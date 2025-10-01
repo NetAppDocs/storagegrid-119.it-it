@@ -1,0 +1,76 @@
+---
+permalink: expand/copying-admin-node-database.html 
+sidebar: sidebar 
+keywords: copy Admin Node database, alert history, Admin Node expansion 
+summary: Quando si aggiungono nodi amministrativi tramite una procedura di espansione, è possibile copiare facoltativamente il database dal nodo amministrativo primario al nuovo nodo amministrativo.  La copia del database consente di conservare informazioni storiche su attributi, avvisi e notifiche. 
+---
+= Copia il database del nodo di amministrazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Quando si aggiungono nodi amministrativi tramite una procedura di espansione, è possibile copiare facoltativamente il database dal nodo amministrativo primario al nuovo nodo amministrativo.  La copia del database consente di conservare informazioni storiche su attributi, avvisi e notifiche.
+
+.Prima di iniziare
+* Hai completato i passaggi di espansione richiesti per aggiungere un nodo di amministrazione.
+* Tu hai il `Passwords.txt` file.
+* Hai la passphrase di provisioning.
+
+
+.Informazioni su questo compito
+Il processo di attivazione del software StorageGRID crea un database vuoto per il servizio NMS sul nodo di amministrazione di espansione.  Quando il servizio NMS viene avviato sul nodo di amministrazione di espansione, registra le informazioni sui server e sui servizi che fanno attualmente parte del sistema o che verranno aggiunti in seguito.  Questo database del nodo di amministrazione include le seguenti informazioni:
+
+* Cronologia degli avvisi
+* Dati degli attributi storici, utilizzati nei grafici in stile legacy nella pagina Nodi
+
+
+Per garantire che il database del nodo amministrativo sia coerente tra i nodi, è possibile copiare il database dal nodo amministrativo primario al nodo amministrativo di espansione.
+
+
+NOTE: La copia del database dal nodo amministrativo primario (il__nodo amministrativo di origine__) a un nodo amministrativo di espansione può richiedere diverse ore.  Durante questo periodo, il Grid Manager non è accessibile.
+
+Utilizzare questi passaggi per arrestare il servizio MI e il servizio Management API sia sul nodo di amministrazione primario che sul nodo di amministrazione di espansione prima di copiare il database.
+
+.Passi
+. Completare i seguenti passaggi sul nodo di amministrazione primario:
++
+.. Accedi al nodo di amministrazione:
++
+... Immettere il seguente comando: `ssh admin@_grid_node_IP_`
+... Inserisci la password elencata nel `Passwords.txt` file.
+... Immettere il seguente comando per passare alla root: `su -`
+... Inserisci la password elencata nel `Passwords.txt` file.
+
+
+.. Eseguire il seguente comando: `recover-access-points`
+.. Immettere la passphrase di provisioning.
+.. Arrestare il servizio MI: `service mi stop`
+.. Arrestare il servizio Management Application Program Interface (mgmt-api): `service mgmt-api stop`
+
+
+. Completare i seguenti passaggi sul nodo di amministrazione di espansione:
++
+.. Accedi al nodo di amministrazione dell'espansione:
++
+... Immettere il seguente comando: `ssh admin@_grid_node_IP_`
+... Inserisci la password elencata nel `Passwords.txt` file.
+... Immettere il seguente comando per passare alla root: `su -`
+... Inserisci la password elencata nel `Passwords.txt` file.
+
+
+.. Arrestare il servizio MI: `service mi stop`
+.. Arrestare il servizio mgmt-api: `service mgmt-api stop`
+.. Aggiungere la chiave privata SSH all'agente SSH.  Inserisci:``ssh-add``
+.. Immettere la password di accesso SSH elencata nel `Passwords.txt` file.
+.. Copiare il database dal nodo di amministrazione di origine al nodo di amministrazione di espansione: `/usr/local/mi/bin/mi-clone-db.sh _Source_Admin_Node_IP_`
+.. Quando richiesto, confermare che si desidera sovrascrivere il database MI sul nodo di amministrazione di espansione.
++
+Il database e i suoi dati storici vengono copiati nel nodo di amministrazione di espansione.  Una volta completata l'operazione di copia, lo script avvia il nodo di amministrazione di espansione.
+
+.. Quando non è più necessario l'accesso senza password ad altri server, rimuovere la chiave privata dall'agente SSH.  Inserisci:``ssh-add -D``
+
+
+. Riavviare i servizi sul nodo di amministrazione primario: `service servermanager start`
+

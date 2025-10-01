@@ -1,0 +1,56 @@
+---
+permalink: admin/copying-storagegrid-system-ca-certificate.html 
+sidebar: sidebar 
+keywords: grid ca certificate, copy certificate 
+summary: 'StorageGRID utilizza un"autorità di certificazione interna (CA) per proteggere il traffico interno.  Questo certificato non cambia se carichi i tuoi certificati.' 
+---
+= Copia il certificato Grid CA
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+StorageGRID utilizza un'autorità di certificazione (CA) interna per proteggere il traffico interno.  Questo certificato non cambia se carichi i tuoi certificati.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Hailink:admin-group-permissions.html["autorizzazioni di accesso specifiche"] .
+
+
+.Informazioni su questo compito
+Se è stato configurato un certificato server personalizzato, le applicazioni client devono verificare il server utilizzando il certificato server personalizzato.  Non devono copiare il certificato CA dal sistema StorageGRID .
+
+.Passi
+. Selezionare *CONFIGURAZIONE* > *Sicurezza* > *Certificati* e quindi selezionare la scheda *CA griglia*.
+. Nella sezione *Certificato PEM*, scaricare o copiare il certificato.
++
+[role="tabbed-block"]
+====
+.Scarica il file del certificato
+--
+Scarica il certificato `.pem` file.
+
+.. Seleziona *Scarica certificato*.
+.. Specificare il nome del file del certificato e il percorso di download.  Salva il file con l'estensione `.pem` .
++
+Ad esempio:  `storagegrid_certificate.pem`
+
+
+
+--
+.Copia certificato PEM
+--
+Copia il testo del certificato per incollarlo altrove.
+
+.. Selezionare *Copia certificato PEM*.
+.. Incolla il certificato copiato in un editor di testo.
+.. Salva il file di testo con l'estensione `.pem` .
++
+Ad esempio:  `storagegrid_certificate.pem`
+
+
+
+--
+====
+

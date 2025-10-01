@@ -1,0 +1,259 @@
+---
+permalink: monitor/monitoring-system-health.html 
+sidebar: sidebar 
+keywords: how to monitor system health, how to view system health 
+summary: Monitora quotidianamente lo stato di salute generale del tuo sistema StorageGRID . 
+---
+= Monitorare lo stato di salute del sistema
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Monitora quotidianamente lo stato di salute generale del tuo sistema StorageGRID .
+
+.Informazioni su questo compito
+Il sistema StorageGRID può continuare a funzionare anche quando alcune parti della rete non sono disponibili.  I potenziali problemi segnalati dagli avvisi non sono necessariamente problemi con le operazioni del sistema.  Esaminare i problemi riepilogati nella scheda Stato di integrità della dashboard di Grid Manager.
+
+Per essere avvisato degli avvisi non appena vengono attivati, puoi https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/setting-up-email-notifications-for-alerts.html["impostare notifiche e-mail per gli avvisi"^] Olink:using-snmp-monitoring.html["configurare trappole SNMP"] .
+
+image::../media/health_status_card.png[Scheda di stato di salute - dashboard]
+
+Quando si verificano problemi, vengono visualizzati dei link che consentono di visualizzare ulteriori dettagli:
+
+[cols="1a,2a"]
+|===
+| Collegamento | Appare quando... 
+
+
+ a| 
+Dettagli della griglia
+ a| 
+Alcuni nodi sono disconnessi (stato di connessione Sconosciuto o Amministrativamente inattivo).
+
+
+
+ a| 
+Avvisi attuali (critici, gravi, minori)
+ a| 
+Gli avvisi sono<<Visualizza gli avvisi correnti e risolti,attualmente attivo>> .
+
+
+
+ a| 
+Avvisi risolti di recente
+ a| 
+Avvisi attivati nell'ultima settimana<<Visualizza gli avvisi correnti e risolti,sono ora risolti>> .
+
+
+
+ a| 
+Licenza
+ a| 
+Si è verificato un problema con la licenza software per questo sistema StorageGRID . È possibile link:../admin/updating-storagegrid-license-information.html["aggiornare le informazioni sulla licenza secondo necessità"] Potrebbe
+
+|===
+
+
+== Monitorare gli stati di connessione dei nodi
+
+Se uno o più nodi vengono disconnessi dalla rete, le operazioni critiche StorageGRID potrebbero essere compromesse.  Monitorare gli stati di connessione dei nodi e risolvere tempestivamente eventuali problemi.
+
+[cols="1a,3a,3a"]
+|===
+| Icona | Descrizione | Azione richiesta 
+
+
+ a| 
+image:../media/icon_alarm_blue_unknown.png["icona punto interrogativo blu"]
+ a| 
+*Non connesso - Sconosciuto*
+
+Per un motivo sconosciuto, un nodo è disconnesso oppure i servizi sul nodo sono inaspettatamente inattivi.  Ad esempio, un servizio sul nodo potrebbe essere interrotto oppure il nodo potrebbe aver perso la connessione di rete a causa di un'interruzione di corrente o di un'interruzione imprevista.
+
+Potrebbe anche essere attivato l'avviso *Impossibile comunicare con il nodo*.  Potrebbero essere attivi anche altri avvisi.
+ a| 
+Richiede attenzione immediata. <<Visualizza gli avvisi correnti e risolti,Seleziona ogni avviso>> e seguire le azioni consigliate.
+
+Ad esempio, potrebbe essere necessario riavviare un servizio che si è arrestato o riavviare l'host per il nodo.
+
+*Nota*: un nodo potrebbe apparire come Sconosciuto durante le operazioni di arresto gestito.  In questi casi è possibile ignorare lo stato Sconosciuto.
+
+
+
+ a| 
+image:../media/icon_alarm_gray_administratively_down.png["icona punto interrogativo grigio"]
+ a| 
+*Non connesso - Amministrativamente inattivo*
+
+Per un motivo prevedibile, il nodo non è connesso alla griglia.
+
+Ad esempio, il nodo o i servizi sul nodo sono stati arrestati correttamente, il nodo si sta riavviando o il software è in fase di aggiornamento.  Potrebbero essere attivi anche uno o più avvisi.
+
+In base al problema di fondo, questi nodi spesso tornano online senza alcun intervento.
+ a| 
+Determina se ci sono avvisi che interessano questo nodo.
+
+Se uno o più avvisi sono attivi,<<Visualizza gli avvisi correnti e risolti,seleziona ogni avviso>> e seguire le azioni consigliate.
+
+
+
+ a| 
+image:../media/icon_alert_green_checkmark.png["icona avviso segno di spunta verde"]
+ a| 
+*Collegato*
+
+Il nodo è collegato alla rete.
+ a| 
+Nessuna azione richiesta.
+
+|===
+
+
+== Visualizza gli avvisi correnti e risolti
+
+*Avvisi attuali*: quando viene attivato un avviso, sulla dashboard viene visualizzata un'icona di avviso.  Nella pagina Nodi viene visualizzata anche un'icona di avviso per il nodo.  Selink:email-alert-notifications.html["le notifiche e-mail di avviso sono configurate"] , verrà inviata anche una notifica via e-mail, a meno che l'avviso non sia stato disattivato.
+
+*Avvisi risolti*: puoi cercare e visualizzare la cronologia degli avvisi che sono stati risolti.
+
+Facoltativamente, hai guardato il video: https://netapp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=2eea81c5-8323-417f-b0a0-b1ff008506c1["Video: Panoramica degli avvisi"^]
+
+[link=https://netapp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=2eea81c5-8323-417f-b0a0-b1ff008506c1]
+image::../media/video-screenshot-alert-overview-118.png[Video: Panoramica degli avvisi]
+
+Nella tabella seguente vengono descritte le informazioni visualizzate in Grid Manager per gli avvisi correnti e risolti.
+
+[cols="1a,3a"]
+|===
+| Intestazione di colonna | Descrizione 
+
+
+ a| 
+Nome o titolo
+ a| 
+Il nome dell'avviso e la sua descrizione.
+
+
+
+ a| 
+Gravità
+ a| 
+La gravità dell'allerta.  Per gli avvisi correnti, se vengono raggruppati più avvisi, la riga del titolo mostra quante istanze di quell'avviso si verificano per ogni livello di gravità.
+
+image:../media/icon_alert_red_critical.png["Icona di avviso rossa critica"]*Critico*: si è verificata una condizione anomala che ha interrotto le normali operazioni di un nodo o servizio StorageGRID .  Bisogna affrontare immediatamente il problema di fondo.  Se il problema non viene risolto, potrebbero verificarsi interruzioni del servizio e perdita di dati.
+
+image:../media/icon_alert_orange_major.png["Icona di allerta arancione maggiore"]*Grave*: Esiste una condizione anomala che sta influenzando le operazioni in corso o che si sta avvicinando alla soglia di un avviso critico.  È necessario esaminare gli avvisi principali e risolvere eventuali problemi sottostanti per garantire che la condizione anomala non interrompa il normale funzionamento di un nodo o servizio StorageGRID .
+
+image:../media/icon_alert_yellow_minor.png["Icona di allerta gialla minore"]*Minore*: Il sistema funziona normalmente, ma si verifica una condizione anomala che potrebbe compromettere la capacità del sistema di funzionare se continua a verificarsi tale condizione.  È opportuno monitorare e risolvere gli avvisi minori che non si risolvono da soli, per evitare che diano origine a problemi più seri.
+
+
+
+ a| 
+Tempo attivato
+ a| 
+*Avvisi attuali*: data e ora in cui è stato attivato l'avviso, in base all'ora locale e all'ora UTC.  Se vengono raggruppati più avvisi, la riga del titolo mostra gli orari dell'istanza più recente dell'avviso (_newest_) e dell'istanza più vecchia dell'avviso (_oldest_).
+
+*Avvisi risolti*: da quanto tempo è stato attivato l'avviso.
+
+
+
+ a| 
+Sito/Nodo
+ a| 
+Nome del sito e del nodo in cui si sta verificando o si è verificato l'avviso.
+
+
+
+ a| 
+Stato
+ a| 
+Se l'avviso è attivo, disattivato o risolto.  Se vengono raggruppati più avvisi e nel menu a discesa è selezionato *Tutti gli avvisi*, la riga del titolo mostra quante istanze di quell'avviso sono attive e quante istanze sono state silenziate.
+
+
+
+ a| 
+Tempo di risoluzione (solo avvisi risolti)
+ a| 
+Da quanto tempo è stato risolto l'avviso.
+
+
+
+ a| 
+Valori correnti o _valori di dati_
+ a| 
+Il valore della metrica che ha causato l'attivazione dell'avviso.  Per alcuni avvisi vengono visualizzati valori aggiuntivi per aiutarti a comprendere e analizzare l'avviso.  Ad esempio, i valori mostrati per un avviso *Archiviazione dati oggetto insufficiente* includono la percentuale di spazio su disco utilizzato, la quantità totale di spazio su disco e la quantità di spazio su disco utilizzata.
+
+*Nota:* se vengono raggruppati più avvisi correnti, i valori correnti non vengono visualizzati nella riga del titolo.
+
+
+
+ a| 
+Valori attivati (solo avvisi risolti)
+ a| 
+Il valore della metrica che ha causato l'attivazione dell'avviso.  Per alcuni avvisi vengono visualizzati valori aggiuntivi per aiutarti a comprendere e analizzare l'avviso.  Ad esempio, i valori mostrati per un avviso *Archiviazione dati oggetto insufficiente* includono la percentuale di spazio su disco utilizzato, la quantità totale di spazio su disco e la quantità di spazio su disco utilizzata.
+
+|===
+.Passi
+. Selezionare il collegamento *Avvisi correnti* o *Avvisi risolti* per visualizzare un elenco degli avvisi in quelle categorie.  È anche possibile visualizzare i dettagli di un avviso selezionando *Nodi* > *_nodo_* > *Panoramica* e quindi selezionando l'avviso dalla tabella Avvisi.
++
+Per impostazione predefinita, gli avvisi correnti vengono visualizzati come segue:
+
++
+** Vengono mostrati per primi gli avvisi attivati più di recente.
+** Più avvisi dello stesso tipo vengono visualizzati come gruppo.
+** Gli avvisi disattivati non vengono visualizzati.
+** Per un avviso specifico su un nodo specifico, se vengono raggiunte le soglie per più di una gravità, viene visualizzato solo l'avviso più grave.  Ciò significa che se vengono raggiunte le soglie di allerta per le gravità minore, maggiore e critica, viene visualizzato solo l'avviso critico.
++
+La pagina Avvisi correnti viene aggiornata ogni due minuti.
+
+
+
+. Per espandere i gruppi di avvisi, selezionare il cursore verso il bassoimage:../media/icon_alert_caret_down.png["icona del cursore verso il basso"] .  Per comprimere i singoli avvisi in un gruppo, selezionare il cursore verso l'altoimage:../media/icon_alert_caret_up.png["Icona cursore su"] oppure seleziona il nome del gruppo.
+. Per visualizzare avvisi individuali anziché gruppi di avvisi, deselezionare la casella di controllo *Avvisi di gruppo*.
+. Per ordinare gli avvisi correnti o i gruppi di avvisi, selezionare le frecce su/giùimage:../media/icon_alert_sort_column.png["Icona delle frecce di ordinamento"] in ogni intestazione di colonna.
++
+** Quando si seleziona *Avvisi di gruppo*, vengono ordinati sia i gruppi di avvisi sia i singoli avvisi all'interno di ciascun gruppo.  Ad esempio, potresti voler ordinare gli avvisi in un gruppo in base all'*ora di attivazione* per trovare l'istanza più recente di un avviso specifico.
+** Quando si cancella *Avvisi di gruppo*, viene ordinato l'intero elenco degli avvisi.  Ad esempio, potresti voler ordinare tutti gli avvisi per *Nodo/Sito* per visualizzare tutti gli avvisi che interessano un nodo specifico.
+
+
+. Per filtrare gli avvisi correnti in base allo stato (*Tutti gli avvisi*, *Attivi* o *Silenziati*), utilizzare il menu a discesa nella parte superiore della tabella.
++
+Vedere link:silencing-alert-notifications.html["Disattiva le notifiche di avviso"] .
+
+. Per ordinare gli avvisi risolti:
++
+** Selezionare un periodo di tempo dal menu a discesa *Quando attivato*.
+** Selezionare uno o più livelli di gravità dal menu a discesa *Gravità*.
+** Selezionare una o più regole di avviso predefinite o personalizzate dal menu a discesa *Regola di avviso* per filtrare gli avvisi risolti correlati a una regola di avviso specifica.
+** Selezionare uno o più nodi dal menu a discesa *Nodo* per filtrare gli avvisi risolti relativi a un nodo specifico.
+
+
+. Per visualizzare i dettagli di un avviso specifico, seleziona l'avviso.  Una finestra di dialogo fornisce dettagli e azioni consigliate per l'avviso selezionato.
+. (Facoltativo) Per un avviso specifico, seleziona Disattiva questo avviso per disattivare la regola di avviso che ha causato l'attivazione dell'avviso.
++
+Devi avere illink:../admin/admin-group-permissions.html["Gestisci avvisi o autorizzazione di accesso root"] per silenziare una regola di avviso.
+
++
+
+CAUTION: Prestare attenzione quando si decide di disattivare una regola di avviso.  Se una regola di avviso viene disattivata, potresti non rilevare un problema di fondo finché non impedisce il completamento di un'operazione critica.
+
+. Per visualizzare le condizioni attuali per la regola di avviso:
++
+.. Dai dettagli dell'avviso, seleziona *Visualizza condizioni*.
++
+Viene visualizzata una finestra pop-up che elenca l'espressione Prometheus per ogni gravità definita.
+
+.. Per chiudere il pop-up, fare clic in un punto qualsiasi al di fuori del pop-up.
+
+
+. Facoltativamente, seleziona *Modifica regola* per modificare la regola di avviso che ha causato l'attivazione di questo avviso.
++
+Devi avere illink:../admin/admin-group-permissions.html["Gestisci avvisi o autorizzazione di accesso root"] per modificare una regola di avviso.
+
++
+
+CAUTION: Prestare attenzione quando si decide di modificare una regola di avviso.  Se si modificano i valori di attivazione, è possibile che non venga rilevato un problema di fondo finché non si impedisce il completamento di un'operazione critica.
+
+. Per chiudere i dettagli dell'avviso, seleziona *Chiudi*.
+

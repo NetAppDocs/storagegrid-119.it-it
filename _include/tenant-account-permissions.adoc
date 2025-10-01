@@ -1,0 +1,31 @@
+= 
+:allow-uri-read: 
+
+
+[cols="1a,3a"]
+|===
+| Permesso | Se selezionato... 
+
+
+ a| 
+Consenti i servizi della piattaforma
+ a| 
+Il tenant può utilizzare i servizi della piattaforma S3 come CloudMirror. Vedere link:../admin/manage-platform-services-for-tenants.html["Gestire i servizi della piattaforma per gli account tenant S3"] .
+
+
+
+ a| 
+Utilizzare la propria fonte di identità
+ a| 
+Il tenant può configurare e gestire la propria fonte di identità per gruppi e utenti federati. Questa opzione è disabilitata se hailink:../admin/configuring-sso.html["SSO configurato"] per il tuo sistema StorageGRID .
+
+
+
+ a| 
+Consenti selezione S3
+ a| 
+Il tenant può inviare richieste API S3 SelectObjectContent per filtrare e recuperare i dati degli oggetti. Vedere link:../admin/manage-s3-select-for-tenant-accounts.html["Gestisci S3 Select per gli account tenant"] .
+
+*Importante*: le richieste SelectObjectContent possono ridurre le prestazioni del bilanciatore del carico per tutti i client S3 e tutti i tenant.  Abilitare questa funzionalità solo quando necessario e solo per i tenant attendibili.
+
+|===

@@ -1,0 +1,56 @@
+---
+permalink: maintain/copying-audit-logs-from-failed-non-primary-admin-node.html 
+sidebar: sidebar 
+keywords: storagegrid, audit log, copy audit log, copying audit log, non-primary admin node, non primary admin node 
+summary: 'Se riesci a copiare i registri di controllo dal nodo di amministrazione non riuscito, dovresti conservarli per mantenere la registrazione dell"attività e dell"utilizzo del sistema nella griglia.  È possibile ripristinare i registri di controllo conservati nel nodo di amministrazione non primario recuperato dopo che è attivo e funzionante.' 
+---
+= Copia i registri di controllo dal nodo di amministrazione non primario non riuscito
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se riesci a copiare i registri di controllo dal nodo di amministrazione non riuscito, dovresti conservarli per mantenere la registrazione dell'attività e dell'utilizzo del sistema nella griglia.  È possibile ripristinare i registri di controllo conservati nel nodo di amministrazione non primario recuperato dopo che è attivo e funzionante.
+
+Questa procedura copia i file del registro di controllo dal nodo di amministrazione non riuscito in una posizione temporanea su un nodo della griglia separato.  Questi registri di controllo conservati possono quindi essere copiati nel nodo di amministrazione sostitutivo.  I registri di controllo non vengono copiati automaticamente nel nuovo nodo di amministrazione.
+
+A seconda del tipo di errore, potrebbe non essere possibile copiare i registri di controllo da un nodo di amministrazione non riuscito.  Se la distribuzione ha un solo nodo amministrativo, il nodo amministrativo recuperato inizia a registrare gli eventi nel registro di controllo in un nuovo file vuoto e i dati registrati in precedenza vengono persi.  Se la distribuzione include più di un nodo amministrativo, è possibile recuperare i registri di controllo da un altro nodo amministrativo.
+
+
+NOTE: Se al momento non è possibile accedere ai registri di controllo sul nodo di amministrazione non riuscito, potresti riuscire ad accedervi in un secondo momento, ad esempio dopo il ripristino dell'host.
+
+. Se possibile, accedere al nodo di amministrazione non riuscito.  In caso contrario, accedi al nodo di amministrazione principale o a un altro nodo di amministrazione, se disponibile.
++
+.. Immettere il seguente comando: `ssh admin@grid_node_IP`
+.. Inserisci la password elencata nel `Passwords.txt` file.
+.. Immettere il seguente comando per passare alla root: `su -`
+.. Inserisci la password elencata nel `Passwords.txt` file.
+
+
++
+Quando si accede come root, il prompt cambia da `$` A `#` .
+
+. Arrestare il servizio AMS per impedire che crei un nuovo file di registro:``service ams stop``
+. Passare alla directory di esportazione dell'audit:
++
+`cd /var/local/log`
+
+. Rinominare il file audit.log di origine con un nome file numerato univoco.  Ad esempio, rinominare il file audit.log in `2023-10-25.txt.1` .
++
+[listing]
+----
+ls -l
+mv audit.log 2023-10-25.txt.1
+----
+. Riavviare il servizio AMS: `service ams start`
+. Creare la directory per copiare tutti i file di registro di controllo in una posizione temporanea su un nodo della griglia separato: `ssh admin@grid_node_IP mkdir -p /var/local/tmp/saved-audit-logs`
++
+Quando richiesto, immettere la password per l'amministratore.
+
+. Copia tutti i file del registro di controllo nella posizione temporanea: `scp -p * admin@grid_node_IP:/var/local/tmp/saved-audit-logs`
++
+Quando richiesto, immettere la password per l'amministratore.
+
+. Disconnettersi come root: `exit`
+

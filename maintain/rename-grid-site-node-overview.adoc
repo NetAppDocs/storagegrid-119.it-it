@@ -1,0 +1,212 @@
+---
+permalink: maintain/rename-grid-site-node-overview.html 
+sidebar: sidebar 
+keywords: rename grid, rename site, rename node, display name, system name 
+summary: 'Se necessario, è possibile modificare i nomi visualizzati in Grid Manager per l"intera griglia, per ciascun sito e per ciascun nodo.  Puoi aggiornare i nomi visualizzati in modo sicuro e ogni volta che ne hai bisogno.' 
+---
+= Utilizzare la procedura di rinomina
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se necessario, è possibile modificare i nomi visualizzati in Grid Manager per l'intera griglia, per ciascun sito e per ciascun nodo.  Puoi aggiornare i nomi visualizzati in modo sicuro e ogni volta che ne hai bisogno.
+
+
+
+== Qual è la procedura di rinomina?
+
+Quando si installa inizialmente StorageGRID , si specifica un nome per la griglia, per ciascun sito e per ciascun nodo.  Questi nomi iniziali sono noti come _nomi di sistema_ e sono i nomi inizialmente visualizzati in StorageGRID.
+
+I nomi di sistema sono necessari per le operazioni interne StorageGRID e non possono essere modificati. Tuttavia, è possibile utilizzare la procedura di ridenominazione per definire nuovi _nomi visualizzati_ per la griglia, ciascun sito e ciascun nodo.  Questi nomi visualizzati compaiono in varie posizioni StorageGRID al posto dei nomi di sistema sottostanti (o in alcuni casi, in aggiunta a essi).
+
+Utilizzare la procedura di ridenominazione per correggere errori di battitura, per implementare una convenzione di denominazione diversa o per indicare che un sito e tutti i suoi nodi sono stati riposizionati.  A differenza dei nomi di sistema, i nomi visualizzati possono essere aggiornati ogni volta che è necessario e senza influire sulle operazioni StorageGRID .
+
+
+
+== Dove compaiono i nomi di sistema e quelli visualizzati?
+
+La tabella seguente riassume dove vengono mostrati i nomi di sistema e i nomi visualizzati nell'interfaccia utente StorageGRID e nei file StorageGRID .
+
+[cols="2a,2a,3a"]
+|===
+| Posizione | Nome del sistema | Nome da visualizzare 
+
+
+ a| 
+Pagine del gestore della griglia
+ a| 
+Visualizzato a meno che l'elemento non venga rinominato
+ a| 
+Se un elemento viene rinominato, viene visualizzato al posto del nome del sistema in queste posizioni:
+
+* Pannello di controllo
+* Pagina dei nodi
+* Pagine di configurazione per gruppi ad alta disponibilità, endpoint di bilanciamento del carico, interfacce VLAN, server di gestione delle chiavi, password di griglia e controllo del firewall
+* Avvisi
+* Definizioni del pool di archiviazione
+* Pagina di ricerca dei metadati degli oggetti
+* Pagine relative alle procedure di manutenzione, tra cui aggiornamento, hotfix, aggiornamento del sistema operativo SANtricity , dismissione, espansione, ripristino e controllo dell'esistenza degli oggetti
+* Pagine di supporto (registri e diagnostica)
+* Pagina Single Sign-On, accanto al nome host del nodo di amministrazione nella tabella per i dettagli del nodo di amministrazione
+
+
+
+
+ a| 
+*NODI* > Scheda *Panoramica* per un nodo
+ a| 
+Sempre mostrato
+ a| 
+Visualizzato solo se l'elemento è stato rinominato
+
+
+
+ a| 
+Pagine legacy in Grid Manager (ad esempio, *SUPPORTO* > *Topologia griglia*)
+ a| 
+Mostrato
+ a| 
+Non mostrato
+
+
+
+ a| 
+API *node-health*
+ a| 
+Sempre tornato
+ a| 
+Restituito solo se l'elemento viene rinominato
+
+
+
+ a| 
+Richiedi quando si utilizza SSH per accedere a un nodo
+ a| 
+Visualizzato come nome principale a meno che l'elemento non sia stato rinominato:
+
+`admin@SYSTEM-NAME: ~ $`
+
+Incluso tra parentesi quando l'elemento viene rinominato:
+
+`admin@DISPLAY-NAME(SYSTEM-NAME):~ $`
+ a| 
+Visualizzato come nome principale quando l'elemento viene rinominato:
+
+`admin@DISPLAY-NAME(SYSTEM-NAME):~ $`
+
+
+
+ a| 
+`Passwords.txt`file nel pacchetto di ripristino
+ a| 
+Mostrato come `Server Name`
+ a| 
+Mostrato come `Display Name`
+
+
+
+ a| 
+`/etc/hosts`file su tutti i nodi
+
+Per esempio:
+
+`10.96.99.128 SYSTEM-NAME 28989c59-a2c3-4d30-bb09-6879adf2437f DISPLAY-NAME localhost-grid # storagegrid-gen-host`
+ a| 
+Sempre mostrato nella seconda colonna
+ a| 
+Quando l'elemento viene rinominato, mostrato nella quarta colonna
+
+
+
+ a| 
+`topology-display-names.json`, incluso con i dati AutoSupport
+ a| 
+Non incluso
+ a| 
+Vuoto a meno che gli elementi non siano stati rinominati; in caso contrario, associa gli ID di griglia, sito e nodo ai rispettivi nomi visualizzati.
+
+|===
+
+
+== Requisiti del nome visualizzato
+
+Prima di utilizzare questa procedura, rivedere i requisiti per i nomi visualizzati.
+
+
+
+=== Nomi visualizzati per i nodi
+
+I nomi visualizzati per i nodi devono seguire queste regole:
+
+* Deve essere univoco in tutto il sistema StorageGRID .
+* Non può essere uguale al nome di sistema di nessun altro elemento nel sistema StorageGRID .
+* Deve contenere almeno 1 e non più di 32 caratteri.
+* Può contenere numeri, trattini (-) e lettere maiuscole e minuscole.
+* Può iniziare o terminare con una lettera o un numero, ma non può iniziare o terminare con un trattino.
+* Non possono essere tutti numeri.
+* Non fanno distinzione tra maiuscole e minuscole.  Per esempio, `DC1-ADM` E `dc1-adm` sono considerati duplicati.
+
+
+È possibile rinominare un nodo con un nome visualizzato precedentemente utilizzato da un nodo diverso, purché la ridenominazione non determini un nome visualizzato o un nome di sistema duplicato.
+
+
+
+=== Nomi visualizzati per griglia e siti
+
+I nomi visualizzati per la griglia e i siti seguono le stesse regole, con queste eccezioni:
+
+* Può includere spazi.
+* Può includere questi caratteri speciali: `= - _ : , . @ !`
+* Può iniziare e terminare con caratteri speciali, inclusi i trattini.
+* Possono essere solo numeri o caratteri speciali.
+
+
+
+
+== Buone pratiche per il nome visualizzato
+
+Se si prevede di rinominare più elementi, documentare lo schema di denominazione generale prima di utilizzare questa procedura.  Elabora un sistema che garantisca che i nomi siano unici, coerenti e facili da capire a colpo d'occhio.
+
+Puoi utilizzare qualsiasi convenzione di denominazione che si adatti alle esigenze della tua organizzazione.  Ecco alcuni suggerimenti di base su cosa includere:
+
+* *Indicatore sito*: se hai più siti, aggiungi un codice sito a ciascun nome di nodo.
+* *Tipo di nodo*: i nomi dei nodi in genere indicano il tipo di nodo.  Puoi usare abbreviazioni come `s` , `adm` , E `gw` (Nodo di archiviazione, nodo di amministrazione e nodo gateway).
+* *Numero nodo*: se un sito contiene più di un nodo di un particolare tipo, aggiungere un numero univoco al nome di ciascun nodo.
+
+
+Pensateci due volte prima di aggiungere dettagli specifici ai nomi che potrebbero cambiare nel tempo.  Ad esempio, non includere gli indirizzi IP nei nomi dei nodi perché questi indirizzi possono essere modificati.  Allo stesso modo, le posizioni dei rack o i numeri dei modelli degli elettrodomestici possono cambiare se si sposta l'apparecchiatura o si aggiorna l'hardware.
+
+
+
+=== Esempi di nomi visualizzati
+
+Supponiamo che il tuo sistema StorageGRID abbia tre data center e nodi di tipo diverso in ogni data center.  I nomi visualizzati potrebbero essere semplici come questi:
+
+* *Griglia*: `StorageGRID Deployment`
+* *Primo sito*: `Data Center 1`
++
+** `dc1-adm1`
+** `dc1-s1`
+** `dc1-s2`
+** `dc1-s3`
+** `dc1-gw1`
+
+
+* *Secondo sito*: `Data Center 2`
++
+** `dc2-adm2`
+** `dc2-s1`
+** `dc2-s2`
+** `dc2-s3`
+
+
+* *Terzo sito*: `Data Center 3`
++
+** `dc3-s1`
+** `dc3-s2`
+** `dc3-s3`
+
+
+

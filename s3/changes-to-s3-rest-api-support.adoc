@@ -1,0 +1,142 @@
+---
+permalink: s3/changes-to-s3-rest-api-support.html 
+sidebar: sidebar 
+keywords: s3 rest api support changes 
+summary: 'È necessario essere a conoscenza delle modifiche apportate al supporto del sistema StorageGRID per l"API REST S3.' 
+---
+= Modifiche al supporto dell'API REST S3
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario essere a conoscenza delle modifiche apportate al supporto del sistema StorageGRID per l'API REST S3.
+
+[cols="1a,4a"]
+|===
+| Pubblicazione | Commenti 
+
+
+ a| 
+11,8
+ a| 
+* Aggiunto supporto per `ExpiredObjectDeleteMarker` in un'operazione PutBucketLifecycleConfiguration, che elimina i marcatori di eliminazione degli oggetti scaduti.
+* Aggiunto supporto per il `s3:ExistingObjectTag/<tag-key>` chiave di condizione della policy, che richiede che gli oggetti esistenti abbiano la chiave e il valore del tag specifici.
+* Aggiunto supporto per il `s3:RequestObjectTag/<tag-key>` chiave di condizione della policy, che richiede un tag specifico e un valore chiave quando la richiesta dell'oggetto include il tagging.
+
+
+
+
+ a| 
+11,7
+ a| 
+* Aggiunto supporto per l'utilizzo della modalità GOVERNANCE con S3 Object Lock.
+* Aggiunto supporto per StorageGRID specifico `x-ntap-sg-cgr-replication-status` intestazione di risposta per le richieste GetObject e HeadObject.  Questa intestazione fornisce lo stato di replicazione di un oggetto per la replica tra griglie.
+* Le richieste SelectObjectContent ora supportano gli oggetti Parquet.
+
+
+
+
+ a| 
+11,6
+ a| 
+* Aggiunto supporto per l'utilizzo di `partNumber` parametro di richiesta nelle richieste GetObject e HeadObject.
+* Aggiunto il supporto per una modalità di conservazione predefinita e un periodo di conservazione predefinito a livello di bucket per S3 Object Lock.
+* Aggiunto supporto per il `s3:object-lock-remaining-retention-days` chiave di condizione della policy per impostare l'intervallo di periodi di conservazione consentiti per i tuoi oggetti.
+* Modificata la dimensione massima _consigliata_ per una singola operazione PutObject a 5 GiB (5.368.709.120 byte).  Se hai oggetti più grandi di 5 GiB, usa invece il caricamento multiparte.
+
+
+
+
+ a| 
+11,5
+ a| 
+* Aggiunto supporto per la gestione della crittografia dei bucket.
+* Aggiunto supporto per S3 Object Lock e richieste di conformità legacy deprecate.
+* Aggiunto supporto per l'utilizzo di DeleteObjects su bucket con versione.
+* IL `Content-MD5` l'intestazione della richiesta è ora supportata correttamente.
+
+
+
+
+ a| 
+11,4
+ a| 
+* Aggiunto supporto per DeleteBucketTagging, GetBucketTagging e PutBucketTagging.  I tag di allocazione dei costi non sono supportati.
+* Per i bucket creati in StorageGRID 11.4, non è più necessario limitare i nomi delle chiavi degli oggetti per soddisfare le best practice in termini di prestazioni.
+* Aggiunto supporto per le notifiche bucket su `s3:ObjectRestore:Post` tipo di evento.
+* Sono ora applicati i limiti dimensionali AWS per le parti multiparte.  Ogni parte di un caricamento multiparte deve avere una dimensione compresa tra 5 MiB e 5 GiB.  L'ultima parte può essere inferiore a 5 MiB.
+* Aggiunto supporto per TLS 1.3
+
+
+
+
+ a| 
+11,3
+ a| 
+* Aggiunto supporto per la crittografia lato server dei dati degli oggetti con chiavi fornite dal cliente (SSE-C).
+* Aggiunto supporto per le operazioni DeleteBucketLifecycle, GetBucketLifecycleConfiguration e PutBucketLifecycleConfiguration (solo azione di scadenza) e per `x-amz-expiration` intestazione di risposta.
+* PutObject, CopyObject e MultipartUpload aggiornati per descrivere l'impatto delle regole ILM che utilizzano il posizionamento sincrono durante l'acquisizione.
+* I cifrari TLS 1.1 non sono più supportati.
+
+
+
+
+ a| 
+11,2
+ a| 
+Aggiunto supporto per RestoreObject per l'utilizzo con Cloud Storage Pool.  Aggiunto supporto per l'utilizzo della sintassi AWS per ARN, chiavi di condizione della policy e variabili della policy nelle policy di gruppo e bucket.  Continueranno a essere supportati i criteri di gruppo e bucket esistenti che utilizzano la sintassi StorageGRID .
+
+*Nota:* gli utilizzi di ARN/URN in altre configurazioni JSON/XML, compresi quelli utilizzati nelle funzionalità StorageGRID personalizzate, non sono cambiati.
+
+
+
+ a| 
+11,1
+ a| 
+Aggiunto supporto per la condivisione delle risorse tra origini (CORS), HTTP per le connessioni client S3 ai nodi della griglia e impostazioni di conformità sui bucket.
+
+
+
+ a| 
+11,0
+ a| 
+Aggiunto supporto per la configurazione dei servizi della piattaforma (replica CloudMirror, notifiche e integrazione della ricerca Elasticsearch) per i bucket.  È stato inoltre aggiunto il supporto per i vincoli di posizione del tagging degli oggetti per i bucket e la coerenza disponibile.
+
+
+
+ a| 
+10,4
+ a| 
+Aggiunto supporto per le modifiche alla scansione ILM relative al controllo delle versioni, aggiornamenti della pagina Nomi di dominio endpoint, condizioni e variabili nelle policy, esempi di policy e autorizzazione PutOverwriteObject.
+
+
+
+ a| 
+10,3
+ a| 
+Aggiunto supporto per il controllo delle versioni.
+
+
+
+ a| 
+10,2
+ a| 
+Aggiunto supporto per criteri di accesso a gruppi e bucket e per la copia multiparte (UploadPartCopy).
+
+
+
+ a| 
+10,1
+ a| 
+Aggiunto supporto per caricamento multiparte, richieste in stile virtual hosted e autenticazione v4.
+
+
+
+ a| 
+10,0
+ a| 
+Supporto iniziale dell'API REST S3 da parte del sistema StorageGRID. La versione attualmente supportata del _Simple Storage Service API Reference_ è 2006-03-01.
+
+|===

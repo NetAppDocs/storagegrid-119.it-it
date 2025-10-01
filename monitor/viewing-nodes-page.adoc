@@ -1,0 +1,98 @@
+---
+permalink: monitor/viewing-nodes-page.html 
+sidebar: sidebar 
+keywords: nodes page 
+summary: 'Quando hai bisogno di informazioni più dettagliate sul tuo sistema StorageGRID rispetto a quelle fornite dalla dashboard, puoi utilizzare la pagina Nodi per visualizzare le metriche per l"intera griglia, per ogni sito nella griglia e per ogni nodo in un sito.' 
+---
+= Visualizza la pagina Nodi
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Quando hai bisogno di informazioni più dettagliate sul tuo sistema StorageGRID rispetto a quelle fornite dalla dashboard, puoi utilizzare la pagina Nodi per visualizzare le metriche per l'intera griglia, per ogni sito nella griglia e per ogni nodo in un sito.
+
+Nella tabella Nodi sono elencate le informazioni riepilogative per l'intera griglia, per ciascun sito e per ciascun nodo.  Se un nodo è disconnesso o ha un avviso attivo, accanto al nome del nodo viene visualizzata un'icona.  Se il nodo è connesso e non ha avvisi attivi, non viene visualizzata alcuna icona.
+
+
+NOTE: Quando un nodo non è connesso alla rete, ad esempio durante un aggiornamento o in uno stato disconnesso, alcune metriche potrebbero non essere disponibili o essere escluse dai totali del sito e della rete.  Dopo che un nodo si è ricollegato alla rete, attendere alcuni minuti affinché i valori si stabilizzino.
+
+
+NOTE: Per modificare le unità di misura per i valori di archiviazione visualizzati in Grid Manager, selezionare il menu a discesa dell'utente in alto a destra di Grid Manager, quindi selezionare *Preferenze utente*.
+
+
+NOTE: Gli screenshot mostrati sono esempi.  I risultati potrebbero variare a seconda della versione StorageGRID .
+
+image::../media/nodes_table.png[Menu Nodi]
+
+
+
+== Icone dello stato della connessione
+
+Se un nodo è disconnesso dalla rete, accanto al nome del nodo viene visualizzata una delle seguenti icone.
+
+[cols="1a,3a,3a"]
+|===
+| Icona | Descrizione | Azione richiesta 
+
+
+ a| 
+image:../media/icon_alarm_blue_unknown.png["icona punto interrogativo blu"]
+ a| 
+*Non connesso - Sconosciuto*
+
+Per un motivo sconosciuto, un nodo è disconnesso oppure i servizi sul nodo sono inaspettatamente inattivi.  Ad esempio, un servizio sul nodo potrebbe essere interrotto oppure il nodo potrebbe aver perso la connessione di rete a causa di un'interruzione di corrente o di un'interruzione imprevista.
+
+Potrebbe anche essere attivato l'avviso *Impossibile comunicare con il nodo*.  Potrebbero essere attivi anche altri avvisi.
+ a| 
+Richiede attenzione immediata. link:monitoring-system-health.html#view-current-and-resolved-alerts["Seleziona ogni avviso"] e seguire le azioni consigliate.
+
+Ad esempio, potrebbe essere necessario riavviare un servizio che si è arrestato o riavviare l'host per il nodo.
+
+*Nota*: un nodo potrebbe apparire come Sconosciuto durante le operazioni di arresto gestito.  In questi casi è possibile ignorare lo stato Sconosciuto.
+
+
+
+ a| 
+image:../media/icon_alarm_gray_administratively_down.png["icona punto interrogativo grigio"]
+ a| 
+*Non connesso - Amministrativamente inattivo*
+
+Per un motivo prevedibile, il nodo non è connesso alla griglia.
+
+Ad esempio, il nodo o i servizi sul nodo sono stati arrestati correttamente, il nodo si sta riavviando o il software è in fase di aggiornamento.  Potrebbero essere attivi anche uno o più avvisi.
+
+In base al problema di fondo, questi nodi spesso tornano online senza alcun intervento.
+ a| 
+Determina se ci sono avvisi che interessano questo nodo.
+
+Se uno o più avvisi sono attivi,link:monitoring-system-health.html#view-current-and-resolved-alerts["Seleziona ogni avviso"] e seguire le azioni consigliate.
+
+|===
+Se un nodo è disconnesso dalla rete, potrebbe essere visualizzato un avviso sottostante, ma viene visualizzata solo l'icona "Non connesso".  Per visualizzare gli avvisi attivi per un nodo, seleziona il nodo.
+
+
+
+== Icone di avviso
+
+Se è presente un avviso attivo per un nodo, accanto al nome del nodo viene visualizzata una delle seguenti icone:
+
+image:../media/icon_alert_red_critical.png["Icona di avviso rossa critica"]*Critico*: si è verificata una condizione anomala che ha interrotto le normali operazioni di un nodo o servizio StorageGRID .  Bisogna affrontare immediatamente il problema di fondo.  Se il problema non viene risolto, potrebbero verificarsi interruzioni del servizio e perdita di dati.
+
+image:../media/icon_alert_orange_major.png["Icona di allerta arancione maggiore"]*Grave*: Esiste una condizione anomala che sta influenzando le operazioni in corso o che si sta avvicinando alla soglia di un avviso critico.  È necessario esaminare gli avvisi principali e risolvere eventuali problemi sottostanti per garantire che la condizione anomala non interrompa il normale funzionamento di un nodo o servizio StorageGRID .
+
+image:../media/icon_alert_yellow_minor.png["Icona di allerta gialla minore"]*Minore*: Il sistema funziona normalmente, ma si verifica una condizione anomala che potrebbe compromettere la capacità del sistema di funzionare se continua a verificarsi tale condizione.  È opportuno monitorare e risolvere gli avvisi minori che non si risolvono da soli, per evitare che diano origine a problemi più seri.
+
+
+
+== Visualizza i dettagli di un sistema, sito o nodo
+
+Per filtrare le informazioni mostrate nella tabella Nodi, immettere una stringa di ricerca nel campo *Cerca*.  È possibile effettuare la ricerca per nome del sistema, nome visualizzato o tipo (ad esempio, immettere *gat* per individuare rapidamente tutti i nodi gateway).
+
+Per visualizzare le informazioni sulla griglia, sul sito o sul nodo:
+
+* Selezionare il nome della griglia per visualizzare un riepilogo aggregato delle statistiche dell'intero sistema StorageGRID .
+* Seleziona un sito specifico del data center per visualizzare un riepilogo aggregato delle statistiche per tutti i nodi di quel sito.
+* Seleziona un nodo specifico per visualizzare informazioni dettagliate su quel nodo.
+

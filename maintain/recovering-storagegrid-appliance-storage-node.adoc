@@ -1,0 +1,29 @@
+---
+permalink: maintain/recovering-storagegrid-appliance-storage-node.html 
+sidebar: sidebar 
+keywords: recover, appliance storage node failure, workflow 
+summary: 'La procedura per ripristinare un nodo di archiviazione dell"appliance StorageGRID non funzionante è la stessa, indipendentemente dal fatto che si stia ripristinando dalla perdita dell"unità di sistema o dalla perdita dei soli volumi di archiviazione.' 
+---
+= Avvisi per il ripristino dei nodi di archiviazione dell'appliance
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+La procedura per ripristinare un nodo di archiviazione dell'appliance StorageGRID non funzionante è la stessa, indipendentemente dal fatto che si stia ripristinando dalla perdita dell'unità di sistema o dalla perdita dei soli volumi di archiviazione.
+
+
+CAUTION: Se più di un nodo di archiviazione è guasto (o è offline), contattare l'assistenza tecnica. Non eseguire la seguente procedura di ripristino. Potrebbe verificarsi una perdita di dati.
+
+
+CAUTION: Se si tratta del secondo guasto del nodo di archiviazione in meno di 15 giorni dopo un guasto o un ripristino del nodo di archiviazione, contattare l'assistenza tecnica.  La ricostruzione di Cassandra su due o più nodi di archiviazione entro 15 giorni può comportare la perdita di dati.
+
+
+NOTE: Se più di un nodo di archiviazione in un sito presenta un guasto, potrebbe essere necessaria una procedura di ripristino del sito. Vedere link:how-site-recovery-is-performed-by-technical-support.html["Come il supporto tecnico recupera un sito"] .
+
+
+CAUTION: Se le regole ILM sono configurate per archiviare solo una copia replicata e la copia esiste su un volume di archiviazione che ha subito un errore, non sarà possibile ripristinare l'oggetto.
+
+
+NOTE: Per le procedure di manutenzione hardware, come le istruzioni per la sostituzione di un controller o la reinstallazione del sistema operativo SANtricity , vedere https://docs.netapp.com/us-en/storagegrid-appliances/commonhardware/index.html["istruzioni per la manutenzione del tuo apparecchio di archiviazione"^] .

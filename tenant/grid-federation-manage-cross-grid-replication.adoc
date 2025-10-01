@@ -1,0 +1,174 @@
+---
+permalink: tenant/grid-federation-manage-cross-grid-replication.html 
+sidebar: sidebar 
+keywords: grid federation, cross-grid replication, use grid federation connection, replicate client delete markers, s3 bucket 
+summary: 'Se al tuo account tenant è stata assegnata l"autorizzazione Usa connessione federazione griglia al momento della creazione, puoi utilizzare la replica tra griglie per replicare automaticamente gli oggetti tra i bucket sulla griglia di origine del tenant e i bucket sulla griglia di destinazione del tenant.  La replicazione tra griglie può avvenire in una o entrambe le direzioni.' 
+---
+= Gestire la replicazione tra griglie
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se al momento della creazione dell'account tenant è stata assegnata l'autorizzazione *Usa connessione federazione griglia*, è possibile utilizzare la replica tra griglie per replicare automaticamente gli oggetti tra i bucket sulla griglia di origine del tenant e i bucket sulla griglia di destinazione del tenant.  La replicazione tra griglie può avvenire in una o entrambe le direzioni.
+
+
+
+== Flusso di lavoro per la replicazione tra griglie
+
+Il diagramma del flusso di lavoro riassume i passaggi da eseguire per configurare la replica tra griglie tra bucket su due griglie.  Questi passaggi sono descritti più dettagliatamente di seguito.
+
+image::../media/grid-federation-cgr-workflow.png[Flusso di lavoro di replicazione tra griglie]
+
+
+
+== Configurare la replicazione tra griglie
+
+Prima di poter utilizzare la replica tra griglie, è necessario accedere agli account tenant corrispondenti su ciascuna griglia e creare bucket identici. Quindi, è possibile abilitare la replica tra griglie su uno o entrambi i bucket.
+
+.Prima di iniziare
+* Hai esaminato i requisiti per la replicazione tra griglie. Vedere link:../admin/grid-federation-what-is-cross-grid-replication.html["Che cosa è la replicazione cross-grid"] .
+* Stai utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* L'account tenant ha l'autorizzazione *Usa connessione federata di griglia* e su entrambe le griglie esistono account tenant identici. Vedere link:../admin/grid-federation-manage-tenants.html["Gestire gli inquilini autorizzati per la connessione alla federazione di rete"] .
+* L'utente tenant con cui effettuerai l'accesso esiste già su entrambe le griglie e appartiene a un gruppo di utenti che halink:tenant-management-permissions.html["Permesso di accesso root"] .
+* Se effettuerai l'accesso alla griglia di destinazione del tenant come utente locale, l'utente root dell'account tenant avrà impostato una password per il tuo account utente su quella griglia.
+
+
+
+
+=== Crea due bucket identici
+
+Come primo passo, accedi agli account tenant corrispondenti su ciascuna griglia e crea bucket identici.
+
+.Passi
+. Partendo da una delle due griglie nella connessione di federazione delle griglie, crea un nuovo bucket:
++
+.. Sign in all'account tenant utilizzando le credenziali di un utente tenant presente su entrambe le griglie.
++
+
+NOTE: Se non riesci ad accedere alla griglia di destinazione del tenant come utente locale, verifica che l'utente root dell'account tenant abbia impostato una password per il tuo account utente.
+
+.. Seguire le istruzioni perlink:creating-s3-bucket.html["creare un bucket S3"] .
+.. Nella scheda *Gestisci impostazioni oggetto*, seleziona *Abilita controllo delle versioni degli oggetti*.
+.. Se S3 Object Lock è abilitato per il sistema StorageGRID , non abilitare S3 Object Lock per il bucket.
+.. Seleziona *Crea bucket*.
+.. Selezionare *Fine*.
+
+
+. Ripetere questi passaggi per creare un bucket identico per lo stesso account tenant sull'altra griglia nella connessione di federazione della griglia.
++
+
+TIP: A seconda delle necessità, ogni bucket può utilizzare una regione diversa.
+
+
+
+
+
+=== Abilita la replicazione tra griglie
+
+È necessario eseguire questi passaggi prima di aggiungere oggetti a uno dei due bucket.
+
+.Passi
+. Partendo da una griglia di cui vuoi replicare gli oggetti, abilitalink:../admin/grid-federation-what-is-cross-grid-replication.html["replicazione cross-grid in una direzione"] :
++
+.. Sign in all'account tenant per il bucket.
+.. Selezionare *Visualizza bucket* dalla dashboard oppure selezionare *ARCHIVIAZIONE (S3)* > *Bucket*.
+.. Selezionare il nome del bucket dalla tabella per accedere alla pagina dei dettagli del bucket.
+.. Selezionare la scheda *Replica tra griglie*.
+.. Selezionare *Abilita* e rivedere l'elenco dei requisiti.
+.. Se tutti i requisiti sono stati soddisfatti, selezionare la connessione di federazione di rete che si desidera utilizzare.
+.. Facoltativamente, modifica l'impostazione di *Replica marcatori di eliminazione* per determinare cosa accade sulla griglia di destinazione se un client S3 invia una richiesta di eliminazione alla griglia di origine che non include un ID versione:
++
+*** *Sì* (predefinito): un marcatore di eliminazione viene aggiunto al bucket di origine e replicato nel bucket di destinazione.
+*** *No*: un marcatore di eliminazione viene aggiunto al bucket di origine ma non viene replicato nel bucket di destinazione.
++
+image::../media/grid-federation-cross-grid-replication-client-deletes.png[immagine che mostra l'eliminazione del client replicato su entrambe le griglie]
+
++
+
+NOTE: Se la richiesta di eliminazione include un ID versione, la versione dell'oggetto viene rimossa definitivamente dal bucket di origine. StorageGRID non replica le richieste di eliminazione che includono un ID versione, pertanto la stessa versione dell'oggetto non viene eliminata dalla destinazione.
+
++
+Vederelink:../admin/grid-federation-what-is-cross-grid-replication.html["Che cosa è la replicazione cross-grid"] per i dettagli.
+
+
+
+.. Facoltativamente, modificare l'impostazione della categoria di controllo *Replica tra griglie* per gestire il volume dei messaggi di controllo:
++
+*** *Errore* (predefinito): nell'output di controllo vengono incluse solo le richieste di replica tra griglie non riuscite.
+*** *Normale*: vengono incluse tutte le richieste di replica tra griglie, il che aumenta significativamente il volume dell'output di audit.
+
+
+.. Rivedi le tue selezioni.  Non è possibile modificare queste impostazioni a meno che entrambi i bucket non siano vuoti.
+.. Seleziona *Abilita e prova*.
++
+Dopo qualche istante, verrà visualizzato un messaggio di conferma dell'operazione. Gli oggetti aggiunti a questo bucket verranno ora replicati automaticamente nell'altra griglia. *La replica tra griglie* è visualizzata come funzionalità abilitata nella pagina dei dettagli del bucket.
+
+
+
+. Facoltativamente, vai al bucket corrispondente sull'altra griglia elink:../admin/grid-federation-what-is-cross-grid-replication.html["abilitare la replicazione cross-grid in entrambe le direzioni"] .
+
+
+
+
+== Test di replicazione tra griglie
+
+Se la replica tra griglie è abilitata per un bucket, potrebbe essere necessario verificare che la connessione e la replica tra griglie funzionino correttamente e che i bucket di origine e di destinazione soddisfino ancora tutti i requisiti (ad esempio, che il controllo delle versioni sia ancora abilitato).
+
+.Prima di iniziare
+* Stai utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Appartieni a un gruppo di utenti che ha illink:tenant-management-permissions.html["Permesso di accesso root"] .
+
+
+.Passi
+. Sign in all'account tenant per il bucket.
+. Selezionare *Visualizza bucket* dalla dashboard oppure selezionare *ARCHIVIAZIONE (S3)* > *Bucket*.
+. Selezionare il nome del bucket dalla tabella per accedere alla pagina dei dettagli del bucket.
+. Selezionare la scheda *Replica tra griglie*.
+. Selezionare *Test connessione*.
++
+Se la connessione è funzionante, viene visualizzato un banner di conferma. In caso contrario, verrà visualizzato un messaggio di errore che tu e l'amministratore della griglia potrete utilizzare per risolvere il problema. Per maggiori dettagli, vedere link:../admin/grid-federation-troubleshoot.html["Risolvere gli errori di federazione della griglia"] .
+
+. Se la replica tra griglie è configurata per verificarsi in entrambe le direzioni, andare al bucket corrispondente sull'altra griglia e selezionare *Test connessione* per verificare che la replica tra griglie funzioni nell'altra direzione.
+
+
+
+
+== Disabilita la replicazione tra griglie
+
+È possibile interrompere definitivamente la replica tra griglie se non si desidera più copiare oggetti nell'altra griglia.
+
+Prima di disattivare la replica tra griglie, tenere presente quanto segue:
+
+* La disattivazione della replica tra griglie non rimuove gli oggetti già copiati tra le griglie. Ad esempio, oggetti in `my-bucket` sulla Griglia 1 che sono stati copiati in `my-bucket` sulla Griglia 2 non vengono rimossi se si disabilita la replica tra griglie per quel bucket. Se si desidera eliminare questi oggetti, è necessario rimuoverli manualmente.
+* Se la replica tra griglie è stata abilitata per ciascuno dei bucket (ovvero, se la replica avviene in entrambe le direzioni), è possibile disabilitare la replica tra griglie per uno o entrambi i bucket.  Ad esempio, potresti voler disabilitare la replica degli oggetti da `my-bucket` sulla griglia 1 a `my-bucket` sulla Griglia 2, continuando a replicare oggetti da `my-bucket` sulla griglia 2 a `my-bucket` sulla griglia 1.
+* È necessario disabilitare la replica tra griglie prima di poter rimuovere l'autorizzazione di un tenant a utilizzare la connessione federata della griglia. Vedere link:../admin/grid-federation-manage-tenants.html["Gestire gli inquilini autorizzati"] .
+* Se si disabilita la replica tra griglie per un bucket contenente oggetti, non sarà possibile riabilitarla a meno che non si eliminino tutti gli oggetti sia dal bucket di origine che da quello di destinazione.
++
+
+CAUTION: Non è possibile riattivare la replica a meno che entrambi i bucket non siano vuoti.
+
+
+
+.Prima di iniziare
+* Stai utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Appartieni a un gruppo di utenti che ha illink:tenant-management-permissions.html["Permesso di accesso root"] .
+
+
+.Passi
+. A partire dalla griglia i cui oggetti non vuoi più replicare, interrompi la replica tra griglie per il bucket:
++
+.. Sign in all'account tenant per il bucket.
+.. Selezionare *Visualizza bucket* dalla dashboard oppure selezionare *ARCHIVIAZIONE (S3)* > *Bucket*.
+.. Selezionare il nome del bucket dalla tabella per accedere alla pagina dei dettagli del bucket.
+.. Selezionare la scheda *Replica tra griglie*.
+.. Selezionare *Disabilita replicazione*.
+.. Se sei sicuro di voler disabilitare la replica tra griglie per questo bucket, digita *Sì* nella casella di testo e seleziona *Disabilita*.
++
+Dopo qualche istante, verrà visualizzato un messaggio di conferma dell'operazione. I nuovi oggetti aggiunti a questo bucket non possono più essere replicati automaticamente nell'altra griglia.  La *replica tra griglie* non è più visualizzata come funzionalità abilitata nella pagina Bucket.
+
+
+
+. Se la replica tra griglie è stata configurata per essere eseguita in entrambe le direzioni, passare al bucket corrispondente sull'altra griglia e interrompere la replica tra griglie nell'altra direzione.
+

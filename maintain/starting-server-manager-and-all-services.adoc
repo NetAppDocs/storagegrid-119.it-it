@@ -1,0 +1,36 @@
+---
+permalink: maintain/starting-server-manager-and-all-services.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, server manager, start server manager, start services, start all services 
+summary: Potrebbe essere necessario avviare Server Manager, che avvia anche tutti i servizi sul nodo della griglia. 
+---
+= Avviare Server Manager e tutti i servizi
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Potrebbe essere necessario avviare Server Manager, che avvia anche tutti i servizi sul nodo della griglia.
+
+.Prima di iniziare
+Tu hai il `Passwords.txt` file.
+
+.Informazioni su questo compito
+L'avvio di Server Manager su un nodo della griglia in cui è già in esecuzione determina il riavvio di Server Manager e di tutti i servizi sul nodo della griglia.
+
+.Passi
+. Accedi al nodo della griglia:
++
+.. Immettere il seguente comando: `ssh admin@_grid_node_IP_`
+.. Inserisci la password elencata nel `Passwords.txt` file.
+.. Immettere il seguente comando per passare alla root: `su -`
+.. Inserisci la password elencata nel `Passwords.txt` file.
+
+
++
+Quando si accede come root, il prompt cambia da `$` A `#` .
+
+. Avviare Server Manager: `service servermanager start`
+. Disconnettersi dalla shell dei comandi: `exit`
+

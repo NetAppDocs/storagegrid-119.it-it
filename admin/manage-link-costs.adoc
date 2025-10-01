@@ -1,0 +1,87 @@
+---
+permalink: admin/manage-link-costs.html 
+sidebar: sidebar 
+keywords: link cost, site latency, manage link costs, prioritize sites 
+summary: I costi di collegamento consentono di stabilire la priorità del sito del data center che fornisce un servizio richiesto quando sono presenti due o più siti del data center.  È possibile adattare i costi dei collegamenti in base alla latenza tra i siti. 
+---
+= Gestire i costi dei link
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+I costi di collegamento consentono di stabilire la priorità del sito del data center che fornisce un servizio richiesto quando sono presenti due o più siti del data center.  È possibile adattare i costi dei collegamenti in base alla latenza tra i siti.
+
+
+
+== Quali sono i costi dei link?
+
+* I costi di collegamento vengono utilizzati per stabilire la priorità della copia dell'oggetto da utilizzare per completare i recuperi dell'oggetto.
+* I costi dei collegamenti vengono utilizzati dall'API di gestione della griglia e dall'API di gestione dei tenant per determinare quali servizi StorageGRID interni utilizzare.
+* I costi di collegamento vengono utilizzati dal servizio Load Balancer sui nodi amministrativi e sui nodi gateway per indirizzare le connessioni client. Vedere link:../admin/managing-load-balancing.html["Considerazioni sul bilanciamento del carico"] .
+
+
+Il diagramma mostra una griglia a tre siti in cui sono configurati i costi di collegamento tra i siti:
+
+image::../media/link_costs.gif[Diagramma concettuale per i costi di collegamento tra data center]
+
+* Il servizio Load Balancer sui nodi amministrativi e sui nodi gateway distribuisce equamente le connessioni client a tutti i nodi di archiviazione nello stesso sito del data center e a tutti i siti del data center con un costo di collegamento pari a 0.
++
+Nell'esempio, un nodo gateway nel sito del data center 1 (DC1) distribuisce equamente le connessioni client ai nodi di archiviazione in DC1 e ai nodi di archiviazione in DC2.  Un nodo gateway in DC3 invia connessioni client solo ai nodi di archiviazione in DC3.
+
+* Quando si recupera un oggetto che esiste in più copie replicate, StorageGRID recupera la copia nel data center che ha il costo di collegamento più basso.
++
+Nell'esempio, se un'applicazione client su DC2 recupera un oggetto archiviato sia su DC1 che su DC3, l'oggetto viene recuperato da DC1, perché il costo del collegamento da DC1 a DC2 è 0, che è inferiore al costo del collegamento da DC3 a DC2 (25).
+
+
+
+I costi dei collegamenti sono numeri relativi arbitrari, senza un'unità di misura specifica.  Ad esempio, un costo di collegamento pari a 50 viene utilizzato in modo meno preferenziale rispetto a un costo di collegamento pari a 25.  La tabella mostra i costi dei link più comunemente utilizzati.
+
+[cols="1a,1a,2a"]
+|===
+| Collegamento | Costo del collegamento | Note 
+
+
+ a| 
+Tra i siti fisici dei data center
+ a| 
+25 (predefinito)
+ a| 
+Data center collegati tramite collegamento WAN.
+
+
+
+ a| 
+Tra siti di data center logici nella stessa posizione fisica
+ a| 
+0
+ a| 
+Data center logici nello stesso edificio fisico o campus collegati tramite una LAN.
+
+|===
+
+
+== Aggiorna i costi dei link
+
+È possibile aggiornare i costi di collegamento tra i siti dei data center per riflettere la latenza tra i siti.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Tu hai illink:admin-group-permissions.html["Autorizzazione di configurazione della pagina della topologia della griglia"] .
+
+
+.Passi
+. Seleziona *SUPPORTO* > *Altro* > *Costo del collegamento*.
++
+image::../media/configuring_link_costs.png[Costo del collegamento]
+
+. Seleziona un sito in *Origine collegamento* e inserisci un valore di costo compreso tra 0 e 100 in *Destinazione collegamento*.
++
+Non è possibile modificare il costo del collegamento se la sorgente è la stessa della destinazione.
+
++
+Per annullare le modifiche, selezionareimage:../media/nms_revert.gif["icona annulla"] *Ripristina*.
+
+. Selezionare *Applica modifiche*.
+

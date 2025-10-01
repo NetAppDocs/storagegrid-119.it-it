@@ -1,0 +1,102 @@
+---
+permalink: ilm/what-cloud-storage-pool-is.html 
+sidebar: sidebar 
+keywords: what is a cloud storage pool 
+summary: 'Un Cloud Storage Pool consente di utilizzare ILM per spostare i dati degli oggetti all"esterno del sistema StorageGRID .  Ad esempio, potresti voler spostare gli oggetti a cui si accede raramente su un archivio cloud più economico, come Amazon S3 Glacier, S3 Glacier Deep Archive, Google Cloud o il livello di accesso Archive nell"archivio BLOB di Microsoft Azure.  In alternativa, potresti voler mantenere un backup cloud degli oggetti StorageGRID per migliorare il ripristino in caso di emergenza.' 
+---
+= Che cos'è un Cloud Storage Pool?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Un Cloud Storage Pool consente di utilizzare ILM per spostare i dati degli oggetti all'esterno del sistema StorageGRID .  Ad esempio, potresti voler spostare gli oggetti a cui si accede raramente su un archivio cloud più economico, come Amazon S3 Glacier, S3 Glacier Deep Archive, Google Cloud o il livello di accesso Archive nell'archivio BLOB di Microsoft Azure.  In alternativa, potresti voler mantenere un backup cloud degli oggetti StorageGRID per migliorare il ripristino in caso di emergenza.
+
+Dal punto di vista ILM, un Cloud Storage Pool è simile a un pool di archiviazione.  Per archiviare gli oggetti in una delle due posizioni, selezionare il pool durante la creazione delle istruzioni di posizionamento per una regola ILM.  Tuttavia, mentre i pool di archiviazione sono costituiti da nodi di archiviazione all'interno del sistema StorageGRID , un pool di archiviazione cloud è costituito da un bucket esterno (S3) o da un contenitore (archiviazione BLOB di Azure).
+
+La tabella confronta i pool di archiviazione con i pool di archiviazione cloud e mostra le principali somiglianze e differenze.
+
+[cols="1a,2a,5a"]
+|===
+|  | Pool di stoccaggio | Pool di archiviazione cloud 
+
+
+ a| 
+Come viene creato?
+ a| 
+Utilizzando l'opzione *ILM* > *Pool di archiviazione* in Grid Manager.
+ a| 
+Utilizzando l'opzione *ILM* > *Pool di archiviazione* > *Pool di archiviazione cloud* in Grid Manager.
+
+È necessario configurare il bucket o il contenitore esterno prima di poter creare il Cloud Storage Pool.
+
+
+
+ a| 
+Quante piscine puoi creare?
+ a| 
+Illimitato.
+ a| 
+Fino a 10.
+
+
+
+ a| 
+Dove vengono conservati gli oggetti?
+ a| 
+Su uno o più nodi di archiviazione all'interno StorageGRID.
+ a| 
+In un bucket Amazon S3, in un contenitore di archiviazione BLOB di Azure o in un Google Cloud esterno al sistema StorageGRID .
+
+Se il Cloud Storage Pool è un bucket Amazon S3:
+
+* Facoltativamente, è possibile configurare un ciclo di vita del bucket per trasferire gli oggetti in un archivio a basso costo e a lungo termine, come Amazon S3 Glacier o S3 Glacier Deep Archive.  Il sistema di archiviazione esterno deve supportare la classe di archiviazione Glacier e l'API S3 RestoreObject.
+* È possibile creare pool di archiviazione cloud da utilizzare con AWS Commercial Cloud Services (C2S), che supporta la regione segreta AWS.
+
+
+Se il Cloud Storage Pool è un contenitore di archiviazione BLOB di Azure, StorageGRID trasferisce l'oggetto al livello Archivio.
+
+*Nota:* in generale, non configurare la gestione del ciclo di vita dell'archiviazione BLOB di Azure per il contenitore utilizzato per un pool di archiviazione cloud.  Le operazioni di RestoreObject sugli oggetti nel Cloud Storage Pool possono essere influenzate dal ciclo di vita configurato.
+
+
+
+ a| 
+Cosa controlla il posizionamento degli oggetti?
+ a| 
+Una regola ILM nelle policy ILM attive.
+ a| 
+Una regola ILM nelle policy ILM attive.
+
+
+
+ a| 
+Quale metodo di protezione dei dati viene utilizzato?
+ a| 
+Codifica di replicazione o cancellazione.
+ a| 
+Replicazione.
+
+
+
+ a| 
+Quante copie di ciascun oggetto sono consentite?
+ a| 
+Multiplo.
+ a| 
+Una copia nel Cloud Storage Pool e, facoltativamente, una o più copie in StorageGRID.
+
+*Nota:* non è possibile archiviare un oggetto in più di un Cloud Storage Pool contemporaneamente.
+
+
+
+ a| 
+Quali sono i vantaggi?
+ a| 
+Gli oggetti sono rapidamente accessibili in qualsiasi momento.
+ a| 
+Archiviazione a basso costo.
+
+*Nota*: i dati FabricPool non possono essere suddivisi in livelli nei Cloud Storage Pool.
+
+|===

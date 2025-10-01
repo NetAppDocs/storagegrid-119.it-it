@@ -1,0 +1,65 @@
+---
+permalink: admin/managing-tenants.html 
+sidebar: sidebar 
+keywords: manage tenants, tenant account, what is a tenant 
+summary: 'Un account tenant consente di utilizzare l"API REST Simple Storage Service \(S3\) per archiviare e recuperare oggetti in un sistema StorageGRID .' 
+---
+= Cosa sono i conti degli inquilini?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Un account tenant consente di utilizzare l'API REST Simple Storage Service (S3) per archiviare e recuperare oggetti in un sistema StorageGRID .
+
+
+TIP: I dettagli su Swift sono stati rimossi da questa versione del sito di documentazione. Vedere https://docs.netapp.com/us-en/storagegrid-118/admin/managing-tenants.html["StorageGRID 11.8: Gestisci i tenant"^] .
+
+In qualità di amministratore della griglia, crei e gestisci gli account tenant che i client S3 utilizzano per archiviare e recuperare gli oggetti.
+
+Ogni account tenant ha gruppi, utenti, bucket S3 e oggetti federati o locali.
+
+Gli account tenant possono essere utilizzati per separare gli oggetti archiviati da entità diverse.  Ad esempio, è possibile utilizzare più account tenant per uno qualsiasi di questi casi d'uso:
+
+* *Caso d'uso aziendale:* se si amministra un sistema StorageGRID in un'applicazione aziendale, potrebbe essere opportuno separare l'archiviazione degli oggetti della griglia in base ai diversi reparti dell'organizzazione.  In questo caso, potresti creare account tenant per il reparto Marketing, il reparto Assistenza Clienti, il reparto Risorse Umane e così via.
++
+
+NOTE: Se si utilizza il protocollo client S3, è possibile utilizzare bucket S3 e policy di bucket per separare gli oggetti tra i reparti di un'azienda. Non è necessario utilizzare account tenant. Vedi le istruzioni per l'implementazionelink:../s3/bucket-and-group-access-policies.html["Bucket S3 e policy dei bucket"] per maggiori informazioni.
+
+* *Caso d'uso del fornitore di servizi:* se si amministra un sistema StorageGRID come fornitore di servizi, è possibile separare l'archiviazione degli oggetti della griglia in base alle diverse entità che prenderanno in leasing l'archiviazione sulla griglia.  In questo caso, dovresti creare account tenant per la Società A, la Società B, la Società C e così via.
+
+
+Per ulteriori informazioni, consultare link:../tenant/index.html["Utilizzare un account tenant"] .
+
+
+
+== Come posso creare un account tenant?
+
+Utilizzare Grid Manager per creare un account tenant.  Quando si crea un account tenant, si specificano le seguenti informazioni:
+
+* Informazioni di base, tra cui il nome del tenant, il tipo di client (S3) e la quota di archiviazione facoltativa.
+* Autorizzazioni per l'account tenant, ad esempio se l'account tenant può utilizzare i servizi della piattaforma S3, configurare la propria origine identità, utilizzare S3 Select o utilizzare una connessione di federazione di griglia.
+* L'accesso root iniziale per il tenant, a seconda che il sistema StorageGRID utilizzi gruppi e utenti locali, federazione delle identità o Single Sign-On (SSO).
+
+
+Inoltre, è possibile abilitare l'impostazione S3 Object Lock per il sistema StorageGRID se gli account tenant S3 devono essere conformi ai requisiti normativi.  Quando S3 Object Lock è abilitato, tutti gli account tenant S3 possono creare e gestire bucket conformi.
+
+
+
+== A cosa serve Tenant Manager?
+
+Dopo aver creato l'account tenant, gli utenti tenant possono accedere a Tenant Manager per eseguire attività come le seguenti:
+
+* Impostare la federazione delle identità (a meno che l'origine dell'identità non sia condivisa con la griglia)
+* Gestisci gruppi e utenti
+* Utilizzare la federazione di griglia per la clonazione degli account e la replica tra griglie
+* Gestisci le chiavi di accesso S3
+* Crea e gestisci bucket S3
+* Utilizzare i servizi della piattaforma S3
+* Utilizzare S3 Select
+* Monitorare l'utilizzo dello spazio di archiviazione
+
+
+
+TIP: Mentre gli utenti tenant S3 possono creare e gestire bucket e chiavi di accesso S3 con Tenant Manager, devono utilizzare un'applicazione client S3 per acquisire e gestire gli oggetti. Vederelink:../s3/index.html["Utilizzare l'API REST S3"] per i dettagli.

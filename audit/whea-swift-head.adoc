@@ -1,0 +1,131 @@
+---
+permalink: audit/whea-swift-head.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, WHEA, Swift HEAD 
+summary: 'Quando un client Swift emette una transazione HEAD, viene effettuata una richiesta per verificare l"esistenza di un account, di un contenitore o di un oggetto e recuperare eventuali metadati rilevanti.  Questo messaggio viene emesso dal server se la transazione ha esito positivo.' 
+---
+= WHEA: TESTA Veloce
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Quando un client Swift emette una transazione HEAD, viene effettuata una richiesta per verificare l'esistenza di un account, di un contenitore o di un oggetto e recuperare eventuali metadati rilevanti.  Questo messaggio viene emesso dal server se la transazione ha esito positivo.
+
+[cols="1a,1a,4a"]
+|===
+| Codice | Campo | Descrizione 
+
+
+ a| 
+CBID
+ a| 
+Identificatore del blocco di contenuto
+ a| 
+Identificatore univoco del blocco di contenuto richiesto.  Se il CBID è sconosciuto, questo campo è impostato su 0.  Le operazioni su account e contenitori non includono questo campo.
+
+
+
+ a| 
+CSIZ
+ a| 
+Dimensione del contenuto
+ a| 
+La dimensione dell'oggetto recuperato in byte.  Le operazioni su account e contenitori non includono questo campo.
+
+
+
+ a| 
+HTRH
+ a| 
+Intestazione richiesta HTTP
+ a| 
+Elenco dei nomi e dei valori delle intestazioni delle richieste HTTP registrate, selezionati durante la configurazione.
+
+ `X-Forwarded-For`viene automaticamente incluso se è presente nella richiesta e se il `X-Forwarded-For` il valore è diverso dall'indirizzo IP del mittente della richiesta (campo di controllo SAIP).
+
+
+
+ a| 
+RSLT
+ a| 
+Codice risultato
+ a| 
+Risultato della transazione HEAD.  Il risultato è sempre:
+
+SUCS: riuscito
+
+
+
+ a| 
+SAIP
+ a| 
+Indirizzo IP del client richiedente
+ a| 
+L'indirizzo IP dell'applicazione client che ha effettuato la richiesta.
+
+
+
+ a| 
+TEMPO
+ a| 
+Tempo
+ a| 
+Tempo totale di elaborazione della richiesta in microsecondi.
+
+
+
+ a| 
+TLIP
+ a| 
+Indirizzo IP del bilanciatore di carico attendibile
+ a| 
+Se la richiesta è stata instradata da un bilanciatore del carico di Livello 7 attendibile, l'indirizzo IP del bilanciatore del carico.
+
+
+
+ a| 
+UUID
+ a| 
+Identificatore univoco universale
+ a| 
+Identificatore dell'oggetto all'interno del sistema StorageGRID .
+
+
+
+ a| 
+WACC
+ a| 
+ID account Swift
+ a| 
+ID account univoco specificato dal sistema StorageGRID .
+
+
+
+ a| 
+WCON
+ a| 
+Contenitore rapido
+ a| 
+Nome del contenitore Swift.  Le operazioni sui conti non includono questo campo.
+
+
+
+ a| 
+WOBJ
+ a| 
+Oggetto rapido
+ a| 
+Identificatore dell'oggetto Swift.  Le operazioni su account e contenitori non includono questo campo.
+
+
+
+ a| 
+WUSR
+ a| 
+Utente dell'account Swift
+ a| 
+Il nome utente dell'account Swift che identifica in modo univoco il cliente che esegue la transazione.
+
+|===

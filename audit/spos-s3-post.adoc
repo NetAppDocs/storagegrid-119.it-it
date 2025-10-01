@@ -1,0 +1,218 @@
+---
+permalink: audit/spos-s3-post.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, SPOS, S3 POST 
+summary: Quando un client S3 invia una richiesta POST Object, questo messaggio viene inviato dal server se la transazione ha esito positivo. 
+---
+= SPOS: S3 POST
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Quando un client S3 invia una richiesta POST Object, questo messaggio viene inviato dal server se la transazione ha esito positivo.
+
+[cols="1a,1a,4a"]
+|===
+| Codice | Campo | Descrizione 
+
+
+ a| 
+CBID
+ a| 
+Identificatore del blocco di contenuto
+ a| 
+Identificatore univoco del blocco di contenuto richiesto.  Se il CBID è sconosciuto, questo campo è impostato su 0.
+
+
+
+ a| 
+CNCH
+ a| 
+Intestazione di controllo della coerenza
+ a| 
+Valore dell'intestazione della richiesta HTTP Consistency-Control, se presente nella richiesta.
+
+
+
+ a| 
+CNID
+ a| 
+Identificatore di connessione
+ a| 
+Identificatore di sistema univoco per la connessione TCP/IP.
+
+
+
+ a| 
+CSIZ
+ a| 
+Dimensione del contenuto
+ a| 
+La dimensione dell'oggetto recuperato in byte.
+
+
+
+ a| 
+HTRH
+ a| 
+Intestazione richiesta HTTP
+ a| 
+Elenco dei nomi e dei valori delle intestazioni delle richieste HTTP registrate, selezionati durante la configurazione.
+
+ `X-Forwarded-For`viene automaticamente incluso se è presente nella richiesta e se il `X-Forwarded-For` il valore è diverso dall'indirizzo IP del mittente della richiesta (campo di controllo SAIP).
+
+(Non previsto per SPOS).
+
+
+
+ a| 
+RSLT
+ a| 
+Codice risultato
+ a| 
+Risultato della richiesta RestoreObject.  Il risultato è sempre:
+
+SUCS: Riuscito
+
+
+
+ a| 
+S3AI
+ a| 
+ID account tenant S3 (mittente della richiesta)
+ a| 
+ID dell'account tenant dell'utente che ha inviato la richiesta.  Un valore vuoto indica un accesso anonimo.
+
+
+
+ a| 
+S3AK
+ a| 
+ID chiave di accesso S3 (mittente della richiesta)
+ a| 
+ID della chiave di accesso S3 con hash per l'utente che ha inviato la richiesta.  Un valore vuoto indica un accesso anonimo.
+
+
+
+ a| 
+S3BK
+ a| 
+Secchio S3
+ a| 
+Nome del bucket S3.
+
+
+
+ a| 
+S3KY
+ a| 
+Chiave S3
+ a| 
+Nome della chiave S3, escluso il nome del bucket.  Le operazioni sui bucket non includono questo campo.
+
+
+
+ a| 
+S3SR
+ a| 
+Sottorisorsa S3
+ a| 
+Se applicabile, il bucket o la sottorisorsa oggetto su cui si sta operando.
+
+Impostare su "seleziona" per un'operazione di selezione S3.
+
+
+
+ a| 
+SACC
+ a| 
+Nome dell'account tenant S3 (mittente della richiesta)
+ a| 
+Nome dell'account tenant dell'utente che ha inviato la richiesta.  Vuoto per richieste anonime.
+
+
+
+ a| 
+SAIP
+ a| 
+Indirizzo IP (mittente della richiesta)
+ a| 
+L'indirizzo IP dell'applicazione client che ha effettuato la richiesta.
+
+
+
+ a| 
+SBAC
+ a| 
+Nome dell'account tenant S3 (proprietario del bucket)
+ a| 
+Nome dell'account tenant per il proprietario del bucket.  Utilizzato per identificare l'accesso multiaccount o anonimo.
+
+
+
+ a| 
+SBAI
+ a| 
+ID account tenant S3 (proprietario del bucket)
+ a| 
+ID dell'account tenant del proprietario del bucket di destinazione.  Utilizzato per identificare l'accesso multiaccount o anonimo.
+
+
+
+ a| 
+SRCF
+ a| 
+Configurazione delle sottorisorse
+ a| 
+Ripristinare le informazioni.
+
+
+
+ a| 
+SUSR
+ a| 
+URN utente S3 (mittente della richiesta)
+ a| 
+L'ID dell'account tenant e il nome utente dell'utente che effettua la richiesta.  L'utente può essere un utente locale o un utente LDAP. Ad esempio:  `urn:sgws:identity::03393893651506583485:root`
+
+Vuoto per richieste anonime.
+
+
+
+ a| 
+TEMPO
+ a| 
+Tempo
+ a| 
+Tempo totale di elaborazione della richiesta in microsecondi.
+
+
+
+ a| 
+TLIP
+ a| 
+Indirizzo IP del bilanciatore di carico attendibile
+ a| 
+Se la richiesta è stata instradata da un bilanciatore del carico di Livello 7 attendibile, l'indirizzo IP del bilanciatore del carico.
+
+
+
+ a| 
+UUID
+ a| 
+Identificatore univoco universale
+ a| 
+Identificatore dell'oggetto all'interno del sistema StorageGRID .
+
+
+
+ a| 
+VSID
+ a| 
+ID versione
+ a| 
+L'ID della versione specifica di un oggetto richiesto.  Le operazioni sui bucket e sugli oggetti nei bucket senza versione non includono questo campo.
+
+|===

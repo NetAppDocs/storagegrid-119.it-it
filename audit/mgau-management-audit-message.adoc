@@ -1,0 +1,134 @@
+---
+permalink: audit/mgau-management-audit-message.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, MGAU, Management audit message 
+summary: 'La categoria Gestione registra le richieste degli utenti nell"API di gestione.  Ogni richiesta all"API che non sia una richiesta GET o HEAD registra una risposta con il nome utente, l"IP e il tipo di richiesta all"API.' 
+---
+= MGAU: Messaggio di audit di gestione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+La categoria Gestione registra le richieste degli utenti nell'API di gestione.  Ogni richiesta HTTP che non sia una richiesta GET o HEAD a un URI API valido registra una risposta contenente il nome utente, l'IP e il tipo di richiesta all'API.  Gli URI API non validi (ad esempio /api/v3-authorize) e le richieste non valide agli URI API validi non vengono registrati.
+
+[cols="1a,1a,4a"]
+|===
+| Codice | Campo | Descrizione 
+
+
+ a| 
+MDIP
+ a| 
+Indirizzo IP di destinazione
+ a| 
+L'indirizzo IP del server (destinazione).
+
+
+
+ a| 
+MDNA
+ a| 
+Nome di dominio
+ a| 
+Il nome di dominio dell'host.
+
+
+
+ a| 
+MPAT
+ a| 
+Richiedi PATH
+ a| 
+Il percorso della richiesta.
+
+
+
+ a| 
+MPQP
+ a| 
+Richiedi parametri di query
+ a| 
+I parametri di query per la richiesta.
+
+
+
+ a| 
+MRBD
+ a| 
+Corpo della richiesta
+ a| 
+Il contenuto del corpo della richiesta.  Mentre il corpo della risposta viene registrato per impostazione predefinita, il corpo della richiesta viene registrato in alcuni casi quando il corpo della risposta è vuoto.  Poiché le seguenti informazioni non sono disponibili nel corpo della risposta, vengono ricavate dal corpo della richiesta per i seguenti metodi POST:
+
+* Nome utente e ID account in *POST authorize*
+* Nuova configurazione delle subnet in *POST /grid/grid-networks/update*
+* Nuovi server NTP in *POST /grid/ntp-servers/update*
+* ID server dismessi in *POST /grid/servers/decommission*
+
+
+*Nota:* le informazioni sensibili vengono eliminate (ad esempio, una chiave di accesso S3) o mascherate con asterischi (ad esempio, una password).
+
+
+
+ a| 
+MRMD
+ a| 
+Metodo di richiesta
+ a| 
+Metodo di richiesta HTTP:
+
+* INVIARE
+* METTERE
+* ELIMINARE
+* TOPPA
+
+
+
+
+ a| 
+MRSC
+ a| 
+Codice di risposta
+ a| 
+Il codice di risposta.
+
+
+
+ a| 
+Prezzo consigliato al pubblico
+ a| 
+Corpo della risposta
+ a| 
+Per impostazione predefinita, il contenuto della risposta (il corpo della risposta) viene registrato.
+
+*Nota:* le informazioni sensibili vengono eliminate (ad esempio, una chiave di accesso S3) o mascherate con asterischi (ad esempio, una password).
+
+
+
+ a| 
+MSIP
+ a| 
+Indirizzo IP di origine
+ a| 
+L'indirizzo IP del client (sorgente).
+
+
+
+ a| 
+MUUN
+ a| 
+URN utente
+ a| 
+L'URN (nome uniforme della risorsa) dell'utente che ha inviato la richiesta.
+
+
+
+ a| 
+RSLT
+ a| 
+Risultato
+ a| 
+Restituisce l'esito positivo (SUCS) oppure l'errore segnalato dal backend.
+
+|===

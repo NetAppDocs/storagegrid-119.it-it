@@ -1,0 +1,33 @@
+---
+permalink: vmware/specifying-grid-network-subnets.html 
+sidebar: sidebar 
+keywords: how to specify Grid Network subnets 
+summary: È necessario specificare le subnet utilizzate nella rete Grid. 
+---
+= Specificare le subnet della rete Grid
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario specificare le subnet utilizzate nella rete Grid.
+
+.Informazioni su questo compito
+Le voci di subnet includono le subnet per la rete Grid per ciascun sito nel sistema StorageGRID , insieme a tutte le subnet che devono essere raggiungibili tramite la rete Grid.
+
+Se si dispone di più subnet della griglia, è necessario il gateway Grid Network.  Tutte le subnet della griglia specificate devono essere raggiungibili tramite questo gateway.
+
+.Passi
+. Specificare l'indirizzo di rete CIDR per almeno una rete Grid nella casella di testo *Subnet 1*.
+. Fare clic sul segno più accanto all'ultima voce per aggiungere un'ulteriore voce di rete.  È necessario specificare tutte le subnet per tutti i siti nella rete Grid.
++
+** Se hai già distribuito almeno un nodo, fai clic su *Scopri subnet di Grid Networks* per popolare automaticamente l'elenco delle subnet di Grid Network con le subnet segnalate dai nodi di Grid che si sono registrati con Grid Manager.
+** È necessario aggiungere manualmente eventuali subnet per NTP, DNS, LDAP o altri server esterni a cui si accede tramite il gateway Grid Network.
++
+image::../media/4_gmi_installer_grid_network_page.gif[Specificare le subnet]
+
+
+
+. Fare clic su *Avanti*.
+

@@ -1,0 +1,306 @@
+---
+permalink: tenant/configuring-search-integration-service.html 
+sidebar: sidebar 
+keywords: how to configure search integration service 
+summary: 'È possibile abilitare l"integrazione della ricerca per un bucket creando un XML di configurazione dell"integrazione della ricerca e utilizzando Tenant Manager per applicare l"XML a un bucket.' 
+---
+= Configurare il servizio di integrazione della ricerca
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile abilitare l'integrazione della ricerca per un bucket creando un XML di integrazione della ricerca e utilizzando Tenant Manager per applicare l'XML al bucket.
+
+.Prima di iniziare
+* I servizi della piattaforma sono stati abilitati per il tuo account tenant da un amministratore StorageGRID .
+* Hai già creato un bucket S3 di cui desideri indicizzare il contenuto.
+* L'endpoint che intendi utilizzare come destinazione per il servizio di integrazione della ricerca esiste già e disponi del suo URN.
+* Appartieni a un gruppo di utenti che ha illink:tenant-management-permissions.html["Gestisci tutti i bucket o l'autorizzazione di accesso Root"] .  Queste autorizzazioni sostituiscono le impostazioni delle autorizzazioni nei criteri di gruppo o di bucket quando si configura il bucket tramite Tenant Manager.
+
+
+.Informazioni su questo compito
+Dopo aver configurato il servizio di integrazione della ricerca per un bucket di origine, la creazione di un oggetto o l'aggiornamento dei metadati o dei tag di un oggetto attiva l'invio dei metadati dell'oggetto all'endpoint di destinazione.
+
+Se si abilita il servizio di integrazione della ricerca per un bucket che contiene già oggetti, le notifiche sui metadati non vengono inviate automaticamente per gli oggetti esistenti.  Aggiornare questi oggetti esistenti per garantire che i loro metadati vengano aggiunti all'indice di ricerca di destinazione.
+
+.Passi
+. Abilita l'integrazione della ricerca per un bucket:
++
+** Utilizzare un editor di testo per creare il file XML di notifica dei metadati necessario per abilitare l'integrazione della ricerca.
+** Durante la configurazione dell'XML, utilizzare l'URN di un endpoint di integrazione della ricerca come destinazione.
++
+Gli oggetti possono essere filtrati in base al prefisso del nome dell'oggetto.  Ad esempio, potresti inviare metadati per oggetti con il prefisso `images` verso una destinazione e metadati per oggetti con il prefisso `videos` all'altro.  Le configurazioni con prefissi sovrapposti non sono valide e vengono rifiutate al momento dell'invio.  Ad esempio, una configurazione che include una regola per gli oggetti con il prefisso `test` e una seconda regola per gli oggetti con il prefisso `test2` non è consentito.
+
++
+Se necessario, fare riferimento a<<example-notification-config,esempi per la configurazione dei metadati XML>> .
+
++
+[listing]
+----
+<MetadataNotificationConfiguration>
+ <Rule>
+    <Status>Enabled</Status>
+    <Prefix></Prefix>
+    <Destination>
+       <Urn>/Urn>
+       </Destination>
+ </Rule>
+</MetadataNotificationConfiguration>
+----
++
+Elementi nel file XML di configurazione della notifica dei metadati:
+
++
+[cols="1a,3a,1a"]
+|===
+| Nome | Descrizione | Necessario 
+
+
+ a| 
+MetadatiNotificaConfigurazione
+ a| 
+Tag contenitore per le regole utilizzate per specificare gli oggetti e la destinazione delle notifiche dei metadati.
+
+Contiene uno o più elementi Rule.
+ a| 
+SÌ
+
+
+
+ a| 
+Regola
+ a| 
+Tag contenitore per una regola che identifica gli oggetti i cui metadati devono essere aggiunti a un indice specificato.
+
+Le regole con prefissi sovrapposti vengono rifiutate.
+
+Incluso nell'elemento MetadataNotificationConfiguration.
+ a| 
+SÌ
+
+
+
+ a| 
+ID
+ a| 
+Identificatore univoco per la regola.
+
+Incluso nell'elemento Regola.
+ a| 
+NO
+
+
+
+ a| 
+Stato
+ a| 
+Lo stato può essere "Abilitato" o "Disabilitato".  Non viene intrapresa alcuna azione per le regole disabilitate.
+
+Incluso nell'elemento Regola.
+ a| 
+SÌ
+
+
+
+ a| 
+Prefisso
+ a| 
+Gli oggetti che corrispondono al prefisso sono interessati dalla regola e i loro metadati vengono inviati alla destinazione specificata.
+
+Per trovare la corrispondenza con tutti gli oggetti, specificare un prefisso vuoto.
+
+Incluso nell'elemento Regola.
+ a| 
+SÌ
+
+
+
+ a| 
+Destinazione
+ a| 
+Tag contenitore per la destinazione di una regola.
+
+Incluso nell'elemento Regola.
+ a| 
+SÌ
+
+
+
+ a| 
+Urna
+ a| 
+URN della destinazione a cui vengono inviati i metadati dell'oggetto.  Deve essere l'URN di un endpoint StorageGRID con le seguenti proprietà:
+
+*** `es`deve essere il terzo elemento.
+*** L'URN deve terminare con l'indice e il tipo in cui sono archiviati i metadati, nel formato `domain-name/myindex/mytype` .
+
+
+Gli endpoint vengono configurati tramite Tenant Manager o Tenant Management API.  Hanno la seguente forma:
+
+*** `arn:aws:es:region:account-ID:domain/mydomain/myindex/mytype`
+*** `urn:mysite:es:::mydomain/myindex/mytype`
+
+
+L'endpoint deve essere configurato prima di inviare il file XML di configurazione, altrimenti la configurazione fallirà con un errore 404.
+
+L'URN è incluso nell'elemento Destinazione.
+ a| 
+SÌ
+
+|===
+
+
+. In Tenant Manager seleziona *ARCHIVIAZIONE (S3)* > *Bucket*.
+. Selezionare il nome del bucket di origine.
++
+Viene visualizzata la pagina dei dettagli del bucket.
+
+. Seleziona *Servizi della piattaforma* > *Integrazione di ricerca*
+. Seleziona la casella di controllo *Abilita integrazione ricerca*.
+. Incolla la configurazione della notifica dei metadati nella casella di testo e seleziona *Salva modifiche*.
++
+
+NOTE: I servizi della piattaforma devono essere abilitati per ciascun account tenant da un amministratore StorageGRID tramite Grid Manager o Management API.  Se si verifica un errore durante il salvataggio del file XML di configurazione, contattare l'amministratore StorageGRID .
+
+. Verificare che il servizio di integrazione della ricerca sia configurato correttamente:
++
+.. Aggiungere un oggetto al bucket di origine che soddisfi i requisiti per l'attivazione di una notifica di metadati come specificato nel file XML di configurazione.
++
+Nell'esempio mostrato in precedenza, tutti gli oggetti aggiunti al bucket attivano una notifica sui metadati.
+
+.. Verificare che un documento JSON contenente i metadati e i tag dell'oggetto sia stato aggiunto all'indice di ricerca specificato nell'endpoint.
+
+
+
+
+.Dopo aver finito
+Se necessario, puoi disattivare l'integrazione della ricerca per un bucket utilizzando uno dei seguenti metodi:
+
+* Selezionare *ARCHIVIAZIONE (S3)* > *Bucket* e deselezionare la casella di controllo *Abilita integrazione ricerca*.
+* Se si utilizza direttamente l'API S3, utilizzare una richiesta di notifica dei metadati DELETE Bucket.  Consultare le istruzioni per l'implementazione delle applicazioni client S3.
+
+
+
+
+== [[example-notification-config]]Esempio: configurazione della notifica dei metadati che si applica a tutti gli oggetti
+
+In questo esempio, i metadati di tutti gli oggetti vengono inviati alla stessa destinazione.
+
+[listing]
+----
+<MetadataNotificationConfiguration>
+    <Rule>
+        <ID>Rule-1</ID>
+        <Status>Enabled</Status>
+        <Prefix></Prefix>
+        <Destination>
+           <Urn>urn:myes:es:::sgws-notifications/test1/all</Urn>
+        </Destination>
+    </Rule>
+</MetadataNotificationConfiguration>
+----
+
+
+== Esempio: configurazione della notifica dei metadati con due regole
+
+In questo esempio, metadati degli oggetti per gli oggetti che corrispondono al prefisso `/images` viene inviato a una destinazione, mentre i metadati degli oggetti corrispondono al prefisso `/videos` viene inviato a una seconda destinazione.
+
+[listing]
+----
+
+<MetadataNotificationConfiguration>
+    <Rule>
+        <ID>Images-rule</ID>
+        <Status>Enabled</Status>
+        <Prefix>/images</Prefix>
+        <Destination>
+           <Urn>arn:aws:es:us-east-1:3333333:domain/es-domain/graphics/imagetype</Urn>
+        </Destination>
+    </Rule>
+    <Rule>
+        <ID>Videos-rule</ID>
+        <Status>Enabled</Status>
+        <Prefix>/videos</Prefix>
+        <Destination>
+           <Urn>arn:aws:es:us-west-1:22222222:domain/es-domain/graphics/videotype</Urn>
+        </Destination>
+    </Rule>
+</MetadataNotificationConfiguration>
+----
+
+
+== Formato di notifica dei metadati
+
+Quando si abilita il servizio di integrazione della ricerca per un bucket, ogni volta che vengono aggiunti, aggiornati o eliminati metadati o tag di un oggetto, viene generato un documento JSON che viene inviato all'endpoint di destinazione.
+
+Questo esempio mostra un esempio del JSON che potrebbe essere generato quando un oggetto con la chiave `SGWS/Tagging.txt` viene creato in un bucket denominato `test` .  IL `test` il bucket non è sottoposto a versioning, quindi `versionId` il tag è vuoto.
+
+[listing]
+----
+{
+  "bucket": "test",
+  "key": "SGWS/Tagging.txt",
+  "versionId": "",
+  "accountId": "86928401983529626822",
+  "size": 38,
+  "md5": "3d6c7634a85436eee06d43415012855",
+  "region":"us-east-1",
+  "metadata": {
+    "age": "25"
+  },
+  "tags": {
+    "color": "yellow"
+  }
+}
+----
+
+
+=== Campi inclusi nel documento JSON
+
+Il nome del documento include il nome del bucket, il nome dell'oggetto e l'ID della versione, se presente.
+
+Informazioni su bucket e oggetti::
++
+--
+`bucket`: Nome del bucket
+
+`key`: Nome chiave dell'oggetto
+
+`versionID`: Versione dell'oggetto, per gli oggetti nei bucket con versione
+
+`region`: Regione del bucket, ad esempio `us-east-1`
+
+--
+Metadati di sistema::
++
+--
+`size`: Dimensione dell'oggetto (in byte) visibile a un client HTTP
+
+`md5`: Hash dell'oggetto
+
+--
+Metadati utente::
++
+--
+`metadata`: Tutti i metadati utente per l'oggetto, come coppie chiave-valore
+
+`key:value`
+
+--
+Etichette::
++
+--
+`tags`: Tutti i tag oggetto definiti per l'oggetto, come coppie chiave-valore
+
+`key:value`
+
+--
+
+
+
+
+=== Come visualizzare i risultati in Elasticsearch
+
+Per i tag e i metadati utente, StorageGRID passa date e numeri a Elasticsearch come stringhe o come notifiche di eventi S3.  Per configurare Elasticsearch in modo che interpreti queste stringhe come date o numeri, seguire le istruzioni di Elasticsearch per la mappatura dinamica dei campi e per la mappatura dei formati di data.  Abilitare i mapping dei campi dinamici sull'indice prima di configurare il servizio di integrazione della ricerca.  Dopo aver indicizzato un documento, non è possibile modificare i tipi di campo del documento nell'indice.

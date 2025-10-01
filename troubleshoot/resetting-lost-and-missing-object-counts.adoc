@@ -1,0 +1,58 @@
+---
+permalink: troubleshoot/resetting-lost-and-missing-object-counts.html 
+sidebar: sidebar 
+keywords: how to reset lost object count, how to reset missing object count 
+summary: 'Dopo aver esaminato il sistema StorageGRID e verificato che tutti gli oggetti persi registrati sono andati persi definitivamente o che si tratta di un falso allarme, è possibile reimpostare il valore dell"attributo Oggetti persi su zero.' 
+---
+= Reimposta il conteggio degli oggetti persi e mancanti
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dopo aver esaminato il sistema StorageGRID e verificato che tutti gli oggetti persi registrati sono andati persi definitivamente o che si tratta di un falso allarme, è possibile reimpostare il valore dell'attributo Oggetti persi su zero.
+
+.Prima di iniziare
+* Devi aver effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Hailink:../admin/admin-group-permissions.html["autorizzazioni di accesso specifiche"] .
+
+
+.Informazioni su questo compito
+È possibile azzerare il contatore degli oggetti smarriti da una delle seguenti pagine:
+
+* *SUPPORTO* > *Strumenti* > *Topologia griglia* > *_Sito_* > *_Nodo di archiviazione_* > *LDR* > *Archivio dati* > *Panoramica* > *Principale*
+* *SUPPORTO* > *Strumenti* > *Topologia griglia* > *_Sito_* > *_Nodo di archiviazione_* > *DDS* > *Archivio dati* > *Panoramica* > *Principale*
+
+
+Queste istruzioni mostrano come reimpostare il contatore dalla pagina *LDR* > *Data Store*.
+
+.Passi
+. Selezionare *SUPPORTO* > *Strumenti* > *Topologia griglia*.
+. Selezionare *_Sito_* > *_Nodo di archiviazione_* > *LDR* > *Archivio dati* > *Configurazione* per il nodo di archiviazione che presenta l'avviso *Oggetti persi* o l'allarme PERSO.
+. Seleziona *Reimposta conteggio oggetti smarriti*.
++
+image::../media/reset_ldr_lost_object_count.gif[Screenshot del conteggio degli oggetti persi di LDR Reset]
+
+. Fare clic su *Applica modifiche*.
++
+L'attributo Oggetti smarriti viene reimpostato su 0 e l'avviso *Oggetti smarriti* e l'allarme SMARRITO vengono cancellati, operazione che può richiedere alcuni minuti.
+
+. Facoltativamente, reimpostare altri valori di attributi correlati che potrebbero essere stati incrementati durante il processo di identificazione dell'oggetto smarrito.
++
+.. Selezionare *_Sito_* > *_Nodo di archiviazione_* > *LDR* > *Codifica di cancellazione* > *Configurazione*.
+.. Selezionare *Reimposta conteggio errori di lettura* e *Reimposta conteggio copie danneggiate rilevate*.
+.. Fare clic su *Applica modifiche*.
+.. Selezionare *_Sito_* > *_Nodo di archiviazione_* > *LDR* > *Verifica* > *Configurazione*.
+.. Selezionare *Reimposta conteggio oggetti mancanti* e *Reimposta conteggio oggetti danneggiati*.
+.. Se sei sicuro che gli oggetti in quarantena non siano necessari, puoi selezionare *Elimina oggetti in quarantena*.
++
+Gli oggetti in quarantena vengono creati quando la verifica in background identifica una copia di un oggetto replicato corrotta.  Nella maggior parte dei casi StorageGRID sostituisce automaticamente l'oggetto danneggiato ed è possibile eliminare in sicurezza gli oggetti in quarantena.  Tuttavia, se viene attivato l'avviso *Oggetti persi* o l'allarme PERSO, il supporto tecnico potrebbe voler accedere agli oggetti in quarantena.
+
+.. Fare clic su *Applica modifiche*.
+
+
++
+Dopo aver fatto clic su *Applica modifiche*, potrebbero essere necessari alcuni istanti prima che gli attributi vengano reimpostati.
+
+

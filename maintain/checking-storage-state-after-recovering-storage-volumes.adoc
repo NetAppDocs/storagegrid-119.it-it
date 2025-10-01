@@ -1,0 +1,35 @@
+---
+permalink: maintain/checking-storage-state-after-recovering-storage-volumes.html 
+sidebar: sidebar 
+keywords: storagegrid, storage volume recovery, storage state, storage volume 
+summary: Dopo aver ripristinato i volumi di archiviazione, è necessario verificare che lo stato desiderato del nodo di archiviazione sia impostato su online e assicurarsi che lo stato sia online per impostazione predefinita ogni volta che il server del nodo di archiviazione viene riavviato. 
+---
+= Controllare lo stato di archiviazione dopo il ripristino dei volumi di archiviazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dopo aver ripristinato i volumi di archiviazione, è necessario verificare che lo stato desiderato del nodo di archiviazione sia impostato su online e assicurarsi che lo stato sia online per impostazione predefinita ogni volta che il server del nodo di archiviazione viene riavviato.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Il nodo di archiviazione è stato recuperato e il ripristino dei dati è completo.
+
+
+.Passi
+. Selezionare *SUPPORTO* > *Strumenti* > *Topologia griglia*.
+. Controllare i valori di *Recovered Storage Node* > *LDR* > *Storage* > *Storage State -- Desired* e *Storage State -- Current*.
++
+Il valore di entrambi gli attributi dovrebbe essere Online.
+
+. Se lo Stato di archiviazione - Desiderato è impostato su Sola lettura, completare i seguenti passaggi:
++
+.. Fare clic sulla scheda *Configurazione*.
+.. Dall'elenco a discesa *Stato di archiviazione - Desiderato*, selezionare *Online*.
+.. Fare clic su *Applica modifiche*.
+.. Fare clic sulla scheda *Panoramica* e verificare che i valori di *Stato di archiviazione -- Desiderato* e *Stato di archiviazione -- Corrente* siano aggiornati su Online.
+
+
+

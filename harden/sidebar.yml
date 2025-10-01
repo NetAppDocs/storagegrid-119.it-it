@@ -1,0 +1,17 @@
+---
+section: harden
+title: Rafforzamento del sistema
+entries:
+- title: Considerazioni generali
+  pdf-filename: Rafforzamento del sistema StorageGRID
+  url: "/harden/index.html"
+- title: Linee guida per il rafforzamento degli aggiornamenti
+  url: "/harden/hardening-guidelines-for-software-upgrades.html"
+- title: Linee guida per il rafforzamento delle reti
+  url: "/harden/hardening-guidelines-for-storagegrid-networks.html"
+- title: Linee guida per il rafforzamento dei nodi
+  url: "/harden/hardening-guidelines-for-storagegrid-nodes.html"
+- title: Linee guida per il rafforzamento di TLS e SSH
+  url: "/harden/hardening-guideline-for-server-certificates.html"
+- title: Altre linee guida per il rafforzamento
+  url: "/harden/other-hardening-guidelines.html"

@@ -1,0 +1,160 @@
+---
+permalink: maintain/adding-to-or-changing-subnet-lists-on-admin-network.html 
+sidebar: sidebar 
+keywords: storagegrid, subnet list, admin network 
+summary: 'È possibile aggiungere, eliminare o modificare le subnet nell"elenco delle subnet della rete di amministrazione di uno o più nodi.' 
+---
+= Aggiungere o modificare gli elenchi di subnet sulla rete di amministrazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile aggiungere, eliminare o modificare le subnet nell'elenco delle subnet della rete di amministrazione di uno o più nodi.
+
+.Prima di iniziare
+* Tu hai il `Passwords.txt` file.
+
+
+È possibile aggiungere, eliminare o modificare le subnet di tutti i nodi nell'elenco delle subnet della rete di amministrazione.
+
+[NOTE]
+====
+Non utilizzare subnet che contengono i seguenti indirizzi IPv4 per la rete Grid, la rete amministrativa o la rete client di alcun nodo:
+
+* 192.168.130.101
+* 192.168.131.101
+* 192.168.130.102
+* 192.168.131.102
+* 198.51.100.2
+* 198.51.100.4
+
+
+Ad esempio, non utilizzare i seguenti intervalli di subnet per la rete Grid, la rete amministrativa o la rete client di alcun nodo:
+
+* 192.168.130.0/24 perché questo intervallo di subnet contiene gli indirizzi IP 192.168.130.101 e 192.168.130.102
+* 192.168.131.0/24 perché questo intervallo di subnet contiene gli indirizzi IP 192.168.131.101 e 192.168.131.102
+* 198.51.100.0/24 perché questo intervallo di subnet contiene gli indirizzi IP 198.51.100.2 e 198.51.100.4
+
+
+====
+.Passi
+. Accedi al nodo di amministrazione principale:
++
+.. Immettere il seguente comando: `ssh admin@_primary_Admin_Node_IP_`
+.. Inserisci la password elencata nel `Passwords.txt` file.
+.. Immettere il seguente comando per passare alla root: `su -`
+.. Inserisci la password elencata nel `Passwords.txt` file.
+
+
++
+Quando si accede come root, il prompt cambia da `$` A `#` .
+
+. Avviare lo strumento Cambia IP immettendo il seguente comando: `change-ip`
+. Immettere la passphrase di provisioning al prompt.
++
+Viene visualizzato il menu principale.
+
++
+image::../media/change_ip_tool_main_menu.png[screenshot che mostra la schermata di benvenuto dello strumento di modifica IP]
+
+. Facoltativamente, limitare le reti/nodi su cui vengono eseguite le operazioni.  Scegli una delle seguenti opzioni:
++
+** Selezionare i nodi da modificare scegliendo *1*, se si desidera filtrare in base a nodi specifici su cui eseguire l'operazione.  Seleziona una delle seguenti opzioni:
++
+*** *1*: Singolo nodo (selezionare per nome)
+*** *2*: Singolo nodo (selezionare per sito, poi per nome)
+*** *3*: Singolo nodo (selezionabile tramite IP corrente)
+*** *4*: Tutti i nodi in un sito
+*** *5*: Tutti i nodi nella griglia
+*** *0*: Torna indietro
+
+
+** Lascia che "tutto" rimanga selezionato.  Dopo aver effettuato la selezione, viene visualizzata la schermata del menu principale.  Il campo Nodi selezionati riflette la nuova selezione e ora tutte le operazioni selezionate verranno eseguite solo su questo elemento.
+
+
+. Nel menu principale, seleziona l'opzione per modificare le subnet per la rete di amministrazione (opzione *3*).
+. Scegli una delle seguenti opzioni:
++
+--
+** Aggiungi una subnet immettendo questo comando: `add CIDR`
+** Elimina una subnet immettendo questo comando: `del CIDR`
+** Imposta l'elenco delle subnet immettendo questo comando: `set CIDR`
+
+
+--
++
+--
+
+NOTE: Per tutti i comandi è possibile immettere più indirizzi utilizzando questo formato: `add CIDR, CIDR`
+
+Esempio: `add 172.14.0.0/16, 172.15.0.0/16, 172.16.0.0/16`
+
+
+TIP: È possibile ridurre la quantità di dati digitati utilizzando la "freccia su" per richiamare i valori digitati in precedenza nel prompt di input corrente e quindi modificarli se necessario.
+
+L'esempio di input riportato di seguito mostra l'aggiunta di subnet all'elenco delle subnet della rete di amministrazione:
+
+image::../media/change_ip_tool_aesl_sample_input.gif[strumento di modifica ip esempio aesl]
+
+--
+. Quando sei pronto, digita *q* per tornare alla schermata del menu principale.  Le modifiche verranno mantenute finché non verranno cancellate o applicate.
++
+
+NOTE: Se nel passaggio 2 è stata selezionata una delle modalità di selezione dei nodi "tutti", premere *Invio* (senza *q*) per passare al nodo successivo nell'elenco.
+
+. Scegli una delle seguenti opzioni:
++
+** Selezionare l'opzione *5* per mostrare le modifiche nell'output isolato in modo da mostrare solo l'elemento modificato.  Le modifiche sono evidenziate in verde (aggiunte) o in rosso (eliminazioni), come mostrato nell'esempio di output riportato di seguito:
++
+image::../media/change_ip_tool_aesl_sample_output.png[screenshot descritto dal testo circostante]
+
+** Selezionare l'opzione *6* per mostrare le modifiche nell'output che mostra la configurazione completa.  Le modifiche sono evidenziate in verde (aggiunte) o in rosso (eliminazioni).  *Nota:* Alcuni emulatori di terminale potrebbero visualizzare aggiunte ed eliminazioni utilizzando il formato barrato.
++
+Quando si tenta di modificare l'elenco delle subnet, viene visualizzato il seguente messaggio:
+
++
+[listing]
+----
+CAUTION: The Admin Network subnet list on the node might contain /32 subnets derived from automatically applied routes that aren't persistent. Host routes (/32 subnets) are applied automatically if the IP addresses provided for external services such as NTP or DNS aren't reachable using default StorageGRID routing, but are reachable using a different interface and gateway. Making and applying changes to the subnet list will make all automatically applied subnets persistent. If you don't want that to happen, delete the unwanted subnets before applying changes. If you know that all /32 subnets in the list were added intentionally, you can ignore this caution.
+----
++
+Se non hai assegnato specificamente le subnet del server NTP e DNS a una rete, StorageGRID crea automaticamente un percorso host (/32) per la connessione.  Se, ad esempio, si preferisce avere una rotta /16 o /24 per la connessione in uscita a un server DNS o NTP, è necessario eliminare la rotta /32 creata automaticamente e aggiungere le rotte desiderate.  Se non si elimina la route host creata automaticamente, questa verrà mantenuta dopo aver applicato eventuali modifiche all'elenco delle subnet.
+
+
+
++
+
+NOTE: Sebbene sia possibile utilizzare questi percorsi host rilevati automaticamente, in genere è necessario configurare manualmente i percorsi DNS e NTP per garantire la connettività.
+
+. Selezionare l'opzione *7* per convalidare tutte le modifiche apportate.
++
+Questa convalida garantisce che vengano rispettate le regole per le reti Grid, Admin e Client, ad esempio utilizzando subnet sovrapposte.
+
+. Facoltativamente, seleziona l'opzione *8* per salvare tutte le modifiche apportate e tornare in seguito per continuare ad apportare modifiche.
++
+Questa opzione consente di uscire dallo strumento Cambia IP e di riavviarlo in un secondo momento, senza perdere le modifiche non applicate.
+
+. Eseguire una delle seguenti operazioni:
++
+** Selezionare l'opzione *9* se si desidera annullare tutte le modifiche senza salvare o applicare la nuova configurazione di rete.
+** Selezionare l'opzione *10* se si è pronti ad applicare le modifiche e a predisporre la nuova configurazione di rete.  Durante il provisioning, l'output visualizza lo stato man mano che vengono applicati gli aggiornamenti, come mostrato nel seguente output di esempio:
++
+[listing]
+----
+Generating new grid networking description file...
+
+Running provisioning...
+
+Updating grid network configuration on Name
+----
+
+
+. Scarica un nuovo pacchetto di ripristino da Grid Manager.
++
+.. Selezionare *MANUTENZIONE* > *Sistema* > *Pacchetto di ripristino*.
+.. Immettere la passphrase di provisioning.
+
+
+

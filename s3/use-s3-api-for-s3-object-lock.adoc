@@ -1,0 +1,268 @@
+---
+permalink: s3/use-s3-api-for-s3-object-lock.html 
+sidebar: sidebar 
+keywords: how to configure S3 object lock, object lock, default bucket retention, governance, compliance, retain-until-date, legal hold 
+summary: 'Se l"impostazione globale S3 Object Lock è abilitata per il sistema StorageGRID , è possibile creare bucket con S3 Object Lock abilitato.  È possibile specificare la conservazione predefinita per ogni bucket o le impostazioni di conservazione per ogni versione dell"oggetto.' 
+---
+= Utilizzare l'API REST S3 per configurare S3 Object Lock
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se l'impostazione globale S3 Object Lock è abilitata per il sistema StorageGRID , è possibile creare bucket con S3 Object Lock abilitato.  È possibile specificare la conservazione predefinita per ogni bucket o le impostazioni di conservazione per ogni versione dell'oggetto.
+
+
+
+== Come abilitare S3 Object Lock per un bucket
+
+Se l'impostazione globale S3 Object Lock è abilitata per il sistema StorageGRID , è possibile abilitare facoltativamente S3 Object Lock quando si crea ogni bucket.
+
+S3 Object Lock è un'impostazione permanente che può essere abilitata solo quando si crea un bucket.  Non è possibile aggiungere o disabilitare S3 Object Lock dopo aver creato un bucket.
+
+Per abilitare S3 Object Lock per un bucket, utilizzare uno dei seguenti metodi:
+
+* Creare il bucket utilizzando Tenant Manager. Vedere link:../tenant/creating-s3-bucket.html["Crea bucket S3"] .
+* Crea il bucket utilizzando una richiesta CreateBucket con `x-amz-bucket-object-lock-enabled` intestazione della richiesta. Vedere link:operations-on-buckets.html["Operazioni sui bucket"] .
+
+
+S3 Object Lock richiede il controllo delle versioni dei bucket, che viene abilitato automaticamente al momento della creazione del bucket.  Non è possibile sospendere il controllo delle versioni per il bucket. Vedere link:object-versioning.html["Versionamento degli oggetti"] .
+
+
+
+== Impostazioni di conservazione predefinite per un bucket
+
+Quando S3 Object Lock è abilitato per un bucket, è possibile abilitare facoltativamente la conservazione predefinita per il bucket e specificare una modalità di conservazione predefinita e un periodo di conservazione predefinito.
+
+
+
+=== Modalità di conservazione predefinita
+
+* In modalità CONFORMITÀ:
++
+** L'oggetto non può essere eliminato finché non viene raggiunta la data di conservazione.
+** La data di conservazione dell'oggetto può essere aumentata, ma non diminuita.
+** La data di conservazione dell'oggetto non può essere rimossa finché non viene raggiunta tale data.
+
+
+* In modalità GOVERNANCE:
++
+** Utenti con il `s3:BypassGovernanceRetention` il permesso può utilizzare il `x-amz-bypass-governance-retention: true` intestazione della richiesta per ignorare le impostazioni di conservazione.
+** Questi utenti possono eliminare una versione di un oggetto prima che venga raggiunta la data di conservazione.
+** Questi utenti possono aumentare, diminuire o rimuovere la data di conservazione di un oggetto.
+
+
+
+
+
+
+=== Periodo di conservazione predefinito
+
+Ogni bucket può avere un periodo di conservazione predefinito specificato in anni o giorni.
+
+
+
+== Come impostare la conservazione predefinita per un bucket
+
+Per impostare la conservazione predefinita per un bucket, utilizzare uno dei seguenti metodi:
+
+* Gestisci le impostazioni del bucket da Tenant Manager. Vederelink:../tenant/creating-s3-bucket.html["Crea un bucket S3"] Elink:../tenant/update-default-retention-settings.html["Aggiorna la conservazione predefinita del blocco degli oggetti S3"] .
+* Inviare una richiesta PutObjectLockConfiguration al bucket per specificare la modalità predefinita e il numero predefinito di giorni o anni.
+
+
+
+
+=== PutObjectLockConfiguration
+
+La richiesta PutObjectLockConfiguration consente di impostare e modificare la modalità di conservazione predefinita e il periodo di conservazione predefinito per un bucket in cui è abilitato S3 Object Lock.  È anche possibile rimuovere le impostazioni di conservazione predefinite configurate in precedenza.
+
+Quando nuove versioni di oggetti vengono acquisite nel bucket, viene applicata la modalità di conservazione predefinita se `x-amz-object-lock-mode` E `x-amz-object-lock-retain-until-date` non sono specificati.  Il periodo di conservazione predefinito viene utilizzato per calcolare la data di conservazione fino a se `x-amz-object-lock-retain-until-date` non è specificato.
+
+Se il periodo di conservazione predefinito viene modificato dopo l'acquisizione di una versione dell'oggetto, la data di conservazione fino alla versione dell'oggetto rimane invariata e non viene ricalcolata utilizzando il nuovo periodo di conservazione predefinito.
+
+Devi avere il `s3:PutBucketObjectLockConfiguration` autorizzazione, oppure essere l'account root, per completare questa operazione.
+
+IL `Content-MD5` l'intestazione della richiesta deve essere specificata nella richiesta PUT.
+
+
+
+==== Richiedi esempio
+
+Questo esempio abilita S3 Object Lock per un bucket e imposta la modalità di conservazione predefinita su CONFORMITÀ e il periodo di conservazione predefinito su 6 anni.
+
+[listing, subs="specialcharacters,quotes"]
+----
+PUT /bucket?object-lock HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 308
+Host: _host_
+Content-MD5: _request header_
+User-Agent: s3sign/1.0.0 requests/2.24.0 python/3.8.2
+X-Amz-Date: _date_
+X-Amz-Content-SHA256: _authorization-string_
+Authorization: _authorization-string_
+
+<ObjectLockConfiguration>
+    <ObjectLockEnabled>Enabled</ObjectLockEnabled>
+    <Rule>
+        <DefaultRetention>
+            <Mode>COMPLIANCE</Mode>
+            <Years>6</Years>
+        </DefaultRetention>
+    </Rule>
+</ObjectLockConfiguration>
+----
+
+
+== Come determinare la conservazione predefinita per un bucket
+
+Per determinare se S3 Object Lock è abilitato per un bucket e per visualizzare la modalità di conservazione predefinita e il periodo di conservazione, utilizzare uno di questi metodi:
+
+* Visualizza il bucket in Tenant Manager. Vedere link:../tenant/viewing-s3-bucket-details.html["Visualizza i bucket S3"] .
+* Inviare una richiesta GetObjectLockConfiguration.
+
+
+
+
+=== Ottieni configurazione blocco oggetto
+
+La richiesta GetObjectLockConfiguration consente di determinare se S3 Object Lock è abilitato per un bucket e, in tal caso, di verificare se sono configurati una modalità di conservazione predefinita e un periodo di conservazione per il bucket.
+
+Quando nuove versioni di oggetti vengono acquisite nel bucket, viene applicata la modalità di conservazione predefinita se `x-amz-object-lock-mode` non è specificato.  Il periodo di conservazione predefinito viene utilizzato per calcolare la data di conservazione fino a se `x-amz-object-lock-retain-until-date` non è specificato.
+
+Devi avere il `s3:GetBucketObjectLockConfiguration` autorizzazione, oppure essere l'account root, per completare questa operazione.
+
+
+
+==== Richiedi esempio
+
+[listing, subs="specialcharacters,quotes"]
+----
+GET /bucket?object-lock HTTP/1.1
+Host: _host_
+Accept-Encoding: identity
+User-Agent: aws-cli/1.18.106 Python/3.8.2 Linux/4.4.0-18362-Microsoft botocore/1.17.29
+x-amz-date: _date_
+x-amz-content-sha256: _authorization-string_
+Authorization: _authorization-string_
+----
+
+
+==== Esempio di risposta
+
+[listing]
+----
+HTTP/1.1 200 OK
+x-amz-id-2: iVmcB7OXXJRkRH1FiVq1151/T24gRfpwpuZrEG11Bb9ImOMAAe98oxSpXlknabA0LTvBYJpSIXk=
+x-amz-request-id: B34E94CACB2CEF6D
+Date: Fri, 04 Sep 2020 22:47:09 GMT
+Transfer-Encoding: chunked
+Server: AmazonS3
+
+<?xml version="1.0" encoding="UTF-8"?>
+<ObjectLockConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+    <ObjectLockEnabled>Enabled</ObjectLockEnabled>
+    <Rule>
+        <DefaultRetention>
+            <Mode>COMPLIANCE</Mode>
+            <Years>6</Years>
+        </DefaultRetention>
+    </Rule>
+</ObjectLockConfiguration>
+----
+
+
+== Come specificare le impostazioni di conservazione per un oggetto
+
+Un bucket con S3 Object Lock abilitato può contenere una combinazione di oggetti con e senza impostazioni di conservazione S3 Object Lock.
+
+Le impostazioni di conservazione a livello di oggetto vengono specificate tramite l'API REST S3.  Le impostazioni di conservazione per un oggetto sostituiscono tutte le impostazioni di conservazione predefinite per il bucket.
+
+Per ogni oggetto è possibile specificare le seguenti impostazioni:
+
+* *Modalità di conservazione*: CONFORMITÀ o GOVERNANCE.
+* *Retain-until-date*: data che specifica per quanto tempo la versione dell'oggetto deve essere conservata da StorageGRID.
++
+** In modalità CONFORMITÀ, se la data di conservazione è futura, l'oggetto può essere recuperato, ma non può essere modificato o eliminato.  La data di conservazione può essere aumentata, ma questa data non può essere diminuita o rimossa.
+** In modalità GOVERNANCE, gli utenti con autorizzazione speciale possono ignorare l'impostazione di conservazione fino alla data indicata.  Possono eliminare una versione di un oggetto prima che scada il periodo di conservazione.  Possono anche aumentare, diminuire o addirittura rimuovere la data di conservazione.
+
+
+* *Sospensione legale*: l'applicazione di una sospensione legale a una versione di un oggetto blocca immediatamente quell'oggetto.  Ad esempio, potrebbe essere necessario applicare un blocco legale a un oggetto correlato a un'indagine o a una controversia legale.  Una sospensione legale non ha una data di scadenza, ma rimane in vigore finché non viene rimossa esplicitamente.
++
+L'impostazione di conservazione legale per un oggetto è indipendente dalla modalità di conservazione e dalla data di conservazione fino alla data di scadenza.  Se una versione di un oggetto è sottoposta a blocco legale, nessuno può eliminarla.
+
+
+
+Per specificare le impostazioni di blocco degli oggetti S3 quando si aggiunge una versione dell'oggetto a un bucket, emettere unlink:put-object.html["MettiOggetto"] ,link:put-object-copy.html["CopiaOggetto"] , Olink:initiate-multipart-upload.html["CreaCaricamentoMultiparte"] richiesta.
+
+Puoi usare quanto segue:
+
+* `x-amz-object-lock-mode`, che può essere COMPLIANCE o GOVERNANCE (con distinzione tra maiuscole e minuscole).
++
+
+NOTE: Se specifichi `x-amz-object-lock-mode` , devi anche specificare `x-amz-object-lock-retain-until-date` .
+
+* `x-amz-object-lock-retain-until-date`
++
+** Il valore retain-til-date deve essere nel formato `2020-08-10T21:46:00Z` .  Sono consentite frazioni di secondo, ma vengono conservate solo 3 cifre decimali (precisione in millisecondi).  Altri formati ISO 8601 non sono consentiti.
+** La data di conservazione deve essere futura.
+
+
+* `x-amz-object-lock-legal-hold`
++
+Se la conservazione legale è ATTIVA (sensibile alle maiuscole e alle minuscole), l'oggetto viene sottoposto a conservazione legale.  Se la conservazione legale è disattivata, non verrà applicata alcuna conservazione legale.  Qualsiasi altro valore genera un errore 400 Bad Request (InvalidArgument).
+
+
+
+Se si utilizza una di queste intestazioni di richiesta, tenere presente le seguenti restrizioni:
+
+* IL `Content-MD5` l'intestazione della richiesta è obbligatoria se presente `x-amz-object-lock-*` l'intestazione della richiesta è presente nella richiesta PutObject. `Content-MD5` non è richiesto per CopyObject o CreateMultipartUpload.
+* Se il bucket non ha S3 Object Lock abilitato e un `x-amz-object-lock-*` Se è presente l'intestazione della richiesta, viene restituito un errore 400 Bad Request (InvalidRequest).
+* La richiesta PutObject supporta l'uso di `x-amz-storage-class: REDUCED_REDUNDANCY` per adattarsi al comportamento di AWS.  Tuttavia, quando un oggetto viene inserito in un bucket con S3 Object Lock abilitato, StorageGRID eseguirà sempre un inserimento a doppio commit.
+* Una successiva risposta alla versione GET o HeadObject includerà le intestazioni `x-amz-object-lock-mode` , `x-amz-object-lock-retain-until-date` , E `x-amz-object-lock-legal-hold` , se configurato e se il mittente della richiesta ha il corretto `s3:Get*` permessi.
+
+
+Puoi usare il `s3:object-lock-remaining-retention-days` chiave di condizione della policy per limitare i periodi di conservazione minimi e massimi consentiti per i tuoi oggetti.
+
+
+
+== Come aggiornare le impostazioni di conservazione per un oggetto
+
+Se è necessario aggiornare le impostazioni di conservazione o di blocco legale per una versione esistente di un oggetto, è possibile eseguire le seguenti operazioni sulle sottorisorse dell'oggetto:
+
+* `PutObjectLegalHold`
++
+Se il nuovo valore di conservazione legale è impostato su ON, l'oggetto viene sottoposto a conservazione legale.  Se il valore di sospensione legale è OFF, la sospensione legale viene revocata.
+
+* `PutObjectRetention`
++
+** Il valore della modalità può essere COMPLIANCE o GOVERNANCE (con distinzione tra maiuscole e minuscole).
+** Il valore retain-til-date deve essere nel formato `2020-08-10T21:46:00Z` .  Sono consentite frazioni di secondo, ma vengono conservate solo 3 cifre decimali (precisione in millisecondi).  Altri formati ISO 8601 non sono consentiti.
+** Se una versione di un oggetto ha una data di conservazione (retain-til-date) esistente, è possibile solo aumentarla.  Il nuovo valore deve essere nel futuro.
+
+
+
+
+
+
+== Come utilizzare la modalità GOVERNANCE
+
+Gli utenti che hanno il `s3:BypassGovernanceRetention` l'autorizzazione può ignorare le impostazioni di conservazione attive di un oggetto che utilizza la modalità GOVERNANCE.  Tutte le operazioni DELETE o PutObjectRetention devono includere `x-amz-bypass-governance-retention:true` intestazione della richiesta.  Questi utenti possono eseguire le seguenti operazioni aggiuntive:
+
+* Eseguire le operazioni DeleteObject o DeleteObjects per eliminare una versione dell'oggetto prima che scada il periodo di conservazione.
++
+Gli oggetti sottoposti a conservazione legale non possono essere eliminati.  La conservazione legale deve essere DISATTIVATA.
+
+* Eseguire operazioni PutObjectRetention che modificano la modalità di una versione dell'oggetto da GOVERNANCE a COMPLIANCE prima che sia trascorso il periodo di conservazione dell'oggetto.
++
+Non è mai consentito cambiare la modalità da COMPLIANCE a GOVERNANCE.
+
+* Eseguire operazioni PutObjectRetention per aumentare, diminuire o rimuovere il periodo di conservazione di una versione dell'oggetto.
+
+
+.Informazioni correlate
+* link:../ilm/managing-objects-with-s3-object-lock.html["Gestisci gli oggetti con S3 Object Lock"]
+* link:../tenant/using-s3-object-lock.html["Utilizzare S3 Object Lock per conservare gli oggetti"]
+* https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html["Guida per l'utente di Amazon Simple Storage Service: blocco degli oggetti"^]
+

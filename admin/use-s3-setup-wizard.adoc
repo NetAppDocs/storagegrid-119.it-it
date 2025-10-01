@@ -1,0 +1,58 @@
+---
+permalink: admin/use-s3-setup-wizard.html 
+sidebar: sidebar 
+keywords: S3, S3 setup wizard 
+summary: 'È possibile utilizzare la procedura guidata di configurazione S3 per configurare StorageGRID come sistema di archiviazione degli oggetti per un"applicazione S3.' 
+---
+= Utilizzare la procedura guidata di configurazione S3: considerazioni e requisiti
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile utilizzare la procedura guidata di configurazione S3 per configurare StorageGRID come sistema di archiviazione degli oggetti per un'applicazione S3.
+
+
+
+== Quando utilizzare la procedura guidata di configurazione S3
+
+La procedura guidata di configurazione di S3 ti guida attraverso ogni fase della configurazione di StorageGRID per l'utilizzo con un'applicazione S3.  Durante il completamento della procedura guidata, scaricherai i file che potrai utilizzare per immettere valori nell'applicazione S3.  Utilizza la procedura guidata per configurare il sistema più rapidamente e per assicurarti che le impostazioni siano conformi alle best practice StorageGRID .
+
+Se hai illink:admin-group-permissions.html["Permesso di accesso root"] , puoi completare la procedura guidata di configurazione di S3 quando inizi a utilizzare StorageGRID Grid Manager oppure puoi accedere e completare la procedura guidata in qualsiasi momento successivo.  A seconda delle esigenze, è anche possibile configurare manualmente alcuni o tutti gli elementi richiesti e quindi utilizzare la procedura guidata per assemblare i valori necessari a un'applicazione S3.
+
+
+
+== Prima di utilizzare la procedura guidata
+
+Prima di utilizzare la procedura guidata, verificare di aver completato questi prerequisiti.
+
+Ottenere indirizzi IP e configurare le interfacce VLAN:: Se si configura un gruppo ad alta disponibilità (HA), si sa a quali nodi si connetterà l'applicazione S3 e quale rete StorageGRID verrà utilizzata.  Si sa anche quali valori immettere per il CIDR della subnet, l'indirizzo IP del gateway e gli indirizzi IP virtuali (VIP).
++
+--
+Se si prevede di utilizzare una LAN virtuale per separare il traffico dall'applicazione S3, è già stata configurata l'interfaccia VLAN. Vedere link:../admin/configure-vlan-interfaces.html["Configurare le interfacce VLAN"] .
+
+--
+Configurare la federazione delle identità e SSO:: Se intendi utilizzare la federazione delle identità o l'accesso singolo (SSO) per il tuo sistema StorageGRID , hai abilitato queste funzionalità. Si sa anche quale gruppo federato deve avere accesso root per l'account tenant che verrà utilizzato dall'applicazione S3. Vederelink:../admin/using-identity-federation.html["Utilizzare la federazione delle identità"] Elink:../admin/configuring-sso.html["Configurare l'accesso singolo"] .
+Ottieni e configura i nomi di dominio:: Sai quale nome di dominio completo (FQDN) utilizzare per StorageGRID.  Le voci del server dei nomi di dominio (DNS) mapperanno questo FQDN agli indirizzi IP virtuali (VIP) del gruppo HA creato tramite la procedura guidata.
++
+--
+Se si prevede di utilizzare richieste in stile host virtuale S3, è necessario disporrelink:../admin/configuring-s3-api-endpoint-domain-names.html["nomi di dominio endpoint S3 configurati"] .  Si consiglia di utilizzare richieste in stile virtual hosted.
+
+--
+Esaminare i requisiti del bilanciatore del carico e del certificato di sicurezza:: Se si prevede di utilizzare il bilanciatore del carico StorageGRID , è necessario aver esaminato le considerazioni generali sul bilanciamento del carico.  Hai i certificati che caricherai o i valori necessari per generare un certificato.
++
+--
+Se si prevede di utilizzare un endpoint di bilanciamento del carico esterno (di terze parti), è necessario disporre del nome di dominio completo (FQDN), della porta e del certificato per tale bilanciatore del carico.
+
+--
+Configurare tutte le connessioni della federazione di griglia:: Se si desidera consentire al tenant S3 di clonare i dati dell'account e replicare gli oggetti bucket in un'altra griglia utilizzando una connessione di federazione della griglia, confermare quanto segue prima di avviare la procedura guidata:
++
+--
+* Hailink:grid-federation-manage-connection.html["configurato la connessione della federazione di griglia"] .
+* Lo stato della connessione è *Connesso*.
+* Hai i permessi di accesso Root.
+
+
+--
+

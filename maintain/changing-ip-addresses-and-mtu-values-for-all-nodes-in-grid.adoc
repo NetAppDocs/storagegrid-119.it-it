@@ -1,0 +1,144 @@
+---
+permalink: maintain/changing-ip-addresses-and-mtu-values-for-all-nodes-in-grid.html 
+sidebar: sidebar 
+keywords: storagegrid, node ip address, change node ip, change node ip address, changing node ip, changing node ip address 
+summary: 'Se è necessario modificare l"indirizzo IP della rete Grid per tutti i nodi della griglia, è necessario seguire questa procedura speciale.  Non è possibile modificare l"IP della rete Grid a livello di griglia utilizzando la procedura per modificare singoli nodi.' 
+---
+= Cambia gli indirizzi IP per tutti i nodi nella griglia
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se è necessario modificare l'indirizzo IP della rete Grid per tutti i nodi della griglia, è necessario seguire questa procedura speciale.  Non è possibile modificare l'IP della rete Grid a livello di griglia utilizzando la procedura per modificare singoli nodi.
+
+.Prima di iniziare
+* Tu hai il `Passwords.txt` file.
+
+
+Per garantire che la griglia si avvii correttamente, è necessario apportare tutte le modifiche contemporaneamente.
+
+
+NOTE: Questa procedura si applica solo alla rete Grid.  Non è possibile utilizzare questa procedura per modificare gli indirizzi IP sulle reti di amministrazione o client.
+
+Se si desidera modificare gli indirizzi IP e l'MTU per i nodi in un solo sito, seguire la proceduralink:changing-nodes-network-configuration.html["Modifica la configurazione della rete del nodo"] istruzioni.
+
+.Passi
+. Pianifica in anticipo le modifiche che devi apportare al di fuori dello strumento Modifica IP, come modifiche al DNS o NTP e modifiche alla configurazione Single Sign-On (SSO), se utilizzata.
++
+
+NOTE: Se i server NTP esistenti non saranno accessibili alla rete sui nuovi indirizzi IP, aggiungere i nuovi server NTP prima di eseguire la procedura di modifica dell'IP.
+
++
+
+NOTE: Se i server DNS esistenti non saranno accessibili alla griglia sui nuovi indirizzi IP, aggiungere i nuovi server DNS prima di eseguire la procedura di modifica dell'IP.
+
++
+
+NOTE: Se SSO è abilitato per il sistema StorageGRID e tutti i trust delle parti affidabili sono stati configurati utilizzando indirizzi IP del nodo di amministrazione (anziché nomi di dominio completi, come consigliato), prepararsi ad aggiornare o riconfigurare tali trust delle parti affidabili in Active Directory Federation Services (AD FS) subito dopo aver modificato gli indirizzi IP. Vedere link:../admin/configuring-sso.html["Configurare l'accesso singolo"] .
+
++
+
+NOTE: Se necessario, aggiungere la nuova subnet per i nuovi indirizzi IP.
+
+. Accedi al nodo di amministrazione principale:
++
+.. Immettere il seguente comando: `ssh admin@_primary_Admin_Node_IP_`
+.. Inserisci la password elencata nel `Passwords.txt` file.
+.. Immettere il seguente comando per passare alla root: `su -`
+.. Inserisci la password elencata nel `Passwords.txt` file.
+
+
++
+Quando si accede come root, il prompt cambia da `$` A `#` .
+
+. Avviare lo strumento Cambia IP immettendo il seguente comando: `change-ip`
+. Immettere la passphrase di provisioning al prompt.
++
+Viene visualizzato il menu principale.  Per impostazione predefinita, il `Selected nodes` il campo è impostato su `all` .
+
++
+image::../media/change_ip_tool_main_menu.png[screenshot che mostra la schermata di benvenuto dello strumento di modifica IP]
+
+. Nel menu principale, selezionare *2* per modificare le informazioni relative a IP/subnet mask, gateway e MTU per tutti i nodi.
++
+.. Selezionare *1* per apportare modifiche alla rete Grid.
++
+Dopo aver effettuato la selezione, il prompt mostra i nomi dei nodi, il nome della rete Grid, il tipo di dati (IP/maschera, gateway o MTU) e i valori correnti.
+
++
+La modifica dell'indirizzo IP, della lunghezza del prefisso, del gateway o dell'MTU di un'interfaccia configurata tramite DHCP modificherà l'interfaccia in statica.  Prima di ogni interfaccia configurata da DHCP viene visualizzato un avviso.
+
++
+Interfacce configurate come `fixed` non può essere modificato.
+
+.. Per impostare un nuovo valore, immetterlo nel formato mostrato per il valore corrente.
+.. Dopo aver modificato tutti i nodi che vuoi cambiare, digita *q* per tornare al menu principale.
++
+Le modifiche verranno mantenute finché non verranno cancellate o applicate.
+
+
+
+. Rivedi le modifiche selezionando una delle seguenti opzioni:
++
+** *5*: mostra le modifiche nell'output isolato per mostrare solo l'elemento modificato.  Le modifiche sono evidenziate in verde (aggiunte) o in rosso (eliminazioni), come mostrato nell'output di esempio:
++
+image::../media/change_ip_tool_edit_ip_mask_sample_output.png[screenshot descritto dal testo circostante]
+
+** *6*: Mostra le modifiche nell'output che visualizza la configurazione completa.  Le modifiche sono evidenziate in verde (aggiunte) o in rosso (eliminazioni).
++
+
+NOTE: Alcune interfacce della riga di comando potrebbero visualizzare aggiunte ed eliminazioni utilizzando il formato barrato.  La corretta visualizzazione dipende dal fatto che il client terminale supporti le sequenze di escape VT100 necessarie.
+
+
+
+. Selezionare l'opzione *7* per convalidare tutte le modifiche.
++
+Questa convalida garantisce che le regole per la rete Grid, come ad esempio il divieto di utilizzare subnet sovrapposte, non vengano violate.
+
++
+In questo esempio, la convalida ha restituito errori.
+
++
+image::../media/change_ip_tool_validate_sample_error_messages.gif[screenshot descritto dal testo circostante]
+
++
+In questo esempio, la convalida è stata superata.
+
++
+image::../media/change_ip_tool_validate_sample_passed_messages.gif[screenshot descritto dal testo circostante]
+
+. Dopo aver completato la convalida, selezionare *10* per applicare la nuova configurazione di rete.
+. Selezionare *fase* per applicare le modifiche al successivo riavvio dei nodi.
++
+
+NOTE: Devi selezionare *fase*.  Non eseguire un riavvio progressivo, né manualmente né selezionando *applica* invece di *fase*; la griglia non si avvierà correttamente.
+
+. Dopo aver completato le modifiche, seleziona *0* per uscire dallo strumento Modifica IP.
+. Spegnere tutti i nodi contemporaneamente.
++
+
+NOTE: L'intera rete deve essere spenta, in modo che tutti i nodi siano inattivi contemporaneamente.
+
+. Apportare le modifiche di rete fisiche o virtuali necessarie.
+. Verificare che tutti i nodi della griglia siano inattivi.
+. Accendere tutti i nodi.
+. Dopo che la rete si è avviata correttamente:
++
+.. Se hai aggiunto nuovi server NTP, elimina i vecchi valori dei server NTP.
+.. Se hai aggiunto nuovi server DNS, elimina i vecchi valori dei server DNS.
+
+
+. Scarica il nuovo pacchetto di ripristino da Grid Manager.
++
+.. Selezionare *MANUTENZIONE* > *Sistema* > *Pacchetto di ripristino*.
+.. Immettere la passphrase di provisioning.
+
+
+
+
+.Informazioni correlate
+* link:adding-to-or-changing-subnet-lists-on-grid-network.html["Aggiungere o modificare gli elenchi di subnet su Grid Network"]
+* link:shutting-down-grid-node.html["Spegnere il nodo della griglia"]
+

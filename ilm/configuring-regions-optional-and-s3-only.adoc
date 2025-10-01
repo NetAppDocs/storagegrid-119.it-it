@@ -1,0 +1,70 @@
+---
+permalink: ilm/configuring-regions-optional-and-s3-only.html 
+sidebar: sidebar 
+keywords: S3 regions, region, ilm rules 
+summary: Le regole ILM possono filtrare gli oggetti in base alle regioni in cui vengono creati i bucket S3, consentendo di archiviare oggetti provenienti da regioni diverse in posizioni di archiviazione diverse. 
+---
+= Configurare le regioni (facoltativo e solo S3)
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Le regole ILM possono filtrare gli oggetti in base alle regioni in cui vengono creati i bucket S3, consentendo di archiviare oggetti provenienti da regioni diverse in posizioni di archiviazione diverse.
+
+Se si desidera utilizzare una regione bucket S3 come filtro in una regola, è necessario prima creare le regioni che possono essere utilizzate dai bucket nel sistema.
+
+
+NOTE: Non è possibile modificare la regione di un bucket dopo averlo creato.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Hailink:../admin/admin-group-permissions.html["autorizzazioni di accesso specifiche"] .
+
+
+.Informazioni su questo compito
+Quando si crea un bucket S3, è possibile specificare che il bucket venga creato in una regione specifica.  Specificando una regione, il bucket può essere geograficamente vicino ai suoi utenti, il che può aiutare a ottimizzare la latenza, ridurre al minimo i costi e soddisfare i requisiti normativi.
+
+Quando si crea una regola ILM, potrebbe essere opportuno utilizzare la regione associata a un bucket S3 come filtro avanzato.  Ad esempio, è possibile progettare una regola che si applica solo agli oggetti nei bucket S3 creati in `us-west-2` regione.  È quindi possibile specificare che copie di tali oggetti vengano posizionate su nodi di archiviazione in un sito di data center all'interno di quella regione per ottimizzare la latenza.
+
+Quando si configurano le regioni, seguire queste linee guida:
+
+* Per impostazione predefinita, tutti i bucket sono considerati appartenenti a `us-east-1` regione.
+* È necessario creare le regioni utilizzando Grid Manager prima di poter specificare una regione non predefinita quando si creano bucket utilizzando Tenant Manager o Tenant Management API oppure con l'elemento di richiesta LocationConstraint per le richieste S3 PUT Bucket API.  Si verifica un errore se una richiesta PUT Bucket utilizza una regione non definita in StorageGRID.
+* Quando si crea il bucket S3, è necessario utilizzare il nome esatto della regione.  I nomi delle regioni sono sensibili alle maiuscole e alle minuscole.  I caratteri validi sono numeri, lettere e trattini.
++
+
+NOTE: EU non è considerato un alias di eu-west-1. Se si desidera utilizzare la regione EU o eu-west-1, è necessario utilizzare il nome esatto.
+
+* Non è possibile eliminare o modificare una regione se è utilizzata in una regola assegnata a un criterio (attivo o inattivo).
+* Se si utilizza una regione non valida come filtro avanzato in una regola ILM, non è possibile aggiungere tale regola a un criterio.
++
+Una regione non valida può verificarsi se si utilizza una regione come filtro avanzato in una regola ILM ma in seguito si elimina tale regione oppure se si utilizza l'API di gestione della griglia per creare una regola e si specifica una regione che non è stata definita.
+
+* Se elimini una regione dopo averla utilizzata per creare un bucket S3, dovrai aggiungere nuovamente la regione se desideri utilizzare il filtro avanzato Vincolo di posizione per trovare oggetti in quel bucket.
+
+
+.Passi
+. Selezionare *ILM* > *Regioni*.
++
+Viene visualizzata la pagina Regioni, in cui sono elencate le regioni attualmente definite.  *Regione 1* mostra la regione predefinita, `us-east-1` , che non può essere modificato o rimosso.
+
+. Per aggiungere una regione:
++
+.. Seleziona *Aggiungi un'altra regione*.
+.. Inserisci il nome della regione che desideri utilizzare durante la creazione dei bucket S3.
++
+Quando si crea il bucket S3 corrispondente, è necessario utilizzare questo nome di regione esatto come elemento di richiesta LocationConstraint.
+
+
+
+. Per rimuovere una regione non utilizzata, seleziona l'icona Eliminaimage:../media/icon-x-to-remove.png["Rimuovi icona"] .
++
+Se si tenta di rimuovere una regione attualmente utilizzata in un criterio (attivo o inattivo), viene visualizzato un messaggio di errore.
+
+. Una volta completate le modifiche, seleziona *Salva*.
++
+Ora puoi selezionare queste regioni dalla sezione Filtri avanzati nel passaggio 1 della procedura guidata Crea regola ILM. Vedere link:create-ilm-rule-enter-details.html#use-advanced-filters-in-ilm-rules["Utilizzare filtri avanzati nelle regole ILM"] .
+
+

@@ -1,0 +1,52 @@
+---
+permalink: admin/editing-traffic-classification-policy.html 
+sidebar: sidebar 
+keywords: edit traffic classification policy 
+summary: È possibile modificare una policy di classificazione del traffico per cambiarne il nome o la descrizione oppure per creare, modificare o eliminare regole o limiti per la policy. 
+---
+= Modifica la politica di classificazione del traffico
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile modificare una policy di classificazione del traffico per cambiarne il nome o la descrizione oppure per creare, modificare o eliminare regole o limiti per la policy.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Tu hai illink:admin-group-permissions.html["Permesso di accesso root"] .
+
+
+.Passi
+. Selezionare *CONFIGURAZIONE* > *Rete* > *Classificazione del traffico*.
++
+Viene visualizzata la pagina Criteri di classificazione del traffico e i criteri esistenti sono elencati in una tabella.
+
+. Modifica la policy utilizzando il menu Azioni o la pagina dei dettagli.  Vederelink:../admin/creating-traffic-classification-policies.html["creare politiche di classificazione del traffico"] per cosa inserire.
++
+[role="tabbed-block"]
+====
+.Menu Azioni
+--
+.. Selezionare la casella di controllo per la policy.
+.. Selezionare *Azioni* > *Modifica*.
+
+
+--
+.Pagina dei dettagli
+--
+.. Selezionare il nome della policy.
+.. Selezionare il pulsante *Modifica* accanto al nome della policy.
+
+
+--
+====
+. Per il passaggio Inserisci nome criterio, modifica facoltativamente il nome o la descrizione del criterio e seleziona *Continua*.
+. Per il passaggio Aggiungi regole di corrispondenza, aggiungere facoltativamente una regola o modificare il *Tipo* e il *Valore di corrispondenza* della regola esistente, quindi selezionare *Continua*.
+. Per il passaggio Imposta limiti, puoi aggiungere, modificare o eliminare un limite e selezionare *Continua*.
+. Rivedi la policy aggiornata e seleziona *Salva e continua*.
++
+Le modifiche apportate alla policy vengono salvate e il traffico di rete viene ora gestito in base alle policy di classificazione del traffico.  Puoi visualizzare i grafici del traffico e verificare che le norme rispettino i limiti di traffico previsti.
+
+

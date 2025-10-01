@@ -1,0 +1,30 @@
+= Sovrapposizioni di membri e raffinazione
+:allow-uri-read: 
+
+
+Se si desidera utilizzare un server OpenLDAP per la federazione delle identità, è necessario configurare impostazioni specifiche sul server OpenLDAP.
+
+
+CAUTION: Per le origini identità diverse da ActiveDirectory o Azure, StorageGRID non bloccherà automaticamente l'accesso S3 agli utenti disabilitati esternamente. Per bloccare l'accesso S3, eliminare tutte le chiavi S3 dell'utente o rimuovere l'utente da tutti i gruppi.
+
+
+
+=== Sovrapposizioni di membri e raffinazione
+
+Le sovrapposizioni memberof e refint dovrebbero essere abilitate.  Per ulteriori informazioni, consultare le istruzioni per la manutenzione inversa dell'appartenenza al gruppo inhttp://www.openldap.org/doc/admin24/index.html["Documentazione OpenLDAP: Guida dell'amministratore versione 2.4"^] .
+
+
+
+=== Indicizzazione
+
+È necessario configurare i seguenti attributi OpenLDAP con le parole chiave di indice specificate:
+
+* `olcDbIndex: objectClass eq`
+* `olcDbIndex: uid eq,pres,sub`
+* `olcDbIndex: cn eq,pres,sub`
+* `olcDbIndex: entryUUID eq`
+
+
+Inoltre, assicurati che i campi menzionati nella guida per Nome utente siano indicizzati per prestazioni ottimali.
+
+Consultare le informazioni sul mantenimento dell'appartenenza al gruppo inverso inhttp://www.openldap.org/doc/admin24/index.html["Documentazione OpenLDAP: Guida dell'amministratore versione 2.4"^] .

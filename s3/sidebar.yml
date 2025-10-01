@@ -1,0 +1,114 @@
+---
+section: s3
+title: Utilizzare l'API REST S3
+entries:
+- title: Versioni e aggiornamenti supportati
+  pdf-filename: Utilizzare S3 con StorageGRID
+  url: "/s3/index.html"
+- title: Riferimento rapido
+  url: "/s3/quick-reference-support-for-aws-apis.html"
+- title: Testare le connessioni S3 REST API
+  url: "/s3/configuring-tenant-accounts-and-connections.html"
+- title: Come StorageGRID implementa l'API REST S3
+  entries:
+  - title: Richieste dei clienti in conflitto
+    url: "/s3/conflicting-client-requests.html"
+  - title: Valori di coerenza
+    url: "/s3/consistency-controls.html"
+  - title: Versionamento degli oggetti
+    url: "/s3/object-versioning.html"
+  - title: Utilizzare l'API REST S3 per configurare S3 Object Lock
+    url: "/s3/use-s3-api-for-s3-object-lock.html"
+  - title: Crea la configurazione del ciclo di vita S3
+    url: "/s3/create-s3-lifecycle-configuration.html"
+  - title: Raccomandazioni per l'implementazione dell'API REST S3
+    url: "/s3/recommendations-for-implementing-s3-rest-api.html"
+- title: Supporto per l'API REST di Amazon S3
+  entries:
+  - title: Dettagli di implementazione
+    url: "/s3/s3-rest-api-supported-operations-and-limitations.html"
+  - title: Autenticare le richieste
+    url: "/s3/authenticating-requests.html"
+  - title: Operazioni sul servizio
+    url: "/s3/operations-on-the-service.html"
+  - title: Operazioni sui bucket
+    url: "/s3/operations-on-buckets.html"
+  - title: Operazioni sugli oggetti
+    entries:
+    - title: Operazioni sugli oggetti S3
+      url: "/s3/operations-on-objects.html"
+    - title: Utilizzare S3 Select
+      url: "/s3/use-s3-select.html"
+    - title: Utilizzare la crittografia lato server
+      url: "/s3/using-server-side-encryption.html"
+    - title: CopiaOggetto
+      url: "/s3/put-object-copy.html"
+    - title: OttieniOggetto
+      url: "/s3/get-object.html"
+    - title: HeadObject
+      url: "/s3/head-object.html"
+    - title: MettiOggetto
+      url: "/s3/put-object.html"
+    - title: Ripristina oggetto
+      url: "/s3/post-object-restore.html"
+    - title: SelezionaOggettoContenuto
+      url: "/s3/select-object-content.html"
+  - title: Operazioni per caricamenti multiparte
+    entries:
+    - title: Caricamenti multiparte
+      pdf-filename: Operazioni per caricamenti multiparte
+      url: "/s3/operations-for-multipart-uploads.html"
+    - title: Caricamento multiparte completo
+      url: "/s3/complete-multipart-upload.html"
+    - title: CreaCaricamentoMultiparte
+      url: "/s3/initiate-multipart-upload.html"
+    - title: Caricamenti multiparte di List
+      url: "/s3/list-multipart-uploads.html"
+    - title: CaricaParte
+      url: "/s3/upload-part.html"
+    - title: CaricaParteCopia
+      url: "/s3/upload-part-copy.html"
+  - title: Risposte di errore
+    url: "/s3/error-responses.html"
+- title: Operazioni personalizzate StorageGRID
+  entries:
+  - title: Elenco delle operazioni personalizzate
+    pdf-filename: Operazioni personalizzate StorageGRID
+    url: "/s3/custom-operations-on-buckets.html"
+  - title: OTTIENI la coerenza del bucket
+    url: "/s3/get-bucket-consistency-request.html"
+  - title: PUT Consistenza del secchio
+    url: "/s3/put-bucket-consistency-request.html"
+  - title: GET Ora dell'ultimo accesso al bucket
+    url: "/s3/get-bucket-last-access-time-request.html"
+  - title: Ora dell'ultimo accesso al bucket PUT
+    url: "/s3/put-bucket-last-access-time-request.html"
+  - title: ELIMINA la configurazione della notifica dei metadati del bucket
+    url: "/s3/delete-bucket-metadata-notification-configuration-request.html"
+  - title: Configurazione della notifica dei metadati del bucket GET
+    url: "/s3/get-bucket-metadata-notification-configuration-request.html"
+  - title: Configurazione della notifica dei metadati del bucket PUT
+    url: "/s3/put-bucket-metadata-notification-configuration-request.html"
+  - title: Utilizzo dello spazio di archiviazione GET
+    url: "/s3/get-storage-usage-request.html"
+  - title: Richieste di bucket deprecate per la conformità legacy
+    entries:
+    - title: Funzionalità e richieste deprecate
+      pdf-filename: Richieste di bucket deprecate per la conformità legacy
+      url: "/s3/deprecated-bucket-requests-for-legacy-compliance.html"
+    - title: Obsoleto - Modifiche alla richiesta CreateBucket per conformità
+      url: "/s3/deprecated-put-bucket-request-modifications-for-compliance.html"
+    - title: Obsoleto - Richiesta di conformità del bucket GET
+      url: "/s3/deprecated-get-bucket-compliance-request.html"
+    - title: Obsoleto - Richiesta di conformità del bucket PUT
+      url: "/s3/deprecated-put-bucket-compliance-request.html"
+- title: Criteri di accesso a bucket e gruppi
+  entries:
+  - title: Utilizzare criteri di accesso a bucket e gruppi
+    url: "/s3/bucket-and-group-access-policies.html"
+  - title: Criteri di esempio per i bucket
+    url: "/s3/example-bucket-policies.html"
+  - title: Criteri di gruppo di esempio
+    url: "/s3/example-group-policies.html"
+- title: Operazioni S3 monitorate nei registri di controllo
+  url: "/s3/s3-operations-tracked-in-audit-logs.html"

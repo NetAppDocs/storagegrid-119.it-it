@@ -1,0 +1,44 @@
+---
+permalink: maintain/step-4-remove-ilm-references.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, remove ilm reference 
+summary: 'Dal passaggio 4 \(Rimuovi riferimenti ILM\) della procedura guidata Dismissione sito, è necessario eliminare o modificare tutte le regole ILM non utilizzate che fanno riferimento al sito, anche se le regole non sono utilizzate in alcun criterio ILM.' 
+---
+= Passaggio 4: rimuovere i riferimenti ILM
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dal passaggio 4 (Rimuovi riferimenti ILM) della procedura guidata Dismissione sito, è necessario eliminare o modificare tutte le regole ILM non utilizzate che fanno riferimento al sito, anche se le regole non sono utilizzate in alcun criterio ILM.
+
+.Passi
+. Determinare se le regole ILM non utilizzate fanno riferimento al sito.
++
+Se sono elencate delle regole ILM, tali regole fanno comunque riferimento al sito, ma non vengono utilizzate in alcuna policy.
+
++
+
+NOTE: Quando StorageGRID dismette il sito, disattiverà automaticamente tutti i profili di codifica di cancellazione inutilizzati che fanno riferimento al sito ed eliminerà automaticamente tutti i pool di archiviazione inutilizzati che fanno riferimento al sito.  Il pool di archiviazione All Storage Nodes (StorageGRID 11.6 e versioni precedenti) è stato rimosso perché utilizza il sito All Sites.
+
+. Modifica o elimina ogni regola non utilizzata:
++
+** Per modificare una regola, vai alla pagina delle regole ILM e aggiorna tutti i posizionamenti che utilizzano un profilo di codifica di cancellazione o un pool di archiviazione che fa riferimento al sito.  Quindi, tornare al *Passaggio 4 (Rimuovere i riferimenti ILM)*.
+** Per eliminare una regola, seleziona l'icona del cestinoimage:../media/icon_trash_can.png["Icona Cestino"] e seleziona *OK*.
++
+
+NOTE: È necessario eliminare la regola *Crea 2 copie* prima di poter dismettere un sito.
+
+
+
+. Verificare che nessuna regola ILM inutilizzata faccia riferimento al sito e che il pulsante *Avanti* sia abilitato.
+. Selezionare *Avanti*.
++
+
+NOTE: Tutti i pool di archiviazione rimanenti e i profili di codifica di cancellazione che fanno riferimento al sito diventeranno non validi quando il sito verrà rimosso.  Quando StorageGRID dismette il sito, disattiverà automaticamente tutti i profili di codifica di cancellazione inutilizzati che fanno riferimento al sito ed eliminerà automaticamente tutti i pool di archiviazione inutilizzati che fanno riferimento al sito.  Il pool di archiviazione All Storage Nodes (StorageGRID 11.6 e versioni precedenti) è stato rimosso perché utilizza il sito All Sites.
+
++
+Viene visualizzato il passaggio 5 (Risolvi conflitti tra nodi).
+
+

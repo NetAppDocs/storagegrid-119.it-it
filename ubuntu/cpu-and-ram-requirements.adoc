@@ -1,0 +1,52 @@
+---
+permalink: ubuntu/cpu-and-ram-requirements.html 
+sidebar: sidebar 
+keywords: cpu, ram, cpu cores 
+summary: 'Prima di installare il software StorageGRID , verificare e configurare l"hardware in modo che sia pronto a supportare il sistema StorageGRID .' 
+---
+= Requisiti CPU e RAM
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Prima di installare il software StorageGRID , verificare e configurare l'hardware in modo che sia pronto a supportare il sistema StorageGRID .
+
+Ogni nodo StorageGRID richiede le seguenti risorse minime:
+
+* Core CPU: 8 per nodo
+* RAM: Dipende dalla RAM totale disponibile e dalla quantità di software non StorageGRID in esecuzione sul sistema
++
+** In genere, almeno 24 GB per nodo e da 2 a 16 GB in meno rispetto alla RAM totale del sistema
+** Un minimo di 64 GB per ogni tenant che avrà circa 5.000 bucket
+
+
+
+
+Le risorse dei nodi basati solo su metadati software devono corrispondere alle risorse dei nodi di archiviazione esistenti. Per esempio:
+
+* Se il sito StorageGRID esistente utilizza appliance SG6000 o SG6100, i nodi basati solo su software devono soddisfare i seguenti requisiti minimi:
++
+** 128 GB di RAM
+** CPU a 8 core
+** SSD da 8 TB o spazio di archiviazione equivalente per il database Cassandra (rangedb/0)
+
+
+* Se il sito StorageGRID esistente utilizza nodi di archiviazione virtuali con 24 GB di RAM, CPU a 8 core e 3 TB o 4 TB di spazio di archiviazione dei metadati, i nodi basati solo su software devono utilizzare risorse simili (24 GB di RAM, CPU a 8 core e 4 TB di spazio di archiviazione dei metadati (rangedb/0).
+
+
+Quando si aggiunge un nuovo sito StorageGRID , la capacità totale dei metadati del nuovo sito deve corrispondere almeno ai siti StorageGRID esistenti e le risorse del nuovo sito devono corrispondere ai nodi di archiviazione nei siti StorageGRID esistenti.
+
+Assicurarsi che il numero di nodi StorageGRID che si prevede di eseguire su ciascun host fisico o virtuale non superi il numero di core della CPU o la RAM fisica disponibile.  Se gli host non sono dedicati all'esecuzione di StorageGRID (sconsigliato), assicurarsi di considerare i requisiti di risorse delle altre applicazioni.
+
+
+CAUTION: Monitora regolarmente l'utilizzo della CPU e della memoria per assicurarti che queste risorse continuino a soddisfare il tuo carico di lavoro.  Ad esempio, raddoppiando l'allocazione di RAM e CPU per i nodi di archiviazione virtuali si otterrebbero risorse simili a quelle fornite per i nodi dell'appliance StorageGRID .  Inoltre, se la quantità di metadati per nodo supera i 500 GB, valutare di aumentare la RAM per nodo a 48 GB o più.  Per informazioni sulla gestione dell'archiviazione dei metadati degli oggetti, sull'aumento dell'impostazione Spazio riservato ai metadati e sul monitoraggio dell'utilizzo della CPU e della memoria, vedere le istruzioni perlink:../admin/index.html["amministrare"] ,link:../monitor/index.html["monitoraggio"] , Elink:../upgrade/index.html["aggiornamento"] StorageGRID.
+
+Se l'hyperthreading è abilitato sugli host fisici sottostanti, è possibile fornire 8 core virtuali (4 core fisici) per nodo.  Se l'hyperthreading non è abilitato sugli host fisici sottostanti, è necessario fornire 8 core fisici per nodo.
+
+Se si utilizzano macchine virtuali come host e si ha il controllo sulle dimensioni e sul numero di VM, è consigliabile utilizzare una singola VM per ogni nodo StorageGRID e dimensionare la VM di conseguenza.
+
+Per le distribuzioni di produzione, non dovresti eseguire più nodi di archiviazione sullo stesso hardware di archiviazione fisico o host virtuale. Ogni nodo di archiviazione in una singola distribuzione StorageGRID dovrebbe trovarsi nel proprio dominio di errore isolato. È possibile massimizzare la durabilità e la disponibilità dei dati degli oggetti se ci si assicura che un singolo guasto hardware possa avere un impatto solo su un singolo nodo di archiviazione.
+
+Vedere anche link:storage-and-performance-requirements.html["Requisiti di archiviazione e prestazioni"] .

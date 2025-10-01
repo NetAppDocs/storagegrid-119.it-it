@@ -1,0 +1,62 @@
+---
+permalink: maintain/selecting-node-recovery-procedure.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, procedure 
+summary: È necessario selezionare la procedura di ripristino corretta per il tipo di nodo che ha subito un errore. 
+---
+= Selezionare la procedura di ripristino del nodo
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario selezionare la procedura di ripristino corretta per il tipo di nodo che ha subito un errore.
+
+[cols="1a,2a"]
+|===
+| Nodo della griglia | Procedura di recupero 
+
+
+ a| 
+Più di un nodo di archiviazione
+ a| 
+Contattare l'assistenza tecnica. Se più di un nodo di archiviazione presenta un errore, il supporto tecnico deve intervenire per il ripristino, in modo da evitare incongruenze nel database che potrebbero causare la perdita di dati.  Potrebbe essere necessaria una procedura di ripristino del sito.
+
+link:how-site-recovery-is-performed-by-technical-support.html["Come il supporto tecnico recupera un sito"]
+
+
+
+ a| 
+Un singolo nodo di archiviazione
+ a| 
+La procedura di ripristino del nodo di archiviazione dipende dal tipo e dalla durata del guasto.
+
+link:recovering-from-storage-node-failures.html["Ripristino da guasti del nodo di archiviazione"]
+
+
+
+ a| 
+Nodo di amministrazione
+ a| 
+La procedura del nodo amministrativo varia a seconda che sia necessario ripristinare il nodo amministrativo primario o un nodo amministrativo non primario.
+
+link:recovering-from-admin-node-failures.html["Ripristino da errori del nodo di amministrazione"]
+
+
+
+ a| 
+Nodo Gateway
+ a| 
+link:replacing-gateway-node.html["Ripristino da guasti del nodo gateway"]
+
+
+
+ a| 
+Nodo di archivio
+ a| 
+https://docs.netapp.com/us-en/storagegrid-118/maintain/recovering-from-archive-node-failures.html["Ripristino da errori del nodo di archivio (sito di documentazione di StorageGRID 11.8)"^]
+
+|===
+
+NOTE: Se un server che ospita più di un nodo della griglia si guasta, è possibile ripristinare i nodi in qualsiasi ordine. Tuttavia, se il server in errore ospita il nodo di amministrazione primario, è necessario prima ripristinare tale nodo. Ripristinando prima il nodo amministrativo primario si evita che altri ripristini dei nodi si interrompano mentre attendono di contattare il nodo amministrativo primario.

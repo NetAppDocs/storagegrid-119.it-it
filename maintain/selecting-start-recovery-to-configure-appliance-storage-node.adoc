@@ -1,0 +1,53 @@
+---
+permalink: maintain/selecting-start-recovery-to-configure-appliance-storage-node.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, appliance storage node 
+summary: 'È necessario selezionare Avvia ripristino in Grid Manager per configurare un nodo di archiviazione dell"appliance come sostituto del nodo guasto.' 
+---
+= Selezionare Avvia ripristino per configurare il nodo di archiviazione dell'appliance
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario selezionare Avvia ripristino in Grid Manager per configurare un nodo di archiviazione dell'appliance come sostituto del nodo guasto.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Tu hai illink:../admin/admin-group-permissions.html["Autorizzazione di accesso alla manutenzione o alla root"] .
+* Hai la passphrase di provisioning.
+* Hai distribuito un'appliance di ripristino Storage Node.
+* Hai la data di inizio di tutti i lavori di riparazione per i dati codificati in modo da essere cancellati.
+* Hai verificato che il nodo di archiviazione non è stato ricostruito negli ultimi 15 giorni.
+
+
+.Passi
+. Da Grid Manager, seleziona *MANUTENZIONE* > *Attività* > *Ripristino*.
+. Selezionare il nodo della griglia che si desidera ripristinare nell'elenco Nodi in sospeso.
++
+I nodi vengono visualizzati nell'elenco dopo un errore, ma non è possibile selezionarne uno finché non è stato reinstallato e non è pronto per il ripristino.
+
+. Immettere la *Passphrase di provisioning*.
+. Fare clic su *Avvia ripristino*.
++
+image::../media/4b_select_recovery_node.png[schermata che mostra la pagina Manutenzione > Ripristino]
+
+. Monitorare l'avanzamento del ripristino nella tabella Nodo griglia in fase di ripristino.
++
+Quando il nodo della griglia raggiunge la fase "In attesa di passaggi manuali", passare all'argomento successivo ed eseguire i passaggi manuali per rimontare e riformattare i volumi di archiviazione dell'appliance.
+
++
+image::../media/recovery_reset_button.gif[screenshot che mostra la fase in attesa di passaggi manuali]
+
++
+
+NOTE: In qualsiasi momento durante il ripristino, puoi fare clic su *Reimposta* per avviare un nuovo ripristino.  Viene visualizzata una finestra di dialogo che indica che se si reimposta la procedura, il nodo verrà lasciato in uno stato indeterminato.
+
++
+image::../media/recovery_reset_warning.gif[schermata che mostra la finestra di dialogo di avviso di ripristino del ripristino]
+
++
+Se si desidera riprovare il ripristino dopo aver reimpostato la procedura, è necessario ripristinare il nodo dell'appliance a uno stato preinstallato eseguendo `sgareinstall` sul nodo.
+
+

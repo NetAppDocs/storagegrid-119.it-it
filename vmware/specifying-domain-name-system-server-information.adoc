@@ -1,0 +1,33 @@
+---
+permalink: vmware/specifying-domain-name-system-server-information.html 
+sidebar: sidebar 
+keywords: how to specify domain name system server information 
+summary: È necessario specificare le informazioni DNS per il sistema StorageGRID , in modo da poter accedere ai server esterni utilizzando nomi host anziché indirizzi IP. 
+---
+= Specificare le informazioni del server DNS
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario specificare le informazioni DNS per il sistema StorageGRID , in modo da poter accedere ai server esterni utilizzando nomi host anziché indirizzi IP.
+
+.Informazioni su questo compito
+Specificando https://docs.netapp.com/us-en/storagegrid-appliances/commonhardware/checking-dns-server-configuration.html["Informazioni sul server DNS"^] consente di utilizzare nomi host FQDN (Fully Qualified Domain Name) anziché indirizzi IP per le notifiche e-mail e AutoSupport.
+
+Per garantire il corretto funzionamento, specificare due o tre server DNS.  Se ne specifichi più di tre, è possibile che ne vengano utilizzati solo tre a causa delle limitazioni note del sistema operativo su alcune piattaforme.  Se nel tuo ambiente sono presenti restrizioni di routing, puoilink:../maintain/modifying-dns-configuration-for-single-grid-node.html["personalizzare l'elenco dei server DNS"] per i singoli nodi (in genere tutti i nodi di un sito) di utilizzare un set diverso di massimo tre server DNS.
+
+Se possibile, utilizzare server DNS a cui ogni sito possa accedere localmente per garantire che un sito isolato possa risolvere gli FQDN per le destinazioni esterne.
+
+.Passi
+. Specificare l'indirizzo IPv4 per almeno un server DNS nella casella di testo *Server 1*.
+. Se necessario, selezionare il segno più accanto all'ultima voce per aggiungere ulteriori voci del server.
++
+image::../media/9_gmi_installer_dns_page.gif[Questa immagine è spiegata dal testo circostante.]
+
++
+La procedura migliore è specificare almeno due server DNS.  È possibile specificare fino a sei server DNS.
+
+. Selezionare *Avanti*.
+

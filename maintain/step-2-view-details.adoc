@@ -1,0 +1,85 @@
+---
+permalink: maintain/step-2-view-details.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, view details 
+summary: 'Dal passaggio 2 \(Visualizza dettagli\) della procedura guidata Dismissione sito, è possibile esaminare quali nodi sono inclusi nel sito, vedere quanto spazio è stato utilizzato su ciascun nodo di archiviazione e valutare quanto spazio libero è disponibile negli altri siti nella griglia.' 
+---
+= Passaggio 2: Visualizza i dettagli
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dal passaggio 2 (Visualizza dettagli) della procedura guidata Dismissione sito, è possibile esaminare quali nodi sono inclusi nel sito, vedere quanto spazio è stato utilizzato su ciascun nodo di archiviazione e valutare quanto spazio libero è disponibile negli altri siti nella griglia.
+
+.Prima di iniziare
+Prima di dismettere un sito, è necessario verificare la quantità di dati degli oggetti presenti nel sito.
+
+* Se si sta eseguendo la dismissione di un sito connesso, è necessario comprendere quanti dati oggetto sono attualmente presenti nel sito prima di aggiornare ILM.  In base alle capacità del sito e alle esigenze di protezione dei dati, è possibile creare nuove regole ILM per spostare i dati in altri siti o per eliminare i dati degli oggetti dal sito.
+* Se possibile, eseguire tutte le espansioni necessarie del nodo di archiviazione prima di avviare la procedura di dismissione.
+* Se si esegue la dismissione di un sito disconnesso, è necessario comprendere quanti dati degli oggetti diventeranno permanentemente inaccessibili quando si rimuove il sito.
+
+
+
+CAUTION: Se si esegue la dismissione di un sito disconnesso, ILM non può spostare o eliminare i dati degli oggetti.  Tutti i dati rimasti sul sito andranno persi.  Tuttavia, se la tua policy ILM è stata progettata per proteggere dalla perdita di un singolo sito, copie dei dati dell'oggetto saranno comunque presenti sui siti rimanenti. Vedere link:../ilm/using-multiple-storage-pools-for-cross-site-replication.html["Abilita la protezione contro la perdita del sito"] .
+
+.Passi
+. Dal passaggio 2 (Visualizza dettagli), esamina tutti gli avvisi relativi al sito che hai selezionato per la rimozione.
++
+image::../media/decommission_site_step_2_site_warnings.png[Avvertenze sul sito di dismissione Fase 2]
+
++
+In questi casi viene visualizzato un avviso:
+
++
+** Il sito include un Gateway Node.  Se i client S3 si stanno attualmente connettendo a questo nodo, è necessario configurare un nodo equivalente in un altro sito.  Prima di procedere con la procedura di dismissione, assicurarsi che i client possano connettersi al nodo sostitutivo.
+** Il sito contiene una miscela di elementi connessi (image:../media/icon_alert_green_checkmark.png["Icona Avviso Segno di spunta verde"] ) e nodi disconnessi (image:../media/icon_alarm_gray_administratively_down.png["Icona Allarme Grigio Amministrativamente Giù"] Oimage:../media/icon_alarm_blue_unknown.png["Icona Allarme Blu Sconosciuto"] ).  Prima di poter rimuovere questo sito, è necessario riportare online tutti i nodi offline.
+
+
+. Esamina i dettagli sul sito che hai scelto di rimuovere.
++
+image::../media/decommission_site_step_2_view_details.png[Fase 2 dello smantellamento del sito Visualizza i dettagli]
+
++
+Per il sito selezionato sono incluse le seguenti informazioni:
+
++
+** Numero di nodi
+** Lo spazio totale utilizzato, lo spazio libero e la capacità di tutti i nodi di archiviazione nel sito.
++
+*** Per la dismissione di un sito connesso, il valore *Spazio utilizzato* rappresenta la quantità di dati oggetto che devono essere spostati in altri siti o eliminati con ILM.
+*** Per la dismissione di un sito disconnesso, il valore *Spazio utilizzato* indica la quantità di dati dell'oggetto che diventerà inaccessibile quando si rimuove il sito.
+
+
+** Nomi dei nodi, tipi e stati di connessione:
++
+*** image:../media/icon_alert_green_checkmark.png["Icona Avviso Segno di spunta verde"](Collegato)
+*** image:../media/icon_alarm_gray_administratively_down.png["Icona Allarme Grigio Amministrativamente Giù"](Amministrativamente inattivo)
+*** image:../media/icon_alarm_blue_unknown.png["Icona Allarme Blu Sconosciuto"](Sconosciuto)
+
+
+** Dettagli su ciascun nodo:
++
+*** Per ogni nodo di archiviazione, la quantità di spazio utilizzata per i dati degli oggetti.
+*** Per i nodi amministrativi e i nodi gateway, se il nodo è attualmente utilizzato in un gruppo ad alta disponibilità (HA).  Non è possibile disattivare un nodo amministrativo o un nodo gateway utilizzato in un gruppo HA.  Prima di iniziare la dismissione, modificare i gruppi HA per rimuovere tutti i nodi nel sito oppure rimuovere il gruppo HA se include solo nodi da questo sito. Per le istruzioni, vederelink:../admin/managing-high-availability-groups.html["Gestire gruppi ad alta disponibilità (HA)"] .
+
+
+
+
+. Nella sezione Dettagli per altri siti della pagina, valuta quanto spazio è disponibile negli altri siti nella tua griglia.
++
+image::../media/decommission_site_step_2_view_details_for_other_sites.png[Dismissione del sito Fase 2 Visualizza i dettagli per altri siti]
+
++
+Se si sta eseguendo la dismissione di un sito connesso e si prevede di utilizzare ILM per spostare i dati degli oggetti dal sito selezionato (anziché semplicemente eliminarli), è necessario assicurarsi che gli altri siti abbiano capacità sufficiente per ospitare i dati spostati e che rimanga una capacità adeguata per la crescita futura.
+
++
+
+NOTE: Viene visualizzato un avviso se lo *Spazio utilizzato* per il sito che si desidera rimuovere è maggiore dello *Spazio libero totale per altri siti*.  Per garantire che sia disponibile una capacità di archiviazione adeguata dopo la rimozione del sito, potrebbe essere necessario eseguire un'espansione prima di eseguire questa procedura.
+
+. Selezionare *Avanti*.
++
+Viene visualizzato il passaggio 3 (Revisione della politica ILM).
+
+

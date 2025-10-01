@@ -1,0 +1,70 @@
+---
+permalink: tenant/changing-bucket-versioning.html 
+sidebar: sidebar 
+keywords: how to change bucket versioning, disabled versioning, enabled versioning, suspended versioning 
+summary: Se si utilizza un tenant S3, è possibile modificare lo stato di controllo delle versioni per i bucket S3. 
+---
+= Modificare il controllo delle versioni degli oggetti per un bucket
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se si utilizza un tenant S3, è possibile modificare lo stato di controllo delle versioni per i bucket S3.
+
+.Prima di iniziare
+* Hai effettuato l'accesso al Tenant Manager tramite unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Appartieni a un gruppo di utenti che ha illink:tenant-management-permissions.html["Gestisci tutti i bucket o l'autorizzazione di accesso Root"] . Queste autorizzazioni sovrascrivono le impostazioni delle autorizzazioni nei criteri di gruppo o di bucket.
+* Hai verificato che sia disponibile il numero richiesto di nodi di archiviazione e siti.  Se due o più nodi di archiviazione non sono disponibili in nessun sito, oppure se un sito non è disponibile, le modifiche a queste impostazioni potrebbero non essere disponibili.
+
+
+.Informazioni su questo compito
+È possibile abilitare o sospendere il controllo delle versioni degli oggetti per un bucket.  Dopo aver abilitato il controllo delle versioni per un bucket, questo non può tornare a uno stato senza controllo delle versioni.  Tuttavia, è possibile sospendere il controllo delle versioni per il bucket.
+
+* Disabilitato: il controllo delle versioni non è mai stato abilitato
+* Abilitato: il controllo delle versioni è abilitato
+* Sospeso: il controllo delle versioni era precedentemente abilitato ed è sospeso
+
+
+Per ulteriori informazioni, vedere quanto segue:
+
+* link:../s3/object-versioning.html["Versionamento degli oggetti"]
+* link:../ilm/example-4-ilm-rules-and-policy-for-s3-versioned-objects.html["Regole e policy ILM per oggetti con versione S3 (esempio 4)"]
+* link:../ilm/how-objects-are-deleted.html["Come vengono eliminati gli oggetti"]
+
+
+.Passi
+. Selezionare *Visualizza bucket* dalla dashboard oppure selezionare *ARCHIVIAZIONE (S3)* > *Bucket*.
+. Selezionare il nome del bucket dalla tabella.
++
+Viene visualizzata la pagina dei dettagli del bucket.
+
+. Dalla scheda *Opzioni bucket*, seleziona la voce accordion *Versionamento oggetto*.
+. Seleziona uno stato di controllo delle versioni per gli oggetti in questo bucket.
++
+Il controllo delle versioni degli oggetti deve rimanere abilitato per un bucket utilizzato per la replica tra griglie.  Se è abilitato il blocco degli oggetti S3 o la conformità legacy, le opzioni di *Versioning degli oggetti* sono disabilitate.
+
++
+[cols="1a,3a"]
+|===
+| Opzione | Descrizione 
+
+
+ a| 
+Abilita il controllo delle versioni
+ a| 
+Abilita il controllo delle versioni degli oggetti se vuoi archiviare ogni versione di ciascun oggetto in questo bucket.  È quindi possibile recuperare le versioni precedenti di un oggetto, se necessario.
+
+Gli oggetti già presenti nel bucket verranno sottoposti a versioning quando vengono modificati da un utente.
+
+
+
+ a| 
+Sospendi il controllo delle versioni
+ a| 
+Sospendi il controllo delle versioni degli oggetti se non desideri più che vengano create nuove versioni degli oggetti.  È ancora possibile recuperare tutte le versioni esistenti dell'oggetto.
+
+|===
+. Seleziona *Salva modifiche*.
+

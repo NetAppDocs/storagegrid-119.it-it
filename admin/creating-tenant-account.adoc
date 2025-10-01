@@ -1,0 +1,328 @@
+---
+permalink: admin/creating-tenant-account.html 
+sidebar: sidebar 
+keywords: create tenant, tenant account 
+summary: 'È necessario creare almeno un account tenant per controllare l"accesso allo storage nel sistema StorageGRID .' 
+---
+= Crea un account inquilino
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario creare almeno un account tenant per controllare l'accesso allo storage nel sistema StorageGRID .
+
+I passaggi per la creazione di un account tenant variano a seconda chelink:using-identity-federation.html["federazione di identità"] Elink:configuring-sso.html["accesso unico"] sono configurati e se l'account Grid Manager utilizzato per creare l'account tenant appartiene a un gruppo di amministratori con autorizzazione di accesso Root.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Tu hai illink:admin-group-permissions.html["Accesso root o autorizzazione account tenant"] .
+* Se l'account tenant utilizzerà l'origine identità configurata per Grid Manager e si desidera concedere l'autorizzazione di accesso Root per l'account tenant a un gruppo federato, è stato importato tale gruppo federato in Grid Manager.  Non è necessario assegnare alcuna autorizzazione Grid Manager a questo gruppo di amministratori. Vedere link:managing-admin-groups.html["Gestisci gruppi di amministratori"] .
+* Se si desidera consentire a un tenant S3 di clonare i dati dell'account e replicare gli oggetti bucket su un'altra griglia utilizzando una connessione di federazione della griglia:
++
+** Hailink:grid-federation-create-connection.html["configurato la connessione della federazione di griglia"] .
+** Lo stato della connessione è *Connesso*.
+** Hai i permessi di accesso Root.
+** Hai esaminato le considerazioni perlink:grid-federation-manage-tenants.html["gestione degli inquilini autorizzati per la federazione della rete"] .
+** Se l'account tenant utilizzerà l'origine identità configurata per Grid Manager, significa che hai importato lo stesso gruppo federato in Grid Manager su entrambe le griglie.
++
+Quando si crea il tenant, si selezionerà questo gruppo per avere l'autorizzazione di accesso Root iniziale sia per l'account tenant di origine che per quello di destinazione.
+
++
+
+TIP: Se questo gruppo di amministratori non esiste su entrambe le griglie prima di creare il tenant, il tenant non verrà replicato nella destinazione.
+
+
+
+
+
+
+
+== Accedi alla procedura guidata
+
+.Passi
+. Selezionare *INQUILINI*.
+. Seleziona *Crea*.
+
+
+
+
+== Inserisci i dettagli
+
+.Passi
+. Inserisci i dettagli dell'inquilino.
++
+[cols="1a,3a"]
+|===
+| Campo | Descrizione 
+
+
+ a| 
+Nome
+ a| 
+Un nome per l'account dell'inquilino.  I nomi degli inquilini non devono essere univoci.  Quando viene creato l'account tenant, questo riceve un ID account univoco di 20 cifre.
+
+
+
+ a| 
+Descrizione (facoltativa)
+ a| 
+Una descrizione che aiuti a identificare l'inquilino.
+
+Se si sta creando un tenant che utilizzerà una connessione di federazione di griglia, è possibile utilizzare questo campo per identificare il tenant di origine e quello di destinazione.  Ad esempio, questa descrizione per un tenant creato sulla Griglia 1 apparirà anche per il tenant replicato sulla Griglia 2: "Questo tenant è stato creato sulla Griglia 1".
+
+
+
+ a| 
+Tipo di cliente
+ a| 
+Il tipo di protocollo client che questo tenant utilizzerà, *S3* o *Swift*.
+
+*Nota*: il supporto per le applicazioni client Swift è stato deprecato e verrà rimosso in una versione futura.
+
+
+
+ a| 
+Quota di archiviazione (facoltativa)
+ a| 
+Se si desidera che questo tenant disponga di una quota di archiviazione, specificare un valore numerico per la quota e le unità.
+
+|===
+. Selezionare *Continua*.
+
+
+
+
+== [[admin-tenant-select-permissions]]Seleziona autorizzazioni
+
+.Passi
+. Facoltativamente, seleziona le autorizzazioni di base che desideri assegnare a questo tenant.
++
+
+NOTE: Alcune di queste autorizzazioni prevedono requisiti aggiuntivi.  Per maggiori dettagli, seleziona l'icona della guida per ogni autorizzazione.
+
++
+[cols="1a,3a"]
+|===
+| Permesso | Se selezionato... 
+
+
+ a| 
+Consenti i servizi della piattaforma
+ a| 
+Il tenant può utilizzare i servizi della piattaforma S3 come CloudMirror. Vedere link:../admin/manage-platform-services-for-tenants.html["Gestire i servizi della piattaforma per gli account tenant S3"] .
+
+
+
+ a| 
+Utilizzare la propria fonte di identità
+ a| 
+Il tenant può configurare e gestire la propria fonte di identità per gruppi e utenti federati. Questa opzione è disabilitata se hailink:../admin/configuring-sso.html["SSO configurato"] per il tuo sistema StorageGRID .
+
+
+
+ a| 
+Consenti selezione S3
+ a| 
+Il tenant può inviare richieste API S3 SelectObjectContent per filtrare e recuperare i dati degli oggetti. Vedere link:../admin/manage-s3-select-for-tenant-accounts.html["Gestisci S3 Select per gli account tenant"] .
+
+*Importante*: le richieste SelectObjectContent possono ridurre le prestazioni del bilanciatore del carico per tutti i client S3 e tutti i tenant.  Abilitare questa funzionalità solo quando necessario e solo per i tenant attendibili.
+
+|===
+. Facoltativamente, seleziona le autorizzazioni avanzate che desideri assegnare a questo tenant.
++
+[cols="1a,3a"]
+|===
+| Permesso | Se selezionato... 
+
+
+ a| 
+Collegamento della federazione di rete
+ a| 
+L'inquilino può utilizzare una connessione di federazione di rete, che:
+
+** Fa sì che questo tenant e tutti i gruppi e gli utenti tenant aggiunti all'account vengano clonati da questa griglia (la _griglia di origine_) all'altra griglia nella connessione selezionata (la _griglia di destinazione_).
+** Consente a questo tenant di configurare la replica tra griglie tra i bucket corrispondenti su ciascuna griglia.
+
+
+Vedere link:../admin/grid-federation-manage-tenants.html["Gestire gli inquilini autorizzati per la federazione della rete"] .
+
+
+
+ a| 
+Blocco oggetto S3
+ a| 
+Consentire al tenant di utilizzare funzionalità specifiche di S3 Object Lock:
+
+** *Imposta periodo massimo di conservazione* definisce per quanto tempo i nuovi oggetti aggiunti a questo bucket devono essere conservati, a partire dal momento in cui vengono acquisiti.
+** *Consenti modalità di conformità* impedisce agli utenti di sovrascrivere o eliminare versioni di oggetti protetti durante il periodo di conservazione.
+
+
+|===
+. Selezionare *Continua*.
+
+
+
+
+== Definisci l'accesso root e crea il tenant
+
+.Passi
+. Definisci l'accesso root per l'account tenant, a seconda che il tuo sistema StorageGRID utilizzi la federazione delle identità, il Single Sign-On (SSO) o entrambi.
++
+[cols="1a,2a"]
+|===
+| Opzione | Fai questo 
+
+
+ a| 
+Se la federazione delle identità non è abilitata
+ a| 
+Specificare la password da utilizzare quando si accede al tenant come utente root locale.
+
+
+
+ a| 
+Se la federazione delle identità è abilitata
+ a| 
+.. Selezionare un gruppo federato esistente per ottenere l'autorizzazione di accesso Root per il tenant.
+.. Facoltativamente, specificare la password da utilizzare quando si accede al tenant come utente root locale.
+
+
+
+
+ a| 
+Se sono abilitati sia la federazione delle identità che il Single Sign-On (SSO)
+ a| 
+Selezionare un gruppo federato esistente per ottenere l'autorizzazione di accesso Root per il tenant.  Nessun utente locale può effettuare l'accesso.
+
+|===
+. Selezionare *Crea tenant*.
++
+Viene visualizzato un messaggio di conferma e il nuovo inquilino viene elencato nella pagina Inquilini.  Per informazioni su come visualizzare i dettagli degli inquilini e monitorarne l'attività, vederelink:../monitor/monitoring-tenant-activity.html["Monitorare l'attività degli inquilini"] .
+
++
+
+NOTE: L'applicazione delle impostazioni del tenant sulla griglia potrebbe richiedere 15 minuti o più, a seconda della connettività di rete, dello stato del nodo e delle operazioni di Cassandra.
+
+. Se hai selezionato l'autorizzazione *Usa connessione federata alla griglia* per il tenant:
++
+.. Verificare che un tenant identico sia stato replicato sull'altra griglia nella connessione.  Gli inquilini su entrambe le griglie avranno lo stesso ID account di 20 cifre, nome, descrizione, quota e autorizzazioni.
++
+
+NOTE: Se viene visualizzato il messaggio di errore "Tenant creato senza un clone", fare riferimento alle istruzioni inlink:grid-federation-troubleshoot.html["Risolvere gli errori di federazione della griglia"] .
+
+.. Se hai fornito una password utente root locale quando hai definito l'accesso root,link:changing-password-for-tenant-local-root-user.html["cambiare la password per l'utente root locale"] per l'inquilino replicato.
++
+
+TIP: Un utente root locale non può accedere a Tenant Manager sulla griglia di destinazione finché non viene modificata la password.
+
+
+
+
+
+
+
+== Sign in al tenant (facoltativo)
+
+Se necessario, puoi accedere subito al nuovo tenant per completare la configurazione oppure puoi accedere al tenant in un secondo momento.  I passaggi per l'accesso variano a seconda che tu abbia effettuato l'accesso a Grid Manager tramite la porta predefinita (443) o una porta con restrizioni. Vedere link:controlling-access-through-firewalls.html["Controllare l'accesso al firewall esterno"] .
+
+
+
+=== Sign in ora
+
+[cols="1a,3a"]
+|===
+| Se stai utilizzando... | Fai questo... 
+
+
+ a| 
+Porta 443 e si imposta una password per l'utente root locale
+ a| 
+. Seleziona * Sign in come root*.
++
+Quando effettui l'accesso, vengono visualizzati i link per configurare bucket, federazione delle identità, gruppi e utenti.
+
+. Selezionare i link per configurare l'account tenant.
++
+Ogni collegamento apre la pagina corrispondente in Tenant Manager.  Per completare la pagina, vedere illink:../tenant/index.html["istruzioni per l'utilizzo degli account degli inquilini"] .
+
+
+
+
+
+ a| 
+Porta 443 e non hai impostato una password per l'utente root locale
+ a| 
+Selezionare * Sign in* e immettere le credenziali di un utente nel gruppo federato con accesso root.
+
+
+
+ a| 
+Un porto limitato
+ a| 
+. Seleziona *Fine*
+. Selezionare *Limitato* nella tabella Tenant per saperne di più sull'accesso a questo account tenant.
++
+L'URL per Tenant Manager ha questo formato:
+
++
+`https://_FQDN_or_Admin_Node_IP:port_/?accountId=_20-digit-account-id_/`
+
++
+** `_FQDN_or_Admin_Node_IP_`è un nome di dominio completamente qualificato o l'indirizzo IP di un nodo di amministrazione
+** `_port_`è la porta riservata al tenant
+** `_20-digit-account-id_`è l'ID account univoco del tenant
+
+
+
+
+|===
+
+
+=== Sign in più tardi
+
+[cols="1a,3a"]
+|===
+| Se stai utilizzando... | Fai una di queste cose... 
+
+
+ a| 
+Porta 443
+ a| 
+* Da Grid Manager, seleziona *TENANT* e seleziona * Sign in* a destra del nome del tenant.
+* Inserisci l'URL del tenant in un browser web:
++
+`https://_FQDN_or_Admin_Node_IP_/?accountId=_20-digit-account-id_/`
+
++
+** `_FQDN_or_Admin_Node_IP_`è un nome di dominio completamente qualificato o l'indirizzo IP di un nodo di amministrazione
+** `_20-digit-account-id_`è l'ID account univoco del tenant
+
+
+
+
+
+
+ a| 
+Un porto limitato
+ a| 
+* Da Grid Manager, seleziona *TENANTS* e seleziona *Restricted*.
+* Inserisci l'URL del tenant in un browser web:
++
+`https://_FQDN_or_Admin_Node_IP:port_/?accountId=_20-digit-account-id_`
+
++
+** `_FQDN_or_Admin_Node_IP_`è un nome di dominio completamente qualificato o l'indirizzo IP di un nodo di amministrazione
+** `_port_`è la porta riservata solo al tenant
+** `_20-digit-account-id_`è l'ID account univoco del tenant
+
+
+
+
+|===
+
+
+== Configurare il tenant
+
+Seguire le istruzioni inlink:../tenant/index.html["Utilizzare un account tenant"] per gestire gruppi di tenant e utenti, chiavi di accesso S3, bucket, servizi di piattaforma, clonazione di account e replica tra griglie.

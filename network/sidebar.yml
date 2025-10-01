@@ -1,0 +1,41 @@
+---
+section: network
+title: Linee guida per il networking
+entries:
+- title: Rete StorageGRID
+  pdf-filename: Linee guida per la rete StorageGRID
+  url: "/network/index.html"
+- title: Tipi di rete StorageGRID
+  url: "/network/storagegrid-network-types.html"
+- title: Esempi di topologia di rete
+  entries:
+  - title: Topologia della rete a griglia
+    url: "/network/grid-network-topology.html"
+  - title: Topologia della rete amministrativa
+    url: "/network/admin-network-topology.html"
+  - title: Topologia della rete client
+    url: "/network/client-network-topology.html"
+  - title: Topologia per tutte e tre le reti
+    url: "/network/topology-for-all-three-networks.html"
+- title: Requisiti di rete
+  url: "/network/networking-requirements-and-guidelines.html"
+- title: Requisiti specifici della rete
+  url: "/network/network-specific-requirements.html"
+- title: Considerazioni sulla rete specifiche per l'implementazione
+  entries:
+  - title: Distribuzioni Linux
+    url: "/network/linux-deployments.html"
+  - title: Networking e porte per servizi di piattaforma e pool di archiviazione cloud
+    url: "/network/networking-and-ports-for-platform-services-and-cloud-storage-pools.html"
+  - title: Nodi dell'appliance
+    url: "/network/appliance-nodes.html"
+- title: Installazione e provisioning della rete
+  url: "/network/network-installation-and-provisioning.html"
+- title: Linee guida post-installazione
+  url: "/network/post-installation-guidelines.html"
+- title: Riferimento porta di rete
+  entries:
+  - title: Comunicazioni interne al nodo della griglia
+    url: "/network/internal-grid-node-communications.html"
+  - title: Comunicazioni esterne
+    url: "/network/external-communications.html"

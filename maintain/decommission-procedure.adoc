@@ -1,0 +1,24 @@
+---
+permalink: maintain/decommission-procedure.html 
+sidebar: sidebar 
+keywords: how to decommission 
+summary: È possibile eseguire una procedura di dismissione per rimuovere definitivamente i nodi della griglia o un intero sito dal sistema StorageGRID . 
+---
+= Dismettere il nodo o il sito
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile eseguire una procedura di dismissione per rimuovere definitivamente i nodi della griglia o un intero sito dal sistema StorageGRID .
+
+Per rimuovere un nodo della griglia o un sito, eseguire una delle seguenti procedure di dismissione:
+
+* Eseguire unlink:grid-node-decommissioning.html["dismissione del nodo della griglia"] per rimuovere uno o più nodi, che possono trovarsi in uno o più siti.  I nodi rimossi possono essere online e connessi al sistema StorageGRID oppure offline e disconnessi.
+* Eseguire unlink:considerations-for-removing-site.html["dismissione del sito"] per rimuovere un sito.  Si esegue una *decommissionazione del sito connesso* se tutti i nodi sono connessi a StorageGRID.  Si esegue una *decommissionazione del sito disconnesso* se tutti i nodi sono disconnessi da StorageGRID.  Se il sito contiene un mix di nodi connessi e disconnessi, è necessario riportare online tutti i nodi offline.
++
+
+CAUTION: Prima di procedere alla dismissione di un sito disconnesso, contattare il rappresentante dell'account NetApp .  NetApp esaminerà i tuoi requisiti prima di abilitare tutti i passaggi della procedura guidata di dismissione del sito.  Non tentare di disattivare un sito disconnesso se ritieni che sia possibile ripristinarlo o recuperare i dati degli oggetti dal sito.
+
+

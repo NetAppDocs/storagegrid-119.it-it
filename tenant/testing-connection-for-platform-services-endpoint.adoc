@@ -1,0 +1,39 @@
+---
+permalink: tenant/testing-connection-for-platform-services-endpoint.html 
+sidebar: sidebar 
+keywords: how to test platform services endpoint connection 
+summary: 'Se la connessione a un servizio della piattaforma è cambiata, è possibile testare la connessione per l"endpoint per convalidare che la risorsa di destinazione esista e che possa essere raggiunta utilizzando le credenziali specificate.' 
+---
+= Prova la connessione per l'endpoint dei servizi della piattaforma
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se la connessione a un servizio della piattaforma è cambiata, è possibile testare la connessione per l'endpoint per convalidare che la risorsa di destinazione esista e che possa essere raggiunta utilizzando le credenziali specificate.
+
+.Prima di iniziare
+* Hai effettuato l'accesso al Tenant Manager tramite unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Appartieni a un gruppo di utenti che ha illink:tenant-management-permissions.html["Gestisci endpoint o autorizzazione di accesso root"] .
+
+
+.Informazioni su questo compito
+StorageGRID non convalida che le credenziali abbiano le autorizzazioni corrette.
+
+.Passi
+. Selezionare *ARCHIVIAZIONE (S3)* > *Endpoint dei servizi di piattaforma*.
++
+Viene visualizzata la pagina Endpoint dei servizi di piattaforma, che mostra l'elenco degli endpoint dei servizi di piattaforma già configurati.
+
+. Selezionare l'endpoint di cui si desidera testare la connessione.
++
+Viene visualizzata la pagina dei dettagli dell'endpoint.
+
+. Selezionare *Test connessione*.
++
+** Se è possibile raggiungere l'endpoint utilizzando le credenziali specificate, viene visualizzato un messaggio di operazione riuscita.  La connessione all'endpoint viene convalidata da un nodo in ogni sito.
+** Se la convalida dell'endpoint non riesce, viene visualizzato un messaggio di errore.  Se è necessario modificare l'endpoint per correggere l'errore, selezionare *Configurazione* e aggiornare le informazioni.  Quindi, seleziona *Testa e salva modifiche*.
+
+
+

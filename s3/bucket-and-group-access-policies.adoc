@@ -1,0 +1,1371 @@
+---
+permalink: s3/bucket-and-group-access-policies.html 
+sidebar: sidebar 
+keywords: bucket access policies, group access policies 
+summary:  
+---
+= Utilizzare criteri di accesso a bucket e gruppi
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+StorageGRID utilizza il linguaggio delle policy di Amazon Web Services (AWS) per consentire ai tenant S3 di controllare l'accesso ai bucket e agli oggetti all'interno di tali bucket.  Il sistema StorageGRID implementa un sottoinsieme del linguaggio di policy dell'API REST S3.  Le policy di accesso per l'API S3 sono scritte in JSON.
+
+
+
+== Panoramica della politica di accesso
+
+StorageGRID supporta due tipi di criteri di accesso.
+
+* *Politiche bucket*, gestite tramite le operazioni API S3 GetBucketPolicy, PutBucketPolicy e DeleteBucketPolicy oppure tramite l'API Tenant Manager o Tenant Management.  I criteri dei bucket sono associati ai bucket e sono quindi configurati per controllare l'accesso degli utenti nell'account proprietario del bucket o di altri account al bucket e agli oggetti in esso contenuti.  Una policy basata su bucket si applica a un solo bucket e, possibilmente, a più gruppi.
+* *Criteri di gruppo*, configurati tramite Tenant Manager o Tenant Management API.  I criteri di gruppo sono associati a un gruppo nell'account e sono quindi configurati per consentire a tale gruppo di accedere a risorse specifiche di proprietà di tale account.  Un criterio di gruppo si applica a un solo gruppo e, possibilmente, a più bucket.
+
+
+
+NOTE: Non vi è alcuna differenza di priorità tra i criteri di gruppo e quelli di bucket.
+
+I criteri di gruppo e bucket StorageGRID seguono una grammatica specifica definita da Amazon.  All'interno di ogni policy è presente una serie di dichiarazioni di policy e ciascuna dichiarazione contiene i seguenti elementi:
+
+* ID dichiarazione (Sid) (facoltativo)
+* Effetto
+* Principale/Non Principale
+* Risorsa/Non Risorsa
+* Azione/Non azione
+* Condizione (facoltativa)
+
+
+Le istruzioni di policy vengono create utilizzando questa struttura per specificare le autorizzazioni: Concedi <Effetto> per consentire/negare a <Principale> di eseguire <Azione> su <Risorsa> quando si applica <Condizione>.
+
+Ogni elemento della policy viene utilizzato per una funzione specifica:
+
+[cols="1a,2a"]
+|===
+| Elemento | Descrizione 
+
+
+ a| 
+Sid
+ a| 
+L'elemento Sid è facoltativo.  Il Sid è inteso solo come descrizione per l'utente.  Viene memorizzato ma non interpretato dal sistema StorageGRID .
+
+
+
+ a| 
+Effetto
+ a| 
+Utilizzare l'elemento Effetto per stabilire se le operazioni specificate sono consentite o negate.  È necessario identificare le operazioni consentite (o negate) sui bucket o sugli oggetti utilizzando le parole chiave dell'elemento Azione supportate.
+
+
+
+ a| 
+Principale/Non Principale
+ a| 
+È possibile consentire a utenti, gruppi e account di accedere a risorse specifiche ed eseguire azioni specifiche.  Se nella richiesta non è inclusa alcuna firma S3, l'accesso anonimo è consentito specificando il carattere jolly (*) come principale.  Per impostazione predefinita, solo l'account root ha accesso alle risorse di proprietà dell'account.
+
+È sufficiente specificare l'elemento Principal in un criterio bucket.  Per i criteri di gruppo, il gruppo a cui è associato il criterio è l'elemento Principal implicito.
+
+
+
+ a| 
+Risorsa/Non Risorsa
+ a| 
+L'elemento Risorsa identifica bucket e oggetti.  È possibile concedere o negare autorizzazioni a bucket e oggetti utilizzando l'Amazon Resource Name (ARN) per identificare la risorsa.
+
+
+
+ a| 
+Azione/Non azione
+ a| 
+Gli elementi Azione ed Effetto sono i due componenti delle autorizzazioni.  Quando un gruppo richiede una risorsa, gli viene concesso o negato l'accesso alla risorsa.  L'accesso viene negato a meno che non si assegnino autorizzazioni specifiche, ma è possibile utilizzare la negazione esplicita per ignorare un'autorizzazione concessa da un altro criterio.
+
+
+
+ a| 
+Condizione
+ a| 
+L'elemento Condizione è facoltativo.  Le condizioni consentono di creare espressioni per determinare quando applicare una policy.
+
+|===
+Nell'elemento Azione, è possibile utilizzare il carattere jolly (*) per specificare tutte le operazioni o un sottoinsieme di operazioni.  Ad esempio, questa azione corrisponde ad autorizzazioni quali s3:GetObject, s3:PutObject e s3:DeleteObject.
+
+[listing]
+----
+s3:*Object
+----
+Nell'elemento Risorsa è possibile utilizzare i caratteri jolly (\*) e (?).  Mentre l'asterisco (*) corrisponde a 0 o più caratteri, il punto interrogativo (?) corrisponde a qualsiasi singolo carattere.
+
+Nell'elemento Principal, i caratteri jolly non sono supportati, tranne che per impostare l'accesso anonimo, che concede l'autorizzazione a tutti.  Ad esempio, si imposta il carattere jolly (*) come valore Principale.
+
+[listing]
+----
+"Principal":"*"
+----
+[listing]
+----
+"Principal":{"AWS":"*"}
+----
+Nell'esempio seguente, l'istruzione utilizza gli elementi Effetto, Principale, Azione e Risorsa.  Questo esempio mostra un'istruzione completa della policy del bucket che utilizza l'effetto "Consenti" per fornire ai Principals, il gruppo di amministrazione `federated-group/admin` e il gruppo finanziario `federated-group/finance` , autorizzazioni per eseguire l'azione `s3:ListBucket` sul secchio denominato `mybucket` e l'azione `s3:GetObject` su tutti gli oggetti all'interno di quel contenitore.
+
+[listing]
+----
+{
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": [
+          "arn:aws:iam::27233906934684427525:federated-group/admin",
+          "arn:aws:iam::27233906934684427525:federated-group/finance"
+        ]
+      },
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::mybucket",
+        "arn:aws:s3:::mybucket/*"
+      ]
+    }
+  ]
+}
+----
+Il criterio del bucket ha un limite di dimensione di 20.480 byte, mentre il criterio del gruppo ha un limite di dimensione di 5.120 byte.
+
+
+
+== Coerenza per le politiche
+
+Per impostazione predefinita, tutti gli aggiornamenti apportati ai criteri di gruppo sono coerenti.  Quando un criterio di gruppo diventa coerente, le modifiche potrebbero richiedere altri 15 minuti per diventare effettive, a causa della memorizzazione nella cache dei criteri.  Per impostazione predefinita, tutti gli aggiornamenti apportati ai criteri dei bucket sono fortemente coerenti.
+
+Se necessario, è possibile modificare le garanzie di coerenza per gli aggiornamenti dei criteri dei bucket.  Ad esempio, potresti voler rendere disponibile una modifica ai criteri di un bucket durante un'interruzione del sito.
+
+In questo caso, è possibile impostare il `Consistency-Control` intestazione nella richiesta PutBucketPolicy oppure puoi utilizzare la richiesta di coerenza PUT Bucket.  Quando un criterio di bucket diventa coerente, le modifiche potrebbero richiedere altri 8 secondi per diventare effettive, a causa della memorizzazione nella cache dei criteri.
+
+
+NOTE: Se si imposta la coerenza su un valore diverso per risolvere una situazione temporanea, assicurarsi di ripristinare l'impostazione a livello di bucket al valore originale al termine dell'operazione.  In caso contrario, tutte le future richieste di bucket utilizzeranno l'impostazione modificata.
+
+
+
+== Utilizzare ARN nelle dichiarazioni di policy
+
+Nelle dichiarazioni di policy, l'ARN viene utilizzato negli elementi Principal e Resource.
+
+* Utilizzare questa sintassi per specificare l'ARN della risorsa S3:
++
+[listing]
+----
+arn:aws:s3:::bucket-name
+arn:aws:s3:::bucket-name/object_key
+----
+* Utilizzare questa sintassi per specificare l'ARN della risorsa identità (utenti e gruppi):
++
+[listing]
+----
+arn:aws:iam::account_id:root
+arn:aws:iam::account_id:user/user_name
+arn:aws:iam::account_id:group/group_name
+arn:aws:iam::account_id:federated-user/user_name
+arn:aws:iam::account_id:federated-group/group_name
+----
+
+
+Altre considerazioni:
+
+* È possibile utilizzare l'asterisco (*) come carattere jolly per trovare la corrispondenza con zero o più caratteri all'interno della chiave dell'oggetto.
+* I caratteri internazionali, che possono essere specificati nella chiave dell'oggetto, devono essere codificati utilizzando JSON UTF-8 o sequenze di escape JSON \u.  La codifica percentuale non è supportata.
++
+https://www.ietf.org/rfc/rfc2141.txt["Sintassi URN RFC 2141"^]
+
++
+Il corpo della richiesta HTTP per l'operazione PutBucketPolicy deve essere codificato con charset=UTF-8.
+
+
+
+
+
+== Specificare le risorse in una policy
+
+Nelle istruzioni dei criteri, è possibile utilizzare l'elemento Risorsa per specificare il bucket o l'oggetto per cui sono concesse o negate le autorizzazioni.
+
+* Ogni dichiarazione di policy richiede un elemento Risorsa.  In una policy, le risorse sono indicate dall'elemento `Resource` , o in alternativa, `NotResource` per l'esclusione.
+* È possibile specificare le risorse con un ARN di risorsa S3. Per esempio:
++
+[listing]
+----
+"Resource": "arn:aws:s3:::mybucket/*"
+----
+* È anche possibile utilizzare variabili di policy all'interno della chiave dell'oggetto. Per esempio:
++
+[listing]
+----
+"Resource": "arn:aws:s3:::mybucket/home/${aws:username}/*"
+----
+* Il valore della risorsa può specificare un bucket che non esiste ancora al momento della creazione di un criterio di gruppo.
+
+
+
+
+== Specificare i principi in una policy
+
+Utilizzare l'elemento Principal per identificare l'utente, il gruppo o l'account tenant a cui è consentito/negato l'accesso alla risorsa in base all'istruzione di policy.
+
+* Ogni istruzione di policy in una policy di bucket deve includere un elemento Principal.  Le istruzioni di policy in un criterio di gruppo non necessitano dell'elemento Principal perché il gruppo è considerato il principale.
+* In una policy, i mandanti sono indicati dall'elemento "Manager" o, in alternativa, "NotManager" per l'esclusione.
+* Le identità basate sull'account devono essere specificate utilizzando un ID o un ARN:
++
+[listing]
+----
+"Principal": { "AWS": "account_id"}
+"Principal": { "AWS": "identity_arn" }
+----
+* In questo esempio viene utilizzato l'ID account tenant 27233906934684427525, che include l'account root e tutti gli utenti nell'account:
++
+[listing]
+----
+ "Principal": { "AWS": "27233906934684427525" }
+----
+* È possibile specificare solo l'account root:
++
+[listing]
+----
+"Principal": { "AWS": "arn:aws:iam::27233906934684427525:root" }
+----
+* È possibile specificare un utente federato specifico ("Alex"):
++
+[listing]
+----
+"Principal": { "AWS": "arn:aws:iam::27233906934684427525:federated-user/Alex" }
+----
+* È possibile specificare un gruppo federato specifico ("Manager"):
++
+[listing]
+----
+"Principal": { "AWS": "arn:aws:iam::27233906934684427525:federated-group/Managers"  }
+----
+* È possibile specificare un'entità anonima:
++
+[listing]
+----
+"Principal": "*"
+----
+* Per evitare ambiguità, è possibile utilizzare l'UUID dell'utente anziché il nome utente:
++
+[listing]
+----
+arn:aws:iam::27233906934684427525:user-uuid/de305d54-75b4-431b-adb2-eb6b9e546013
+----
++
+Ad esempio, supponiamo che Alex lasci l'organizzazione e il nome utente `Alex` viene eliminato.  Se un nuovo Alex si unisce all'organizzazione e gli viene assegnato lo stesso `Alex` nome utente, il nuovo utente potrebbe ereditare involontariamente i permessi concessi all'utente originale.
+
+* Il valore principale può specificare un nome di gruppo/utente che non esiste ancora al momento della creazione di un criterio bucket.
+
+
+
+
+== Specificare le autorizzazioni in una policy
+
+In una policy, l'elemento Azione viene utilizzato per concedere/negare le autorizzazioni a una risorsa.  Esiste una serie di autorizzazioni che è possibile specificare in una policy, contrassegnate dall'elemento "Azione" o, in alternativa, "NonAzione" per l'esclusione.  Ciascuno di questi elementi è mappato a specifiche operazioni dell'API REST S3.
+
+Nelle tabelle sono elencate le autorizzazioni che si applicano ai bucket e le autorizzazioni che si applicano agli oggetti.
+
+
+NOTE: Amazon S3 ora utilizza l'autorizzazione s3:PutReplicationConfiguration per entrambe le azioni PutBucketReplication e DeleteBucketReplication.  StorageGRID utilizza autorizzazioni separate per ogni azione, in linea con le specifiche originali di Amazon S3.
+
+
+NOTE: Un'operazione di eliminazione viene eseguita quando si utilizza un'istruzione put per sovrascrivere un valore esistente.
+
+
+
+=== Autorizzazioni applicabili ai bucket
+
+[cols="2a,2a,1a"]
+|===
+| Permessi | Operazioni API REST S3 | Personalizzato per StorageGRID 
+
+
+ a| 
+s3:CreaBucket
+ a| 
+CreaBucket
+ a| 
+Sì.
+
+*Nota*: utilizzare solo nei criteri di gruppo.
+
+
+
+ a| 
+s3:EliminaBucket
+ a| 
+EliminaBucket
+ a| 
+
+
+
+ a| 
+s3:DeleteBucketMetadataNotification
+ a| 
+ELIMINA la configurazione della notifica dei metadati del bucket
+ a| 
+SÌ
+
+
+
+ a| 
+s3:EliminaBucketPolicy
+ a| 
+DeleteBucketPolicy
+ a| 
+
+
+
+ a| 
+s3:EliminaConfigurazioneReplicazione
+ a| 
+DeleteBucketReplication
+ a| 
+Sì, autorizzazioni separate per PUT e DELETE
+
+
+
+ a| 
+s3:GetBucketAcl
+ a| 
+OttieniBucketAcl
+ a| 
+
+
+
+ a| 
+s3:GetBucketCompliance
+ a| 
+Conformità GET Bucket (obsoleto)
+ a| 
+SÌ
+
+
+
+ a| 
+s3:GetBucketConsistency
+ a| 
+OTTIENI la coerenza del bucket
+ a| 
+SÌ
+
+
+
+ a| 
+s3:GetBucketCORS
+ a| 
+GetBucketCors
+ a| 
+
+
+
+ a| 
+s3:Ottieni configurazione crittografia
+ a| 
+Ottieni crittografia dei bucket
+ a| 
+
+
+
+ a| 
+s3:GetBucketLastAccessTime
+ a| 
+GET Ora dell'ultimo accesso al bucket
+ a| 
+SÌ
+
+
+
+ a| 
+s3:OttieniPosizioneBucket
+ a| 
+OttieniPosizioneBucket
+ a| 
+
+
+
+ a| 
+s3:GetBucketMetadataNotification
+ a| 
+Configurazione della notifica dei metadati del bucket GET
+ a| 
+SÌ
+
+
+
+ a| 
+s3:OttieniNotificaBucket
+ a| 
+Configurazione di notifica di GetBucket
+ a| 
+
+
+
+ a| 
+s3:GetBucketObjectLockConfiguration
+ a| 
+Ottieni configurazione blocco oggetto
+ a| 
+
+
+
+ a| 
+s3:GetBucketPolicy
+ a| 
+OttieniPoliticaBucket
+ a| 
+
+
+
+ a| 
+s3:OttieniTaggingBucket
+ a| 
+OttieniBucketTagging
+ a| 
+
+
+
+ a| 
+s3:GetBucketVersioning
+ a| 
+GetBucketVersioning
+ a| 
+
+
+
+ a| 
+s3:GetLifecycleConfiguration
+ a| 
+GetBucketLifecycleConfiguration
+ a| 
+
+
+
+ a| 
+s3:OttieniConfigurazioneReplicazione
+ a| 
+OttieniReplicazioneBucket
+ a| 
+
+
+
+ a| 
+s3:ElencaTuttiIMieBucket
+ a| 
+* ListBuckets
+* Utilizzo dello spazio di archiviazione GET
+
+ a| 
+Sì, per l'utilizzo dello spazio di archiviazione GET.
+
+*Nota*: utilizzare solo nei criteri di gruppo.
+
+
+
+ a| 
+s3:ElencoBucket
+ a| 
+* ElencoOggetti
+* HeadBucket
+* Ripristina oggetto
+
+ a| 
+
+
+
+ a| 
+s3:ListBucketMultipartUploads
+ a| 
+* Caricamenti multiparte di List
+* Ripristina oggetto
+
+ a| 
+
+
+
+ a| 
+s3:ListBucketVersions
+ a| 
+Versioni GET Bucket
+ a| 
+
+
+
+ a| 
+s3:PutBucketCompliance
+ a| 
+Conformità al bucket PUT (obsoleto)
+ a| 
+SÌ
+
+
+
+ a| 
+s3:PutBucketConsistency
+ a| 
+PUT Consistenza del secchio
+ a| 
+SÌ
+
+
+
+ a| 
+s3:PutBucketCORS
+ a| 
+* DeleteBucketCors†
+* PutBucketCors
+
+ a| 
+
+
+
+ a| 
+s3:PutEncryptionConfiguration
+ a| 
+* DeleteBucketEncryption
+* PutBucketEncryption
+
+ a| 
+
+
+
+ a| 
+s3:PutBucketLastAccessTime
+ a| 
+Ora dell'ultimo accesso al bucket PUT
+ a| 
+SÌ
+
+
+
+ a| 
+s3:PutBucketMetadataNotification
+ a| 
+Configurazione della notifica dei metadati del bucket PUT
+ a| 
+SÌ
+
+
+
+ a| 
+s3:PutBucketNotification
+ a| 
+Configurazione della notifica PutBucket
+ a| 
+
+
+
+ a| 
+s3:PutBucketObjectLockConfiguration
+ a| 
+* CreateBucket con il `x-amz-bucket-object-lock-enabled: true` intestazione della richiesta (richiede anche l'autorizzazione s3:CreateBucket)
+* PutObjectLockConfiguration
+
+ a| 
+
+
+
+ a| 
+s3:PoliticaPutBucket
+ a| 
+PutBucketPolicy
+ a| 
+
+
+
+ a| 
+s3:PutBucketTagging
+ a| 
+* EliminaBucketTagging†
+* PutBucketTagging
+
+ a| 
+
+
+
+ a| 
+s3:PutBucketVersioning
+ a| 
+PutBucketVersioning
+ a| 
+
+
+
+ a| 
+s3:PutLifecycleConfiguration
+ a| 
+* DeleteBucketLifecycle†
+* Configurazione del ciclo di vita di PutBucket
+
+ a| 
+
+
+
+ a| 
+s3:PutReplicationConfiguration
+ a| 
+PutBucketReplication
+ a| 
+Sì, autorizzazioni separate per PUT e DELETE
+
+|===
+
+
+=== Autorizzazioni applicabili agli oggetti
+
+[cols="2a,2a,1a"]
+|===
+| Permessi | Operazioni API REST S3 | Personalizzato per StorageGRID 
+
+
+ a| 
+s3:AnnullaCaricamentoMultipart
+ a| 
+* Annulla caricamento multiparte
+* Ripristina oggetto
+
+ a| 
+
+
+
+ a| 
+s3:BypassGovernanceRetention
+ a| 
+* EliminaOggetto
+* EliminaOggetti
+* PutObjectRetention
+
+ a| 
+
+
+
+ a| 
+s3:EliminaOggetto
+ a| 
+* EliminaOggetto
+* EliminaOggetti
+* Ripristina oggetto
+
+ a| 
+
+
+
+ a| 
+s3:EliminaTaggingOggetto
+ a| 
+DeleteObjectTagging
+ a| 
+
+
+
+ a| 
+s3:EliminaObjectVersionTagging
+ a| 
+DeleteObjectTagging (una versione specifica dell'oggetto)
+ a| 
+
+
+
+ a| 
+s3:EliminaVersioneOggetto
+ a| 
+DeleteObject (una versione specifica dell'oggetto)
+ a| 
+
+
+
+ a| 
+s3:OttieniOggetto
+ a| 
+* OttieniOggetto
+* HeadObject
+* Ripristina oggetto
+* SelezionaOggettoContenuto
+
+ a| 
+
+
+
+ a| 
+s3:GetObjectAcl
+ a| 
+OttieniOggettoAcl
+ a| 
+
+
+
+ a| 
+s3:GetObjectLegalHold
+ a| 
+OttieniOggettoLegaleHold
+ a| 
+
+
+
+ a| 
+s3:OttieniRitenzioneOggetto
+ a| 
+Ottieni conservazione oggetto
+ a| 
+
+
+
+ a| 
+s3:OttieniTaggingOggetto
+ a| 
+OttieniTaggingOggetto
+ a| 
+
+
+
+ a| 
+s3:GetObjectVersionTagging
+ a| 
+GetObjectTagging (una versione specifica dell'oggetto)
+ a| 
+
+
+
+ a| 
+s3:GetObjectVersion
+ a| 
+GetObject (una versione specifica dell'oggetto)
+ a| 
+
+
+
+ a| 
+s3:ListMultipartUploadParts
+ a| 
+ListParts, RestoreObject
+ a| 
+
+
+
+ a| 
+s3:PutObject
+ a| 
+* MettiOggetto
+* CopiaOggetto
+* Ripristina oggetto
+* CreaCaricamentoMultiparte
+* Caricamento multiparte completo
+* CaricaParte
+* CaricaParteCopia
+
+ a| 
+
+
+
+ a| 
+s3:PutObjectLegalHold
+ a| 
+PutObjectLegalHold
+ a| 
+
+
+
+ a| 
+s3:PutObjectRetention
+ a| 
+PutObjectRetention
+ a| 
+
+
+
+ a| 
+s3:PutObjectTagging
+ a| 
+PutObjectTagging
+ a| 
+
+
+
+ a| 
+s3:PutObjectVersionTagging
+ a| 
+PutObjectTagging (una versione specifica dell'oggetto)
+ a| 
+
+
+
+ a| 
+s3:PutOverwriteObject
+ a| 
+* MettiOggetto
+* CopiaOggetto
+* PutObjectTagging
+* DeleteObjectTagging
+* Caricamento multiparte completo
+
+ a| 
+SÌ
+
+
+
+ a| 
+s3:RipristinaOggetto
+ a| 
+Ripristina oggetto
+ a| 
+
+|===
+
+
+== Utilizzare l'autorizzazione PutOverwriteObject
+
+L'autorizzazione s3:PutOverwriteObject è un'autorizzazione StorageGRID personalizzata che si applica alle operazioni che creano o aggiornano oggetti.  L'impostazione di questa autorizzazione determina se il client può sovrascrivere i dati di un oggetto, i metadati definiti dall'utente o il tagging degli oggetti S3.
+
+Le possibili impostazioni per questa autorizzazione includono:
+
+* *Consenti*: il client può sovrascrivere un oggetto.  Questa è l'impostazione predefinita.
+* *Nega*: Il client non può sovrascrivere un oggetto.  Se impostato su Nega, l'autorizzazione PutOverwriteObject funziona come segue:
++
+** Se un oggetto esistente viene trovato nello stesso percorso:
++
+*** I dati dell'oggetto, i metadati definiti dall'utente o i tag degli oggetti S3 non possono essere sovrascritti.
+*** Tutte le operazioni di acquisizione in corso vengono annullate e viene restituito un errore.
+*** Se è abilitato il controllo delle versioni S3, l'impostazione Nega impedisce alle operazioni PutObjectTagging o DeleteObjectTagging di modificare il TagSet per un oggetto e le sue versioni non correnti.
+
+
+** Se non viene trovato un oggetto esistente, questa autorizzazione non ha effetto.
+
+
+* Quando questa autorizzazione non è presente, l'effetto è lo stesso che si avrebbe se fosse impostato Consenti.
+
+
+
+NOTE: Se l'attuale policy S3 consente la sovrascrittura e l'autorizzazione PutOverwriteObject è impostata su Nega, il client non può sovrascrivere i dati di un oggetto, i metadati definiti dall'utente o i tag degli oggetti. Inoltre, se è selezionata la casella di controllo *Impedisci modifica client* (*CONFIGURAZIONE* > *Impostazioni di sicurezza* > *Rete e oggetti*), tale impostazione sostituisce l'impostazione dell'autorizzazione PutOverwriteObject.
+
+
+
+== Specificare le condizioni in una policy
+
+Le condizioni definiscono quando una politica entrerà in vigore.  Le condizioni sono costituite da operatori e coppie chiave-valore.
+
+Le condizioni utilizzano coppie chiave-valore per la valutazione.  Un elemento Condizione può contenere più condizioni e ogni condizione può contenere più coppie chiave-valore.  Il blocco di condizione utilizza il seguente formato:
+
+[listing, subs="specialcharacters,quotes"]
+----
+Condition: {
+     _condition_type_: {
+          _condition_key_: _condition_values_
+----
+Nell'esempio seguente, la condizione IpAddress utilizza la chiave di condizione SourceIp.
+
+[listing]
+----
+"Condition": {
+    "IpAddress": {
+      "aws:SourceIp": "54.240.143.0/24"
+		...
+},
+		...
+----
+
+
+=== Operatori di condizione supportati
+
+Gli operatori condizionali sono classificati come segue:
+
+* Corda
+* Numerico
+* Booleano
+* indirizzo IP
+* Controllo nullo
+
+
+[cols="1a,2a"]
+|===
+| Operatori di condizione | Descrizione 
+
+
+ a| 
+StringEquals
+ a| 
+Confronta una chiave con un valore stringa in base alla corrispondenza esatta (con distinzione tra maiuscole e minuscole).
+
+
+
+ a| 
+Stringa non uguale
+ a| 
+Confronta una chiave con un valore stringa in base alla corrispondenza negata (sensibile alle maiuscole e alle minuscole).
+
+
+
+ a| 
+StringEqualsIgnoreCase
+ a| 
+Confronta una chiave con un valore stringa in base alla corrispondenza esatta (ignora la distinzione tra maiuscole e minuscole).
+
+
+
+ a| 
+StringNotEqualsIgnoreCase
+ a| 
+Confronta una chiave con un valore stringa in base alla corrispondenza negata (ignora la distinzione tra maiuscole e minuscole).
+
+
+
+ a| 
+StringLike
+ a| 
+Confronta una chiave con un valore stringa in base alla corrispondenza esatta (con distinzione tra maiuscole e minuscole).  Può includere i caratteri jolly * e ?.
+
+
+
+ a| 
+Stringa non piace
+ a| 
+Confronta una chiave con un valore stringa in base alla corrispondenza negata (sensibile alle maiuscole e alle minuscole).  Può includere i caratteri jolly * e ?.
+
+
+
+ a| 
+NumericEquals
+ a| 
+Confronta una chiave con un valore numerico in base alla corrispondenza esatta.
+
+
+
+ a| 
+NumericoNonUguale
+ a| 
+Confronta una chiave con un valore numerico in base alla corrispondenza negata.
+
+
+
+ a| 
+NumericoMaggioreDi
+ a| 
+Confronta una chiave con un valore numerico in base alla corrispondenza "maggiore di".
+
+
+
+ a| 
+NumericoMaggioreDiUguale
+ a| 
+Confronta una chiave con un valore numerico in base alla corrispondenza "maggiore o uguale a".
+
+
+
+ a| 
+NumericoMenoDi
+ a| 
+Confronta una chiave con un valore numerico in base alla corrispondenza "minore di".
+
+
+
+ a| 
+NumericoMinoreUguale
+ a| 
+Confronta una chiave con un valore numerico in base alla corrispondenza "minore o uguale".
+
+
+
+ a| 
+Bool
+ a| 
+Confronta una chiave con un valore booleano in base alla corrispondenza "vero o falso".
+
+
+
+ a| 
+Indirizzo IP
+ a| 
+Confronta una chiave con un indirizzo IP o un intervallo di indirizzi IP.
+
+
+
+ a| 
+NonIndirizzoIP
+ a| 
+Confronta una chiave con un indirizzo IP o un intervallo di indirizzi IP in base alla corrispondenza negata.
+
+
+
+ a| 
+Nullo
+ a| 
+Controlla se una chiave di condizione è presente nel contesto della richiesta corrente.
+
+|===
+
+
+=== Chiavi di condizione supportate
+
+[cols="1a,1a,2a"]
+|===
+| Chiavi di condizione | Azioni | Descrizione 
+
+
+ a| 
+aws:SourceIp
+ a| 
+operatori IP
+ a| 
+Verrà confrontato con l'indirizzo IP da cui è stata inviata la richiesta.  Può essere utilizzato per operazioni su bucket o oggetti.
+
+*Nota:* se la richiesta S3 è stata inviata tramite il servizio Load Balancer sui nodi amministrativi e sui nodi gateway, questa verrà confrontata con l'indirizzo IP a monte del servizio Load Balancer.
+
+*Nota*: se viene utilizzato un bilanciatore del carico di terze parti non trasparente, questo verrà confrontato con l'indirizzo IP di tale bilanciatore del carico.  Qualunque `X-Forwarded-For` l'intestazione verrà ignorata perché non è possibile accertarne la validità.
+
+
+
+ a| 
+aws:nome utente
+ a| 
+Risorsa/Identità
+ a| 
+Verrà confrontato con il nome utente del mittente da cui è stata inviata la richiesta.  Può essere utilizzato per operazioni su bucket o oggetti.
+
+
+
+ a| 
+s3:delimitatore
+ a| 
+s3:ListBucket e
+
+s3:permessi ListBucketVersions
+ a| 
+Verrà confrontato con il parametro delimitatore specificato in una richiesta ListObjects o ListObjectVersions.
+
+
+
+ a| 
+s3:ExistingObjectTag/<chiave-tag>
+ a| 
+s3:EliminaTaggingOggetto
+
+s3:EliminaObjectVersionTagging
+
+s3:OttieniOggetto
+
+s3:GetObjectAcl
+
+3: Ottieni tag oggetto
+
+s3:GetObjectVersion
+
+s3:GetObjectVersionAcl
+
+s3:GetObjectVersionTagging
+
+s3:PutObjectAcl
+
+s3:PutObjectTagging
+
+s3:PutObjectVersionAcl
+
+s3:PutObjectVersionTagging
+ a| 
+Richiederà che l'oggetto esistente abbia la chiave e il valore del tag specifici.
+
+
+
+ a| 
+s3:max-chiavi
+ a| 
+s3:ListBucket e
+
+s3:permessi ListBucketVersions
+ a| 
+Verrà confrontato con il parametro max-keys specificato in una richiesta ListObjects o ListObjectVersions.
+
+
+
+ a| 
+s3:giorni di conservazione rimanenti del blocco dell'oggetto
+ a| 
+s3:PutObject
+ a| 
+Confronta con la data di conservazione specificata in `x-amz-object-lock-retain-until-date` intestazione della richiesta o calcolata dal periodo di conservazione predefinito del bucket per assicurarsi che questi valori siano compresi nell'intervallo consentito per le seguenti richieste:
+
+* MettiOggetto
+* CopiaOggetto
+* CreaCaricamentoMultiparte
+
+
+
+
+ a| 
+s3:giorni di conservazione rimanenti del blocco dell'oggetto
+ a| 
+s3:PutObjectRetention
+ a| 
+Confronta con la retain-until-date specificata nella richiesta PutObjectRetention per garantire che rientri nell'intervallo consentito.
+
+
+
+ a| 
+s3:prefisso
+ a| 
+s3:ListBucket e
+
+s3:permessi ListBucketVersions
+ a| 
+Verrà confrontato con il parametro prefisso specificato in una richiesta ListObjects o ListObjectVersions.
+
+
+
+ a| 
+s3:RequestObjectTag/<chiave-tag>
+ a| 
+s3:PutObject
+
+s3:PutObjectTagging
+
+s3:PutObjectVersionTagging
+ a| 
+Richiederà una chiave e un valore tag specifici quando la richiesta dell'oggetto include il tagging.
+
+|===
+
+
+== Specificare le variabili in una policy
+
+È possibile utilizzare le variabili nelle policy per popolare le informazioni sulle policy quando sono disponibili.  È possibile utilizzare le variabili di policy in `Resource` elemento e nei confronti di stringhe in `Condition` elemento.
+
+In questo esempio, la variabile `${aws:username}` fa parte dell'elemento Risorsa:
+
+[listing]
+----
+"Resource": "arn:aws:s3:::bucket-name/home/${aws:username}/*"
+----
+In questo esempio, la variabile `${aws:username}` fa parte del valore della condizione nel blocco di condizioni:
+
+[listing]
+----
+"Condition": {
+    "StringLike": {
+      "s3:prefix": "${aws:username}/*"
+		...
+},
+		...
+----
+[cols="1a,2a"]
+|===
+| Variabile | Descrizione 
+
+
+ a| 
+`${aws:SourceIp}`
+ a| 
+Utilizza la chiave SourceIp come variabile fornita.
+
+
+
+ a| 
+`${aws:username}`
+ a| 
+Utilizza la chiave nome utente come variabile fornita.
+
+
+
+ a| 
+`${s3:prefix}`
+ a| 
+Utilizza la chiave del prefisso specifico del servizio come variabile fornita.
+
+
+
+ a| 
+`${s3:max-keys}`
+ a| 
+Utilizza la chiave max-keys specifica del servizio come variabile fornita.
+
+
+
+ a| 
+`${*}`
+ a| 
+Carattere speciale.  Utilizza il carattere come carattere letterale *.
+
+
+
+ a| 
+`${?}`
+ a| 
+Carattere speciale.  Utilizza il carattere come carattere ? letterale.
+
+
+
+ a| 
+`${$}`
+ a| 
+Carattere speciale.  Utilizza il carattere come carattere $ letterale.
+
+|===
+
+
+== Creare politiche che richiedono una gestione speciale
+
+Talvolta una policy può concedere autorizzazioni pericolose per la sicurezza o per il proseguimento delle operazioni, ad esempio bloccando l'utente root dell'account.  L'implementazione dell'API REST S3 StorageGRID è meno restrittiva durante la convalida delle policy rispetto ad Amazon, ma altrettanto rigorosa durante la valutazione delle policy.
+
+[cols="2a,1a,2a,2a"]
+|===
+| Descrizione della politica | Tipo di polizza | Comportamento di Amazon | Comportamento StorageGRID 
+
+
+ a| 
+Nega a te stesso qualsiasi autorizzazione all'account root
+ a| 
+Secchio
+ a| 
+Valido e applicato, ma l'account utente root mantiene l'autorizzazione per tutte le operazioni dei criteri del bucket S3
+ a| 
+Stesso
+
+
+
+ a| 
+Nega a te stesso qualsiasi autorizzazione all'utente/gruppo
+ a| 
+Gruppo
+ a| 
+Valido e applicato
+ a| 
+Stesso
+
+
+
+ a| 
+Consentire qualsiasi autorizzazione a un gruppo di account esteri
+ a| 
+Secchio
+ a| 
+Principale non valido
+ a| 
+Valido, ma le autorizzazioni per tutte le operazioni di policy del bucket S3 restituiscono un errore 405 Metodo non consentito quando consentito da una policy
+
+
+
+ a| 
+Consentire a un account esterno root o utente qualsiasi autorizzazione
+ a| 
+Secchio
+ a| 
+Valido, ma le autorizzazioni per tutte le operazioni di policy del bucket S3 restituiscono un errore 405 Metodo non consentito quando consentito da una policy
+ a| 
+Stesso
+
+
+
+ a| 
+Consenti a tutti i permessi per tutte le azioni
+ a| 
+Secchio
+ a| 
+Valido, ma le autorizzazioni per tutte le operazioni di policy del bucket S3 restituiscono un errore 405 Metodo non consentito per l'account esterno root e gli utenti
+ a| 
+Stesso
+
+
+
+ a| 
+Nega a tutti i permessi per tutte le azioni
+ a| 
+Secchio
+ a| 
+Valido e applicato, ma l'account utente root mantiene l'autorizzazione per tutte le operazioni dei criteri del bucket S3
+ a| 
+Stesso
+
+
+
+ a| 
+Il principale è un utente o un gruppo inesistente
+ a| 
+Secchio
+ a| 
+Principale non valido
+ a| 
+Valido
+
+
+
+ a| 
+La risorsa è un bucket S3 inesistente
+ a| 
+Gruppo
+ a| 
+Valido
+ a| 
+Stesso
+
+
+
+ a| 
+Principal è un gruppo locale
+ a| 
+Secchio
+ a| 
+Principale non valido
+ a| 
+Valido
+
+
+
+ a| 
+La policy concede a un account non proprietario (inclusi gli account anonimi) l'autorizzazione a inserire oggetti.
+ a| 
+Secchio
+ a| 
+Valido.  Gli oggetti sono di proprietà dell'account del creatore e la policy del bucket non si applica.  L'account del creatore deve concedere le autorizzazioni di accesso per l'oggetto utilizzando gli ACL degli oggetti.
+ a| 
+Valido.  Gli oggetti sono di proprietà dell'account proprietario del bucket.  Si applica la politica dei bucket.
+
+|===
+
+
+== Protezione WORM (Write-once-read-many)
+
+È possibile creare bucket WORM (write-once-read-many) per proteggere i dati, i metadati degli oggetti definiti dall'utente e il tagging degli oggetti S3.  È possibile configurare i bucket WORM per consentire la creazione di nuovi oggetti e impedire la sovrascrittura o l'eliminazione di contenuti esistenti.  Utilizzare uno degli approcci descritti qui.
+
+Per garantire che le sovrascritture vengano sempre negate, puoi:
+
+* Da Grid Manager, vai su *CONFIGURAZIONE* > *Sicurezza* > *Impostazioni di sicurezza* > *Rete e oggetti* e seleziona la casella di controllo *Impedisci modifiche client*.
+* Applicare le seguenti regole e policy S3:
++
+** Aggiungere un'operazione PutOverwriteObject DENY al criterio S3.
+** Aggiungere un'operazione DeleteObject DENY al criterio S3.
+** Aggiungere un'operazione PutObject ALLOW al criterio S3.
+
+
+
+
+
+NOTE: L'impostazione di DeleteObject su DENY in un criterio S3 non impedisce a ILM di eliminare oggetti quando esiste una regola come "zero copie dopo 30 giorni".
+
+
+NOTE: Anche quando vengono applicate tutte queste regole e policy, non proteggono dalle scritture simultanee (vedere Situazione A).  Proteggono dalle sovrascritture sequenziali completate (vedere Situazione B).
+
+*Situazione A*: Scritture simultanee (non protette)
+
+[listing]
+----
+/mybucket/important.doc
+PUT#1 ---> OK
+PUT#2 -------> OK
+----
+*Situazione B*: Sovrascritture sequenziali completate (protette contro)
+
+[listing]
+----
+/mybucket/important.doc
+PUT#1 -------> PUT#2 ---X (denied)
+----
+.Informazioni correlate
+* link:how-storagegrid-ilm-rules-manage-objects.html["Come le regole StorageGRID ILM gestiscono gli oggetti"]
+* link:example-bucket-policies.html["Criteri di esempio per i bucket"]
+* link:example-group-policies.html["Criteri di gruppo di esempio"]
+* link:../ilm/index.html["Gestire gli oggetti con ILM"]
+* link:../tenant/index.html["Utilizzare un account tenant"]
+

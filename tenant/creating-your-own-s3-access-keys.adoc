@@ -1,0 +1,63 @@
+---
+permalink: tenant/creating-your-own-s3-access-keys.html 
+sidebar: sidebar 
+keywords: how to create your own S3 access key 
+summary: Se si utilizza un tenant S3 e si dispone delle autorizzazioni appropriate, è possibile creare le proprie chiavi di accesso S3.  Per accedere ai tuoi bucket e oggetti devi disporre di una chiave di accesso. 
+---
+= Crea le tue chiavi di accesso S3
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se si utilizza un tenant S3 e si dispone delle autorizzazioni appropriate, è possibile creare le proprie chiavi di accesso S3.  Per accedere ai tuoi bucket e oggetti devi disporre di una chiave di accesso.
+
+.Prima di iniziare
+* Hai effettuato l'accesso al Tenant Manager tramite unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Appartieni a un gruppo di utenti che ha illink:tenant-management-permissions.html["Gestisci le tue credenziali S3 o l'autorizzazione di accesso Root"] .
+
+
+.Informazioni su questo compito
+Puoi creare una o più chiavi di accesso S3 che ti consentono di creare e gestire i bucket per il tuo account tenant.  Dopo aver creato una nuova chiave di accesso, aggiorna l'applicazione con il tuo nuovo ID chiave di accesso e la chiave di accesso segreta.  Per motivi di sicurezza, non creare più chiavi del necessario ed elimina quelle che non utilizzi.  Se hai una sola chiave e questa sta per scadere, creane una nuova prima che scada quella vecchia, quindi eliminala.
+
+Ogni chiave può avere una scadenza specifica o nessuna scadenza.  Per quanto riguarda la scadenza, seguire queste linee guida:
+
+* Imposta una scadenza per le tue chiavi per limitare l'accesso a un determinato periodo di tempo.  Impostare un tempo di scadenza breve può aiutare a ridurre il rischio nel caso in cui l'ID della chiave di accesso e la chiave di accesso segreta vengano accidentalmente esposti.  Le chiavi scadute vengono rimosse automaticamente.
+* Se il rischio per la sicurezza nel tuo ambiente è basso e non hai bisogno di creare periodicamente nuove chiavi, non devi impostare una data di scadenza per le tue chiavi.  Se in seguito decidi di creare nuove chiavi, elimina manualmente quelle vecchie.
+
+
+
+CAUTION: È possibile accedere ai bucket e agli oggetti S3 appartenenti al tuo account utilizzando l'ID chiave di accesso e la chiave di accesso segreta visualizzati per il tuo account in Tenant Manager.  Per questo motivo, proteggi le chiavi di accesso come faresti con una password.  Ruota regolarmente le chiavi di accesso, rimuovi dal tuo account quelle non utilizzate e non condividerle mai con altri utenti.
+
+.Passi
+. Selezionare *ARCHIVIAZIONE (S3)* > *Le mie chiavi di accesso*.
++
+Viene visualizzata la pagina Le mie chiavi di accesso, in cui sono elencate tutte le chiavi di accesso esistenti.
+
+. Seleziona *Crea chiave*.
+. Eseguire una delle seguenti operazioni:
++
+** Seleziona *Non impostare una data di scadenza* per creare una chiave che non scadrà.  (Predefinito)
+** Seleziona *Imposta una data di scadenza* e imposta la data e l'ora di scadenza.
++
+
+NOTE: La data di scadenza può essere al massimo di cinque anni dalla data corrente.  L'orario di scadenza può essere di almeno un minuto rispetto all'orario corrente.
+
+
+
+. Seleziona *Crea chiave di accesso*.
++
+Viene visualizzata la finestra di dialogo Scarica chiave di accesso, in cui sono elencati l'ID della chiave di accesso e la chiave di accesso segreta.
+
+. Copiare l'ID della chiave di accesso e la chiave di accesso segreta in un luogo sicuro oppure selezionare *Scarica .csv* per salvare un file di foglio di calcolo contenente l'ID della chiave di accesso e la chiave di accesso segreta.
++
+
+CAUTION: Non chiudere questa finestra di dialogo finché non hai copiato o scaricato queste informazioni.  Non è possibile copiare o scaricare le chiavi dopo aver chiuso la finestra di dialogo.
+
+. Selezionare *Fine*.
++
+La nuova chiave è elencata nella pagina Le mie chiavi di accesso.
+
+. Se il tuo account tenant dispone dell'autorizzazione *Usa connessione federazione griglia*, puoi facoltativamente utilizzare l'API di gestione tenant per clonare manualmente le chiavi di accesso S3 dal tenant sulla griglia di origine al tenant sulla griglia di destinazione. Vedere link:grid-federation-clone-keys-with-api.html["Clona le chiavi di accesso S3 utilizzando l'API"] .
+

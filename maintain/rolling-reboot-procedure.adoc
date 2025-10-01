@@ -1,0 +1,134 @@
+---
+permalink: maintain/rolling-reboot-procedure.html 
+sidebar: sidebar 
+keywords: reboot nodes, rolling reboot procedure 
+summary: 'È possibile eseguire un riavvio progressivo per riavviare più nodi della griglia senza causare un"interruzione del servizio.' 
+---
+= Eseguire un riavvio progressivo
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile eseguire un riavvio progressivo per riavviare più nodi della griglia senza causare un'interruzione del servizio.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager sul nodo di amministrazione primario e stai utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
++
+
+NOTE: Per eseguire questa procedura è necessario aver effettuato l'accesso al nodo di amministrazione principale.
+
+* Tu hai illink:../admin/admin-group-permissions.html["Autorizzazione di accesso alla manutenzione o alla root"] .
+
+
+.Informazioni su questo compito
+Utilizzare questa procedura se è necessario riavviare più nodi contemporaneamente.  Ad esempio, è possibile utilizzare questa procedura dopo aver modificato la modalità FIPS per la griglialink:../admin/manage-tls-ssh-policy.html["Politica di sicurezza TLS e SSH"] .  Quando si modifica la modalità FIPS, è necessario riavviare tutti i nodi per rendere effettiva la modifica.
+
+
+TIP: Se hai bisogno di riavviare solo un nodo, puoilink:../maintain/rebooting-grid-node-from-grid-manager.html["riavviare il nodo dalla scheda Attività"] .
+
+Quando StorageGRID riavvia i nodi della griglia, emette il `reboot` comando su ciascun nodo, che determina l'arresto e il riavvio del nodo.  Tutti i servizi vengono riavviati automaticamente.
+
+* Il riavvio di un nodo VMware riavvia la macchina virtuale.
+* Il riavvio di un nodo Linux riavvia anche il contenitore.
+* Il riavvio di un nodo StorageGRID Appliance riavvia anche il controller di elaborazione.
+
+
+La procedura di riavvio progressivo può riavviare più nodi contemporaneamente, con le seguenti eccezioni:
+
+* Due nodi dello stesso tipo non verranno riavviati contemporaneamente.
+* I nodi gateway e i nodi amministrativi non verranno riavviati contemporaneamente.
+
+
+Al contrario, questi nodi vengono riavviati in sequenza per garantire che i gruppi HA, i dati degli oggetti e i servizi dei nodi critici rimangano sempre disponibili.
+
+Quando si riavvia il nodo di amministrazione primario, il browser perde temporaneamente l'accesso a Grid Manager, quindi non è più possibile monitorare la procedura.  Per questo motivo, il nodo di amministrazione primario viene riavviato per ultimo.
+
+
+
+== Eseguire un riavvio progressivo
+
+Seleziona i nodi che vuoi riavviare, rivedi le tue selezioni, avvia la procedura di riavvio e monitora l'avanzamento.
+
+
+
+=== Seleziona nodi
+
+Come primo passo, accedi alla pagina Riavvio progressivo e seleziona i nodi che desideri riavviare.
+
+.Passi
+. Selezionare *MANUTENZIONE* > *Attività* > *Riavvio progressivo*.
+. Esaminare lo stato della connessione e le icone di avviso nella colonna *Nome nodo*.
++
+
+TIP: Non è possibile riavviare un nodo se è disconnesso dalla rete.  Le caselle di controllo sono disabilitate per i nodi con queste icone:image:../media/icon_alarm_gray_administratively_down.png["icona punto interrogativo grigio"] Oimage:../media/icon_alarm_blue_unknown.png["icona punto interrogativo blu"] .
+
+. Se alcuni nodi hanno avvisi attivi, rivedere l'elenco degli avvisi nella colonna *Riepilogo avvisi*.
++
+
+TIP: Per visualizzare tutti gli avvisi correnti per un nodo, puoi anche selezionarelink:../monitor/viewing-overview-tab.html["Nodi > Scheda Panoramica"] .
+
+. Facoltativamente, eseguire le azioni consigliate per risolvere eventuali avvisi correnti.
+. Facoltativamente, se tutti i nodi sono connessi e si desidera riavviarli tutti, selezionare la casella di controllo nell'intestazione della tabella e selezionare *Seleziona tutto*.  Altrimenti, seleziona ogni nodo che vuoi riavviare.
++
+È possibile utilizzare le opzioni di filtro della tabella per visualizzare sottoinsiemi di nodi.  Ad esempio, è possibile visualizzare e selezionare solo i nodi di archiviazione oppure tutti i nodi in un determinato sito.
+
+. Seleziona *Rivedi selezione*.
+
+
+
+
+=== Selezione della revisione
+
+In questo passaggio puoi determinare quanto tempo potrebbe richiedere la procedura di riavvio totale e confermare di aver selezionato i nodi corretti.
+
+. Nella pagina Selezione revisione, rivedere il Riepilogo, che indica quanti nodi verranno riavviati e il tempo totale stimato per il riavvio di tutti i nodi.
+. Facoltativamente, per rimuovere un nodo specifico dall'elenco di riavvio, selezionare *Rimuovi*.
+. Facoltativamente, per aggiungere altri nodi, selezionare *Passaggio precedente*, selezionare i nodi aggiuntivi e selezionare *Rivedi selezione*.
+. Quando si è pronti ad avviare la procedura di riavvio progressivo per tutti i nodi selezionati, selezionare *Riavvia nodi*.
+. Se hai scelto di riavviare il nodo di amministrazione primario, leggi il messaggio informativo e seleziona *Sì*.
++
+
+NOTE: Il nodo di amministrazione primario sarà l'ultimo nodo a riavviarsi.  Durante il riavvio di questo nodo, la connessione del browser verrà interrotta.  Quando il nodo di amministrazione primario è nuovamente disponibile, è necessario ricaricare la pagina di riavvio progressivo.
+
+
+
+
+
+=== Monitorare un riavvio progressivo
+
+Mentre è in esecuzione la procedura di riavvio progressivo, è possibile monitorarla dal nodo di amministrazione primario.
+
+.Passi
+. Esaminare l'avanzamento complessivo dell'operazione, che include le seguenti informazioni:
++
+** Numero di nodi riavviati
+** Numero di nodi in fase di riavvio
+** Numero di nodi che devono ancora essere riavviati
+
+
+. Esaminare la tabella per ciascun tipo di nodo.
++
+Le tabelle forniscono una barra di avanzamento dell'operazione su ciascun nodo e mostrano la fase di riavvio per quel nodo, che può essere una delle seguenti:
+
++
+** In attesa di riavviare
+** Interruzione dei servizi
+** Riavvio del sistema
+** Servizi di avviamento
+** Riavvio completato
+
+
+
+
+
+
+== Interrompere la procedura di riavvio progressivo
+
+È possibile interrompere la procedura di riavvio progressivo dal nodo di amministrazione primario.  Quando si interrompe la procedura, tutti i nodi con stato "Arresto servizi in corso", "Riavvio del sistema" o "Avvio servizi in corso" completeranno l'operazione di riavvio.  Tuttavia, questi nodi non saranno più monitorati come parte della procedura.
+
+.Passi
+. Selezionare *MANUTENZIONE* > *Attività* > *Riavvio progressivo*.
+. Dal passaggio *Riavvio del monitor*, selezionare *Interrompi procedura di riavvio*.
+

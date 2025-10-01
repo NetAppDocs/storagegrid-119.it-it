@@ -1,0 +1,40 @@
+---
+permalink: tenant/duplicating-group.html 
+sidebar: sidebar 
+keywords: how to duplicate tenant group 
+summary: È possibile creare nuovi gruppi più rapidamente duplicando un gruppo esistente. 
+---
+= Gruppo duplicato
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile creare nuovi gruppi più rapidamente duplicando un gruppo esistente.
+
+.Prima di iniziare
+* Hai effettuato l'accesso al Tenant Manager tramite unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Appartieni a un gruppo di utenti che dispone dell'autorizzazione di accesso Root. Vedere link:tenant-management-permissions.html["Autorizzazioni di gestione degli inquilini"] .
+
+
+.Passi
+. Selezionare *GESTIONE ACCESSI* > *Gruppi*.
+. Seleziona la casella di controllo relativa al gruppo che desideri duplicare.
+. Seleziona *Duplica gruppo*. Per ulteriori dettagli sulla creazione di un gruppo, vedere le istruzioni per la creazione di gruppi perlink:creating-groups-for-s3-tenant.html["un tenant S3"] o perlink:creating-groups-for-swift-tenant.html["un inquilino Swift"] .
+. Selezionare la scheda *Gruppo locale* per creare un gruppo locale oppure selezionare la scheda *Gruppo federato* per importare un gruppo dall'origine identità configurata in precedenza.
++
+Se l'accesso Single Sign-On (SSO) è abilitato per il sistema StorageGRID , gli utenti appartenenti a gruppi locali non saranno in grado di accedere a Tenant Manager, sebbene possano utilizzare le applicazioni client per gestire le risorse del tenant, in base alink:tenant-management-permissions.html["permessi di gruppo"] .
+
+. Inserisci il nome del gruppo.
++
+** *Gruppo locale*: immettere sia un nome visualizzato che un nome univoco.  Potrai modificare il nome visualizzato in un secondo momento.
+** *Gruppo federato*: immettere il nome univoco.  Per Active Directory, il nome univoco è il nome associato a `sAMAccountName` attributo.  Per OpenLDAP, il nome univoco è il nome associato a `uid` attributo.
+
+
+. Selezionare *Continua*.
+. Se necessario, modificare le autorizzazioni per questo gruppo.
+. Selezionare *Continua*.
+. Se necessario, se si sta duplicando un gruppo per un tenant S3, è possibile selezionare facoltativamente un criterio diverso dai pulsanti di opzione *Aggiungi criterio S3*.  Se hai selezionato un criterio personalizzato, aggiorna la stringa JSON come richiesto.
+. Seleziona *Crea gruppo*.
+

@@ -1,0 +1,73 @@
+---
+permalink: expand/adding-metadata-capacity.html 
+sidebar: sidebar 
+keywords: metadata capacity, add, adding, expand, expansion, guidelines, Storage Nodes, metadata storage 
+summary: Per garantire che sia disponibile spazio adeguato per i metadati degli oggetti, potrebbe essere necessario eseguire una procedura di espansione per aggiungere nuovi nodi di archiviazione in ogni sito. 
+---
+= Aggiungere capacità di metadati
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Per garantire che sia disponibile spazio adeguato per i metadati degli oggetti, potrebbe essere necessario eseguire una procedura di espansione per aggiungere nuovi nodi di archiviazione in ogni sito.
+
+StorageGRID riserva spazio per i metadati degli oggetti sul volume 0 di ciascun nodo di archiviazione.  In ogni sito vengono conservate tre copie di tutti i metadati degli oggetti, distribuite uniformemente tra tutti i nodi di archiviazione.
+
+È possibile utilizzare Grid Manager per monitorare la capacità dei metadati dei nodi di archiviazione e stimare la velocità con cui tale capacità viene consumata.  Inoltre, l'avviso *Archiviazione metadati insufficiente* viene attivato per un nodo di archiviazione quando lo spazio metadati utilizzato raggiunge determinate soglie.
+
+Si noti che la capacità dei metadati degli oggetti di una griglia potrebbe essere consumata più velocemente della sua capacità di archiviazione degli oggetti, a seconda di come si utilizza la griglia.  Ad esempio, se in genere si ingeriscono grandi quantità di piccoli oggetti o si aggiungono grandi quantità di metadati utente o tag agli oggetti, potrebbe essere necessario aggiungere nodi di archiviazione per aumentare la capacità dei metadati, anche se rimane una capacità di archiviazione degli oggetti sufficiente.
+
+Per ulteriori informazioni, vedere quanto segue:
+
+* link:../admin/managing-object-metadata-storage.html["Gestire l'archiviazione dei metadati degli oggetti"]
+* link:../monitor/monitoring-storage-capacity.html#monitor-object-metadata-capacity-for-each-storage-node["Monitorare la capacità dei metadati degli oggetti per ogni nodo di archiviazione"]
+
+
+
+
+== Linee guida per aumentare la capacità dei metadati
+
+Prima di aggiungere nodi di archiviazione per aumentare la capacità dei metadati, rivedere le seguenti linee guida e limitazioni:
+
+* Supponendo che sia disponibile una capacità di archiviazione degli oggetti sufficiente, avere più spazio disponibile per i metadati degli oggetti aumenta il numero di oggetti che è possibile archiviare nel sistema StorageGRID .
+* È possibile aumentare la capacità dei metadati di una griglia aggiungendo uno o più nodi di archiviazione a ciascun sito.
+* Lo spazio effettivamente riservato ai metadati degli oggetti su un dato nodo di archiviazione dipende dall'opzione di archiviazione Spazio riservato ai metadati (impostazione a livello di sistema), dalla quantità di RAM allocata al nodo e dalle dimensioni del volume 0 del nodo.
+* Non è possibile aumentare la capacità dei metadati aggiungendo volumi di archiviazione ai nodi di archiviazione esistenti, perché i metadati vengono archiviati solo sul volume 0.
+* Non è possibile aumentare la capacità dei metadati aggiungendo un nuovo sito.
+* StorageGRID conserva tre copie di tutti i metadati degli oggetti in ogni sito.  Per questo motivo, la capacità dei metadati del tuo sistema è limitata dalla capacità dei metadati del tuo sito più piccolo.
+* Quando si aggiunge capacità di metadati, è necessario aggiungere lo stesso numero di nodi di archiviazione a ciascun sito.
+
+
+I nodi di archiviazione solo metadati hanno requisiti hardware specifici:
+
+* Quando si utilizzano appliance StorageGRID , i nodi solo metadati possono essere configurati solo su appliance SGF6112 con dodici unità da 1,9 TB o dodici unità da 3,8 TB.
+* Quando si utilizzano nodi basati su software, le risorse dei nodi solo metadati devono corrispondere alle risorse dei nodi di archiviazione esistenti. Per esempio:
++
+** Se il sito StorageGRID esistente utilizza appliance SG6000 o SG6100, i nodi basati solo su software devono soddisfare i seguenti requisiti minimi:
++
+*** 128 GB di RAM
+*** CPU a 8 core
+*** SSD da 8 TB o spazio di archiviazione equivalente per il database Cassandra (rangedb/0)
+
+
+** Se il sito StorageGRID esistente utilizza nodi di archiviazione virtuali con 24 GB di RAM, CPU a 8 core e 3 TB o 4 TB di spazio di archiviazione dei metadati, i nodi basati solo su software devono utilizzare risorse simili (24 GB di RAM, CPU a 8 core e 4 TB di spazio di archiviazione dei metadati (rangedb/0).
+
+
+* Quando si aggiunge un nuovo sito StorageGRID , la capacità totale dei metadati del nuovo sito deve corrispondere almeno ai siti StorageGRID esistenti e le risorse del nuovo sito devono corrispondere ai nodi di archiviazione nei siti StorageGRID esistenti.
+
+
+Vedi illink:../admin/managing-object-metadata-storage.html["descrizione di cosa è lo spazio riservato ai metadati"] .
+
+
+
+== Come vengono ridistribuiti i metadati quando si aggiungono nodi di archiviazione
+
+Quando si aggiungono nodi di archiviazione in un'espansione, StorageGRID ridistribuisce i metadati degli oggetti esistenti ai nuovi nodi in ogni sito, aumentando così la capacità complessiva dei metadati della griglia.  Non è richiesta alcuna azione da parte dell'utente.
+
+La figura seguente mostra come StorageGRID ridistribuisce i metadati degli oggetti quando si aggiungono nodi di archiviazione in un'espansione.  Il lato sinistro della figura rappresenta il volume 0 di tre nodi di archiviazione prima di un'espansione.  I metadati stanno consumando una porzione relativamente grande dello spazio metadati disponibile su ciascun nodo ed è stato attivato l'avviso *Spazio di archiviazione metadati insufficiente*.
+
+Il lato destro della figura mostra come i metadati esistenti vengono ridistribuiti dopo che due nodi di archiviazione sono stati aggiunti al sito.  La quantità di metadati su ciascun nodo è diminuita, l'avviso *Spazio di archiviazione metadati insufficiente* non viene più attivato e lo spazio disponibile per i metadati è aumentato.
+
+image::../media/metadata_space_after_expansion.png[Diagramma dei metadati ridistribuiti dopo l'aggiunta di due nodi di archiviazione]

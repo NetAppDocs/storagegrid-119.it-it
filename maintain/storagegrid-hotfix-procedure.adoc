@@ -1,0 +1,53 @@
+---
+permalink: maintain/storagegrid-hotfix-procedure.html 
+sidebar: sidebar 
+keywords: apply hotfix, install hotfix, replace primary admin node 
+summary: 'Potrebbe essere necessario applicare un hotfix al sistema StorageGRID se vengono rilevati e risolti problemi con il software tra un rilascio e l"altro delle funzionalità.' 
+---
+= Procedura di hotfix di StorageGRID
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Potrebbe essere necessario applicare un hotfix al sistema StorageGRID se vengono rilevati e risolti problemi con il software tra un rilascio e l'altro delle funzionalità.
+
+Gli hotfix StorageGRID contengono modifiche software rese disponibili al di fuori di una release di funzionalità o patch.  Le stesse modifiche saranno incluse in una versione futura.  Inoltre, ogni versione di hotfix contiene un riepilogo di tutti gli hotfix precedenti presenti nella versione di funzionalità o patch.
+
+
+
+== Considerazioni per l'applicazione di un hotfix
+
+Non è possibile applicare un hotfix StorageGRID quando è in esecuzione un'altra procedura di manutenzione.  Ad esempio, non è possibile applicare un hotfix mentre è in esecuzione una procedura di dismissione, espansione o ripristino.
+
+
+NOTE: Se una procedura di dismissione di un nodo o di un sito viene sospesa, è possibile applicare in tutta sicurezza un hotfix.  Inoltre, potresti essere in grado di applicare un hotfix durante le fasi finali di una procedura di aggiornamento StorageGRID .  Per maggiori dettagli, consultare le istruzioni per l'aggiornamento del software StorageGRID .
+
+Dopo aver caricato l'hotfix in Grid Manager, l'hotfix viene applicato automaticamente al nodo di amministrazione primario.  Successivamente, puoi approvare l'applicazione dell'hotfix al resto dei nodi nel tuo sistema StorageGRID .
+
+Se un hotfix non riesce ad essere applicato a uno o più nodi, il motivo dell'errore viene visualizzato nella colonna Dettagli della tabella di avanzamento dell'hotfix.  È necessario risolvere i problemi che hanno causato gli errori e quindi ripetere l'intero processo.  I nodi su cui è stata precedentemente applicata correttamente la correzione rapida verranno ignorati nelle applicazioni successive.  È possibile ripetere in tutta sicurezza il processo di hotfix tutte le volte che si desidera, finché tutti i nodi non saranno stati aggiornati.  Affinché l'applicazione sia completa, è necessario che l'hotfix sia installato correttamente su tutti i nodi della griglia.
+
+Sebbene i nodi della griglia vengano aggiornati con la nuova versione dell'hotfix, le modifiche effettive in un hotfix potrebbero interessare solo servizi specifici su tipi specifici di nodi.  Ad esempio, un hotfix potrebbe interessare solo il servizio LDR sui nodi di archiviazione.
+
+
+
+== Come vengono applicati gli hotfix per il ripristino e l'espansione
+
+Dopo che un hotfix è stato applicato alla griglia, il nodo di amministrazione primario installa automaticamente la stessa versione dell'hotfix su tutti i nodi ripristinati tramite operazioni di ripristino o aggiunti in un'espansione.
+
+Tuttavia, se è necessario ripristinare il nodo di amministrazione primario, è necessario installare manualmente la versione corretta StorageGRID e quindi applicare l'hotfix.  La versione finale StorageGRID del nodo di amministrazione primario deve corrispondere alla versione degli altri nodi nella griglia.
+
+L'esempio seguente illustra come applicare un hotfix durante il ripristino del nodo di amministrazione primario:
+
+. Supponiamo che la griglia esegua una versione StorageGRID 11._A.B_ con l'ultimo hotfix.  La "versione griglia" è 11._A.B.y_.
+. Il nodo di amministrazione primario non funziona.
+. Si ridistribuisce il nodo di amministrazione primario utilizzando StorageGRID 11._A.B_ ed si esegue la procedura di ripristino.
++
+
+NOTE: Se necessario, per adattare la versione della griglia, è possibile utilizzare una versione secondaria durante la distribuzione del nodo; non è necessario distribuire prima la versione principale.
+
+. Quindi si applica l'hotfix 11._A.B.y_ al nodo di amministrazione primario.
+
+
+Per ulteriori informazioni, consultare link:configuring-replacement-primary-admin-node.html["Configura il nodo di amministrazione primario sostitutivo"] .

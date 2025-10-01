@@ -1,0 +1,150 @@
+---
+permalink: admin/configure-firewall-controls.html 
+sidebar: sidebar 
+keywords: firewall, privileged IP address, untrusted client network, configure firewall controls, monitor 
+summary: 'È possibile configurare l"accesso alla rete per porte StorageGRID interne specifiche.' 
+---
+= Configurare il firewall interno
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile configurare il firewall StorageGRID per controllare l'accesso alla rete a porte specifiche sui nodi StorageGRID .
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Hailink:../admin/admin-group-permissions.html["autorizzazioni di accesso specifiche"] .
+* Hai esaminato le informazioni inlink:../admin/manage-firewall-controls.html["Gestire i controlli del firewall"] Elink:../network/index.html["Linee guida per il networking"] .
+* Se si desidera che un nodo di amministrazione o un nodo gateway accetti il traffico in entrata solo su endpoint configurati in modo esplicito, è necessario definire gli endpoint del bilanciatore del carico.
++
+
+NOTE: Quando si modifica la configurazione della rete client, le connessioni client esistenti potrebbero non funzionare se gli endpoint del bilanciatore del carico non sono stati configurati.
+
+
+
+.Informazioni su questo compito
+StorageGRID include un firewall interno su ciascun nodo che consente di aprire o chiudere alcune porte sui nodi della griglia.  È possibile utilizzare le schede di controllo Firewall per aprire o chiudere le porte aperte per impostazione predefinita sulla rete Grid, sulla rete di amministrazione e sulla rete client.  È anche possibile creare un elenco di indirizzi IP privilegiati che possono accedere alle porte della griglia chiuse.  Se si utilizza una rete client, è possibile specificare se un nodo si fida del traffico in entrata dalla rete client e configurare l'accesso di porte specifiche sulla rete client.
+
+Limitare il numero di porte aperte agli indirizzi IP esterni alla rete solo a quelle assolutamente necessarie aumenta la sicurezza della rete stessa.  Utilizzare le impostazioni in ciascuna delle tre schede di controllo del firewall per garantire che siano aperte solo le porte necessarie.
+
+Per ulteriori informazioni sull'utilizzo dei controlli del firewall, inclusi esempi, vederelink:../admin/manage-firewall-controls.html["Gestire i controlli del firewall"] .
+
+Per ulteriori informazioni sui firewall esterni e sulla sicurezza di rete, vederelink:../admin/controlling-access-through-firewalls.html["Controllare l'accesso al firewall esterno"] .
+
+
+
+== Controlli del firewall di accesso
+
+.Passi
+. Selezionare *CONFIGURAZIONE* > *Sicurezza* > *Controllo firewall*.
++
+Le tre schede in questa pagina sono descritte inlink:../admin/manage-firewall-controls.html["Gestire i controlli del firewall"] .
+
+. Selezionare una scheda qualsiasi per configurare i controlli del firewall.
++
+È possibile utilizzare queste schede in qualsiasi ordine.  Le configurazioni impostate in una scheda non limitano le operazioni eseguibili nelle altre schede; tuttavia, le modifiche apportate alla configurazione in una scheda potrebbero modificare il comportamento delle porte configurate nelle altre schede.
+
+
+
+
+
+== Elenco indirizzi privilegiati
+
+Utilizzare la scheda Elenco indirizzi privilegiati per concedere agli host l'accesso alle porte chiuse per impostazione predefinita o chiuse dalle impostazioni nella scheda Gestisci accesso esterno.
+
+Per impostazione predefinita, gli indirizzi IP e le subnet privilegiati non dispongono di accesso alla griglia interna.  Inoltre, gli endpoint del bilanciatore del carico e le porte aggiuntive aperte nella scheda Elenco indirizzi privilegiati sono accessibili anche se bloccati nella scheda Gestisci accesso esterno.
+
+
+NOTE: Le impostazioni nella scheda Elenco indirizzi privilegiati non possono sovrascrivere le impostazioni nella scheda Rete client non attendibile.
+
+.Passi
+. Nella scheda Elenco indirizzi privilegiati, immettere l'indirizzo o la subnet IP a cui si desidera concedere l'accesso alle porte chiuse.
+. Facoltativamente, seleziona *Aggiungi un altro indirizzo IP o subnet in notazione CIDR* per aggiungere altri client privilegiati.
++
+
+TIP: Aggiungere il minor numero possibile di indirizzi all'elenco privilegiato.
+
+. Facoltativamente, seleziona *Consenti agli indirizzi IP privilegiati di accedere alle porte interne StorageGRID *. Vedere link:../network/internal-grid-node-communications.html["Porte interne StorageGRID"] .
++
+
+TIP: Questa opzione rimuove alcune protezioni per i servizi interni.  Se possibile, lascialo disattivato.
+
+. Seleziona *Salva*.
+
+
+
+
+== Gestisci l'accesso esterno
+
+Quando una porta viene chiusa nella scheda Gestisci accesso esterno, non è possibile accedervi da nessun indirizzo IP non in rete, a meno che non si aggiunga l'indirizzo IP all'elenco degli indirizzi privilegiati.  Puoi chiudere solo le porte che sono aperte per impostazione predefinita e puoi aprire solo le porte che hai chiuso.
+
+
+NOTE: Le impostazioni nella scheda Gestisci accesso esterno non possono sostituire le impostazioni nella scheda Rete client non attendibile.  Ad esempio, se un nodo non è attendibile, la porta SSH/22 viene bloccata sulla rete client anche se è aperta nella scheda Gestisci accesso esterno.  Le impostazioni nella scheda Rete client non attendibile sovrascrivono le porte chiuse (ad esempio 443, 8443, 9443) sulla rete client.
+
+.Passi
+. Seleziona *Gestisci accesso esterno*.  La scheda visualizza una tabella con tutte le porte esterne (porte accessibili per impostazione predefinita dai nodi non in griglia) per i nodi nella griglia.
+. Configura le porte che vuoi aprire e chiudere utilizzando le seguenti opzioni:
++
+** Utilizzare il pulsante accanto a ciascuna porta per aprire o chiudere la porta selezionata.
+** Selezionare *Apri tutte le porte visualizzate* per aprire tutte le porte elencate nella tabella.
+** Selezionare *Chiudi tutte le porte visualizzate* per chiudere tutte le porte elencate nella tabella.
++
+
+CAUTION: Se chiudi le porte 443 o 8443 di Grid Manager, tutti gli utenti attualmente connessi su una porta bloccata, incluso te, perderanno l'accesso a Grid Manager, a meno che il loro indirizzo IP non sia stato aggiunto all'elenco degli indirizzi privilegiati.
+
++
+
+NOTE: Utilizzare la barra di scorrimento sul lato destro della tabella per assicurarsi di aver visualizzato tutte le porte disponibili.  Utilizzare il campo di ricerca per trovare le impostazioni per qualsiasi porta esterna inserendo un numero di porta.  È possibile immettere un numero di porta parziale.  Ad esempio, se si immette *2*, vengono visualizzate tutte le porte che contengono la stringa "2" nel loro nome.
+
+
+
+. Seleziona *Salva*
+
+
+
+
+== Rete client non attendibile
+
+Se la rete client di un nodo non è attendibile, il nodo accetta solo il traffico in entrata sulle porte configurate come endpoint del bilanciatore del carico e, facoltativamente, sulle porte aggiuntive selezionate in questa scheda.  È possibile utilizzare questa scheda anche per specificare l'impostazione predefinita per i nuovi nodi aggiunti in un'espansione.
+
+
+CAUTION: Le connessioni client esistenti potrebbero non riuscire se gli endpoint del bilanciatore del carico non sono stati configurati.
+
+Le modifiche alla configurazione apportate nella scheda *Rete client non attendibile* sovrascrivono le impostazioni nella scheda *Gestisci accesso esterno*.
+
+.Passi
+. Selezionare *Rete client non attendibile*.
+. Nella sezione Imposta nuovo nodo predefinito, specificare quale deve essere l'impostazione predefinita quando vengono aggiunti nuovi nodi alla griglia in una procedura di espansione.
++
+** *Affidabile* (predefinito): quando un nodo viene aggiunto in un'espansione, la sua rete client è attendibile.
+** *Non attendibile*: quando un nodo viene aggiunto a un'espansione, la sua rete client non è attendibile.
++
+Se necessario, è possibile tornare a questa scheda per modificare l'impostazione per un nuovo nodo specifico.
+
++
+
+NOTE: Questa impostazione non influisce sui nodi esistenti nel sistema StorageGRID .
+
+
+
+. Utilizzare le seguenti opzioni per selezionare i nodi che devono consentire connessioni client solo su endpoint del bilanciatore del carico configurati in modo esplicito o porte aggiuntive selezionate:
++
+** Selezionare *Non considerare attendibili i nodi visualizzati* per aggiungere tutti i nodi visualizzati nella tabella all'elenco Reti client non attendibili.
+** Selezionare *Considera attendibili i nodi visualizzati* per rimuovere tutti i nodi visualizzati nella tabella dall'elenco Reti client non attendibili.
+** Utilizzare il pulsante di attivazione/disattivazione accanto a ciascun nodo per impostare la rete client come attendibile o non attendibile per il nodo selezionato.
++
+Ad esempio, è possibile selezionare *Non considerare attendibili i nodi visualizzati* per aggiungere tutti i nodi all'elenco Reti client non attendibili e quindi utilizzare il pulsante di attivazione/disattivazione accanto a un singolo nodo per aggiungere quel singolo nodo all'elenco Reti client attendibili.
+
++
+
+NOTE: Utilizzare la barra di scorrimento sul lato destro della tabella per assicurarsi di aver visualizzato tutti i nodi disponibili.  Utilizzare il campo di ricerca per trovare le impostazioni di qualsiasi nodo immettendone il nome.  È possibile immettere un nome parziale.  Ad esempio, se si immette *GW*, verranno visualizzati tutti i nodi che hanno la stringa "GW" come parte del loro nome.
+
+
+
+. Seleziona *Salva*.
++
+Le nuove impostazioni del firewall vengono applicate e rese effettive immediatamente.  Le connessioni client esistenti potrebbero non riuscire se gli endpoint del bilanciatore del carico non sono stati configurati.
+
+

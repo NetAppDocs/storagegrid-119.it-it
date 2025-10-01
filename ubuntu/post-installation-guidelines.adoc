@@ -1,0 +1,26 @@
+---
+permalink: ubuntu/post-installation-guidelines.html 
+sidebar: sidebar 
+keywords: after installation guidelines ubuntu or debian 
+summary: 'Dopo aver completato la distribuzione e la configurazione del nodo della griglia, seguire queste linee guida per l"indirizzamento DHCP e le modifiche alla configurazione di rete.' 
+---
+= Linee guida post-installazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dopo aver completato la distribuzione e la configurazione del nodo della griglia, seguire queste linee guida per l'indirizzamento DHCP e le modifiche alla configurazione di rete.
+
+* Se è stato utilizzato DHCP per assegnare gli indirizzi IP, configurare una prenotazione DHCP per ciascun indirizzo IP sulle reti utilizzate.
++
+È possibile configurare DHCP solo durante la fase di distribuzione.  Non è possibile impostare DHCP durante la configurazione.
+
++
+
+NOTE: I nodi si riavviano quando la configurazione della rete Grid viene modificata da DHCP, il che può causare interruzioni se una modifica DHCP interessa più nodi contemporaneamente.
+
+* È necessario utilizzare le procedure di modifica IP se si desidera modificare gli indirizzi IP, le maschere di sottorete e i gateway predefiniti per un nodo della griglia. Vedere link:../maintain/configuring-ip-addresses.html["Configurare gli indirizzi IP"] .
+* Se si apportano modifiche alla configurazione di rete, tra cui modifiche al routing e al gateway, la connettività del client al nodo di amministrazione primario e ad altri nodi della griglia potrebbe andare persa.  A seconda delle modifiche apportate alla rete, potrebbe essere necessario ristabilire queste connessioni.
+

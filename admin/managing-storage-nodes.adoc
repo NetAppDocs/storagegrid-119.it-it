@@ -1,0 +1,22 @@
+---
+permalink: admin/managing-storage-nodes.html 
+sidebar: sidebar 
+keywords: storage nodes, what is a storage node 
+summary: 'I nodi di archiviazione forniscono capacità e servizi di archiviazione su disco.  La gestione dei nodi di archiviazione comporta il monitoraggio della quantità di spazio utilizzabile su ciascun nodo, l"utilizzo delle impostazioni di filigrana e l"applicazione delle impostazioni di configurazione dei nodi di archiviazione.' 
+---
+= Gestisci nodi di archiviazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+I nodi di archiviazione forniscono capacità e servizi di archiviazione su disco.  La gestione dei nodi di archiviazione comporta quanto segue:
+
+* Gestione delle opzioni di archiviazione
+* Comprendere cosa sono le filigrane del volume di archiviazione e come è possibile utilizzare gli override delle filigrane per controllare quando i nodi di archiviazione diventano di sola lettura
+* Monitoraggio e gestione dello spazio utilizzato per i metadati degli oggetti
+* Configurazione delle impostazioni globali per gli oggetti memorizzati
+* Applicazione delle impostazioni di configurazione del nodo di archiviazione
+* Gestione di nodi di archiviazione completi
+

@@ -1,0 +1,111 @@
+---
+permalink: s3/deprecated-put-bucket-compliance-request.html 
+sidebar: sidebar 
+keywords: S3 REST API, S3 operations, PUT deprecated compliance requests 
+summary: La richiesta di conformità del bucket PUT è obsoleta.  Tuttavia, puoi continuare a utilizzare questa richiesta per modificare le impostazioni di conformità per un bucket Conforme legacy esistente. 
+---
+= Obsoleto: richiesta di conformità del bucket PUT
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+La richiesta di conformità del bucket PUT è obsoleta.  Tuttavia, puoi continuare a utilizzare questa richiesta per modificare le impostazioni di conformità per un bucket Conforme legacy esistente.  Ad esempio, è possibile mettere in attesa per motivi legali un bucket esistente o aumentarne il periodo di conservazione.
+
+[NOTE]
+====
+La funzionalità StorageGRID Compliance disponibile nelle precedenti versioni StorageGRID è obsoleta ed è stata sostituita da S3 Object Lock.  Per maggiori dettagli vedere quanto segue:
+
+* link:../s3/use-s3-api-for-s3-object-lock.html["Utilizzare l'API REST S3 per configurare S3 Object Lock"]
+* https://kb.netapp.com/Advice_and_Troubleshooting/Hybrid_Cloud_Infrastructure/StorageGRID/How_to_manage_legacy_Compliant_buckets_in_StorageGRID_11.5["Knowledge Base di NetApp : come gestire i bucket Compliant legacy in StorageGRID 11.5"^]
+
+
+====
+Per completare questa operazione è necessario disporre dell'autorizzazione s3:PutBucketCompliance oppure essere l'account root.
+
+Quando si invia una richiesta di conformità del bucket PUT, è necessario specificare un valore per ogni campo delle impostazioni di conformità.
+
+
+
+== Richiedi esempio
+
+Questa richiesta di esempio modifica le impostazioni di conformità per il bucket denominato `mybucket` .  In questo esempio, gli oggetti in `mybucket` verranno ora conservati per due anni (1.051.200 minuti) anziché uno, a partire dal momento in cui l'oggetto viene inserito nella griglia.  Non esiste alcun vincolo legale su questo secchio.  Ogni oggetto verrà automaticamente eliminato dopo due anni.
+
+[listing, subs="specialcharacters,quotes"]
+----
+PUT /mybucket/?x-ntap-sg-compliance HTTP/1.1
+Date: _date_
+Authorization: _authorization name_
+Host: _host_
+Content-Length: 152
+
+<SGCompliance>
+  <RetentionPeriodMinutes>1051200</RetentionPeriodMinutes>
+  <LegalHold>false</LegalHold>
+  <AutoDelete>true</AutoDelete>
+</SGCompliance>
+----
+[cols="1a,2a"]
+|===
+| Nome | Descrizione 
+
+
+ a| 
+Periodo di conservazioneMinuti
+ a| 
+Durata del periodo di conservazione degli oggetti aggiunti a questo bucket, in minuti.  Il periodo di conservazione inizia quando l'oggetto viene inserito nella griglia.
+
+*Importante* Quando si specifica un nuovo valore per RetentionPeriodMinutes, è necessario specificare un valore uguale o maggiore del periodo di conservazione corrente del bucket.  Dopo aver impostato il periodo di conservazione del bucket, non è possibile diminuire tale valore; è possibile solo aumentarlo.
+
+
+
+ a| 
+LegalHold
+ a| 
+* Vero: questo bucket è attualmente sottoposto a blocco legale.  Gli oggetti in questo bucket non possono essere eliminati finché non viene revocata la sospensione legale, anche se il periodo di conservazione è scaduto.
+* Falso: questo bucket non è attualmente sottoposto a blocco legale.  Gli oggetti in questo bucket possono essere eliminati alla scadenza del periodo di conservazione.
+
+
+
+
+ a| 
+Eliminazione automatica
+ a| 
+* Vero: gli oggetti in questo bucket verranno eliminati automaticamente alla scadenza del periodo di conservazione, a meno che il bucket non sia soggetto a conservazione legale.
+* Falso: gli oggetti in questo bucket non verranno eliminati automaticamente alla scadenza del periodo di conservazione.  Se vuoi eliminarli, devi eliminarli manualmente.
+
+
+|===
+
+
+== Coerenza per le impostazioni di conformità
+
+Quando si aggiornano le impostazioni di conformità per un bucket S3 con una richiesta di conformità del bucket PUT, StorageGRID tenta di aggiornare i metadati del bucket in tutta la griglia.  Per impostazione predefinita, StorageGRID utilizza la coerenza *Strong-global* per garantire che tutti i siti dei data center e tutti i nodi di archiviazione che contengono metadati dei bucket abbiano coerenza di lettura dopo scrittura per le impostazioni di conformità modificate.
+
+Se StorageGRID non riesce a raggiungere la coerenza *Strong-global* perché un sito del data center o più nodi di archiviazione in un sito non sono disponibili, il codice di stato HTTP per la risposta è `503 Service Unavailable.`
+
+Se si riceve questa risposta, è necessario contattare l'amministratore della rete per assicurarsi che i servizi di archiviazione richiesti siano resi disponibili il prima possibile.  Se l'amministratore della rete non è in grado di rendere disponibili sufficienti nodi di archiviazione in ciascun sito, il supporto tecnico potrebbe consigliarti di riprovare la richiesta non riuscita forzando la coerenza *Strong-site*.
+
+
+CAUTION: Non forzare mai la coerenza *Strong-site* per la conformità del bucket PUT, a meno che non ti sia stato chiesto di farlo dal supporto tecnico e a meno che tu non comprenda le potenziali conseguenze dell'utilizzo di questo livello.
+
+Quando la coerenza viene ridotta a *Strong-site*, StorageGRID garantisce che le impostazioni di conformità aggiornate avranno coerenza di lettura dopo scrittura solo per le richieste client all'interno di un sito.  Ciò significa che il sistema StorageGRID potrebbe avere temporaneamente più impostazioni incoerenti per questo bucket finché tutti i siti e i nodi di archiviazione non saranno disponibili.  Impostazioni incoerenti possono dare luogo a comportamenti inaspettati e indesiderati.  Ad esempio, se si sottopone un bucket a un blocco legale e si impone una minore coerenza, le precedenti impostazioni di conformità del bucket (ovvero il blocco legale) potrebbero continuare a essere valide in alcuni siti di data center.  Di conseguenza, gli oggetti che ritieni siano in sospeso a fini legali potrebbero essere eliminati alla scadenza del periodo di conservazione, dall'utente o tramite l'eliminazione automatica, se abilitata.
+
+Per forzare l'uso della coerenza *Strong-site*, riemettere la richiesta di conformità del bucket PUT e includere `Consistency-Control` Intestazione della richiesta HTTP, come segue:
+
+[listing]
+----
+PUT /mybucket/?x-ntap-sg-compliance HTTP/1.1
+Consistency-Control: strong-site
+----
+
+
+== Risposte di errore
+
+* Se il bucket non è stato creato per essere conforme, il codice di stato HTTP per la risposta è `404 Not Found` .
+* Se `RetentionPeriodMinutes` nella richiesta è inferiore al periodo di conservazione corrente del bucket, il codice di stato HTTP è `400 Bad Request` .
+
+
+.Informazioni correlate
+link:deprecated-put-bucket-request-modifications-for-compliance.html["Obsoleto: modifiche alla richiesta PUT Bucket per conformità"]

@@ -1,0 +1,33 @@
+---
+permalink: maintain/index.html 
+sidebar: sidebar 
+keywords: maintain overview, maintenance overview, about maintain, about maintenance 
+summary: Le attività di manutenzione della rete includono la dismissione di un nodo o di un sito, la ridenominazione di una rete, di un nodo o di un sito e la manutenzione della rete.  È inoltre possibile eseguire procedure host e middleware e procedure del nodo della griglia. 
+---
+= Manutenzione della rete
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Le attività di manutenzione della rete includono la dismissione di un nodo o di un sito, la ridenominazione di una rete, di un nodo o di un sito e la manutenzione delle reti.  È inoltre possibile eseguire procedure host e middleware e procedure del nodo della griglia.
+
+
+NOTE: In queste istruzioni, "Linux" si riferisce a una distribuzione Red Hat® Enterprise Linux®, Ubuntu® o Debian®. Per un elenco delle versioni supportate, vedere https://imt.netapp.com/matrix/#welcome["Strumento matrice di interoperabilità NetApp"^] .
+
+
+
+== Prima di iniziare
+
+* Hai una conoscenza approfondita del sistema StorageGRID .
+* Hai esaminato la topologia del tuo sistema StorageGRID e hai compreso la configurazione della griglia.
+* L'utente è consapevole che è necessario seguire scrupolosamente tutte le istruzioni e prestare attenzione a tutti gli avvertimenti.
+* L'utente è consapevole che le procedure di manutenzione non descritte non sono supportate né richiedono un impegno di servizi.
+
+
+
+
+== Procedure di manutenzione per gli elettrodomestici
+
+Per le procedure hardware, vedere https://docs.netapp.com/us-en/storagegrid-appliances/commonhardware/index.html["istruzioni di manutenzione per il tuo dispositivo StorageGRID"^] .

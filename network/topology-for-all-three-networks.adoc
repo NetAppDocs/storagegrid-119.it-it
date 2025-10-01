@@ -1,0 +1,25 @@
+---
+permalink: network/topology-for-all-three-networks.html 
+sidebar: sidebar 
+keywords: network topology for storagegrid 
+summary: 'È possibile configurare tutte e tre le reti in una topologia di rete composta da una rete Grid privata, reti amministrative specifiche del sito delimitate e reti client aperte.  Se necessario, l"utilizzo di endpoint di bilanciamento del carico e reti client non attendibili può fornire ulteriore sicurezza.' 
+---
+= Topologia per tutte e tre le reti
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile configurare tutte e tre le reti in una topologia di rete composta da una rete Grid privata, reti amministrative specifiche del sito delimitate e reti client aperte.  Se necessario, l'utilizzo di endpoint di bilanciamento del carico e reti client non attendibili può fornire ulteriore sicurezza.
+
+In questo esempio:
+
+* La rete Grid viene utilizzata per il traffico di rete correlato alle operazioni di gestione degli oggetti interni.
+* La rete amministrativa viene utilizzata per il traffico correlato alle funzioni amministrative.
+* La rete client viene utilizzata per il traffico correlato alle richieste client S3.
+
+
+*Esempio di topologia: reti Grid, Admin e Client*
+
+image::../media/grid_admin_client_networks.png[Reti client di amministrazione della griglia]

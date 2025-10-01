@@ -1,0 +1,57 @@
+---
+permalink: audit/svrf-object-store-verify-fail.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, SVRF, Object Store Verify Fail 
+summary: 'Questo messaggio viene visualizzato ogni volta che un blocco di contenuto non supera il processo di verifica.  Ogni volta che i dati degli oggetti replicati vengono letti o scritti sul disco, vengono eseguiti diversi controlli di verifica e integrità per garantire che i dati inviati all"utente richiedente siano identici ai dati originariamente inseriti nel sistema.  Se uno di questi controlli fallisce, il sistema mette automaticamente in quarantena i dati dell"oggetto replicato corrotti per impedirne il recupero.' 
+---
+= SVRF: Errore di verifica dell'archivio oggetti
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Questo messaggio viene visualizzato ogni volta che un blocco di contenuto non supera il processo di verifica.  Ogni volta che i dati degli oggetti replicati vengono letti o scritti sul disco, vengono eseguiti diversi controlli di verifica e integrità per garantire che i dati inviati all'utente richiedente siano identici ai dati originariamente inseriti nel sistema.  Se uno di questi controlli fallisce, il sistema mette automaticamente in quarantena i dati dell'oggetto replicato corrotti per impedirne il recupero.
+
+[cols="1a,1a,4a"]
+|===
+| Codice | Campo | Descrizione 
+
+
+ a| 
+CBID
+ a| 
+Identificatore del blocco di contenuto
+ a| 
+Identificatore univoco del blocco di contenuto che non ha superato la verifica.
+
+
+
+ a| 
+RSLT
+ a| 
+Codice risultato
+ a| 
+Tipo di errore di verifica:
+
+CRCF: Controllo di ridondanza ciclico (CRC) non riuscito.
+
+HMAC: controllo del codice di autenticazione dei messaggi basato su hash (HMAC) non riuscito.
+
+EHSH: Hash del contenuto crittografato inaspettato.
+
+PHSH: Hash del contenuto originale inaspettato.
+
+SEQC: sequenza di dati errata sul disco.
+
+PERR: Struttura non valida del file su disco.
+
+DERR: Errore del disco.
+
+FNAM: Nome file errato.
+
+|===
+
+NOTE: Questo messaggio deve essere monitorato attentamente.  Gli errori nella verifica del contenuto possono indicare imminenti guasti hardware.
+
+Per determinare quale operazione ha attivato il messaggio, vedere il valore del campo AMID (ID modulo).  Ad esempio, un valore SVFY indica che il messaggio è stato generato dal modulo Storage Verifier, ovvero una verifica in background, mentre STOR indica che il messaggio è stato attivato dal recupero del contenuto.

@@ -1,0 +1,62 @@
+---
+permalink: maintain/grid-node-decommissioning.html 
+sidebar: sidebar 
+keywords: storagegrid, decommission, remove grid node 
+summary: È possibile utilizzare la procedura di dismissione dei nodi per rimuovere uno o più nodi della griglia in uno o più siti.  Non è possibile disattivare il nodo di amministrazione primario. 
+---
+= Disattivazione del nodo della rete
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile utilizzare la procedura di dismissione dei nodi per rimuovere uno o più nodi della griglia in uno o più siti.  Non è possibile disattivare il nodo di amministrazione primario.
+
+
+
+== Quando dismettere un nodo
+
+Utilizzare la procedura di dismissione del nodo quando si verifica una delle seguenti condizioni:
+
+* Hai aggiunto un nodo di archiviazione più grande in un'espansione e vuoi rimuovere uno o più nodi di archiviazione più piccoli, preservando allo stesso tempo gli oggetti.
++
+
+TIP: Se vuoi sostituire un elettrodomestico vecchio con uno più nuovo, considera https://docs.netapp.com/us-en/storagegrid-appliances/commonhardware/how-appliance-node-cloning-works.html["clonazione del nodo dell'appliance"^] invece di aggiungere un nuovo elettrodomestico in un'espansione e poi dismettere quello vecchio.
+
+* Hai bisogno di meno spazio di archiviazione totale.
+* Non hai più bisogno di un Gateway Node.
+* Non è più necessario un nodo di amministrazione non primario.
+* La tua rete include un nodo disconnesso che non puoi recuperare o rimettere online.
+* La tua griglia include un nodo archivio.
+
+
+
+
+== Come dismettere un nodo
+
+È possibile disattivare i nodi della rete connessi o disconnessi.
+
+Disattivare i nodi connessi:: In generale, è opportuno disattivare i nodi della griglia solo quando sono connessi al sistema StorageGRID e solo quando tutti i nodi sono in condizioni normali (sono presenti icone verdi nelle pagine *NODI* e nella pagina *Disattivazione nodi*).
++
+--
+Per le istruzioni, vederelink:decommissioning-connected-grid-nodes.html["Disattivare i nodi della rete connessi"] .
+
+--
+Disattivare i nodi disconnessi:: In alcuni casi, potrebbe essere necessario dismettere un nodo della rete che non è attualmente connesso alla rete (uno il cui stato è sconosciuto o amministrativamente inattivo).
++
+--
+Per le istruzioni, vederelink:decommissioning-disconnected-grid-nodes.html["Disattivare i nodi della rete disconnessi"] .
+
+--
+
+
+
+
+== Cosa considerare prima di dismettere un nodo
+
+Prima di eseguire una delle due procedure, rivedere le considerazioni per ciascun tipo di nodo:
+
+* link:considerations-for-decommissioning-admin-or-gateway-nodes.html["Considerazioni per la dismissione del nodo di amministrazione o gateway"]
+* link:considerations-for-decommissioning-storage-nodes.html["Considerazioni per la dismissione del nodo di archiviazione"]
+

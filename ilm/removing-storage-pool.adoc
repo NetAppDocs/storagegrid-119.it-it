@@ -1,0 +1,30 @@
+---
+permalink: ilm/removing-storage-pool.html 
+sidebar: sidebar 
+keywords: remove storage pool 
+summary: È possibile rimuovere un pool di archiviazione non utilizzato. 
+---
+= Rimuovere un pool di archiviazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile rimuovere un pool di archiviazione non utilizzato.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Tu hai illink:../admin/admin-group-permissions.html["autorizzazioni di accesso richieste"] .
+
+
+.Passi
+. Selezionare *ILM* > *Pool di archiviazione*.
+. Esaminare la colonna relativa all'utilizzo di ILM nella tabella per determinare se è possibile rimuovere il pool di archiviazione.
++
+Non è possibile rimuovere un pool di archiviazione se è utilizzato in una regola ILM o in un profilo di codifica di cancellazione.  Se necessario, selezionare *_nome pool di archiviazione_* > *Utilizzo ILM* per determinare dove viene utilizzato il pool di archiviazione.
+
+. Se il pool di archiviazione che si desidera rimuovere non è in uso, selezionare la casella di controllo.
+. Seleziona *Rimuovi*.
+. Selezionare *OK*.
+

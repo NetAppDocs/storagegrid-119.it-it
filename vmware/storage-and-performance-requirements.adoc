@@ -1,0 +1,154 @@
+---
+permalink: vmware/storage-and-performance-requirements.html 
+sidebar: sidebar 
+keywords: storage requirements, performance requirements, netapp ontap, fabricpool 
+summary: 'È necessario comprendere i requisiti di archiviazione e prestazioni per i nodi StorageGRID ospitati da macchine virtuali, in modo da poter fornire spazio sufficiente per supportare la configurazione iniziale e la futura espansione dell"archiviazione.' 
+---
+= Requisiti di archiviazione e prestazioni
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario comprendere i requisiti di archiviazione e prestazioni per i nodi StorageGRID ospitati da macchine virtuali, in modo da poter fornire spazio sufficiente per supportare la configurazione iniziale e la futura espansione dell'archiviazione.
+
+
+
+== Requisiti di prestazione
+
+Le prestazioni del volume del sistema operativo e del primo volume di archiviazione influiscono in modo significativo sulle prestazioni complessive del sistema.  Assicurarsi che forniscano prestazioni del disco adeguate in termini di latenza, operazioni di input/output al secondo (IOPS) e throughput.
+
+Tutti i nodi StorageGRID richiedono che l'unità del sistema operativo e tutti i volumi di archiviazione abbiano la memorizzazione nella cache write-back abilitata.  La cache deve trovarsi su un supporto protetto o persistente.
+
+
+
+== Requisiti per le macchine virtuali che utilizzano lo storage NetApp ONTAP
+
+Se si distribuisce un nodo StorageGRID come macchina virtuale con storage assegnato da un sistema NetApp ONTAP , è stato verificato che il volume non ha un criterio di suddivisione in livelli FabricPool abilitato.  Ad esempio, se un nodo StorageGRID è in esecuzione come macchina virtuale su un host VMware, assicurarsi che il volume che supporta il datastore per il nodo non abbia un criterio di suddivisione in livelli FabricPool abilitato.  La disattivazione della suddivisione in livelli FabricPool per i volumi utilizzati con i nodi StorageGRID semplifica la risoluzione dei problemi e le operazioni di archiviazione.
+
+
+NOTE: Non utilizzare mai FabricPool per riportare i dati relativi a StorageGRID a StorageGRID stesso.  Il riordino dei dati StorageGRID su StorageGRID aumenta la complessità operativa e la risoluzione dei problemi.
+
+
+
+== Numero di macchine virtuali richieste
+
+Ogni sito StorageGRID richiede un minimo di tre nodi di archiviazione.
+
+
+
+== Requisiti di archiviazione per tipo di nodo
+
+In un ambiente di produzione, le macchine virtuali per i nodi StorageGRID devono soddisfare requisiti diversi, a seconda dei tipi di nodi.
+
+
+NOTE: Gli snapshot del disco non possono essere utilizzati per ripristinare i nodi della griglia.  Fare invece riferimento allink:../maintain/warnings-and-considerations-for-grid-node-recovery.html["ripristino del nodo della griglia"] procedure per ogni tipo di nodo.
+
+[cols="1a,2a"]
+|===
+| Tipo di nodo | Magazzinaggio 
+
+
+ a| 
+Nodo di amministrazione
+ a| 
+LUN da 100 GB per il sistema operativo
+
+LUN da 200 GB per le tabelle dei nodi di amministrazione
+
+LUN da 200 GB per il registro di controllo del nodo di amministrazione
+
+
+
+ a| 
+Nodo di archiviazione
+ a| 
+LUN da 100 GB per il sistema operativo
+
+3 LUN per ogni nodo di archiviazione su questo host
+
+*Nota*: un nodo di archiviazione può avere da 1 a 16 LUN di archiviazione; si consigliano almeno 3 LUN di archiviazione.
+
+Dimensione minima per LUN: 4 TB
+
+Dimensione massima LUN testata: 39 TB.
+
+
+
+ a| 
+Nodo di archiviazione (solo metadati)
+ a| 
+LUN da 100 GB per il sistema operativo
+
+1 LUN
+
+Dimensione minima per LUN: 4 TB
+
+Dimensione massima LUN testata: 39 TB.
+
+*Nota*: per i nodi di archiviazione solo metadati è richiesto un solo rangedb.
+
+
+
+ a| 
+Nodo Gateway
+ a| 
+LUN da 100 GB per il sistema operativo
+
+|===
+
+NOTE: A seconda del livello di controllo configurato, delle dimensioni degli input utente, come il nome della chiave dell'oggetto S3, e della quantità di dati del registro di controllo da conservare, potrebbe essere necessario aumentare le dimensioni della LUN del registro di controllo su ciascun nodo di amministrazione. In genere, una griglia genera circa 1 KB di dati di controllo per operazione S3, il che significa che una LUN da 200 GB supporterebbe 70 milioni di operazioni al giorno o 800 operazioni al secondo per due o tre giorni.
+
+
+
+== Requisiti di archiviazione per i nodi di archiviazione
+
+Un nodo di archiviazione basato su software può avere da 1 a 16 volumi di archiviazione; si consigliano 3 o più volumi di archiviazione. Ogni volume di archiviazione deve essere pari o superiore a 4 TB.
+
+
+NOTE: Un nodo di archiviazione dell'appliance può avere fino a 48 volumi di archiviazione.
+
+Come mostrato nella figura, StorageGRID riserva spazio per i metadati degli oggetti sul volume di archiviazione 0 di ciascun nodo di archiviazione.  Tutto lo spazio rimanente sul volume di archiviazione 0 e su tutti gli altri volumi di archiviazione nel nodo di archiviazione viene utilizzato esclusivamente per i dati degli oggetti.
+
+image::../media/metadata_space_storage_node.png[Nodo di archiviazione dello spazio dei metadati]
+
+Per garantire ridondanza e proteggere i metadati degli oggetti dalla perdita, StorageGRID memorizza tre copie dei metadati per tutti gli oggetti nel sistema in ogni sito.  Le tre copie dei metadati degli oggetti vengono distribuite uniformemente tra tutti i nodi di archiviazione di ciascun sito.
+
+Quando si installa una griglia con nodi di archiviazione solo metadati, la griglia deve contenere anche un numero minimo di nodi per l'archiviazione degli oggetti.  Vederelink:../primer/what-storage-node-is.html#types-of-storage-nodes["Tipi di nodi di archiviazione"] per ulteriori informazioni sui nodi di archiviazione solo metadati.
+
+* Per una griglia a sito singolo, sono configurati almeno due nodi di archiviazione per oggetti e metadati.
+* Per una griglia multi-sito, almeno un nodo di archiviazione per sito è configurato per oggetti e metadati.
+
+
+Quando si assegna spazio al volume 0 di un nuovo nodo di archiviazione, è necessario assicurarsi che vi sia spazio adeguato per la porzione di tutti i metadati degli oggetti di quel nodo.
+
+* Come minimo, è necessario assegnare almeno 4 TB al volume 0.
++
+
+NOTE: Se si utilizza un solo volume di archiviazione per un nodo di archiviazione e si assegnano 4 TB o meno al volume, il nodo di archiviazione potrebbe entrare nello stato di sola lettura dell'archiviazione all'avvio e archiviare solo i metadati degli oggetti.
+
++
+
+NOTE: Se si assegnano meno di 500 GB al volume 0 (solo per uso non produttivo), il 10% della capacità del volume di archiviazione è riservato ai metadati.
+
+* Le risorse dei nodi basati solo su metadati software devono corrispondere alle risorse dei nodi di archiviazione esistenti. Per esempio:
++
+** Se il sito StorageGRID esistente utilizza appliance SG6000 o SG6100, i nodi basati solo su software devono soddisfare i seguenti requisiti minimi:
++
+*** 128 GB di RAM
+*** CPU a 8 core
+*** SSD da 8 TB o spazio di archiviazione equivalente per il database Cassandra (rangedb/0)
+
+
+** Se il sito StorageGRID esistente utilizza nodi di archiviazione virtuali con 24 GB di RAM, CPU a 8 core e 3 TB o 4 TB di spazio di archiviazione dei metadati, i nodi basati solo su software devono utilizzare risorse simili (24 GB di RAM, CPU a 8 core e 4 TB di spazio di archiviazione dei metadati (rangedb/0).
++
+Quando si aggiunge un nuovo sito StorageGRID , la capacità totale dei metadati del nuovo sito deve corrispondere almeno ai siti StorageGRID esistenti e le risorse del nuovo sito devono corrispondere ai nodi di archiviazione nei siti StorageGRID esistenti.
+
+
+
+* Se si installa un nuovo sistema (StorageGRID 11.6 o versione successiva) e ogni nodo di archiviazione dispone di 128 GB o più di RAM, assegnare 8 TB o più al volume 0.  Utilizzando un valore maggiore per il volume 0 è possibile aumentare lo spazio consentito per i metadati su ciascun nodo di archiviazione.
+* Quando si configurano diversi nodi di archiviazione per un sito, utilizzare la stessa impostazione per il volume 0, se possibile.  Se un sito contiene nodi di archiviazione di dimensioni diverse, il nodo di archiviazione con il volume più piccolo, 0, determinerà la capacità dei metadati di quel sito.
+
+
+Per i dettagli, vai alink:../admin/managing-object-metadata-storage.html["Gestire l'archiviazione dei metadati degli oggetti"] .

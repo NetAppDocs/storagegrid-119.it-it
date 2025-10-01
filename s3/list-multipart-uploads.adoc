@@ -1,0 +1,32 @@
+---
+permalink: s3/list-multipart-uploads.html 
+sidebar: sidebar 
+keywords: ListMultipartUploads, uploads, multipart uploads, bucket 
+summary: 'L"operazione ListMultipartUploads elenca i caricamenti multiparte in corso per un bucket.' 
+---
+= Caricamenti multiparte di List
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+L'operazione ListMultipartUploads elenca i caricamenti multiparte in corso per un bucket.
+
+Sono supportati i seguenti parametri di richiesta:
+
+* `encoding-type`
+* `key-marker`
+* `max-uploads`
+* `prefix`
+* `upload-id-marker`
+* `Host`
+* `Date`
+* `Authorization`
+
+
+
+
+== Controllo delle versioni
+
+Il caricamento multiparte consiste in operazioni separate per avviare il caricamento, elencare i caricamenti, caricare le parti, assemblare le parti caricate e completare il caricamento.  Gli oggetti vengono creati (e sottoposti a controllo di versione, se applicabile) quando viene eseguita l'operazione CompleteMultipartUpload.

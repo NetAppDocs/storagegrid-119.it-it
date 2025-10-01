@@ -1,0 +1,40 @@
+---
+permalink: audit/srem-object-store-remove.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, SREM, Object Store Remove 
+summary: 'Questo messaggio viene visualizzato quando il contenuto viene rimosso dall"archiviazione persistente e non è più accessibile tramite le API standard.' 
+---
+= SREM: Rimozione dell'archivio oggetti
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Questo messaggio viene visualizzato quando il contenuto viene rimosso dall'archiviazione persistente e non è più accessibile tramite le API standard.
+
+[cols="1a,1a,4a"]
+|===
+| Codice | Campo | Descrizione 
+
+
+ a| 
+CBID
+ a| 
+Identificatore del blocco di contenuto
+ a| 
+Identificatore univoco del blocco di contenuto eliminato dalla memoria permanente.
+
+
+
+ a| 
+RSLT
+ a| 
+Codice risultato
+ a| 
+Indica il risultato delle operazioni di rimozione del contenuto.  L'unico valore definito è:
+
+SUCS: Contenuto rimosso dall'archiviazione persistente
+
+|===
+Questo messaggio di controllo indica che un determinato blocco di contenuto è stato eliminato da un nodo e non può più essere richiesto direttamente.  Il messaggio può essere utilizzato per tracciare il flusso di contenuti eliminati all'interno del sistema.

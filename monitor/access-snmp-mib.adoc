@@ -1,0 +1,149 @@
+---
+permalink: monitor/access-snmp-mib.html 
+sidebar: sidebar 
+keywords: mib, snmp, monitoring 
+summary: I file MIB contengono definizioni e informazioni sulle proprietà delle risorse e dei servizi gestiti per i nodi della griglia.  È possibile accedere ai file MIB che definiscono gli oggetti e le notifiche per StorageGRID.  Questi file possono essere utili per monitorare la tua rete. 
+---
+= Accedi ai file MIB
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+I file MIB contengono definizioni e informazioni sulle proprietà delle risorse e dei servizi gestiti per i nodi della griglia.  È possibile accedere ai file MIB che definiscono gli oggetti e le notifiche per StorageGRID.  Questi file possono essere utili per monitorare la tua rete.
+
+Vederelink:using-snmp-monitoring.html["Utilizzare il monitoraggio SNMP"] per ulteriori informazioni sui file SNMP e MIB.
+
+
+
+== Accedi ai file MIB
+
+Per accedere ai file MIB, seguire questi passaggi.
+
+.Passi
+. Selezionare *CONFIGURAZIONE* > *Monitoraggio* > *Agente SNMP*.
+. Nella pagina dell'agente SNMP, seleziona il file che desideri scaricare:
++
+** *NETAPP-STORAGEGRID-MIB.txt*: definisce la tabella degli avvisi e le notifiche (trap) accessibili su tutti i nodi di amministrazione.
+** *ES-NETAPP-06-MIB.mib*: definisce oggetti e notifiche per appliance basate su E-Series.
+** *MIB_1_10.zip*: definisce oggetti e notifiche per appliance con interfaccia BMC .
++
+[]
+====
+
+TIP: È inoltre possibile accedere ai file MIB nella seguente posizione su qualsiasi nodo StorageGRID : `/usr/share/snmp/mibs`
+
+====
+
+
+. Per estrarre gli OID StorageGRID dal file MIB:
++
+.. Ottieni l'OID della radice del MIB StorageGRID :
++
+`root@user-adm1:~ # snmptranslate -On -IR storagegrid`
+
++
+Risultato: `.1.3.6.1.4.1.789.28669` (`28669` è sempre l'OID per StorageGRID)
+
+.. Grep per l'OID StorageGRID nell'intero albero (utilizzando `paste` per unire le linee):
++
+`root@user-adm1:~ # snmptranslate -Tso | paste -d " " - - | grep 28669`
+
+
+
+
+
+
+TIP: IL `snmptranslate` Il comando ha molte opzioni utili per esplorare il MIB.  Questo comando è disponibile su qualsiasi nodo StorageGRID .
+
+
+
+== Contenuto del file MIB
+
+Tutti gli oggetti sono sotto l'OID StorageGRID .
+
+[cols="1a,1a,2a"]
+|===
+| Nome dell'oggetto | ID oggetto (OID) | Descrizione 
+
+
+| .iso.org.dod.internet.  + imprese private.  + netapp.storagegrid | .1.3.6.1.4.1.789.28669  a| 
+Modulo MIB per entità NetApp StorageGRID .
+
+|===
+
+
+== oggetti MIB
+
+[cols="1a,1a,2a"]
+|===
+| Nome dell'oggetto | ID oggetto (OID) | Descrizione 
+
+
+| activeAlertCount | .1.3.6.1.4.1. + 789.28669.1.3  a| 
+Numero di avvisi attivi in activeAlertTable.
+
+
+
+| TabellaAvvisiAttivi | .1.3.6.1.4.1. + 789.28669.1.4  a| 
+Una tabella degli avvisi attivi in ​​StorageGRID.
+
+
+
+| activeAlertId | .1.3.6.1.4.1. + 789.28669.1.4.1.1  a| 
+L'ID dell'avviso.  Unico nel set attuale di avvisi attivi.
+
+
+
+| NomeAvvisoAttivo | .1.3.6.1.4.1. + 789.28669.1.4.1.2  a| 
+Il nome dell'avviso.
+
+
+
+| activeAlertInstance | .1.3.6.1.4.1. + 789.28669.1.4.1.3  a| 
+Il nome dell'entità che ha generato l'avviso, in genere il nome del nodo.
+
+
+
+| activeAlertSeverity | .1.3.6.1.4.1. + 789.28669.1.4.1.4  a| 
+La gravità dell'allerta.
+
+
+
+| activeAlertStartTime | .1.3.6.1.4.1. + 789.28669.1.4.1.5  a| 
+Data e ora in cui è stato attivato l'avviso.
+
+|===
+
+
+== Tipi di notifica (Trappole)
+
+Tutte le notifiche includono le seguenti variabili come varbind:
+
+* activeAlertId
+* NomeAvvisoAttivo
+* activeAlertInstance
+* activeAlertSeverity
+* activeAlertStartTime
+
+
+[cols="1a,1a,2a"]
+|===
+| Tipo di notifica | ID oggetto (OID) | Descrizione 
+
+
+| activeMinorAlert | .1.3.6.1.4.1. + 789.28669.0.6  a| 
+Un avviso di gravità minore
+
+
+
+| activeMajorAlert | .1.3.6.1.4.1. + 789.28669.0.7  a| 
+Un avviso di grave gravità
+
+
+
+| Avviso critico attivo | .1.3.6.1.4.1. + 789.28669.0.8  a| 
+Un avviso con gravità critica
+
+|===

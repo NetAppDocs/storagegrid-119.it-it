@@ -1,0 +1,73 @@
+---
+permalink: tenant/troubleshooting-platform-services-endpoint-errors.html 
+sidebar: sidebar 
+keywords: how to troubleshoot platform services endpoint 
+summary: 'Se si verifica un errore quando StorageGRID tenta di comunicare con un endpoint dei servizi della piattaforma, viene visualizzato un messaggio nella dashboard.  Nella pagina Endpoint dei servizi della piattaforma, la colonna Ultimo errore indica da quanto tempo si è verificato l"errore.  Se le autorizzazioni associate alle credenziali di un endpoint sono errate, non viene visualizzato alcun errore.' 
+---
+= Risolvere gli errori degli endpoint dei servizi della piattaforma
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se si verifica un errore quando StorageGRID tenta di comunicare con un endpoint dei servizi della piattaforma, viene visualizzato un messaggio nella dashboard.  Nella pagina Endpoint dei servizi della piattaforma, la colonna Ultimo errore indica da quanto tempo si è verificato l'errore.  Se le autorizzazioni associate alle credenziali di un endpoint sono errate, non viene visualizzato alcun errore.
+
+
+
+== Determina se si è verificato un errore
+
+Se negli ultimi 7 giorni si sono verificati errori degli endpoint dei servizi della piattaforma, la dashboard di Tenant Manager visualizza un messaggio di avviso.  Per maggiori dettagli sull'errore, puoi andare alla pagina Endpoint dei servizi della piattaforma.
+
+image::../media/tenant_dashboard_endpoint_error.png[messaggio di errore dell'endpoint sul dashboard]
+
+Lo stesso errore che appare nella dashboard appare anche nella parte superiore della pagina Endpoint dei servizi della piattaforma.  Per visualizzare un messaggio di errore più dettagliato:
+
+.Passi
+. Dall'elenco degli endpoint, seleziona quello che presenta l'errore.
+. Nella pagina dei dettagli dell'endpoint, seleziona *Connessione*.  Questa scheda visualizza solo l'errore più recente per un endpoint e indica da quanto tempo si è verificato l'errore.  Errori che includono l'icona X rossaimage:../media/icon_alert_red_critical.png["Icona X rossa"] si sono verificati negli ultimi 7 giorni.
+
+
+
+
+== Controlla se l'errore è ancora attuale
+
+Alcuni errori potrebbero continuare a essere visualizzati nella colonna *Ultimo errore* anche dopo essere stati risolti.  Per verificare se un errore è attuale o per forzare la rimozione di un errore risolto dalla tabella:
+
+.Passi
+. Selezionare l'endpoint.
++
+Viene visualizzata la pagina dei dettagli dell'endpoint.
+
+. Selezionare *Connessione* > *Test connessione*.
+
+
+Selezionando *Test connessione*, StorageGRID convalida che l'endpoint dei servizi della piattaforma esiste e che può essere raggiunto con le credenziali correnti.  La connessione all'endpoint viene convalidata da un nodo in ogni sito.
+
+
+
+== Risolvi gli errori dell'endpoint
+
+È possibile utilizzare il messaggio *Ultimo errore* nella pagina dei dettagli dell'endpoint per determinare la causa dell'errore.  Alcuni errori potrebbero richiedere la modifica dell'endpoint per risolvere il problema.  Ad esempio, può verificarsi un errore CloudMirroring se StorageGRID non è in grado di accedere al bucket S3 di destinazione perché non dispone delle autorizzazioni di accesso corrette o la chiave di accesso è scaduta.  Il messaggio è "È necessario aggiornare le credenziali dell'endpoint o l'accesso alla destinazione" e i dettagli sono "AccessDenied" o "InvalidAccessKeyId".
+
+Se è necessario modificare l'endpoint per risolvere un errore, selezionando *Test e salva modifiche* StorageGRID convalida l'endpoint aggiornato e conferma che può essere raggiunto con le credenziali correnti.  La connessione all'endpoint viene convalidata da un nodo in ogni sito.
+
+.Passi
+. Selezionare l'endpoint.
+. Nella pagina dei dettagli dell'endpoint, seleziona *Configurazione*.
+. Modificare la configurazione dell'endpoint secondo necessità.
+. Selezionare *Connessione* > *Test connessione*.
+
+
+
+
+== Credenziali dell'endpoint con autorizzazioni insufficienti
+
+Quando StorageGRID convalida un endpoint dei servizi della piattaforma, conferma che le credenziali dell'endpoint possono essere utilizzate per contattare la risorsa di destinazione ed esegue un controllo di base delle autorizzazioni.  Tuttavia, StorageGRID non convalida tutte le autorizzazioni richieste per determinate operazioni dei servizi della piattaforma.  Per questo motivo, se si riceve un errore quando si tenta di utilizzare un servizio della piattaforma (ad esempio "403 Forbidden"), verificare le autorizzazioni associate alle credenziali dell'endpoint.
+
+.Informazioni correlate
+* link:../admin/troubleshooting-platform-services.html["Amministra StorageGRID > Risolvi i problemi dei servizi della piattaforma"]
+* link:creating-platform-services-endpoint.html["Crea endpoint dei servizi della piattaforma"]
+* link:testing-connection-for-platform-services-endpoint.html["Prova la connessione per l'endpoint dei servizi della piattaforma"]
+* link:editing-platform-services-endpoint.html["Modifica endpoint dei servizi della piattaforma"]
+

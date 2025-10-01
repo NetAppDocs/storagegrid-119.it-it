@@ -1,0 +1,58 @@
+---
+permalink: maintain/starting-or-restarting-service.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, service, start service, restart service 
+summary: Potrebbe essere necessario avviare un servizio che è stato arrestato oppure potrebbe essere necessario arrestare e riavviare un servizio. 
+---
+= Avvia o riavvia il servizio
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Potrebbe essere necessario avviare un servizio che è stato arrestato oppure potrebbe essere necessario arrestare e riavviare un servizio.
+
+.Prima di iniziare
+Tu hai il `Passwords.txt` file.
+
+.Passi
+. Accedi al nodo della griglia:
++
+.. Immettere il seguente comando: `ssh admin@_grid_node_IP_`
+.. Inserisci la password elencata nel `Passwords.txt` file.
+.. Immettere il seguente comando per passare alla root: `su -`
+.. Inserisci la password elencata nel `Passwords.txt` file.
+
+
++
+Quando si accede come root, il prompt cambia da `$` A `#` .
+
+. Decidere quale comando emettere, a seconda che il servizio sia attualmente in esecuzione o arrestato.
++
+** Se il servizio è attualmente interrotto, utilizzare il `start` comando per avviare manualmente il servizio: `service _servicename_ start`
++
+Per esempio:
+
++
+[listing]
+----
+service ldr start
+----
+** Se il servizio è attualmente in esecuzione, utilizzare il `restart` comando per arrestare il servizio e poi riavviarlo: `service _servicename_ restart`
++
+Per esempio:
+
++
+[listing]
+----
+service ldr restart
+----
++
+
+NOTE: Utilizzando il `restart` il comando è lo stesso dell'utilizzo del `stop` comando seguito dal `start` comando.  Puoi emettere `restart` anche se il servizio è attualmente interrotto.
+
+
+
+. Disconnettersi dalla shell dei comandi: `exit`
+

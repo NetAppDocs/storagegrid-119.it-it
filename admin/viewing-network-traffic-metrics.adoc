@@ -1,0 +1,69 @@
+---
+permalink: admin/viewing-network-traffic-metrics.html 
+sidebar: sidebar 
+keywords: network traffic, traffic classification policy, monitor traffic 
+summary: È possibile monitorare il traffico di rete visualizzando i grafici disponibili nella pagina Criteri di classificazione del traffico. 
+---
+= Visualizza le metriche del traffico di rete
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile monitorare il traffico di rete visualizzando i grafici disponibili nella pagina Criteri di classificazione del traffico.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Tu hai illink:admin-group-permissions.html["Accesso root o autorizzazione account tenant"] .
+
+
+.Informazioni su questo compito
+Per qualsiasi policy di classificazione del traffico esistente, è possibile visualizzare le metriche per il servizio di bilanciamento del carico per determinare se la policy sta limitando correttamente il traffico sulla rete.  I dati nei grafici possono aiutarti a stabilire se è necessario modificare la polizza.
+
+Anche se non vengono stabiliti limiti per una politica di classificazione del traffico, vengono raccolte metriche e i grafici forniscono informazioni utili per comprendere le tendenze del traffico.
+
+.Passi
+. Selezionare *CONFIGURAZIONE* > *Rete* > *Classificazione del traffico*.
++
+Viene visualizzata la pagina Criteri di classificazione del traffico e i criteri esistenti sono elencati nella tabella.
+
+. Selezionare il nome del criterio di classificazione del traffico per il quale si desidera visualizzare le metriche.
+. Selezionare la scheda *Metriche*.
++
+Vengono visualizzati i grafici della politica di classificazione del traffico.  I grafici mostrano le metriche solo per il traffico che corrisponde alla policy selezionata.
+
++
+Nella pagina sono inclusi i seguenti grafici.
+
++
+** Frequenza delle richieste: questo grafico fornisce la quantità di larghezza di banda corrispondente a questa policy gestita da tutti i bilanciatori del carico.  I dati ricevuti includono le intestazioni delle richieste per tutte le richieste e le dimensioni dei dati del corpo per le risposte che contengono dati del corpo.  Inviato include le intestazioni di risposta per tutte le richieste e le dimensioni dei dati del corpo della risposta per le richieste che includono dati del corpo nella risposta.
++
+
+NOTE: Una volta completate le richieste, questo grafico mostra solo l'utilizzo della larghezza di banda.  Per richieste di oggetti lenti o di grandi dimensioni, la larghezza di banda istantanea effettiva potrebbe differire dai valori riportati in questo grafico.
+
+** Tasso di risposta agli errori: questo grafico fornisce una frequenza approssimativa con cui le richieste che corrispondono a questa policy restituiscono errori (codice di stato HTTP >= 400) ai client.
+** Durata media della richiesta (senza errori): questo grafico fornisce la durata media delle richieste riuscite che corrispondono a questa policy.
+** Utilizzo della larghezza di banda della policy: questo grafico mostra la quantità di larghezza di banda corrispondente a questa policy gestita da tutti i bilanciatori del carico.  I dati ricevuti includono le intestazioni delle richieste per tutte le richieste e le dimensioni dei dati del corpo per le risposte che contengono dati del corpo.  Inviato include le intestazioni di risposta per tutte le richieste e le dimensioni dei dati del corpo della risposta per le richieste che includono dati del corpo nella risposta.
+
+
+. Posiziona il cursore su un grafico a linee per visualizzare una finestra pop-up con i valori relativi a una parte specifica del grafico.
+. Selezionare *Dashboard Grafana* subito sotto il titolo Metriche per visualizzare tutti i grafici relativi a una policy.  Oltre ai quattro grafici della scheda *Metriche*, puoi visualizzare altri due grafici:
++
+** Frequenza delle richieste di scrittura in base alle dimensioni dell'oggetto: frequenza delle richieste PUT/POST/DELETE che corrispondono a questa policy.  Il posizionamento su una singola cella mostra le velocità al secondo.  Le tariffe mostrate nella vista hover vengono troncate a conteggi interi e potrebbero riportare 0 quando nel bucket sono presenti richieste diverse da zero.
+** Frequenza delle richieste di lettura in base alle dimensioni dell'oggetto: frequenza delle richieste GET/HEAD che corrispondono a questa policy.  Il posizionamento su una singola cella mostra le velocità al secondo.  Le tariffe mostrate nella vista hover vengono troncate a conteggi interi e potrebbero riportare 0 quando nel bucket sono presenti richieste diverse da zero.
+
+
+. In alternativa, è possibile accedere ai grafici dal menu *SUPPORTO*.
++
+.. Selezionare *SUPPORTO* > *Strumenti* > *Metriche*.
+.. Selezionare *Politica di classificazione del traffico* dalla sezione *Grafana*.
+.. Selezionare la policy dal menu in alto a sinistra della pagina.
+.. Posiziona il cursore su un grafico per visualizzare un pop-up che mostra la data e l'ora del campione, le dimensioni degli oggetti aggregati nel conteggio e il numero di richieste al secondo durante quel periodo di tempo.
++
+Le policy di classificazione del traffico sono identificate dal loro ID.  Gli ID dei criteri sono elencati nella pagina Criteri di classificazione del traffico.
+
+
+
+. Analizza i grafici per determinare la frequenza con cui la policy limita il traffico e se è necessario modificarla.
+

@@ -1,0 +1,106 @@
+---
+permalink: vmware/collecting-information-about-your-deployment-environment.html 
+sidebar: sidebar 
+keywords: how to collect information about your deployment environment 
+summary: 'Prima di distribuire i nodi della griglia, è necessario raccogliere informazioni sulla configurazione di rete e sull"ambiente VMware.' 
+---
+= Raccogli informazioni sul tuo ambiente di distribuzione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Prima di distribuire i nodi della griglia, è necessario raccogliere informazioni sulla configurazione di rete e sull'ambiente VMware.
+
+
+NOTE: È più efficiente eseguire un'unica installazione di tutti i nodi, piuttosto che installare alcuni nodi ora e altri in seguito.
+
+
+
+== Informazioni VMware
+
+È necessario accedere all'ambiente di distribuzione e raccogliere informazioni sull'ambiente VMware, sulle reti create per Grid, Admin e Client Network e sui tipi di volumi di archiviazione che si intende utilizzare per i nodi di archiviazione.
+
+È necessario raccogliere informazioni sul proprio ambiente VMware, tra cui:
+
+* Nome utente e password per un account VMware vSphere dotato delle autorizzazioni appropriate per completare la distribuzione.
+* Informazioni sulla configurazione di host, datastore e rete per ogni macchina virtuale del nodo StorageGRID .
+
+
+
+NOTE: VMware Live vMotion provoca un salto temporale nella macchina virtuale e non è supportato per nodi di griglia di alcun tipo.  Anche se raramente, orari errati possono causare la perdita di dati o di aggiornamenti della configurazione.
+
+
+
+== Informazioni sulla rete Grid
+
+È necessario raccogliere informazioni sulla rete VMware creata per StorageGRID Grid Network (obbligatorio), tra cui:
+
+* Il nome della rete.
+* Metodo utilizzato per assegnare gli indirizzi IP, statico o DHCP.
++
+** Se si utilizzano indirizzi IP statici, i dettagli di rete richiesti per ciascun nodo della griglia (indirizzo IP, gateway, maschera di rete).
+** Se si utilizza DHCP, l'indirizzo IP del nodo di amministrazione primario sulla rete Grid. Vedere link:how-grid-nodes-discover-primary-admin-node.html["Come i nodi della griglia scoprono il nodo di amministrazione primario"] per maggiori informazioni.
+
+
+
+
+
+
+== Informazioni sulla rete di amministrazione
+
+Per i nodi che saranno connessi alla rete di amministrazione StorageGRID opzionale, è necessario raccogliere informazioni sulla rete VMware creata per questa rete, tra cui:
+
+* Il nome della rete.
+* Metodo utilizzato per assegnare gli indirizzi IP, statico o DHCP.
++
+** Se si utilizzano indirizzi IP statici, i dettagli di rete richiesti per ciascun nodo della griglia (indirizzo IP, gateway, maschera di rete).
+** Se si utilizza DHCP, l'indirizzo IP del nodo di amministrazione primario sulla rete Grid. Vedere link:how-grid-nodes-discover-primary-admin-node.html["Come i nodi della griglia scoprono il nodo di amministrazione primario"] per maggiori informazioni.
+
+
+* L'elenco delle subnet esterne (ESL) per la rete di amministrazione.
+
+
+
+
+== Informazioni sulla rete del cliente
+
+Per i nodi che saranno connessi alla rete client StorageGRID opzionale, è necessario raccogliere informazioni sulla rete VMware creata per questa rete, tra cui:
+
+* Il nome della rete.
+* Metodo utilizzato per assegnare gli indirizzi IP, statico o DHCP.
+* Se si utilizzano indirizzi IP statici, i dettagli di rete richiesti per ciascun nodo della griglia (indirizzo IP, gateway, maschera di rete).
+
+
+
+
+== Informazioni sulle interfacce aggiuntive
+
+Dopo aver installato il nodo, è possibile aggiungere facoltativamente interfacce trunk o di accesso alla VM in vCenter.  Ad esempio, potresti voler aggiungere un'interfaccia trunk a un nodo di amministrazione o gateway, in modo da poter utilizzare le interfacce VLAN per separare il traffico appartenente a diverse applicazioni o tenant.  In alternativa, potresti voler aggiungere un'interfaccia di accesso da utilizzare in un gruppo ad alta disponibilità (HA).
+
+Le interfacce aggiunte vengono visualizzate nella pagina Interfacce VLAN e nella pagina Gruppi HA in Grid Manager.
+
+* Se si aggiunge un'interfaccia trunk, configurare una o più interfacce VLAN per ogni nuova interfaccia padre. Vedere link:../admin/configure-vlan-interfaces.html["configurare le interfacce VLAN"] .
+* Se si aggiunge un'interfaccia di accesso, è necessario aggiungerla direttamente ai gruppi HA. Vedere link:../admin/configure-high-availability-group.html["configurare gruppi ad alta disponibilità"] .
+
+
+
+
+== Volumi di archiviazione per nodi di archiviazione virtuali
+
+È necessario raccogliere le seguenti informazioni per i nodi di archiviazione basati su macchine virtuali:
+
+* Il numero e la dimensione dei volumi di archiviazione (LUN di archiviazione) che intendi aggiungere. Vedilink:storage-and-performance-requirements.html["Requisiti di archiviazione e prestazioni"] .
+
+
+
+
+== Informazioni sulla configurazione della griglia
+
+È necessario raccogliere informazioni per configurare la griglia:
+
+* licenza di rete
+* Indirizzi IP del server NTP (Network Time Protocol)
+* Indirizzi IP del server DNS
+

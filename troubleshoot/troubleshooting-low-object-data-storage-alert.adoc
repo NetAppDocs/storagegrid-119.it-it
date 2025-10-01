@@ -1,0 +1,84 @@
+---
+permalink: troubleshoot/troubleshooting-low-object-data-storage-alert.html 
+sidebar: sidebar 
+keywords: how to troubleshoot the Low object data storage alert 
+summary: 'L"avviso *Archiviazione dati oggetto insufficiente* monitora la quantità di spazio disponibile per l"archiviazione dei dati oggetto su ciascun nodo di archiviazione.' 
+---
+= Risoluzione dei problemi relativi all'avviso di spazio di archiviazione dati dell'oggetto insufficiente
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+L'avviso *Archiviazione dati oggetto insufficiente* monitora la quantità di spazio disponibile per l'archiviazione dei dati oggetto su ciascun nodo di archiviazione.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Hailink:../admin/admin-group-permissions.html["autorizzazioni di accesso specifiche"] .
+
+
+.Informazioni su questo compito
+L'avviso *Archiviazione dati oggetto insufficiente* viene attivato quando la quantità totale di dati oggetto replicati e codificati per la cancellazione su un nodo di archiviazione soddisfa una delle condizioni configurate nella regola di avviso.
+
+Per impostazione predefinita, viene attivato un avviso importante quando questa condizione viene valutata come vera:
+
+[listing]
+----
+(storagegrid_storage_utilization_data_bytes/
+(storagegrid_storage_utilization_data_bytes + storagegrid_storage_utilization_usable_space_bytes)) >=0.90
+----
+In questa condizione:
+
+* `storagegrid_storage_utilization_data_bytes`è una stima della dimensione totale dei dati degli oggetti replicati e codificati per la cancellazione per un nodo di archiviazione.
+* `storagegrid_storage_utilization_usable_space_bytes`è la quantità totale di spazio di archiviazione degli oggetti rimanente per un nodo di archiviazione.
+
+
+Se viene attivato un avviso di *Archiviazione dati oggetto insufficiente*, importante o minore, è necessario eseguire una procedura di espansione il prima possibile.
+
+.Passi
+. Selezionare *AVVISI* > *Correnti*.
++
+Viene visualizzata la pagina Avvisi.
+
+. Dalla tabella degli avvisi, espandere il gruppo di avvisi *Archiviazione dati oggetto insufficiente*, se necessario, e selezionare l'avviso che si desidera visualizzare.
++
+
+NOTE: Selezionare l'avviso, non l'intestazione di un gruppo di avvisi.
+
+. Esaminare i dettagli nella finestra di dialogo e notare quanto segue:
++
+** Tempo attivato
+** Il nome del sito e del nodo
+** I valori correnti delle metriche per questo avviso
+
+
+. Selezionare *NODI* > *Nodo o sito di archiviazione_* > *Archiviazione*.
+. Posiziona il cursore sul grafico Spazio di archiviazione utilizzato - Dati oggetto.
++
+Vengono mostrati i seguenti valori:
+
++
+** *Utilizzato (%)*: la percentuale dello spazio utilizzabile totale che è stata utilizzata per i dati dell'oggetto.
+** *Utilizzato*: quantità di spazio utilizzabile totale utilizzata per i dati dell'oggetto.
+** *Dati replicati*: una stima della quantità di dati di oggetti replicati su questo nodo, sito o griglia.
+** *Dati con codice di cancellazione*: una stima della quantità di dati di oggetti con codice di cancellazione su questo nodo, sito o griglia.
+** *Totale*: quantità totale di spazio utilizzabile su questo nodo, sito o griglia.  Il valore utilizzato è il `storagegrid_storage_utilization_data_bytes` metrica.
+
+
++
+image::../media/nodes_page_storage_used_object_data.png[Nodi Pagina Archiviazione utilizzata Oggetto Dati]
+
+. Selezionare i controlli temporali sopra il grafico per visualizzare l'utilizzo dello spazio di archiviazione in diversi periodi di tempo.
++
+Esaminare l'utilizzo dello spazio di archiviazione nel tempo può aiutare a capire quanto spazio di archiviazione è stato utilizzato prima e dopo l'attivazione dell'avviso e può aiutare a stimare quanto tempo potrebbe essere necessario affinché lo spazio rimanente del nodo si riempia.
+
+. Appena possibile,link:../expand/guidelines-for-adding-object-capacity.html["aggiungere capacità di archiviazione"] alla tua griglia.
++
+È possibile aggiungere volumi di archiviazione (LUN) ai nodi di archiviazione esistenti oppure aggiungere nuovi nodi di archiviazione.
+
++
+
+NOTE: Per ulteriori informazioni, consultare link:../admin/managing-full-storage-nodes.html["Gestisci nodi di archiviazione completi"] .
+
+

@@ -1,0 +1,46 @@
+---
+permalink: ilm/index.html 
+sidebar: sidebar 
+keywords: information lifecycle management overview, about information lifecycle management, ilm overview, about ilm 
+summary: 'Le regole di gestione del ciclo di vita delle informazioni \(ILM\) in una policy ILM indicano a StorageGRID come creare e distribuire copie dei dati degli oggetti e come gestire tali copie nel tempo.' 
+---
+= Gestire gli oggetti con ILM
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Le regole di gestione del ciclo di vita delle informazioni (ILM) in una policy ILM indicano a StorageGRID come creare e distribuire copie dei dati degli oggetti e come gestire tali copie nel tempo.
+
+
+
+== Informazioni su queste istruzioni
+
+La progettazione e l'implementazione delle regole e delle politiche ILM richiedono un'attenta pianificazione.  È necessario comprendere i requisiti operativi, la topologia del sistema StorageGRID , le esigenze di protezione degli oggetti e i tipi di storage disponibili.  Quindi, è necessario stabilire come si desidera che i diversi tipi di oggetti vengano copiati, distribuiti e archiviati.
+
+Utilizzare queste istruzioni per:
+
+* Scopri di più su StorageGRID ILM, inclusolink:how-ilm-operates-throughout-objects-life.html["come funziona l'ILM durante tutta la vita di un oggetto"] .
+* Scopri come configurarelink:what-storage-pool-is.html["pool di stoccaggio"] ,link:what-cloud-storage-pool-is.html["Pool di archiviazione cloud"] , Elink:what-ilm-rule-is.html["Regole ILM"] .
+* Impara comelink:creating-ilm-policy.html["creare, simulare e attivare una politica ILM"] che proteggerà i dati degli oggetti su uno o più siti.
+* Impara comelink:managing-objects-with-s3-object-lock.html["gestire gli oggetti con S3 Object Lock"] , che aiuta a garantire che gli oggetti in bucket S3 specifici non vengano eliminati o sovrascritti per un periodo di tempo specificato.
+
+
+
+
+== Saperne di più
+
+Per saperne di più, guarda questi video:
+
+* https://netapp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=9872d38f-80b3-4ad4-9f79-b1ff008760c7["Video: panoramica delle regole ILM"^] .
++
+[link=https://netapp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=9872d38f-80b3-4ad4-9f79-b1ff008760c7]
+image::../media/video-screenshot-ilm-rules-118.png[Video: panoramica delle regole ILM]
+
+* https://netapp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=e768d4da-da88-413c-bbaa-b1ff00874d10["Video: Panoramica delle politiche ILM"^]
++
+[link=https://netapp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=e768d4da-da88-413c-bbaa-b1ff00874d10]
+image::../media/video-screenshot-ilm-policies-118.png[Video: Panoramica delle politiche ILM]
+
+

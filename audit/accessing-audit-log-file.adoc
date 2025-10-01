@@ -1,0 +1,39 @@
+---
+permalink: audit/accessing-audit-log-file.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, log, log file, access, accessing 
+summary: La condivisione di controllo contiene il file audit.log attivo e tutti i file di registro di controllo compressi.  È possibile accedere ai file di registro di controllo direttamente dalla riga di comando del nodo di amministrazione. 
+---
+= Accedi al file di registro di controllo
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+La condivisione di controllo contiene l'attivo `audit.log` file e tutti i file di registro di controllo compressi.  È possibile accedere ai file di registro di controllo direttamente dalla riga di comando del nodo di amministrazione.
+
+.Prima di iniziare
+* Hailink:../admin/admin-group-permissions.html["autorizzazioni di accesso specifiche"] .
+* Devi avere il `Passwords.txt` file.
+* È necessario conoscere l'indirizzo IP di un nodo di amministrazione.
+
+
+.Passi
+. Accedi a un nodo di amministrazione:
++
+.. Immettere il seguente comando: `ssh admin@_primary_Admin_Node_IP_`
+.. Inserisci la password elencata nel `Passwords.txt` file.
+.. Immettere il seguente comando per passare alla root: `su -`
+.. Inserisci la password elencata nel `Passwords.txt` file.
++
+Quando si accede come root, il prompt cambia da `$` A `#` .
+
+
+
+. Andare alla directory contenente i file di registro di controllo:
++
+`cd /var/local/log`
+
+. Visualizzare il file di registro di controllo corrente o salvato, a seconda delle necessità.
+

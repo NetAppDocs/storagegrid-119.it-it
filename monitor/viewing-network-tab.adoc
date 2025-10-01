@@ -1,0 +1,25 @@
+---
+permalink: monitor/viewing-network-tab.html 
+sidebar: sidebar 
+keywords: network tab 
+summary: La scheda Rete visualizza un grafico che mostra il traffico di rete ricevuto e inviato su tutte le interfacce di rete sul nodo, sul sito o sulla griglia. 
+---
+= Visualizza la scheda Rete
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+La scheda Rete visualizza un grafico che mostra il traffico di rete ricevuto e inviato su tutte le interfacce di rete sul nodo, sul sito o sulla griglia.
+
+La scheda Rete viene visualizzata per tutti i nodi, per ciascun sito e per l'intera griglia.
+
+Per visualizzare un intervallo di tempo diverso, seleziona uno dei controlli sopra il grafico.  È possibile visualizzare le informazioni disponibili per intervalli di 1 ora, 1 giorno, 1 settimana o 1 mese.  È anche possibile impostare un intervallo personalizzato, che consente di specificare intervalli di data e ora.
+
+Per i nodi, la tabella Interfacce di rete fornisce informazioni sulle porte di rete fisiche di ciascun nodo.  La tabella delle comunicazioni di rete fornisce dettagli sulle operazioni di ricezione e trasmissione di ciascun nodo e su eventuali contatori di errori segnalati dal driver.
+
+image::../media/nodes_page_network_tab.png[Pagina Nodi Scheda Rete]
+
+.Informazioni correlate
+link:monitoring-network-connections-and-performance.html["Monitorare le connessioni e le prestazioni di rete"]

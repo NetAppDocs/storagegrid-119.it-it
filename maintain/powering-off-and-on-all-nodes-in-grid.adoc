@@ -1,0 +1,184 @@
+---
+permalink: maintain/powering-off-and-on-all-nodes-in-grid.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, power nodes, power on nodes, power off nodes, power down nodes 
+summary: 'Potrebbe essere necessario arrestare l"intero sistema StorageGRID , ad esempio se si sta spostando un data center.  Questi passaggi forniscono una panoramica di alto livello della sequenza consigliata per eseguire un arresto e un avvio controllati.' 
+---
+= Spegnere e riaccendere tutti i nodi nella griglia
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Potrebbe essere necessario arrestare l'intero sistema StorageGRID , ad esempio se si sta spostando un data center.  Questi passaggi forniscono una panoramica di alto livello della sequenza consigliata per eseguire un arresto e un avvio controllati.
+
+Quando si disattivano tutti i nodi in un sito o in una griglia, non sarà possibile accedere agli oggetti acquisiti mentre i nodi di archiviazione sono offline.
+
+
+
+== Arrestare i servizi e spegnere i nodi della griglia
+
+Prima di poter spegnere un sistema StorageGRID , è necessario arrestare tutti i servizi in esecuzione su ciascun nodo della griglia, quindi arrestare tutte le macchine virtuali VMware, i motori dei container e le appliance StorageGRID .
+
+.Informazioni su questo compito
+Arrestare prima i servizi sui nodi di amministrazione e sui nodi gateway, quindi arrestare i servizi sui nodi di archiviazione.
+
+Questo approccio consente di utilizzare il nodo di amministrazione primario per monitorare lo stato degli altri nodi della griglia il più a lungo possibile.
+
+
+NOTE: Se un singolo host include più di un nodo della griglia, non arrestare l'host finché non hai arrestato tutti i nodi su quell'host.  Se l'host include il nodo di amministrazione primario, arrestare quell'host per ultimo.
+
+
+NOTE: Se necessario, puoilink:linux-migrating-grid-node-to-new-host.html["migrare i nodi da un host Linux a un altro"] per eseguire la manutenzione dell'host senza compromettere la funzionalità o la disponibilità della griglia.
+
+.Passi
+. Impedisci a tutte le applicazioni client di accedere alla griglia.
+. [[log_in_to_gn]]Accedi a ciascun nodo gateway:
++
+.. Immettere il seguente comando: `ssh admin@_grid_node_IP_`
+.. Inserisci la password elencata nel `Passwords.txt` file.
+.. Immettere il seguente comando per passare alla root: `su -`
+.. Inserisci la password elencata nel `Passwords.txt` file.
+
+
++
+Quando si accede come root, il prompt cambia da `$` A `#` .
+
+. [[stop_all_services]]Arresta tutti i servizi in esecuzione sul nodo: `service servermanager stop`
++
+L'arresto dei servizi può richiedere fino a 15 minuti; potrebbe essere necessario accedere al sistema da remoto per monitorare il processo di arresto.
+
+. Ripetere i due passaggi precedenti per arrestare i servizi su tutti i nodi di archiviazione e sui nodi amministrativi non primari.
++
+È possibile interrompere i servizi su questi nodi in qualsiasi ordine.
+
++
+
+NOTE: Se emetti il `service servermanager stop` comando per arrestare i servizi su un nodo di archiviazione dell'appliance, è necessario spegnere e riaccendere l'appliance per riavviare il nodo.
+
+. Per il nodo di amministrazione primario, ripetere i passaggi per<<log_in_to_gn,accesso al nodo>> E<<stop_all_services,arresto di tutti i servizi sul nodo>> .
+. Per i nodi in esecuzione su host Linux:
++
+.. Accedere al sistema operativo host.
+.. Arresta il nodo: `storagegrid node stop`
+.. Arrestare il sistema operativo host.
+
+
+. Per i nodi in esecuzione su macchine virtuali VMware e per i nodi di archiviazione dell'appliance, emettere il comando di arresto: `shutdown -h now`
++
+Eseguire questo passaggio indipendentemente dall'esito del `service servermanager stop` comando.
+
++
+Per l'appliance, questo comando arresta il controller di elaborazione, ma l'appliance rimane accesa.  Devi completare il passaggio successivo.
+
+. Se disponi di nodi appliance, segui i passaggi per la tua appliance.
++
+[role="tabbed-block"]
+====
+.SG110 o SG1100
+--
+.. Spegnere l'apparecchio.
+.. Attendere che il LED di alimentazione blu si spenga.
+
+
+--
+.SG100 o SG1000
+--
+.. Spegnere l'apparecchio.
+.. Attendere che il LED di alimentazione blu si spenga.
+
+
+--
+.SG6160
+--
+.. Spegnere l'alimentazione del controller di archiviazione SG6100-CN.
+.. Attendere che il LED di alimentazione blu sul controller di archiviazione SG6100-CN si spenga.
+
+
+--
+.SGF6112
+--
+.. Spegnere l'apparecchio.
+.. Attendere che il LED di alimentazione blu si spenga.
+
+
+--
+.SG6000
+--
+.. Attendere che il LED verde Cache Active sul retro dei controller di archiviazione si spenga.
++
+Questo LED è acceso quando i dati memorizzati nella cache devono essere scritti sulle unità.  Prima di interrompere l'alimentazione, attendere che il LED si spenga.
+
+.. Spegnere l'apparecchio e attendere che il LED blu di alimentazione si spenga.
+
+
+--
+.SG5800
+--
+.. Attendere che il LED verde Cache Active sul retro del controller di archiviazione si spenga.
++
+Questo LED è acceso quando i dati memorizzati nella cache devono essere scritti sulle unità.  Prima di interrompere l'alimentazione, attendere che il LED si spenga.
+
+.. Dalla home page di SANtricity System Manager, selezionare *Visualizza operazioni in corso*.
+.. Verificare che tutte le operazioni siano state completate prima di procedere con il passaggio successivo.
+.. Spegnere entrambi gli interruttori di alimentazione sul ripiano del controller e attendere che tutti i LED sul ripiano del controller si spengano.
+
+
+--
+.SG5700
+--
+.. Attendere che il LED verde Cache Active sul retro del controller di archiviazione si spenga.
++
+Questo LED è acceso quando i dati memorizzati nella cache devono essere scritti sulle unità.  Prima di interrompere l'alimentazione, attendere che il LED si spenga.
+
+.. Spegnere l'apparecchio e attendere che tutti i LED e il display a sette segmenti si arrestino.
+
+
+--
+====
+. Se necessario, disconnettersi dalla shell dei comandi: `exit`
++
+La rete StorageGRID è stata ora disattivata.
+
+
+
+
+
+== Avviare i nodi della griglia
+
+
+CAUTION: Se l'intera rete è rimasta spenta per più di 15 giorni, è necessario contattare l'assistenza tecnica prima di avviare qualsiasi nodo della rete.  Non tentare di eseguire le procedure di ripristino che ricostruiscono i dati di Cassandra.  Ciò potrebbe causare la perdita di dati.
+
+Se possibile, accendere i nodi della rete in questo ordine:
+
+* Applicare prima l'alimentazione ai nodi amministrativi.
+* Applicare l'alimentazione ai nodi gateway per ultimi.
+
+
+
+NOTE: Se un host include più nodi della griglia, i nodi torneranno automaticamente online quando si accende l'host.
+
+.Passi
+. Accendere gli host per il nodo amministrativo primario e tutti i nodi amministrativi non primari.
++
+
+NOTE: Non sarà possibile accedere ai nodi di amministrazione finché i nodi di archiviazione non saranno stati riavviati.
+
+. Accendere gli host per tutti i nodi di archiviazione.
++
+È possibile accendere questi nodi in qualsiasi ordine.
+
+. Accendere gli host per tutti i nodi gateway.
+. Sign in a Grid Manager.
+. Selezionare *NODI* e monitorare lo stato dei nodi della griglia. Verificare che non vi siano icone di avviso accanto ai nomi dei nodi.
+
+
+.Informazioni correlate
+* https://docs.netapp.com/us-en/storagegrid-appliances/sg6100/index.html["Dispositivi di archiviazione SGF6112 e SG6160"^]
+* https://docs.netapp.com/us-en/storagegrid-appliances/sg110-1100/index.html["Apparecchiature di servizio SG110 e SG1100"^]
+* https://docs.netapp.com/us-en/storagegrid-appliances/sg100-1000/index.html["Apparecchiature di servizio SG100 e SG1000"^]
+* https://docs.netapp.com/us-en/storagegrid-appliances/sg6000/index.html["Dispositivi di archiviazione SG6000"^]
+* https://docs.netapp.com/us-en/storagegrid-appliances/sg5800/index.html["Dispositivi di archiviazione SG5800"^]
+* https://docs.netapp.com/us-en/storagegrid-appliances/sg5700/index.html["Dispositivi di archiviazione SG5700"^]
+

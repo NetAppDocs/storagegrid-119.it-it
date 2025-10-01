@@ -1,0 +1,24 @@
+---
+permalink: expand/adding-storage-capacity-for-replicated-objects.html 
+sidebar: sidebar 
+keywords: replication, replicated, copies, capacity, storage nodes, expand, expansion 
+summary: 'Se la policy di gestione del ciclo di vita delle informazioni \(ILM\) per la distribuzione include una regola che crea copie replicate degli oggetti, è necessario valutare la quantità di spazio di archiviazione da aggiungere e dove aggiungere i nuovi volumi di archiviazione o nodi di archiviazione.' 
+---
+= Aggiungere capacità di archiviazione per oggetti replicati
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se la policy di gestione del ciclo di vita delle informazioni (ILM) per la distribuzione include una regola che crea copie replicate degli oggetti, è necessario valutare la quantità di spazio di archiviazione da aggiungere e dove aggiungere i nuovi volumi di archiviazione o nodi di archiviazione.
+
+Per indicazioni su dove aggiungere ulteriore spazio di archiviazione, esaminare le regole ILM che creano copie replicate.  Se le regole ILM creano due o più copie di oggetti, pianificare di aggiungere spazio di archiviazione in ogni posizione in cui vengono create le copie di oggetti.  Come semplice esempio, se si dispone di una griglia a due siti e di una regola ILM che crea una copia dell'oggetto in ciascun sito, è necessariolink:../expand/adding-storage-volumes-to-storage-nodes.html["aggiungere spazio di archiviazione"] a ciascun sito per aumentare la capacità complessiva degli oggetti della rete.  Per informazioni sulla replicazione degli oggetti, vederelink:../ilm/what-replication-is.html["Che cosa è la replicazione"] .
+
+Per motivi di prestazioni, dovresti cercare di bilanciare la capacità di archiviazione e la potenza di elaborazione tra i siti.  Pertanto, per questo esempio, dovresti aggiungere lo stesso numero di nodi di archiviazione a ciascun sito oppure volumi di archiviazione aggiuntivi in ciascun sito.
+
+Se si dispone di una policy ILM più complessa che include regole che posizionano gli oggetti in posizioni diverse in base a criteri quali il nome del bucket o regole che modificano le posizioni degli oggetti nel tempo, l'analisi di dove è necessario lo storage per l'espansione sarà simile, ma più complessa.
+
+Visualizzare graficamente la velocità con cui viene consumata la capacità di archiviazione complessiva può aiutare a capire quanto spazio di archiviazione aggiungere nell'espansione e quando sarà necessario ulteriore spazio di archiviazione.  Puoi usare Grid Manager perlink:../monitor/monitoring-storage-capacity.html["monitorare e tracciare la capacità di archiviazione"] .
+
+Quando si pianifica la tempistica di un'espansione, bisogna tenere presente quanto tempo potrebbe essere necessario per procurarsi e installare ulteriore spazio di archiviazione.

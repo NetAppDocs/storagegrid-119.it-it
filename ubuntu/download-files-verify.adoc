@@ -1,0 +1,71 @@
+---
+permalink: ubuntu/download-files-verify.html 
+sidebar: sidebar 
+keywords: ubuntu installation files, how to verify files 
+summary: 'Se necessario, è possibile verificare manualmente i file nell"archivio di installazione StorageGRID .' 
+---
+= Verifica manuale dei file di installazione (facoltativo)
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se necessario, è possibile verificare manualmente i file nell'archivio di installazione StorageGRID .
+
+.Prima di iniziare
+Hailink:../ubuntu/downloading-and-extracting-storagegrid-installation-files.html#ubuntu-download-verification-package["scaricato il pacchetto di verifica"] dal https://mysupport.netapp.com/site/products/all/details/storagegrid/downloads-tab["Pagina di download di NetApp per StorageGRID"^] .
+
+.Passi
+. Estrarre gli artefatti dal pacchetto di verifica:
++
+`tar -xf StorageGRID_11.9.0_Code_Signature_Verification_Package.tar.gz`
+
+. Assicurarsi che questi artefatti siano stati estratti:
++
+** Certificato fogliare: `Leaf-Cert.pem`
+** Catena di certificati: `CA-Int-Cert.pem`
+** Catena di risposta del timestamp: `TS-Cert.pem`
+** File di checksum: `sha256sum`
+** Firma di checksum: `sha256sum.sig`
+** File di risposta con timestamp: `sha256sum.sig.tsr`
+
+
+. Utilizzare la catena per verificare che il certificato fogliare sia valido.
++
+*Esempio*: `openssl verify -CAfile CA-Int-Cert.pem Leaf-Cert.pem`
+
++
+*Risultati previsti*: `Leaf-Cert.pem: OK`
+
+. Se il passaggio _2_ non è riuscito a causa di un certificato foglia scaduto, utilizzare `tsr` file da verificare.
++
+*Esempio*: `openssl ts -CAfile CA-Int-Cert.pem -untrusted TS-Cert.pem -verify -data sha256sum.sig -in sha256sum.sig.tsr`
+
++
+*I risultati previsti includono*: `Verification: OK`
+
+. Creare un file di chiave pubblica dal certificato foglia.
++
+*Esempio*: `openssl x509 -pubkey -noout -in Leaf-Cert.pem > Leaf-Cert.pub`
+
++
+*Risultato previsto*: _nessuno_
+
+. Utilizzare la chiave pubblica per verificare il `sha256sum` presentare ricorso contro `sha256sum.sig` .
++
+*Esempio*: `openssl dgst -sha256 -verify Leaf-Cert.pub -signature sha256sum.sig sha256sum`
+
++
+*Risultati previsti*: `Verified OK`
+
+. Verificare il `sha256sum` il contenuto del file rispetto ai checksum appena creati.
++
+*Esempio*: `sha256sum -c sha256sum`
+
++
+*Risultati previsti*: `_<filename>_: OK` +
+`_<filename>_` è il nome del file di archivio che hai scaricato.
+
+. link:../ubuntu/downloading-and-extracting-storagegrid-installation-files.html["Completa i passaggi rimanenti"]per estrarre e scegliere i file di installazione appropriati.
+

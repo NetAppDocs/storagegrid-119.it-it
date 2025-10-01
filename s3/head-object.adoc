@@ -1,0 +1,189 @@
+---
+permalink: s3/head-object.html 
+sidebar: sidebar 
+keywords: HeadObject 
+summary: 'È possibile utilizzare la richiesta S3 HeadObject per recuperare i metadati da un oggetto senza restituire l"oggetto stesso.' 
+---
+= HeadObject
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile utilizzare la richiesta S3 HeadObject per recuperare i metadati da un oggetto senza restituire l'oggetto stesso.  Se l'oggetto è archiviato in un Cloud Storage Pool, è possibile utilizzare HeadObject per determinare lo stato di transizione dell'oggetto.
+
+
+
+== HeadObject e oggetti multiparte
+
+Puoi usare il `partNumber` parametro di richiesta per recuperare i metadati per una parte specifica di un oggetto multiparte o segmentato.  IL `x-amz-mp-parts-count` l'elemento di risposta indica quante parti ha l'oggetto.
+
+Puoi impostare `partNumber` a 1 sia per gli oggetti segmentati/multiparte che per gli oggetti non segmentati/non multiparte; tuttavia, il `x-amz-mp-parts-count` l'elemento response viene restituito solo per oggetti segmentati o multiparte.
+
+
+
+== Caratteri UTF-8 nei metadati utente
+
+StorageGRID non analizza né interpreta i caratteri UTF-8 con escape nei metadati definiti dall'utente.  Le richieste HEAD per un oggetto con caratteri UTF-8 sfuggiti nei metadati definiti dall'utente non restituiscono `x-amz-missing-meta` intestazione se il nome o il valore della chiave include caratteri non stampabili.
+
+
+
+== Intestazione della richiesta supportata
+
+È supportata la seguente intestazione di richiesta:
+
+* `x-amz-checksum-mode`
++
+IL `partNumber` parametro e `Range` l'intestazione non è supportata con `x-amz-checksum-mode` per HeadObject.  Quando li includi nella richiesta con `x-amz-checksum-mode` abilitato, StorageGRID non restituisce un valore di checksum nella risposta.
+
+
+
+
+
+== Intestazione della richiesta non supportata
+
+La seguente intestazione di richiesta non è supportata e restituisce `XNotImplemented` :
+
+* `x-amz-website-redirect-location`
+
+
+
+
+== Controllo delle versioni
+
+Se un `versionId` Se la sottorisorsa non è specificata, l'operazione recupera la versione più recente dell'oggetto in un bucket con versione.  Se la versione corrente dell'oggetto è un marcatore di eliminazione, viene restituito lo stato "Non trovato" con `x-amz-delete-marker` intestazione di risposta impostata su `true` .
+
+
+
+== Intestazioni di richiesta per la crittografia lato server con chiavi di crittografia fornite dal cliente (SSE-C)
+
+Utilizzare tutte e tre queste intestazioni se l'oggetto è crittografato con una chiave univoca da te fornita.
+
+* `x-amz-server-side-encryption-customer-algorithm`: Specificare `AES256` .
+* `x-amz-server-side-encryption-customer-key`: Specifica la chiave di crittografia per l'oggetto.
+* `x-amz-server-side-encryption-customer-key-MD5`: Specifica il digest MD5 della chiave di crittografia dell'oggetto.
+
+
+
+CAUTION: Le chiavi di crittografia fornite non vengono mai memorizzate.  Se si perde una chiave di crittografia, si perde anche l'oggetto corrispondente.  Prima di utilizzare le chiavi fornite dal cliente per proteggere i dati degli oggetti, rivedere le considerazioni inlink:using-server-side-encryption.html["Utilizzare la crittografia lato server"] .
+
+
+
+== Risposte HeadObject per gli oggetti Cloud Storage Pool
+
+Se l'oggetto è memorizzato in unlink:../ilm/what-cloud-storage-pool-is.html["Pool di archiviazione cloud"] , vengono restituite le seguenti intestazioni di risposta:
+
+* `x-amz-storage-class: GLACIER`
+* `x-amz-restore`
+
+
+Le intestazioni di risposta forniscono informazioni sullo stato di un oggetto mentre viene spostato in un Cloud Storage Pool, facoltativamente portato a uno stato non recuperabile e ripristinato.
+
+[cols="1a,1a"]
+|===
+| Stato dell'oggetto | Risposta a HeadObject 
+
+
+ a| 
+Oggetto inserito in StorageGRID ma non ancora valutato da ILM, oppure oggetto archiviato in un pool di archiviazione tradizionale o mediante codifica di cancellazione
+ a| 
+`200 OK`(Non viene restituita alcuna intestazione di risposta speciale.)
+
+
+
+ a| 
+Oggetto nel Cloud Storage Pool ma non ancora trasferito a uno stato non recuperabile
+ a| 
+`200 OK`
+
+`x-amz-storage-class: GLACIER`
+
+`x-amz-restore: ongoing-request="false", expiry-date="Sat, 23 July 20 2030 00:00:00 GMT"`
+
+Finché l'oggetto non viene portato in uno stato non recuperabile, il valore per `expiry-date` è ambientato in un lontano futuro.  Il momento esatto della transizione non è controllato dal sistema StorageGRID .
+
+
+
+ a| 
+L'oggetto è passato allo stato non recuperabile, ma almeno una copia esiste anche sulla griglia
+ a| 
+`200 OK`
+
+`x-amz-storage-class: GLACIER`
+
+`x-amz-restore: ongoing-request="false", expiry-date="Sat, 23 July 20 2030 00:00:00 GMT"`
+
+Il valore per `expiry-date` è ambientato in un lontano futuro.
+
+*Nota*: se la copia sulla griglia non è disponibile (ad esempio, un nodo di archiviazione è inattivo), è necessario emettere unlink:post-object-restore.html["Ripristina oggetto"] richiedere di ripristinare la copia dal Cloud Storage Pool prima di poter recuperare correttamente l'oggetto.
+
+
+
+ a| 
+L'oggetto è passato a uno stato non recuperabile e non esiste alcuna copia sulla griglia
+ a| 
+`200 OK`
+
+`x-amz-storage-class: GLACIER`
+
+
+
+ a| 
+Oggetto in fase di ripristino da uno stato non recuperabile
+ a| 
+`200 OK`
+
+`x-amz-storage-class: GLACIER`
+
+`x-amz-restore: ongoing-request="true"`
+
+
+
+ a| 
+Oggetto completamente ripristinato nel Cloud Storage Pool
+ a| 
+`200 OK`
+
+`x-amz-storage-class: GLACIER`
+
+`x-amz-restore: ongoing-request="false", expiry-date="Sat, 23 July 20 2018 00:00:00 GMT"`
+
+IL `expiry-date` indica quando l'oggetto nel Cloud Storage Pool tornerà a uno stato non recuperabile.
+
+|===
+
+
+=== Oggetti multiparte o segmentati in Cloud Storage Pool
+
+Se hai caricato un oggetto multiparte o se StorageGRID ha suddiviso un oggetto di grandi dimensioni in segmenti, StorageGRID determina se l'oggetto è disponibile nel Cloud Storage Pool campionando un sottoinsieme delle parti o dei segmenti dell'oggetto.  In alcuni casi, una richiesta HeadObject potrebbe restituire in modo errato `x-amz-restore: ongoing-request="false"` quando alcune parti dell'oggetto sono già state trasferite a uno stato non recuperabile o quando alcune parti dell'oggetto non sono ancora state ripristinate.
+
+
+
+== HeadObject e replicazione cross-grid
+
+Se stai usandolink:../admin/grid-federation-overview.html["federazione di rete"] Elink:../tenant/grid-federation-manage-cross-grid-replication.html["replicazione cross-grid"] è abilitato per un bucket, il client S3 può verificare lo stato di replicazione di un oggetto inviando una richiesta HeadObject.  La risposta include StorageGRID-specifico `x-ntap-sg-cgr-replication-status` intestazione di risposta, che avrà uno dei seguenti valori:
+
+[cols="1a,2a"]
+|===
+| Griglia | Stato di replicazione 
+
+
+ a| 
+Fonte
+ a| 
+* *COMPLETO*: La replica è riuscita.
+* *IN ATTESA*: L'oggetto non è stato ancora replicato.
+* *ERRORE*: La replica non è riuscita con un errore permanente. Un utente deve risolvere l'errore.
+
+
+
+
+ a| 
+Destinazione
+ a| 
+*REPLICA*: L'oggetto è stato replicato dalla griglia di origine.
+
+|===
+
+NOTE: StorageGRID non supporta il `x-amz-replication-status` intestazione.

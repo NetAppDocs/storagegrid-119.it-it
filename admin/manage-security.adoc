@@ -1,0 +1,47 @@
+---
+permalink: admin/manage-security.html 
+sidebar: sidebar 
+keywords: how to manage security 
+summary: È possibile configurare diverse impostazioni di sicurezza da Grid Manager per proteggere il sistema StorageGRID . 
+---
+= Gestire la sicurezza
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile configurare diverse impostazioni di sicurezza da Grid Manager per proteggere il sistema StorageGRID .
+
+
+
+== Gestisci la crittografia
+
+StorageGRID offre diverse opzioni per la crittografia dei dati.  Dovrestilink:reviewing-storagegrid-encryption-methods.html["rivedere i metodi di crittografia disponibili"] per determinare quali soddisfano i tuoi requisiti di protezione dei dati.
+
+
+
+== Gestisci i certificati
+
+Puoilink:using-storagegrid-security-certificates.html["configurare e gestire i certificati del server"] utilizzato per le connessioni HTTP o i certificati client utilizzati per autenticare l'identità di un client o di un utente sul server.
+
+
+
+== Configurare i server di gestione delle chiavi
+
+Utilizzando unlink:kms-configuring.html["server di gestione delle chiavi"] consente di proteggere i dati StorageGRID anche se un dispositivo viene rimosso dal data center.  Dopo aver crittografato i volumi dell'appliance, non sarà possibile accedere ai dati sull'appliance a meno che il nodo non sia in grado di comunicare con il KMS.
+
+
+NOTE: Per utilizzare la gestione delle chiavi di crittografia, è necessario abilitare l'impostazione *Crittografia nodo* per ogni appliance durante l'installazione, prima che l'appliance venga aggiunta alla griglia.
+
+
+
+== Gestisci le impostazioni proxy
+
+Se si utilizzano servizi della piattaforma S3 o pool di archiviazione cloud, è possibile configurare unlink:configuring-storage-proxy-settings.html["server proxy di archiviazione"] tra i nodi di archiviazione e gli endpoint S3 esterni.  Se si inviano pacchetti AutoSupport tramite HTTPS o HTTP, è possibile configurare unlink:configuring-admin-proxy-settings.html["server proxy di amministrazione"] tra i nodi amministrativi e il supporto tecnico.
+
+
+
+== Controllare i firewall
+
+Per migliorare la sicurezza del sistema, è possibile controllare l'accesso ai nodi di amministrazione StorageGRID aprendo o chiudendo porte specifiche a livellolink:controlling-access-through-firewalls.html["firewall esterno"] .  È inoltre possibile controllare l'accesso alla rete per ciascun nodo configurandonelink:manage-firewall-controls.html["firewall interno"] .  È possibile impedire l'accesso a tutte le porte, ad eccezione di quelle necessarie per la distribuzione.

@@ -1,0 +1,60 @@
+---
+permalink: ilm/when-to-use-cloud-storage-pools.html 
+sidebar: sidebar 
+keywords: use cloud storage pool, benefits of cloud storage pools 
+summary: Utilizzando i Cloud Storage Pool, è possibile eseguire il backup o suddividere i dati in livelli in una posizione esterna.  Inoltre, è possibile eseguire il backup o suddividere i dati in più cloud. 
+---
+= Quando utilizzare i pool di archiviazione cloud
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Utilizzando i Cloud Storage Pool, è possibile eseguire il backup o suddividere i dati in livelli in una posizione esterna.  Inoltre, è possibile eseguire il backup o suddividere i dati in più cloud.
+
+
+
+== Eseguire il backup dei dati StorageGRID in una posizione esterna
+
+È possibile utilizzare un Cloud Storage Pool per eseguire il backup degli oggetti StorageGRID in una posizione esterna.
+
+Se le copie in StorageGRID non sono accessibili, i dati degli oggetti nel Cloud Storage Pool possono essere utilizzati per soddisfare le richieste dei client.  Tuttavia, potrebbe essere necessario inviare una richiesta S3 RestoreObject per accedere alla copia dell'oggetto di backup nel Cloud Storage Pool.
+
+I dati degli oggetti in un Cloud Storage Pool possono essere utilizzati anche per recuperare i dati persi da StorageGRID a causa di un errore del volume di archiviazione o del nodo di archiviazione.  Se l'unica copia rimanente di un oggetto si trova in un Cloud Storage Pool, StorageGRID ripristina temporaneamente l'oggetto e crea una nuova copia sul nodo di archiviazione recuperato.
+
+Per implementare una soluzione di backup:
+
+. Crea un singolo Cloud Storage Pool.
+. Configurare una regola ILM che memorizzi simultaneamente copie di oggetti su nodi di archiviazione (come copie replicate o con codice di cancellazione) e una singola copia di oggetti nel pool di archiviazione cloud.
+. Aggiungi la regola alla tua policy ILM.  Quindi, simulare e attivare la policy.
+
+
+
+
+== Dati di livello da StorageGRID alla posizione esterna
+
+È possibile utilizzare un Cloud Storage Pool per archiviare oggetti al di fuori del sistema StorageGRID .  Supponiamo, ad esempio, di avere un gran numero di oggetti che devi conservare, ma che prevedi di accedervi raramente, se non mai.  È possibile utilizzare un Cloud Storage Pool per suddividere gli oggetti in livelli di archiviazione più economici e liberare spazio in StorageGRID.
+
+Per implementare una soluzione a livelli:
+
+. Crea un singolo Cloud Storage Pool.
+. Configura una regola ILM che sposta gli oggetti raramente utilizzati dai nodi di archiviazione al pool di archiviazione cloud.
+. Aggiungi la regola alla tua policy ILM.  Quindi, simulare e attivare la policy.
+
+
+
+
+== Gestisci più endpoint cloud
+
+È possibile configurare più endpoint del Cloud Storage Pool se si desidera suddividere in livelli o eseguire il backup dei dati degli oggetti su più cloud.  I filtri nelle regole ILM consentono di specificare quali oggetti vengono archiviati in ciascun Cloud Storage Pool.  Ad esempio, potresti voler archiviare oggetti da alcuni tenant o bucket in Amazon S3 Glacier e oggetti da altri tenant o bucket nell'archiviazione BLOB di Azure.  Oppure potresti voler spostare i dati tra Amazon S3 Glacier e Azure Blob Storage.
+
+
+NOTE: Quando si utilizzano più endpoint Cloud Storage Pool, tenere presente che un oggetto può essere archiviato in un solo Cloud Storage Pool alla volta.
+
+Per implementare più endpoint cloud:
+
+. Crea fino a 10 pool di archiviazione cloud.
+. Configurare le regole ILM per archiviare i dati degli oggetti appropriati al momento opportuno in ogni Cloud Storage Pool.  Ad esempio, archivia gli oggetti dal bucket A nel Cloud Storage Pool A e archivia gli oggetti dal bucket B nel Cloud Storage Pool B. Oppure, archivia gli oggetti nel Cloud Storage Pool A per un certo periodo di tempo e poi spostali nel Cloud Storage Pool B.
+. Aggiungi le regole alla tua policy ILM.  Quindi, simulare e attivare la policy.
+

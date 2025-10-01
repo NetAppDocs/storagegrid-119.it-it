@@ -1,0 +1,166 @@
+---
+permalink: upgrade/troubleshooting-upgrade-issues.html 
+sidebar: sidebar 
+keywords: upgrade, troubleshoot, troubleshooting, errors, upgrade precheck 
+summary: 'Se durante l"aggiornamento si verifica un problema, potresti riuscire a risolverlo autonomamente.  Se non riesci a risolvere un problema, raccogli quante più informazioni possibili e contatta l"assistenza tecnica.' 
+---
+= Risolvere i problemi di aggiornamento
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se durante l'aggiornamento si verifica un problema, potresti riuscire a risolverlo autonomamente.  Se non riesci a risolvere un problema, raccogli quante più informazioni possibili e contatta l'assistenza tecnica.
+
+
+
+== L'aggiornamento non viene completato
+
+Nelle sezioni seguenti viene descritto come ripristinare situazioni in cui l'aggiornamento è parzialmente fallito.
+
+
+
+=== Errori di pre-controllo dell'aggiornamento
+
+Per rilevare e risolvere i problemi, è possibile eseguire manualmente i controlli preliminari all'aggiornamento prima di avviare l'aggiornamento vero e proprio.  La maggior parte degli errori di pre-controllo fornisce informazioni su come risolvere il problema.
+
+
+
+=== Errori di provisioning
+
+Se il processo di provisioning automatico non riesce, contattare l'assistenza tecnica.
+
+
+
+=== Il nodo della griglia si blocca o non riesce ad avviarsi
+
+Se un nodo della griglia si blocca durante il processo di aggiornamento o non si avvia correttamente al termine dell'aggiornamento, contattare l'assistenza tecnica per indagare e correggere eventuali problemi sottostanti.
+
+
+
+=== L'acquisizione o il recupero dei dati è interrotto
+
+Se l'acquisizione o il recupero dei dati viene interrotto inaspettatamente quando non si sta aggiornando un nodo della griglia, contattare l'assistenza tecnica.
+
+
+
+=== Errori di aggiornamento del database
+
+Se l'aggiornamento del database fallisce e si verifica un errore, riprovare.  Se il problema persiste, contattare l'assistenza tecnica.
+
+.Informazioni correlate
+link:checking-systems-condition-before-upgrading-software.html["Controllo delle condizioni del sistema prima di aggiornare il software"]
+
+
+
+== Problemi dell'interfaccia utente
+
+Durante o dopo l'aggiornamento potrebbero verificarsi problemi con Grid Manager o Tenant Manager.
+
+
+
+=== Grid Manager visualizza più messaggi di errore durante l'aggiornamento
+
+Se aggiorni il browser o passi a un'altra pagina di Grid Manager mentre è in corso l'aggiornamento del nodo di amministrazione principale, potresti visualizzare più messaggi "503: Servizio non disponibile" e "Problema di connessione al server".  Puoi tranquillamente ignorare questi messaggi: non appariranno più non appena il nodo sarà aggiornato.
+
+Se questi messaggi vengono visualizzati per più di un'ora dopo l'avvio dell'aggiornamento, potrebbe essersi verificato un problema che ha impedito l'aggiornamento del nodo di amministrazione primario.  Se non riesci a risolvere il problema da solo, contatta l'assistenza tecnica.
+
+
+
+=== L'interfaccia web non risponde come previsto
+
+Dopo l'aggiornamento del software StorageGRID , Grid Manager o Tenant Manager potrebbero non rispondere come previsto.
+
+Se riscontri problemi con l'interfaccia web:
+
+* Assicurati di utilizzare unlink:../admin/web-browser-requirements.html["browser web supportato"] .
++
+
+NOTE: In genere, il supporto del browser cambia per ogni versione StorageGRID .
+
+* Svuota la cache del tuo browser web.
++
+La cancellazione della cache rimuove le risorse obsolete utilizzate dalla versione precedente del software StorageGRID e consente all'interfaccia utente di funzionare di nuovo correttamente.  Per le istruzioni, consultare la documentazione del browser web.
+
+
+
+
+
+== Messaggi di errore "Controllo della disponibilità dell'immagine Docker"
+
+Quando si tenta di avviare il processo di aggiornamento, è possibile che venga visualizzato un messaggio di errore che indica "I seguenti problemi sono stati identificati dalla suite di convalida del controllo della disponibilità delle immagini Docker".  Prima di poter completare l'aggiornamento, è necessario risolvere tutti i problemi.
+
+Se non sei sicuro delle modifiche necessarie per risolvere i problemi identificati, contatta l'assistenza tecnica.
+
+[cols="1a,1a,1a"]
+|===
+| Messaggio | Causa | Soluzione 
+
+
+ a| 
+Impossibile determinare la versione dell'aggiornamento.  File di informazioni sulla versione di aggiornamento `{file_path}` non corrispondeva al formato previsto.
+ a| 
+Il pacchetto di aggiornamento è danneggiato.
+ a| 
+Ricarica il pacchetto di aggiornamento e riprova.  Se il problema persiste, contattare l'assistenza tecnica.
+
+
+
+ a| 
+File di informazioni sulla versione di aggiornamento `{file_path}` non è stato trovato.  Impossibile determinare la versione dell'aggiornamento.
+ a| 
+Il pacchetto di aggiornamento è danneggiato.
+ a| 
+Ricarica il pacchetto di aggiornamento e riprova.  Se il problema persiste, contattare l'assistenza tecnica.
+
+
+
+ a| 
+Impossibile determinare la versione di rilascio attualmente installata su `{node_name}` .
+ a| 
+Un file critico sul nodo è danneggiato.
+ a| 
+Contattare l'assistenza tecnica.
+
+
+
+ a| 
+Errore di connessione durante il tentativo di elencare le versioni su `{node_name}`
+ a| 
+Il nodo è offline oppure la connessione è stata interrotta.
+ a| 
+Verificare che tutti i nodi siano online e raggiungibili dal nodo di amministrazione primario, quindi riprovare.
+
+
+
+ a| 
+L'host per il nodo `{node_name}` non ha StorageGRID `{upgrade_version}` immagine caricata.  Prima di poter procedere con l'aggiornamento, è necessario installare immagini e servizi sull'host.
+ a| 
+I pacchetti RPM o DEB per l'aggiornamento non sono stati installati sull'host su cui è in esecuzione il nodo oppure le immagini sono ancora in fase di importazione.
+
+*Nota:* questo errore si applica solo ai nodi in esecuzione come container su Linux.
+ a| 
+Verificare che i pacchetti RPM o DEB siano stati installati su tutti gli host Linux in cui sono in esecuzione i nodi.  Assicurarsi che la versione sia corretta sia per il servizio che per il file immagine.  Attendi qualche minuto e riprova.
+
+Vedere link:../upgrade/linux-installing-rpm-or-deb-package-on-all-hosts.html["Linux: installa il pacchetto RPM o DEB su tutti gli host"] .
+
+
+
+ a| 
+Errore durante il controllo del nodo `{node_name}`
+ a| 
+Si è verificato un errore imprevisto.
+ a| 
+Attendi qualche minuto e riprova.
+
+
+
+ a| 
+Errore non rilevato durante l'esecuzione dei controlli preliminari. `{error_string}`
+ a| 
+Si è verificato un errore imprevisto.
+ a| 
+Attendi qualche minuto e riprova.
+
+|===

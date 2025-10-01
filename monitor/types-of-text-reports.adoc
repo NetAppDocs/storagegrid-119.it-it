@@ -1,0 +1,112 @@
+---
+permalink: monitor/types-of-text-reports.html 
+sidebar: sidebar 
+keywords: how to use text reports 
+summary: 'I report di testo mostrano una rappresentazione testuale dei valori dei dati degli attributi elaborati dal servizio NMS.  A seconda del periodo di tempo su cui si sta effettuando il report, vengono generati due tipi di report: report di testo grezzo per periodi inferiori a una settimana e report di testo aggregato per periodi superiori a una settimana.' 
+---
+= Utilizzare report di testo
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+I report di testo mostrano una rappresentazione testuale dei valori dei dati degli attributi elaborati dal servizio NMS.  A seconda del periodo di tempo su cui si sta effettuando il report, vengono generati due tipi di report: report di testo grezzo per periodi inferiori a una settimana e report di testo aggregato per periodi superiori a una settimana.
+
+
+
+== Rapporti di testo grezzo
+
+Un report di testo grezzo visualizza i dettagli sull'attributo selezionato:
+
+* Ora di ricezione: data e ora locali in cui un valore campione dei dati di un attributo è stato elaborato dal servizio NMS.
+* Ora di campionamento: data e ora locali in cui un valore di attributo è stato campionato o modificato all'origine.
+* Valore: valore dell'attributo al momento del campionamento.
+
+
+image::../media/raw_text_report.gif[screenshot che mostra il report di testo non elaborato]
+
+
+
+== Rapporti di testo aggregati
+
+Un report di testo aggregato visualizza i dati per un periodo di tempo più lungo (solitamente una settimana) rispetto a un report di testo grezzo.  Ogni voce è il risultato della sintesi di più valori di attributi (un aggregato di valori di attributi) da parte del servizio NMS nel tempo in un'unica voce con valori medi, massimi e minimi derivati dall'aggregazione.
+
+Ogni voce visualizza le seguenti informazioni:
+
+* Ora aggregata: ultima data e ora locale in cui il servizio NMS ha aggregato (raccolto) un set di valori di attributi modificati.
+* Valore medio: la media del valore dell'attributo nel periodo di tempo aggregato.
+* Valore minimo: il valore minimo nel periodo di tempo aggregato.
+* Valore massimo: il valore massimo nel periodo di tempo aggregato.
+
+
+image::../media/aggregate_text_report.gif[screenshot che mostra il report di testo aggregato]
+
+
+
+== Genera report di testo
+
+I report di testo mostrano una rappresentazione testuale dei valori dei dati degli attributi elaborati dal servizio NMS.  È possibile creare report su un sito di data center, un nodo di griglia, un componente o un servizio.
+
+.Prima di iniziare
+* Devi aver effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Hailink:../admin/admin-group-permissions.html["autorizzazioni di accesso specifiche"] .
+
+
+.Informazioni su questo compito
+Per i dati degli attributi che si prevede cambino continuamente, questi dati vengono campionati dal servizio NMS (alla fonte) a intervalli regolari.  Per i dati degli attributi che cambiano raramente (ad esempio, dati basati su eventi quali cambiamenti di stato o di stato), un valore dell'attributo viene inviato al servizio NMS quando il valore cambia.
+
+Il tipo di report visualizzato dipende dal periodo di tempo configurato.  Per impostazione predefinita, i report di testo aggregati vengono generati per periodi di tempo superiori a una settimana.
+
+Il testo grigio indica che il servizio era amministrativamente inattivo durante il periodo in cui è stato effettuato il campionamento.  Il testo blu indica che il servizio era in uno stato sconosciuto.
+
+.Passi
+. Selezionare *SUPPORTO* > *Strumenti* > *Topologia griglia*.
+. Selezionare *_nodo griglia_* > *_componente o servizio_* > *Report* > *Testo*.
+. Selezionare l'attributo da segnalare dall'elenco a discesa *Attributo*.
+. Selezionare il numero di risultati per pagina dall'elenco a discesa *Risultati per pagina*.
+. Per arrotondare i valori a un massimo di tre cifre decimali (ad esempio, per gli attributi riportati come percentuali), deselezionare la casella di controllo *Dati grezzi*.
+. Selezionare il periodo di tempo su cui effettuare il report dall'elenco a discesa *Query rapida*.
++
+Selezionare l'opzione Query personalizzata per selezionare un intervallo di tempo specifico.
+
++
+Il rapporto appare dopo qualche istante.  Per la tabulazione di intervalli di tempo lunghi, attendere alcuni minuti.
+
+. Se hai selezionato Query personalizzata, devi personalizzare il periodo di tempo su cui effettuare il report inserendo la *Data di inizio* e la *Data di fine*.
++
+Utilizzare il formato `YYYY/MM/DDHH:MM:SS` nell'ora locale.  Per rispettare il formato è necessario utilizzare gli zeri iniziali.  Ad esempio, 2017/4/6 7:30:00 non supera la convalida.  Il formato corretto è: 2017/04/06 07:30:00.
+
+. Fare clic su *Aggiorna*.
++
+Dopo qualche istante viene generato un report di testo.  Per la tabulazione di intervalli di tempo lunghi, attendere alcuni minuti.  A seconda della durata impostata per la query, viene visualizzato un report di testo grezzo o un report di testo aggregato.
+
+
+
+
+
+== Esporta report di testo
+
+I report di testo esportati aprono una nuova scheda del browser, che consente di selezionare e copiare i dati.
+
+.Informazioni su questo compito
+I dati copiati possono quindi essere salvati in un nuovo documento (ad esempio, un foglio di calcolo) e utilizzati per analizzare le prestazioni del sistema StorageGRID .
+
+.Passi
+. Selezionare *SUPPORTO* > *Strumenti* > *Topologia griglia*.
+. Crea un report di testo.
+. Fare clic su *Esporta*image:../media/icon_export.gif["icona di esportazione"] .
++
+image::../media/export_text_report.gif[screenshot descritto dal testo circostante]
+
++
+Si apre la finestra Esporta report di testo che visualizza il report.
+
++
+image::../media/export_text_report_data.gif[screenshot che mostra un esempio di report di testo]
+
+. Selezionare e copiare il contenuto della finestra Esporta report di testo.
++
+Questi dati possono ora essere incollati in un documento di terze parti, ad esempio un foglio di calcolo.
+
+

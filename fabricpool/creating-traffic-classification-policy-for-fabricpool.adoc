@@ -1,0 +1,67 @@
+---
+permalink: fabricpool/creating-traffic-classification-policy-for-fabricpool.html 
+sidebar: sidebar 
+keywords: fabricPool, traffic classification, traffic policy, QoS, quality of service 
+summary: Facoltativamente, è possibile progettare una policy di classificazione del traffico StorageGRID per ottimizzare la qualità del servizio per il carico di lavoro FabricPool . 
+---
+= Creare una policy di classificazione del traffico per FabricPool
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Facoltativamente, è possibile progettare una policy di classificazione del traffico StorageGRID per ottimizzare la qualità del servizio per il carico di lavoro FabricPool .
+
+Per i dettagli su questa attività, vederelink:../admin/managing-traffic-classification-policies.html["Gestire le policy di classificazione del traffico"] .  Per utilizzare la procedura guidata di configurazione FabricPool per completare questa attività, andare alink:use-fabricpool-setup-wizard-steps.html["Accedi e completa la procedura guidata di configurazione FabricPool"] .
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Tu hai illink:../admin/admin-group-permissions.html["Permesso di accesso root"] .
+
+
+.Informazioni su questo compito
+Le best practice per la creazione di una policy di classificazione del traffico per FabricPool dipendono dal carico di lavoro, come segue:
+
+* Se si prevede di suddividere i dati del carico di lavoro primario FabricPool in livelli su StorageGRID, è necessario assicurarsi che il carico di lavoro FabricPool disponga della maggior parte della larghezza di banda.  È possibile creare una policy di classificazione del traffico per limitare tutti gli altri carichi di lavoro.
++
+
+NOTE: In generale, è più importante dare priorità alle operazioni di lettura FabricPool rispetto alle operazioni di scrittura.
+
++
+Ad esempio, se altri client S3 utilizzano questo sistema StorageGRID , è necessario creare una policy di classificazione del traffico.  È possibile limitare il traffico di rete per gli altri bucket, tenant, subnet IP o endpoint del bilanciatore del carico.
+
+* In genere, non dovresti imporre limiti alla qualità del servizio su alcun carico di lavoro FabricPool ; dovresti limitare solo gli altri carichi di lavoro.
+* I limiti imposti ad altri carichi di lavoro dovrebbero tenere conto del comportamento di tali carichi di lavoro.  I limiti imposti varieranno anche in base alle dimensioni e alle capacità della rete e al livello di utilizzo previsto.
+
+
+.Passi
+. Selezionare *CONFIGURAZIONE* > *Rete* > *Classificazione del traffico*.
+. Seleziona *Crea*.
+. Inserisci un nome e una descrizione (facoltativa) per la policy e seleziona *Continua*.
+. Per il passaggio Aggiungi regole di corrispondenza, aggiungere almeno una regola.
++
+.. Seleziona *Aggiungi regola*
+.. Per Tipo, seleziona *Endpoint del bilanciatore del carico* e seleziona l'endpoint del bilanciatore del carico creato per FabricPool.
++
+È anche possibile selezionare l'account tenant o il bucket FabricPool .
+
+.. Se si desidera che questa policy del traffico limiti il traffico per gli altri endpoint, selezionare *Corrispondenza inversa*.
+
+
+. Facoltativamente, aggiungi uno o più limiti per controllare il traffico di rete a cui corrisponde la regola.
++
+
+NOTE: StorageGRID raccoglie le metriche anche se non si aggiungono limiti, in modo da poter comprendere le tendenze del traffico.
+
++
+.. Seleziona *Aggiungi un limite*.
+.. Seleziona il tipo di traffico che vuoi limitare e il limite da applicare.
+
+
+. Selezionare *Continua*.
+. Leggere e rivedere la politica di classificazione del traffico.  Utilizzare il pulsante *Precedente* per tornare indietro e apportare le modifiche desiderate.  Quando sei soddisfatto della policy, seleziona *Salva e continua*.
+
+
+.Dopo aver finito
+link:../admin/viewing-network-traffic-metrics.html["Visualizza le metriche del traffico di rete"]per verificare che le norme rispettino i limiti di traffico previsti.

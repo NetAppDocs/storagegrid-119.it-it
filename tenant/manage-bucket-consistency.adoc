@@ -1,0 +1,84 @@
+---
+permalink: tenant/manage-bucket-consistency.html 
+sidebar: sidebar 
+keywords: how to manage bucket consistency, how to change bucket consistency, read after new write, read-after-new-write, strong site, strong-site, strong global, strong-global 
+summary: 'I valori di coerenza possono essere utilizzati per specificare la disponibilità delle modifiche alle impostazioni del bucket, nonché per fornire un equilibrio tra la disponibilità degli oggetti all"interno di un bucket e la coerenza di tali oggetti tra diversi nodi di archiviazione e siti.  È possibile modificare i valori di coerenza in modo che siano diversi dai valori predefiniti, in modo che le applicazioni client possano soddisfare le proprie esigenze operative.' 
+---
+= Gestire la coerenza del bucket
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+I valori di coerenza possono essere utilizzati per specificare la disponibilità delle modifiche alle impostazioni del bucket, nonché per fornire un equilibrio tra la disponibilità degli oggetti all'interno di un bucket e la coerenza di tali oggetti tra diversi nodi di archiviazione e siti.  È possibile modificare i valori di coerenza in modo che siano diversi dai valori predefiniti, in modo che le applicazioni client possano soddisfare le proprie esigenze operative.
+
+.Prima di iniziare
+* Hai effettuato l'accesso al Tenant Manager tramite unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Appartieni a un gruppo di utenti che ha illink:tenant-management-permissions.html["Gestisci tutti i bucket o l'autorizzazione di accesso Root"] . Queste autorizzazioni sovrascrivono le impostazioni delle autorizzazioni nei criteri di gruppo o di bucket.
+
+
+
+
+== Linee guida sulla coerenza del bucket
+
+La coerenza del bucket viene utilizzata per determinare la coerenza delle applicazioni client che interessano gli oggetti all'interno di quel bucket S3.  In generale, dovresti usare la coerenza *Lettura dopo nuova scrittura* per i tuoi bucket.
+
+
+
+== [[change-bucket-consistency]]Modifica la coerenza del bucket
+
+Se la coerenza *Read-after-new-write* non soddisfa i requisiti dell'applicazione client, è possibile modificarla impostando la coerenza del bucket o utilizzando `Consistency-Control` intestazione.  IL `Consistency-Control` l'intestazione sovrascrive la coerenza del bucket.
+
+
+NOTE: Quando si modifica la consistenza di un bucket, solo gli oggetti acquisiti dopo la modifica sono garantiti per soddisfare l'impostazione rivista.
+
+.Passi
+. Selezionare *Visualizza bucket* dalla dashboard oppure selezionare *ARCHIVIAZIONE (S3)* > *Bucket*.
+. Selezionare il nome del bucket dalla tabella.
++
+Viene visualizzata la pagina dei dettagli del bucket.
+
+. Dalla scheda *Opzioni bucket*, seleziona la fisarmonica **.
+. Selezionare una coerenza per le operazioni eseguite sugli oggetti in questo bucket.
++
+** *Tutti*: fornisce il massimo livello di coerenza.  Tutti i nodi ricevono immediatamente i dati, altrimenti la richiesta fallirà.
+** *Strong-global*: garantisce la coerenza di lettura e scrittura per tutte le richieste dei client su tutti i siti.
+** *Strong-site*: garantisce la coerenza di lettura e scrittura per tutte le richieste client all'interno di un sito.
+** *Lettura dopo nuova scrittura* (predefinito): fornisce coerenza di lettura dopo scrittura per i nuovi oggetti e coerenza finale per gli aggiornamenti degli oggetti.  Offre elevate garanzie di disponibilità e protezione dei dati.  Consigliato nella maggior parte dei casi.
+** *Disponibile*: fornisce coerenza finale sia per i nuovi oggetti che per gli aggiornamenti degli oggetti.  Per i bucket S3, utilizzare solo se necessario (ad esempio, per un bucket che contiene valori di log che vengono letti raramente o per operazioni HEAD o GET su chiavi inesistenti).  Non supportato per i bucket S3 FabricPool .
+
+
+. Seleziona *Salva modifiche*.
+
+
+
+
+== Cosa succede quando si modificano le impostazioni del bucket
+
+I bucket hanno più impostazioni che influenzano il comportamento dei bucket stessi e degli oggetti al loro interno.
+
+Le seguenti impostazioni del bucket utilizzano per impostazione predefinita la coerenza *forte*.  Se due o più nodi di archiviazione non sono disponibili in nessun sito, oppure se un sito non è disponibile, le modifiche a queste impostazioni potrebbero non essere disponibili.
+
+* link:deleting-s3-bucket-objects.html["Eliminazione del bucket vuoto in background"]
+* link:enabling-or-disabling-last-access-time-updates.html["Ultimo orario di accesso"]
+* link:../s3/create-s3-lifecycle-configuration.html["Ciclo di vita del bucket"]
+* link:../s3/bucket-and-group-access-policies.html["Politica del bucket"]
+* link:../s3/operations-on-buckets.html["Etichettatura del secchio"]
+* link:changing-bucket-versioning.html["Versionamento del bucket"]
+* link:using-s3-object-lock.html["Blocco oggetto S3"]
+* link:../admin/reviewing-storagegrid-encryption-methods.html#bucket-encryption-table["Crittografia del bucket"]
+
+
+
+NOTE: Il valore di coerenza per il controllo delle versioni dei bucket, il blocco degli oggetti S3 e la crittografia dei bucket non può essere impostato su un valore che non sia fortemente coerente.
+
+Le seguenti impostazioni del bucket non utilizzano una coerenza elevata e hanno una maggiore disponibilità per le modifiche.  Le modifiche a queste impostazioni potrebbero richiedere del tempo prima di avere effetto.
+
+* link:considerations-for-platform-services.html["Configurazione dei servizi della piattaforma: integrazione di notifica, replica o ricerca"]
+* link:configuring-cross-origin-resource-sharing-cors.html["Configurazione CORS"]
+* <<change-bucket-consistency,Modifica la coerenza del bucket>>
+
+
+
+TIP: Se la coerenza predefinita utilizzata durante la modifica delle impostazioni del bucket non soddisfa i requisiti dell'applicazione client, è possibile modificare la coerenza utilizzando `Consistency-Control` intestazione per illink:../s3/put-bucket-consistency-request.html["API REST S3"] oppure utilizzando il `reducedConsistency` O `force` opzioni nellink:understanding-tenant-management-api.html["API di gestione degli inquilini"] .

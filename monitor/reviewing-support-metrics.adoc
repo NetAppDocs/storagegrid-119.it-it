@@ -1,0 +1,50 @@
+---
+permalink: monitor/reviewing-support-metrics.html 
+sidebar: sidebar 
+keywords: how to view support metrics, how to review support metrics 
+summary: Durante la risoluzione di un problema, puoi collaborare con il supporto tecnico per esaminare metriche e grafici dettagliati per il tuo sistema StorageGRID . 
+---
+= Esaminare le metriche di supporto
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Durante la risoluzione di un problema, puoi collaborare con il supporto tecnico per esaminare metriche e grafici dettagliati per il tuo sistema StorageGRID .
+
+.Prima di iniziare
+* Devi aver effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Hailink:../admin/admin-group-permissions.html["autorizzazioni di accesso specifiche"] .
+
+
+.Informazioni su questo compito
+La pagina Metriche consente di accedere alle interfacce utente di Prometheus e Grafana.  Prometheus è un software open source per la raccolta di metriche.  Grafana è un software open source per la visualizzazione delle metriche.
+
+
+NOTE: Gli strumenti disponibili nella pagina Metriche sono destinati all'uso da parte del supporto tecnico.  Alcune funzionalità e voci di menu all'interno di questi strumenti sono intenzionalmente non funzionali e sono soggette a modifiche.  Vedi l'elenco dilink:commonly-used-prometheus-metrics.html["metriche Prometheus comunemente utilizzate"] .
+
+.Passi
+. Come indicato dal supporto tecnico, seleziona *SUPPORTO* > *Strumenti* > *Metriche*.
++
+Di seguito è riportato un esempio della pagina Metriche:
+
++
+image::../media/metrics_page.png[Pagina delle metriche]
+
+. Per interrogare i valori correnti delle metriche StorageGRID e visualizzare i grafici dei valori nel tempo, fare clic sul collegamento nella sezione Prometheus.
++
+Viene visualizzata l'interfaccia di Prometheus.  È possibile utilizzare questa interfaccia per eseguire query sulle metriche StorageGRID disponibili e per rappresentare graficamente le metriche StorageGRID nel tempo.
+
++
+
+NOTE: Le metriche che includono _private_ nei loro nomi sono destinate esclusivamente all'uso interno e sono soggette a modifiche tra le versioni StorageGRID senza preavviso.
+
+. Per accedere alle dashboard predefinite contenenti grafici delle metriche StorageGRID nel tempo, fare clic sui collegamenti nella sezione Grafana.
++
+Viene visualizzata l'interfaccia Grafana per il collegamento selezionato.
+
++
+image::../media/metrics_page_grafana.png[Pagina delle metriche Grafana]
+
+

@@ -1,0 +1,46 @@
+---
+permalink: maintain/pausing-and-resuming-decommission-process-for-storage-nodes.html 
+sidebar: sidebar 
+keywords: how to pause decommission 
+summary: 'Se è necessario eseguire una seconda procedura di manutenzione, è possibile sospendere la procedura di dismissione di un nodo di archiviazione durante determinate fasi.  Una volta completata l"altra procedura, è possibile riprendere la dismissione.' 
+---
+= Sospendi e riprendi il processo di dismissione per i nodi di archiviazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se è necessario eseguire una seconda procedura di manutenzione, è possibile sospendere la procedura di dismissione di un nodo di archiviazione durante determinate fasi.  Una volta completata l'altra procedura, è possibile riprendere la dismissione.
+
+
+NOTE: Il pulsante *Pausa* è abilitato solo quando vengono raggiunte le fasi di valutazione ILM o di disattivazione dei dati codificati in cancellazione; tuttavia, la valutazione ILM (migrazione dei dati) continuerà a essere eseguita in background.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Tu hai illink:../admin/admin-group-permissions.html["Autorizzazione di accesso alla manutenzione o alla root"] .
+
+
+.Passi
+. Selezionare *MANUTENZIONE* > *Attività* > *Dismissione*.
++
+Viene visualizzata la pagina Disattivazione.
+
+. Selezionare *Dismissione nodi*.
++
+Viene visualizzata la pagina Nodi dismessi.  Quando la procedura di disattivazione raggiunge una delle seguenti fasi, il pulsante *Pausa* viene abilitato.
+
++
+** Valutazione dell'ILM
+** Dismissione dei dati codificati tramite cancellazione
+
+
+. Selezionare *Pausa* per sospendere la procedura.
++
+La fase corrente è in pausa e il pulsante *Riprendi* è abilitato.
+
++
+image::../media/decommission_nodes_procedure_paused.png[Procedura di dismissione dei nodi sospesa]
+
+. Una volta completata l'altra procedura di manutenzione, selezionare *Riprendi* per procedere con la dismissione.
+

@@ -1,0 +1,107 @@
+---
+permalink: maintain/step-1-select-site.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, select site 
+summary: Per determinare se un sito può essere dismesso, iniziare accedendo alla procedura guidata Dismissione sito. 
+---
+= Passaggio 1: seleziona il sito
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Per determinare se un sito può essere dismesso, iniziare accedendo alla procedura guidata Dismissione sito.
+
+.Prima di iniziare
+* Hai ottenuto tutto il materiale richiesto.
+* Hai esaminato le considerazioni per la rimozione di un sito.
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Tu hai illink:../admin/admin-group-permissions.html["Autorizzazione di accesso root o autorizzazioni di manutenzione e ILM"] .
+
+
+.Passi
+. Selezionare *MANUTENZIONE* > *Attività* > *Dismissione*.
+. Selezionare *Dismissione sito*.
++
+Viene visualizzato il passaggio 1 (Seleziona sito) della procedura guidata Dismissione sito.  Questo passaggio include un elenco alfabetico dei siti nel sistema StorageGRID .
+
++
+image::../media/decommission_site_step_select_site.png[Dismissione del sito Fase 1 Selezione del sito]
+
+. Visualizza i valori nella colonna *Capacità di archiviazione utilizzata* per determinare la quantità di spazio di archiviazione attualmente utilizzata per i dati degli oggetti in ciascun sito.
++
+La capacità di archiviazione utilizzata è una stima.  Se i nodi sono offline, la capacità di archiviazione utilizzata è l'ultimo valore noto per il sito.
+
++
+** Per la dismissione di un sito connesso, questo valore rappresenta la quantità di dati oggetto che dovranno essere spostati in altri siti o eliminati da ILM prima di poter dismettere in sicurezza il sito.
+** Per la dismissione di un sito disconnesso, questo valore rappresenta la quantità di spazio di archiviazione dati del sistema che diventerà inaccessibile quando si dismette il sito.
++
+
+NOTE: Se la tua policy ILM è stata progettata per proteggere dalla perdita di un singolo sito, copie dei dati dell'oggetto dovrebbero comunque esistere sui siti rimanenti.
+
+
+
+. Esaminare i motivi nella colonna *Dismissione possibile* per determinare quali siti possono essere dismessi al momento.
++
+
+NOTE: Se sussistono più motivi per cui un sito non può essere dismesso, viene visualizzato il motivo più critico.
+
++
+[cols="1a,1a,1a"]
+|===
+| Possibile motivo di disattivazione | Descrizione | Passo successivo 
+
+
+ a| 
+Segno di spunta verde (image:../media/icon_alert_green_checkmark.png["Icona Avviso Segno di spunta verde"] )
+ a| 
+Puoi disattivare questo sito.
+ a| 
+Vai a<<decommission_possible,il passo successivo>> .
+
+
+
+ a| 
+No. Questo sito contiene il nodo di amministrazione principale.
+ a| 
+Non è possibile dismettere un sito contenente il nodo di amministrazione primario.
+ a| 
+Nessuno.  Non è possibile eseguire questa procedura.
+
+
+
+ a| 
+No. Questo sito contiene uno o più nodi di archivio.
+ a| 
+Non è possibile dismettere un sito contenente un nodo archivio.
+ a| 
+Nessuno.  Non è possibile eseguire questa procedura.
+
+
+
+ a| 
+No. Tutti i nodi di questo sito sono disconnessi.  Contatta il tuo rappresentante NetApp .
+ a| 
+Non è possibile eseguire la dismissione di un sito connesso a meno che ogni nodo del sito non sia connesso (image:../media/icon_alert_green_checkmark.png["Icona Avviso Segno di spunta verde"] ).
+ a| 
+Se si desidera eseguire la dismissione di un sito disconnesso, è necessario contattare il rappresentante dell'account NetApp , che esaminerà i requisiti e abiliterà il resto della procedura guidata di dismissione del sito.
+
+*IMPORTANTE*: Non disattivare mai i nodi online per poter rimuovere un sito.  Perderai dati.
+
+|===
++
+L'esempio mostra un sistema StorageGRID con tre siti.  Il segno di spunta verde (image:../media/icon_alert_green_checkmark.png["Icona Avviso Segno di spunta verde"] ) per i siti di Raleigh e Sunnyvale indica che è possibile dismettere tali siti.  Tuttavia, non è possibile dismettere il sito di Vancouver perché contiene il nodo di amministrazione principale.
+
+
+
+[[decommission_possible]]
+. Se è possibile la dismissione, selezionare il pulsante di opzione per il sito.
++
+Il pulsante *Avanti* è abilitato.
+
+. Selezionare *Avanti*.
++
+Viene visualizzato il passaggio 2 (Visualizza dettagli).
+
+

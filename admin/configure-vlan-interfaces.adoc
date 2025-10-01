@@ -1,0 +1,162 @@
+---
+permalink: admin/configure-vlan-interfaces.html 
+sidebar: sidebar 
+keywords: how to configure vlan interfaces, vlan interfaces, trunk interface 
+summary: 'È possibile creare interfacce LAN virtuali \(VLAN\) su nodi amministrativi e nodi gateway e utilizzarle in gruppi HA ed endpoint di bilanciamento del carico per isolare e partizionare il traffico per garantire sicurezza, flessibilità e prestazioni.' 
+---
+= Configurare le interfacce VLAN
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile creare interfacce LAN virtuali (VLAN) sui nodi di amministrazione e sui nodi gateway e utilizzarle nei gruppi HA e negli endpoint del bilanciatore del carico per isolare e partizionare il traffico per garantire sicurezza, flessibilità e prestazioni.
+
+
+
+== Considerazioni sulle interfacce VLAN
+
+* Per creare un'interfaccia VLAN, immettere un ID VLAN e scegliere un'interfaccia padre su uno o più nodi.
+* Un'interfaccia padre deve essere configurata come interfaccia trunk sullo switch.
+* Un'interfaccia padre può essere la rete Grid (eth0), la rete client (eth2) o un'interfaccia trunk aggiuntiva per la VM o l'host bare-metal (ad esempio, ens256).
+* Per ogni interfaccia VLAN, è possibile selezionare solo un'interfaccia padre per un dato nodo.  Ad esempio, non è possibile utilizzare sia l'interfaccia Grid Network che l'interfaccia Client Network sullo stesso Gateway Node come interfaccia padre per la stessa VLAN.
+* Se l'interfaccia VLAN è destinata al traffico del nodo amministrativo, che include il traffico relativo al Grid Manager e al Tenant Manager, selezionare le interfacce solo sui nodi amministrativi.
+* Se l'interfaccia VLAN è destinata al traffico client S3, selezionare le interfacce sui nodi amministrativi o sui nodi gateway.
+* Se è necessario aggiungere interfacce trunk, vedere quanto segue per i dettagli:
++
+** *VMware (dopo l'installazione del nodo)*:link:../maintain/vmware-adding-trunk-or-access-interfaces-to-node.html["VMware: aggiungi trunk o interfacce di accesso a un nodo"]
+** *RHEL (prima di installare il nodo)*:link:../rhel/creating-node-configuration-files.html["Creare file di configurazione del nodo"]
+** *Ubuntu o Debian (prima di installare il nodo)*:link:../ubuntu/creating-node-configuration-files.html["Creare file di configurazione del nodo"]
+** *RHEL, Ubuntu o Debian (dopo aver installato il nodo)*:link:../maintain/linux-adding-trunk-or-access-interfaces-to-node.html["Linux: aggiungere interfacce trunk o di accesso a un nodo"]
+
+
+
+
+
+
+== Creare un'interfaccia VLAN
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Tu hai illink:admin-group-permissions.html["Permesso di accesso root"] .
+* Un'interfaccia trunk è stata configurata nella rete e collegata alla VM o al nodo Linux.  Conosci il nome dell'interfaccia trunk.
+* Conosci l'ID della VLAN che stai configurando.
+
+
+.Informazioni su questo compito
+L'amministratore di rete potrebbe aver configurato una o più interfacce trunk e una o più VLAN per separare il traffico client o amministrativo appartenente a diverse applicazioni o tenant.  Ogni VLAN è identificata da un ID numerico o tag.  Ad esempio, la rete potrebbe utilizzare la VLAN 100 per il traffico FabricPool e la VLAN 200 per un'applicazione di archiviazione.
+
+È possibile utilizzare Grid Manager per creare interfacce VLAN che consentono ai client di accedere a StorageGRID su una VLAN specifica.  Quando si creano interfacce VLAN, si specifica l'ID VLAN e si selezionano le interfacce padre (trunk) su uno o più nodi.
+
+
+
+=== Accedi alla procedura guidata
+
+.Passi
+. Selezionare *CONFIGURAZIONE* > *Rete* > *Interfacce VLAN*.
+. Seleziona *Crea*.
+
+
+
+
+=== Inserisci i dettagli per le interfacce VLAN
+
+.Passi
+. Specificare l'ID della VLAN nella rete.  È possibile immettere qualsiasi valore compreso tra 1 e 4094.
++
+Gli ID VLAN non devono essere univoci.  Ad esempio, è possibile utilizzare l'ID VLAN 200 per il traffico amministrativo in un sito e lo stesso ID VLAN per il traffico client in un altro sito.  È possibile creare interfacce VLAN separate con diversi set di interfacce padre in ogni sito.  Tuttavia, due interfacce VLAN con lo stesso ID non possono condividere la stessa interfaccia su un nodo.  Se si specifica un ID già utilizzato, viene visualizzato un messaggio.
+
+. Facoltativamente, immettere una breve descrizione per l'interfaccia VLAN.
+. Selezionare *Continua*.
+
+
+
+
+=== Scegli le interfacce padre
+
+Nella tabella sono elencate le interfacce disponibili per tutti i nodi amministrativi e i nodi gateway in ciascun sito della griglia.  Le interfacce Admin Network (eth1) non possono essere utilizzate come interfacce padre e non vengono visualizzate.
+
+.Passi
+. Selezionare una o più interfacce padre a cui collegare questa VLAN.
++
+Ad esempio, potresti voler collegare una VLAN all'interfaccia Client Network (eth2) per un Gateway Node e un Admin Node.
+
++
+image::../media/vlan-create-parent-interfaces.png[Creazione guidata interfacce padre VLAN]
+
+. Selezionare *Continua*.
+
+
+
+
+=== Conferma le impostazioni
+
+.Passi
+. Rivedere la configurazione e apportare eventuali modifiche.
++
+** Se devi modificare l'ID o la descrizione della VLAN, seleziona *Inserisci dettagli VLAN* nella parte superiore della pagina.
+** Se devi modificare un'interfaccia padre, seleziona *Scegli interfacce padre* nella parte superiore della pagina oppure seleziona *Precedente*.
+** Se devi rimuovere un'interfaccia padre, seleziona il cestinoimage:../media/icon-trash-can.png["icona del cestino"] .
+
+
+. Seleziona *Salva*.
+. Attendere fino a 5 minuti affinché la nuova interfaccia venga visualizzata come selezione nella pagina Gruppi ad alta disponibilità e venga elencata nella tabella *Interfacce di rete* per il nodo (*NODI* > *_nodo interfaccia padre_* > *Rete*).
+
+
+
+
+== Modifica un'interfaccia VLAN
+
+Quando si modifica un'interfaccia VLAN, è possibile apportare i seguenti tipi di modifiche:
+
+* Modificare l'ID o la descrizione della VLAN.
+* Aggiungere o rimuovere interfacce padre.
+
+
+Ad esempio, potresti voler rimuovere un'interfaccia padre da un'interfaccia VLAN se intendi dismettere il nodo associato.
+
+Notare quanto segue:
+
+* Non è possibile modificare un ID VLAN se l'interfaccia VLAN viene utilizzata in un gruppo HA.
+* Non è possibile rimuovere un'interfaccia padre se tale interfaccia padre è utilizzata in un gruppo HA.
++
+Ad esempio, supponiamo che la VLAN 200 sia collegata alle interfacce padre sui nodi A e B. Se un gruppo HA utilizza l'interfaccia VLAN 200 per il nodo A e l'interfaccia eth2 per il nodo B, è possibile rimuovere l'interfaccia padre non utilizzata per il nodo B, ma non è possibile rimuovere l'interfaccia padre utilizzata per il nodo A.
+
+
+
+.Passi
+. Selezionare *CONFIGURAZIONE* > *Rete* > *Interfacce VLAN*.
+. Selezionare la casella di controllo relativa all'interfaccia VLAN che si desidera modificare.  Quindi, seleziona *Azioni* > *Modifica*.
+. Facoltativamente, aggiorna l'ID VLAN o la descrizione.  Quindi, seleziona *Continua*.
++
+Non è possibile aggiornare un ID VLAN se la VLAN viene utilizzata in un gruppo HA.
+
+. Facoltativamente, seleziona o deseleziona le caselle di controllo per aggiungere interfacce padre o per rimuovere interfacce non utilizzate.  Quindi, seleziona *Continua*.
+. Rivedere la configurazione e apportare eventuali modifiche.
+. Seleziona *Salva*.
+
+
+
+
+== Rimuovere un'interfaccia VLAN
+
+È possibile rimuovere una o più interfacce VLAN.
+
+Non è possibile rimuovere un'interfaccia VLAN se è attualmente utilizzata in un gruppo HA.  Prima di poter rimuovere l'interfaccia VLAN dal gruppo HA, è necessario rimuoverla.
+
+Per evitare interruzioni nel traffico dei clienti, si consiglia di effettuare una delle seguenti operazioni:
+
+* Aggiungere una nuova interfaccia VLAN al gruppo HA prima di rimuovere questa interfaccia VLAN.
+* Creare un nuovo gruppo HA che non utilizzi questa interfaccia VLAN.
+* Se l'interfaccia VLAN che si desidera rimuovere è attualmente l'interfaccia attiva, modificare il gruppo HA.  Spostare l'interfaccia VLAN che si desidera rimuovere in fondo all'elenco delle priorità.  Attendere che la comunicazione venga stabilita sulla nuova interfaccia primaria, quindi rimuovere la vecchia interfaccia dal gruppo HA.  Infine, eliminare l'interfaccia VLAN su quel nodo.
+
+
+.Passi
+. Selezionare *CONFIGURAZIONE* > *Rete* > *Interfacce VLAN*.
+. Selezionare la casella di controllo per ogni interfaccia VLAN che si desidera rimuovere.  Quindi, seleziona *Azioni* > *Elimina*.
+. Selezionare *Sì* per confermare la selezione.
++
+Tutte le interfacce VLAN selezionate verranno rimosse.  Nella pagina delle interfacce VLAN viene visualizzato un banner verde di successo.
+
+

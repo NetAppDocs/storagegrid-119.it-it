@@ -1,0 +1,79 @@
+---
+permalink: ilm/using-last-access-time-in-ilm-rules.html 
+sidebar: sidebar 
+keywords: last access time, ilm rule reference time 
+summary: 'È possibile utilizzare l"orario dell"ultimo accesso come orario di riferimento in una regola ILM.  Ad esempio, potresti voler lasciare gli oggetti visualizzati negli ultimi tre mesi sui nodi di archiviazione locali, spostando invece gli oggetti non visualizzati di recente in una posizione esterna.  È anche possibile utilizzare l"ora dell"ultimo accesso come filtro avanzato se si desidera che una regola ILM venga applicata solo agli oggetti a cui si è effettuato l"ultimo accesso in una data specifica.' 
+---
+= Utilizzare l'orario dell'ultimo accesso nelle regole ILM
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile utilizzare l'orario dell'ultimo accesso come orario di riferimento in una regola ILM.  Ad esempio, potresti voler lasciare gli oggetti visualizzati negli ultimi tre mesi sui nodi di archiviazione locali, spostando invece gli oggetti non visualizzati di recente in una posizione esterna.  È anche possibile utilizzare l'ora dell'ultimo accesso come filtro avanzato se si desidera che una regola ILM venga applicata solo agli oggetti a cui si è effettuato l'ultimo accesso in una data specifica.
+
+.Informazioni su questo compito
+Prima di utilizzare l'orario dell'ultimo accesso in una regola ILM, esaminare le seguenti considerazioni:
+
+* Quando si utilizza l'orario dell'ultimo accesso come orario di riferimento, tenere presente che la modifica dell'orario dell'ultimo accesso per un oggetto non attiva una valutazione ILM immediata.  Al contrario, vengono valutati i posizionamenti dell'oggetto e l'oggetto viene spostato secondo necessità quando l'ILM in background valuta l'oggetto.  Potrebbero volerci due settimane o più dopo l'accesso all'oggetto.
++
+Tieni conto di questa latenza quando crei regole ILM basate sull'orario dell'ultimo accesso ed evita posizionamenti che utilizzano periodi di tempo brevi (meno di un mese).
+
+* Quando si utilizza l'orario dell'ultimo accesso come filtro avanzato o come orario di riferimento, è necessario abilitare gli aggiornamenti dell'orario dell'ultimo accesso per i bucket S3.  Puoi usare illink:../tenant/enabling-or-disabling-last-access-time-updates.html["Responsabile degli inquilini"] o illink:../s3/put-bucket-last-access-time-request.html["API di gestione degli inquilini"] .
++
+
+NOTE: Per impostazione predefinita, gli aggiornamenti dell'orario dell'ultimo accesso sono disabilitati per i bucket S3.
+
++
+
+NOTE: Tieni presente che l'abilitazione degli aggiornamenti dell'ora dell'ultimo accesso può ridurre le prestazioni, soprattutto nei sistemi con oggetti di piccole dimensioni.  L'impatto sulle prestazioni si verifica perché StorageGRID deve aggiornare gli oggetti con nuovi timestamp ogni volta che vengono recuperati.
+
+
+
+La tabella seguente riassume se l'orario dell'ultimo accesso viene aggiornato per tutti gli oggetti nel bucket per diversi tipi di richieste.
+
+[cols="1a,1a,1a"]
+|===
+| Tipo di richiesta | Se l'orario dell'ultimo accesso viene aggiornato quando gli aggiornamenti dell'orario dell'ultimo accesso sono disabilitati | Se l'orario dell'ultimo accesso viene aggiornato quando sono abilitati gli aggiornamenti dell'orario dell'ultimo accesso 
+
+
+ a| 
+Richiesta di recupero di un oggetto, del suo elenco di controllo di accesso o dei suoi metadati
+ a| 
+NO
+ a| 
+SÌ
+
+
+
+ a| 
+Richiesta di aggiornamento dei metadati di un oggetto
+ a| 
+SÌ
+ a| 
+SÌ
+
+
+
+ a| 
+Richiesta di copiare un oggetto da un bucket all'altro
+ a| 
+* No, per la copia sorgente
+* Sì, per la copia di destinazione
+
+ a| 
+* Sì, per la copia sorgente
+* Sì, per la copia di destinazione
+
+
+
+
+ a| 
+Richiesta di completamento di un caricamento multiparte
+ a| 
+Sì, per l'oggetto assemblato
+ a| 
+Sì, per l'oggetto assemblato
+
+|===

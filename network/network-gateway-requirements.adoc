@@ -1,0 +1,19 @@
+---
+permalink: network/network-gateway-requirements.html 
+sidebar: sidebar 
+keywords: network gateway requirements 
+summary: Seguire questi requisiti e linee guida per i gateway o router di rete. 
+---
+= Requisiti del gateway di rete
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Seguire questi requisiti e linee guida per i gateway o router di rete.
+
+* Se impostato, il gateway per una determinata rete deve trovarsi all'interno della subnet della rete specifica.
+* Se si configura un'interfaccia utilizzando l'indirizzamento statico, è necessario specificare un indirizzo gateway diverso da 0.0.0.0.
+* Se non si dispone di un gateway, la procedura consigliata è quella di impostare l'indirizzo del gateway come indirizzo IP dell'interfaccia di rete.
+

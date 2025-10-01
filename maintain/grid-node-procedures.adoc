@@ -1,0 +1,30 @@
+---
+permalink: maintain/grid-node-procedures.html 
+sidebar: sidebar 
+keywords: storagegrid, grid node procedure 
+summary: Potrebbe essere necessario eseguire procedure di manutenzione relative a specifici nodi della griglia o servizi dei nodi. 
+---
+= Procedure di manutenzione dei nodi
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Potrebbe essere necessario eseguire procedure di manutenzione relative a specifici nodi della griglia o servizi dei nodi.
+
+Procedure del Server Manager:: Server Manager viene eseguito su ogni nodo della griglia per supervisionare l'avvio e l'arresto dei servizi e per garantire che i servizi si uniscano e abbandonino correttamente il sistema StorageGRID .  Server Manager monitora anche i servizi su ogni nodo della griglia e tenterà automaticamente di riavviare tutti i servizi che segnalano errori.
++
+--
+Per eseguire le procedure di Server Manager, in genere è necessario accedere alla riga di comando del nodo.
+
+
+NOTE: Dovresti accedere a Server Manager solo se il supporto tecnico ti ha indicato di farlo.
+
+
+NOTE: Dopo aver terminato di utilizzare Server Manager, è necessario chiudere la sessione corrente della shell dei comandi e disconnettersi.  Inserisci: `exit`
+
+--
+Procedure di riavvio, spegnimento e alimentazione del nodo:: È possibile utilizzare queste procedure per riavviare uno o più nodi, per arrestare e riavviare i nodi oppure per spegnere e riaccendere i nodi.
+Procedure di rimappatura delle porte:: È possibile utilizzare le procedure di rimappatura delle porte per rimuovere le rimappature delle porte da un nodo, ad esempio se si desidera configurare un endpoint del bilanciatore del carico utilizzando una porta che era stata precedentemente rimappata.
+

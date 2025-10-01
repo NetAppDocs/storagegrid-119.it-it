@@ -1,0 +1,145 @@
+---
+permalink: maintain/accessing-decommission-nodes-page.html 
+sidebar: sidebar 
+keywords: storagegrid, decommission nodes, decommissioning nodes, maintenance task 
+summary: 'Quando si accede alla pagina Decommission Nodes in Grid Manager, è possibile vedere a colpo d"occhio quali nodi possono essere dismessi.' 
+---
+= Accedi alla pagina Nodi di dismissione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Quando si accede alla pagina Decommission Nodes in Grid Manager, è possibile vedere a colpo d'occhio quali nodi possono essere dismessi.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Tu hai illink:../admin/admin-group-permissions.html["Autorizzazione di accesso alla manutenzione o alla root"] .
+
+
+
+CAUTION: Prestare attenzione quando si dismettono nodi di archiviazione in una griglia contenente nodi basati solo su software.  Se si dismettono tutti i nodi configurati per archiviare sia oggetti che metadati, la possibilità di archiviare oggetti viene rimossa dalla griglia.  Vederelink:../primer/what-storage-node-is.html#types-of-storage-nodes["Tipi di nodi di archiviazione"] per ulteriori informazioni sui nodi di archiviazione solo metadati.
+
+.Passi
+. Selezionare *MANUTENZIONE* > *Attività* > *Dismissione*.
+. Selezionare *Dismissione nodi*.
++
+Viene visualizzata la pagina Nodi dismessi.  Da questa pagina puoi:
+
++
+** Determinare quali nodi della griglia possono essere attualmente dismessi.
+** Visualizza lo stato di salute di tutti i nodi della griglia
+** Ordina l'elenco in ordine crescente o decrescente per *Nome*, *Sito*, *Tipo* o *Ha ADC*.
+** Inserisci i termini di ricerca per trovare rapidamente nodi specifici.
++
+In questo esempio, la colonna Dismissione possibile indica che è possibile dismettere il nodo gateway e uno dei quattro nodi di archiviazione.
+
++
+image::../media/decommission_nodes_page_all_connected.png[Pagina Nodi dismessi]
+
+
+
+. Esaminare la colonna *Dismissione possibile* per ogni nodo che si desidera dismettere.
++
+Se un nodo della griglia può essere dismesso, questa colonna include un segno di spunta verde e la colonna di sinistra include una casella di controllo.  Se un nodo non può essere dismesso, questa colonna descrive il problema.  Se esiste più di un motivo per cui un nodo non può essere dismesso, viene mostrato il motivo più critico.
+
++
+[cols="1a,1a,1a"]
+|===
+| Possibile motivo di disattivazione | Descrizione | Passaggi per risolvere 
+
+
+ a| 
+No, la dismissione del tipo _node_ non è supportata.
+ a| 
+Non è possibile disattivare il nodo di amministrazione primario.
+ a| 
+Nessuno.
+
+
+
+ a| 
+No, almeno un nodo della griglia è disconnesso.
+
+*Nota:* questo messaggio viene visualizzato solo per i nodi della griglia connessi.
+ a| 
+Non è possibile disattivare un nodo della rete connesso se un nodo della rete è disconnesso.
+
+La colonna *Salute* include una di queste icone per i nodi della griglia disconnessi:
+
+** image:../media/icon_alarm_gray_administratively_down.png["icona punto interrogativo grigio"](grigio): Amministrativamente inattivo
+** image:../media/icon_alarm_blue_unknown.png["icona punto interrogativo blu"](blu): Sconosciuto
+
+ a| 
+È necessario riportare online tutti i nodi disconnessi olink:decommissioning-disconnected-grid-nodes.html["dismettere tutti i nodi disconnessi"] prima di poter rimuovere un nodo connesso.
+
+*Nota*: se la rete contiene più nodi disconnessi, il software richiede di disattivarli tutti contemporaneamente, il che aumenta il rischio di risultati imprevisti.
+
+
+
+ a| 
+No, uno o più nodi richiesti sono attualmente disconnessi e devono essere ripristinati.
+
+*Nota:* questo messaggio viene visualizzato solo per i nodi della griglia disconnessi.
+ a| 
+Non è possibile dismettere un nodo di rete disconnesso se anche uno o più nodi necessari sono disconnessi (ad esempio, un nodo di archiviazione necessario per il quorum ADC).
+ a| 
+.. Esaminare i messaggi di possibile dismissione per tutti i nodi disconnessi.
+.. Determinare quali nodi non possono essere dismessi perché necessari.
++
+*** Se lo stato di un nodo richiesto è amministrativamente inattivo, riportare il nodo online.
+*** Se lo stato di un nodo richiesto è sconosciuto, eseguire una procedura di ripristino del nodo per recuperarlo.
+
+
+
+
+
+
+ a| 
+No, membro del gruppo/i HA: _nome del gruppo_. Prima di poter dismettere questo nodo, è necessario rimuoverlo da tutti i gruppi HA.
+ a| 
+Non è possibile disattivare un nodo amministrativo o un nodo gateway se un'interfaccia del nodo appartiene a un gruppo ad alta disponibilità (HA).
+ a| 
+Modificare il gruppo HA per rimuovere l'interfaccia del nodo o rimuovere l'intero gruppo HA. Vedere link:../admin/configure-high-availability-group.html["Configurare gruppi ad alta disponibilità"] .
+
+
+
+ a| 
+No, il sito _x_ richiede un minimo di _n_ nodi di archiviazione con servizi ADC.
+ a| 
+*Solo nodi di archiviazione.* Non è possibile dismettere un nodo di archiviazione se nel sito non rimarrebbero nodi sufficienti a supportare i requisiti di quorum ADC.
+ a| 
+Eseguire un'espansione.  Aggiungere un nuovo nodo di archiviazione al sito e specificare che deve disporre di un servizio ADC.  Vedi informazioni sulink:understanding-adc-service-quorum.html["Quorum ADC"] .
+
+
+
+ a| 
+No, uno o più profili di codifica di cancellazione necessitano di almeno _n_ nodi di archiviazione.  Se il profilo non viene utilizzato in una regola ILM, è possibile disattivarlo.
+ a| 
+*Solo nodi di archiviazione.* Non è possibile dismettere un nodo di archiviazione a meno che non rimangano nodi sufficienti per i profili di codifica di cancellazione esistenti.
+
+Ad esempio, se esiste un profilo di codifica di cancellazione per la codifica di cancellazione 4+2, devono rimanere almeno 6 nodi di archiviazione.
+ a| 
+Per ciascun profilo di codifica di cancellazione interessato, eseguire uno dei seguenti passaggi, in base al modo in cui viene utilizzato il profilo:
+
+** *Utilizzato nelle policy ILM attive*: Esegue un'espansione.  Aggiungere un numero sufficiente di nuovi nodi di archiviazione per consentire la continuazione della codifica di cancellazione. Vedi le istruzioni perlink:../expand/index.html["espandere la tua griglia"] .
+** *Utilizzato in una regola ILM ma non nei criteri ILM attivi*: modifica o elimina la regola e quindi disattiva il profilo di codifica di cancellazione.
+** *Non utilizzato in nessuna regola ILM*: Disattiva il profilo di codifica di cancellazione.
+
+
+*Nota:* viene visualizzato un messaggio di errore se si tenta di disattivare un profilo di codifica di cancellazione e i dati dell'oggetto sono ancora associati al profilo.  Potrebbe essere necessario attendere diverse settimane prima di provare nuovamente la procedura di disattivazione.
+
+Scopri di piùlink:../ilm/manage-erasure-coding-profiles.html["disattivazione di un profilo di codifica di cancellazione"] .
+
+
+
+ a| 
+No, non è possibile disattivare un nodo di archivio a meno che il nodo non sia disconnesso.
+ a| 
+Se un nodo archivio è ancora connesso, non è possibile rimuoverlo.
+ a| 
+*Nota*: il supporto per i nodi di archivio è stato rimosso.  Se è necessario dismettere un nodo di archivio, vedere https://docs.netapp.com/us-en/storagegrid-118/maintain/grid-node-decommissioning.html["Dismissione del nodo di rete (sito di documentazione StorageGRID 11.8)"^]
+
+|===
+

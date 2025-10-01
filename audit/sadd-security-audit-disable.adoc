@@ -1,0 +1,47 @@
+---
+permalink: audit/sadd-security-audit-disable.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, SADD, Security Audit Disable 
+summary: 'Questo messaggio indica che il servizio di origine \(ID nodo\) ha disattivato la registrazione dei messaggi di controllo; i messaggi di controllo non vengono più raccolti o recapitati.' 
+---
+= SADD: Disabilitazione controllo sicurezza
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Questo messaggio indica che il servizio di origine (ID nodo) ha disattivato la registrazione dei messaggi di controllo; i messaggi di controllo non vengono più raccolti o recapitati.
+
+[cols="1a,1a,4a"]
+|===
+| Codice | Campo | Descrizione 
+
+
+ a| 
+AETM
+ a| 
+Abilita metodo
+ a| 
+Metodo utilizzato per disattivare l'audit.
+
+
+
+ a| 
+AEUN
+ a| 
+Nome utente
+ a| 
+Nome utente che ha eseguito il comando per disabilitare la registrazione degli audit.
+
+
+
+ a| 
+RSLT
+ a| 
+Risultato
+ a| 
+Questo campo ha il valore NESSUNO.  RSLT è un campo del messaggio obbligatorio, ma non è rilevante per questo messaggio.  Viene utilizzato NONE anziché SUCS in modo che questo messaggio non venga filtrato.
+
+|===
+Il messaggio implica che la registrazione era precedentemente abilitata, ma ora è stata disabilitata.  In genere, questa opzione viene utilizzata solo durante l'acquisizione in blocco per migliorare le prestazioni del sistema.  Dopo l'attività di massa, l'audit viene ripristinato (SADE) e la possibilità di disabilitarlo viene bloccata in modo permanente.

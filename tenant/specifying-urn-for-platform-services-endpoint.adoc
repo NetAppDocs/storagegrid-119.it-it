@@ -1,0 +1,166 @@
+---
+permalink: tenant/specifying-urn-for-platform-services-endpoint.html 
+sidebar: sidebar 
+keywords: how to specify platform services urn 
+summary: 'Quando si crea un endpoint dei servizi della piattaforma, è necessario specificare un nome di risorsa univoco (URN).  L"URN verrà utilizzato per fare riferimento all"endpoint quando si crea un XML di configurazione per il servizio della piattaforma.  L"URN per ciascun endpoint deve essere univoco.' 
+---
+= Specificare l'URN per l'endpoint dei servizi della piattaforma
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Quando si crea un endpoint dei servizi della piattaforma, è necessario specificare un nome di risorsa univoco (URN).  L'URN verrà utilizzato per fare riferimento all'endpoint quando si crea un XML di configurazione per il servizio della piattaforma.  L'URN per ciascun endpoint deve essere univoco.
+
+StorageGRID convalida gli endpoint dei servizi della piattaforma man mano che li crei.  Prima di creare un endpoint dei servizi della piattaforma, verificare che la risorsa specificata nell'endpoint esista e che sia raggiungibile.
+
+
+
+== Elementi URN
+
+L'URN per un endpoint dei servizi di piattaforma deve iniziare con `arn:aws` O `urn:mysite` , come segue:
+
+* Se il servizio è ospitato su Amazon Web Services (AWS), utilizzare `arn:aws`
+* Se il servizio è ospitato su Google Cloud Platform (GCP), utilizzare `arn:aws`
+* Se il servizio è ospitato localmente, utilizzare `urn:mysite`
+
+
+Ad esempio, se si specifica l'URN per un endpoint CloudMirror ospitato su StorageGRID, l'URN potrebbe iniziare con `urn:sgws` .
+
+L'elemento successivo dell'URN specifica il tipo di servizio della piattaforma, come segue:
+
+[cols="2a,1a"]
+|===
+| Servizio | Tipo 
+
+
+ a| 
+Replica CloudMirror
+ a| 
+`s3`
+
+
+
+ a| 
+Notifiche
+ a| 
+`sns`O `kafka`
+
+
+
+ a| 
+Integrazione della ricerca
+ a| 
+`es`
+
+|===
+Ad esempio, per continuare a specificare l'URN per un endpoint CloudMirror ospitato su StorageGRID, è necessario aggiungere `s3` ottenere `urn:sgws:s3` .
+
+L'elemento finale dell'URN identifica la risorsa di destinazione specifica nell'URI di destinazione.
+
+[cols="1a,2a"]
+|===
+| Servizio | Risorsa specifica 
+
+
+ a| 
+Replica CloudMirror
+ a| 
+`bucket-name`
+
+
+
+ a| 
+Notifiche
+ a| 
+`sns-topic-name`O `kafka-topic-name`
+
+
+
+ a| 
+Integrazione della ricerca
+ a| 
+`domain-name/index-name/type-name`
+
+*Nota:* se il cluster Elasticsearch *non* è configurato per creare indici automaticamente, è necessario creare l'indice manualmente prima di creare l'endpoint.
+
+|===
+
+
+== URN per servizi ospitati su AWS e GCP
+
+Per le entità AWS e GCP, l'URN completo è un ARN AWS valido. Per esempio:
+
+* Replica CloudMirror:
++
+[listing]
+----
+arn:aws:s3:::bucket-name
+----
+* Notifiche:
++
+[listing]
+----
+arn:aws:sns:region:account-id:topic-name
+----
+* Integrazione della ricerca:
++
+[listing]
+----
+arn:aws:es:region:account-id:domain/domain-name/index-name/type-name
+----
++
+
+NOTE: Per un endpoint di integrazione della ricerca AWS, `domain-name` deve includere la stringa letterale `domain/` , come mostrato qui.
+
+
+
+
+
+== URN per servizi ospitati localmente
+
+Quando si utilizzano servizi ospitati localmente anziché servizi cloud, è possibile specificare l'URN in qualsiasi modo che crei un URN valido e univoco, purché l'URN includa gli elementi richiesti nella terza e ultima posizione.  È possibile lasciare vuoti gli elementi indicati come facoltativi oppure specificarli in qualsiasi modo che aiuti a identificare la risorsa e a rendere univoco l'URN. Per esempio:
+
+* Replica CloudMirror:
++
+[listing]
+----
+urn:mysite:s3:optional:optional:bucket-name
+----
++
+Per un endpoint CloudMirror ospitato su StorageGRID, è possibile specificare un URN valido che inizia con `urn:sgws` :
+
++
+[listing]
+----
+urn:sgws:s3:optional:optional:bucket-name
+----
+* Notifiche:
++
+Specificare un endpoint Amazon Simple Notification Service:
+
++
+[listing]
+----
+urn:mysite:sns:optional:optional:sns-topic-name
+----
++
+Specificare un endpoint Kafka:
+
++
+[listing]
+----
+urn:mysite:kafka:optional:optional:kafka-topic-name
+----
+* Integrazione della ricerca:
++
+[listing]
+----
+urn:mysite:es:optional:optional:domain-name/index-name/type-name
+----
++
+
+NOTE: Per gli endpoint di integrazione della ricerca ospitati localmente, `domain-name` l'elemento può essere qualsiasi stringa purché l'URN dell'endpoint sia univoco.
+
+

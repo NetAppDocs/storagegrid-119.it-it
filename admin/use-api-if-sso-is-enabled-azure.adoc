@@ -1,0 +1,74 @@
+---
+permalink: admin/use-api-if-sso-is-enabled-azure.html 
+sidebar: sidebar 
+keywords: how to access storagegrid API if SSO is enabled with Azure 
+summary: 'Se hai configurato e abilitato l"accesso Single Sign-On (SSO) e usi Azure come provider SSO, puoi usare due script di esempio per ottenere un token di autenticazione valido per l"API Grid Management o l"API Tenant Management.' 
+---
+= Utilizzare l'API se è abilitato l'accesso Single Sign-On (Azure)
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se hailink:../admin/configuring-sso.html["configurato e abilitato l'accesso singolo (SSO)"] e si utilizza Azure come provider SSO, è possibile utilizzare due script di esempio per ottenere un token di autenticazione valido per l'API Grid Management o l'API Tenant Management.
+
+
+
+== Sign in all'API se è abilitato l'accesso Single Sign-On di Azure
+
+Queste istruzioni si applicano se si utilizza Azure come provider di identità SSO
+
+.Prima di iniziare
+* Conosci l'indirizzo email e la password SSO di un utente federato che appartiene a un gruppo di utenti StorageGRID .
+* Se vuoi accedere all'API di gestione tenant, devi conoscere l'ID dell'account tenant.
+
+
+.Informazioni su questo compito
+Per ottenere un token di autenticazione, è possibile utilizzare i seguenti script di esempio:
+
+* IL `storagegrid-ssoauth-azure.py` Script Python
+* IL `storagegrid-ssoauth-azure.js` Script Node.js
+
+
+Entrambi gli script si trovano nella directory dei file di installazione StorageGRID(`./rpms` per Red Hat Enterprise Linux, `./debs` per Ubuntu o Debian, e `./vsphere` per VMware).
+
+Per scrivere la tua integrazione API con Azure, consulta `storagegrid-ssoauth-azure.py` sceneggiatura.  Lo script Python invia direttamente due richieste a StorageGRID (prima per ottenere SAMLRequest e poi per ottenere il token di autorizzazione) e chiama anche lo script Node.js per interagire con Azure ed eseguire le operazioni SSO.
+
+Le operazioni SSO possono essere eseguite utilizzando una serie di richieste API, ma non è un'operazione semplice. Il modulo Puppeteer Node.js viene utilizzato per eseguire lo scraping dell'interfaccia Azure SSO.
+
+Se riscontri un problema di codifica URL, potresti visualizzare l'errore: `Unsupported SAML version` .
+
+.Passi
+. Installare le dipendenze richieste, come segue:
++
+.. Installa Node.js (vedi https://nodejs.org/en/download/["https://nodejs.org/en/download/"^] ).
+.. Installa i moduli Node.js richiesti (puppeteer e jsdom):
++
+`npm install -g <module>`
+
+
+
+. Passare lo script Python all'interprete Python per eseguirlo.
++
+Lo script Python chiamerà quindi lo script Node.js corrispondente per eseguire le interazioni SSO di Azure.
+
+. Quando richiesto, immettere i valori per i seguenti argomenti (o passarli utilizzando i parametri):
++
+** L'indirizzo e-mail SSO utilizzato per accedere ad Azure
+** L'indirizzo per StorageGRID
+** ID dell'account tenant, se si desidera accedere all'API di gestione tenant
+
+
+. Quando richiesto, immettere la password e prepararsi a fornire un'autorizzazione MFA ad Azure, se richiesto.
++
+image::../media/sso_api_password_mfa.png[Richiedi di inserire password e MFA]
+
++
+
+NOTE: Lo script presuppone che l'autenticazione MFA venga eseguita tramite Microsoft Authenticator.  Potrebbe essere necessario modificare lo script per supportare altre forme di MFA (ad esempio l'inserimento di un codice ricevuto in un messaggio di testo).
+
++
+Il token di autorizzazione StorageGRID viene fornito nell'output.  Ora puoi utilizzare il token per altre richieste, in modo simile a come utilizzeresti l'API se non utilizzassi l'SSO.
+
+

@@ -1,0 +1,76 @@
+---
+permalink: monitor/monitoring-information-lifecycle-management.html 
+sidebar: sidebar 
+keywords: lifecycle management, lifecycle, monitoring, ILM, information lifecycle management 
+summary: 'Il sistema di gestione del ciclo di vita delle informazioni \(ILM\) fornisce la gestione dei dati per tutti gli oggetti memorizzati sulla griglia.  È necessario monitorare le operazioni ILM per capire se la rete è in grado di gestire il carico attuale o se sono necessarie più risorse.' 
+---
+= Monitorare la gestione del ciclo di vita delle informazioni
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Il sistema di gestione del ciclo di vita delle informazioni (ILM) garantisce la gestione dei dati per tutti gli oggetti memorizzati nella griglia.  È necessario monitorare le operazioni ILM per capire se la rete è in grado di gestire il carico attuale o se sono necessarie più risorse.
+
+.Informazioni su questo compito
+Il sistema StorageGRID gestisce gli oggetti applicando le policy ILM attive.  Le policy ILM e le regole ILM associate determinano quante copie vengono effettuate, il tipo di copie create, dove vengono posizionate le copie e per quanto tempo ciascuna copia viene conservata.
+
+L'acquisizione di oggetti e altre attività correlate agli oggetti possono superare la velocità con cui StorageGRID può valutare ILM, facendo sì che il sistema metta in coda oggetti le cui istruzioni di posizionamento ILM non possono essere soddisfatte quasi in tempo reale.  È necessario monitorare se StorageGRID sta tenendo il passo con le azioni del client.
+
+
+
+== Utilizzare la scheda dashboard di Grid Manager
+
+.Passi
+Utilizzare la scheda ILM nella dashboard di Grid Manager per monitorare le operazioni ILM:
+
+. Sign in a Grid Manager.
+. Dalla dashboard, seleziona la scheda ILM e prendi nota dei valori nella scheda Coda ILM (Oggetti) e nella scheda Velocità di valutazione ILM.
++
+Sono previsti picchi temporanei nella scheda Coda ILM (Oggetti) sulla dashboard.  Ma se la coda continua ad aumentare e non diminuisce mai, la griglia ha bisogno di più risorse per funzionare in modo efficiente: più nodi di archiviazione oppure, se la politica ILM colloca gli oggetti in posizioni remote, più larghezza di banda di rete.
+
+
+
+
+
+== Utilizzare la pagina NODI
+
+.Passi
+Inoltre, esaminare le code ILM utilizzando la pagina *NODES*:
+
+
+NOTE: I grafici nella pagina *NODI* verranno sostituiti con le schede della dashboard corrispondenti in una futura versione StorageGRID .
+
+. Selezionare *NODES*.
+. Selezionare *_nome griglia_* > *ILM*.
+. Posiziona il cursore sul grafico della coda ILM per visualizzare il valore dei seguenti attributi in un dato momento:
++
+** *Oggetti in coda (da operazioni client)*: numero totale di oggetti in attesa di valutazione ILM a causa di operazioni client (ad esempio, acquisizione).
+** *Oggetti in coda (da tutte le operazioni)*: numero totale di oggetti in attesa di valutazione ILM.
+** *Frequenza di scansione (oggetti/sec)*: la velocità con cui gli oggetti nella griglia vengono scansionati e messi in coda per ILM.
+** *Frequenza di valutazione (oggetti/sec)*: la frequenza attuale con cui gli oggetti vengono valutati in base alla policy ILM nella griglia.
+
+
+. Nella sezione Coda ILM, osservare i seguenti attributi.
++
+
+NOTE: La sezione della coda ILM è inclusa solo per la griglia.  Queste informazioni non vengono visualizzate nella scheda ILM per un sito o un nodo di archiviazione.
+
++
+** *Periodo di scansione - stimato*: tempo stimato per completare una scansione ILM completa di tutti gli oggetti.
++
+
+NOTE: Una scansione completa non garantisce che ILM sia stato applicato a tutti gli oggetti.
+
+** *Riparazioni tentate*: numero totale di operazioni di riparazione degli oggetti per i dati replicati che sono state tentate. Questo conteggio aumenta ogni volta che un nodo di archiviazione tenta di riparare un oggetto ad alto rischio. Le riparazioni ILM ad alto rischio hanno la priorità se la rete diventa sovraccarica.
++
+
+NOTE: La riparazione dello stesso oggetto potrebbe incrementarsi nuovamente se la replica fallisce dopo la riparazione.
+
+
+
++
+Questi attributi possono essere utili quando si monitora l'avanzamento del ripristino del volume del nodo di archiviazione. Se il numero di tentativi di riparazione ha smesso di aumentare ed è stata completata una scansione completa, è probabile che la riparazione sia stata completata.
+
+

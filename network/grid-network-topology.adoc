@@ -1,0 +1,29 @@
+---
+permalink: network/grid-network-topology.html 
+sidebar: sidebar 
+keywords: grid network topology 
+summary: La topologia di rete più semplice viene creata configurando solo la rete Grid. 
+---
+= Topologia della rete a griglia
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+La topologia di rete più semplice viene creata configurando solo la rete Grid.
+
+Quando si configura la rete Grid, si stabilisce l'indirizzo IP host, la subnet mask e l'indirizzo IP gateway per l'interfaccia eth0 per ciascun nodo Grid.
+
+Durante la configurazione, è necessario aggiungere tutte le subnet della rete Grid all'elenco delle subnet della rete Grid (GNSL).  Questo elenco include tutte le subnet di tutti i siti e potrebbe includere anche subnet esterne che forniscono accesso a servizi critici quali NTP, DNS o LDAP.
+
+Durante l'installazione, l'interfaccia Grid Network applica percorsi statici per tutte le subnet nel GNSL e imposta il percorso predefinito del nodo sul gateway Grid Network, se configurato.  Il GNSL non è richiesto se non è presente una rete client e il gateway della rete Grid è il percorso predefinito del nodo.  Vengono generati anche percorsi host verso tutti gli altri nodi della griglia.
+
+In questo esempio, tutto il traffico condivide la stessa rete, incluso il traffico relativo alle richieste del client S3 e alle funzioni amministrative e di manutenzione.
+
+
+NOTE: Questa topologia è adatta per distribuzioni a sito singolo non disponibili esternamente, distribuzioni proof-of-concept o di prova oppure quando un bilanciatore del carico di terze parti funge da limite di accesso client.  Quando possibile, la rete Grid dovrebbe essere utilizzata esclusivamente per il traffico interno.  Sia la rete amministrativa che la rete client presentano ulteriori restrizioni firewall che bloccano il traffico esterno verso i servizi interni.  È supportato l'utilizzo della Grid Network per il traffico client esterno, ma questo utilizzo offre meno livelli di protezione.
+
+image::../media/grid_network.png[Rete a griglia]
+
+image::../media/grid_network_ips.png[IP di rete Grid]

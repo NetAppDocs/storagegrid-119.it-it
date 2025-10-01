@@ -1,0 +1,29 @@
+---
+permalink: maintain/installing-services-appliance-platform-change-only.html 
+sidebar: sidebar 
+keywords: storagegrid, recover services appliance, recover appliance, recovering appliance, recovering services appliance, install services appliance, installing services appliance, services appliance 
+summary: 'Quando si ripristina un nodo della griglia non riuscito ospitato su VMware o un host Linux e si utilizza un"appliance di servizi per il nodo sostitutivo, è necessario prima installare il nuovo hardware dell"appliance utilizzando lo stesso nome del nodo (nome del sistema) del nodo non riuscito.' 
+---
+= Installa l'appliance dei servizi (solo cambio piattaforma)
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Quando si ripristina un nodo della griglia non riuscito ospitato su VMware o un host Linux e si utilizza un'appliance di servizi per il nodo sostitutivo, è necessario prima installare il nuovo hardware dell'appliance utilizzando lo stesso nome del nodo (nome del sistema) del nodo non riuscito.
+
+.Prima di iniziare
+Sono disponibili le seguenti informazioni sul nodo non riuscito:
+
+* *Nome nodo*: è necessario installare l'appliance dei servizi utilizzando lo stesso nome nodo del nodo non riuscito.  Il nome del nodo è il nome host (nome del sistema).
+* *Indirizzi IP*: è possibile assegnare all'appliance dei servizi gli stessi indirizzi IP del nodo guasto, che è l'opzione preferita, oppure è possibile selezionare un nuovo indirizzo IP non utilizzato su ciascuna rete.
+
+
+.Informazioni su questo compito
+Eseguire questa procedura solo se si sta ripristinando un nodo non riuscito ospitato su VMware o Linux e lo si sta sostituendo con un nodo ospitato su un'appliance di servizi.
+
+.Passi
+. Seguire le istruzioni per installare un nuovo dispositivo di servizi. Vedere https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/index.html["Avvio rapido per l'installazione dell'hardware"^] .
+. Quando viene richiesto un nome nodo, utilizzare il nome del nodo non riuscito.
+

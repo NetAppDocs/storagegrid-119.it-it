@@ -1,0 +1,35 @@
+---
+permalink: maintain/replacing-failed-node-with-services-appliance.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, replace failed node, services appliance 
+summary: 'È possibile utilizzare un"appliance di servizi per ripristinare un nodo gateway non riuscito, un nodo amministrativo non primario non riuscito o un nodo amministrativo primario non riuscito ospitato su VMware, un host Linux o un"appliance di servizi.  Questa procedura è un passaggio della procedura di ripristino del nodo della griglia.' 
+---
+= Sostituisci il nodo non riuscito con l'appliance dei servizi
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile utilizzare un'appliance di servizi per ripristinare un nodo gateway non riuscito, un nodo amministrativo non primario non riuscito o un nodo amministrativo primario non riuscito ospitato su VMware, un host Linux o un'appliance di servizi.  Questa procedura è un passaggio della procedura di ripristino del nodo della griglia.
+
+.Prima di iniziare
+* Hai stabilito che una delle seguenti situazioni è vera:
++
+** La macchina virtuale che ospita il nodo non può essere ripristinata.
+** L'host Linux fisico o virtuale per il nodo della griglia è guasto e deve essere sostituito.
+** È necessario sostituire l'appliance di servizi che ospita il nodo della griglia.
+
+
+* Hai confermato che la versione di StorageGRID Appliance Installer sull'appliance dei servizi corrisponde alla versione software del tuo sistema StorageGRID . Vedere https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/verifying-and-upgrading-storagegrid-appliance-installer-version.html["Verificare e aggiornare la versione di StorageGRID Appliance Installer"^] .
+
+
+
+NOTE: Non distribuire contemporaneamente un'appliance di servizi SG110 e SG1100 oppure un'appliance di servizi SG100 e SG1000 nello stesso sito.  Potrebbero verificarsi prestazioni imprevedibili.
+
+.Informazioni su questo compito
+È possibile utilizzare un'appliance di servizi per ripristinare un nodo della griglia non riuscito nei seguenti casi:
+
+* Il nodo non riuscito era ospitato su VMware o Linux (link:installing-services-appliance-platform-change-only.html["cambio di piattaforma"] )
+* Il nodo non riuscito era ospitato su un'appliance di servizi (link:preparing-appliance-for-reinstallation-platform-replacement-only.html["sostituzione della piattaforma"] )
+

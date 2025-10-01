@@ -1,0 +1,152 @@
+---
+permalink: s3/use-s3-select.html 
+sidebar: sidebar 
+keywords: use S3 Select, S3 Select 
+summary: StorageGRID supporta le seguenti clausole Amazon S3 Select, tipi di dati, operatori e parole chiave riservate per il comando SelectObjectContent. 
+---
+= Utilizzare S3 Select
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+StorageGRID supporta le seguenti clausole Amazon S3 Select, tipi di dati e operatori perlink:select-object-content.html["Comando SelectObjectContent"] .
+
+
+NOTE: Tutti gli elementi non elencati non sono supportati.
+
+Per la sintassi, vederelink:select-object-content.html["SelezionaOggettoContenuto"] .  Per ulteriori informazioni su S3 Select, vedere https://docs.aws.amazon.com/AmazonS3/latest/userguide/selecting-content-from-objects.html["Documentazione AWS per S3 Select"^] .
+
+Solo gli account tenant che hanno abilitato S3 Select possono inviare query SelectObjectContent. Vedi illink:../admin/manage-s3-select-for-tenant-accounts.html["considerazioni e requisiti per l'utilizzo di S3 Select"] .
+
+
+
+== Clausole
+
+* SELEZIONA elenco
+* clausola FROM
+* clausola WHERE
+* Clausola LIMIT
+
+
+
+
+== Tipi di dati
+
+* bool
+* intero
+* corda
+* galleggiante
+* decimale, numerico
+* marca temporale
+
+
+
+
+== Operatori
+
+
+
+=== Operatori logici
+
+* E
+* NON
+* O
+
+
+
+
+=== Operatori di confronto
+
+* <
+* >
+* <=
+* >=
+* =
+* =
+* <>
+* !=
+* FRA
+* IN
+
+
+
+
+=== Operatori di corrispondenza di pattern
+
+* COME
+* _
+* %
+
+
+
+
+=== Operatori unitari
+
+* È NULLO
+* NON È NULLO
+
+
+
+
+=== Operatori matematici
+
+* +
+* -
+* *
+* /
+* %
+
+
+StorageGRID segue la precedenza dell'operatore Amazon S3 Select.
+
+
+
+== Funzioni aggregate
+
+* MEDIA()
+* CONTARE(*)
+* MAX()
+* MIN()
+* SOMMA()
+
+
+
+
+== Funzioni condizionali
+
+* CASO
+* COALESCERE
+* NULLIF
+
+
+
+
+== Funzioni di conversione
+
+* CAST (per i tipi di dati supportati)
+
+
+
+
+== Funzioni di data
+
+* DATA_AGGIUNGI
+* DATE_DIFF
+* ESTRARRE
+* A_STRINGA
+* TO_TIMESTAMP
+* UTCNOW
+
+
+
+
+== Funzioni stringa
+
+* LUNGHEZZA_CARATTERE, LUNGHEZZA_CARATTERE
+* INFERIORE
+* SOTTOSTRINGA
+* ORDINARE
+* SUPERIORE
+

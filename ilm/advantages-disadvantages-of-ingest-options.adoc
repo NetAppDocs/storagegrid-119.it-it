@@ -1,0 +1,98 @@
+---
+permalink: ilm/advantages-disadvantages-of-ingest-options.html 
+sidebar: sidebar 
+keywords: ingest options, balance ingest, strict ingest, dual commit ingest 
+summary: 'Comprendere i vantaggi e gli svantaggi di ciascuna delle tre opzioni per la protezione dei dati in fase di acquisizione (Balanced, Strict o Dual commit) può aiutarti a decidere quale selezionare per una regola ILM.' 
+---
+= Vantaggi, svantaggi e limitazioni delle opzioni di ingestione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Comprendere i vantaggi e gli svantaggi di ciascuna delle tre opzioni per la protezione dei dati in fase di acquisizione (Balanced, Strict o Dual commit) può aiutarti a decidere quale selezionare per una regola ILM.
+
+Per una panoramica delle opzioni di acquisizione, vederelink:data-protection-options-for-ingest.html["Opzioni di acquisizione"] .
+
+
+
+== Vantaggi delle opzioni Bilanciata e Rigorosa
+
+Rispetto al Dual commit, che crea copie provvisorie durante l'acquisizione, le due opzioni di posizionamento sincrono possono offrire i seguenti vantaggi:
+
+* *Maggiore sicurezza dei dati*: i dati degli oggetti vengono immediatamente protetti come specificato nelle istruzioni di posizionamento della regola ILM, che possono essere configurate per proteggere da un'ampia gamma di condizioni di errore, incluso l'errore di più di una posizione di archiviazione.  Il doppio commit può proteggere solo dalla perdita di una singola copia locale.
+* *Funzionamento della griglia più efficiente*: ogni oggetto viene elaborato una sola volta, quando viene acquisito.  Poiché il sistema StorageGRID non ha bisogno di tracciare o eliminare copie provvisorie, il carico di elaborazione è inferiore e viene consumato meno spazio nel database.
+* *(Bilanciato) Consigliato*: l'opzione Bilanciata garantisce un'efficienza ILM ottimale.  Si consiglia di utilizzare l'opzione Bilanciata, a meno che non sia richiesto un comportamento di ingestione rigoroso o che la griglia soddisfi tutti i criteri per l'utilizzo del commit doppio.
+* *(Rigorosa) Certezza sulla posizione degli oggetti*: l'opzione Rigorosa garantisce che gli oggetti vengano immediatamente archiviati secondo le istruzioni di posizionamento nella regola ILM.
+
+
+
+
+== Svantaggi delle opzioni Bilanciata e Rigorosa
+
+Rispetto al Dual commit, le opzioni Balanced e Strict presentano alcuni svantaggi:
+
+* *Ingestione client più lunga*: le latenze di acquisizione client potrebbero essere più lunghe.  Quando si utilizzano le opzioni Bilanciato o Rigoroso, il messaggio "ingest riuscito" non viene restituito al client finché non vengono creati e archiviati tutti i frammenti codificati in modo da essere cancellati o le copie replicate.  Tuttavia, è molto probabile che i dati degli oggetti raggiungano la loro collocazione finale molto più rapidamente.
+* *(Rigoroso) Maggiori tassi di errore di acquisizione*: con l'opzione Rigorosa, l'acquisizione fallisce ogni volta che StorageGRID non riesce a effettuare immediatamente tutte le copie specificate nella regola ILM.  Si potrebbero verificare alti tassi di errore di acquisizione se una posizione di archiviazione richiesta è temporaneamente offline o se problemi di rete causano ritardi nella copia di oggetti tra siti.
+* *(Rigoroso) In alcune circostanze, i posizionamenti dei caricamenti multiparte S3 potrebbero non essere quelli previsti*: con Rigoroso, ci si aspetta che gli oggetti vengano posizionati come descritto dalla regola ILM oppure che l'acquisizione non vada a buon fine.  Tuttavia, con un caricamento multiparte S3, l'ILM viene valutato per ogni parte dell'oggetto mentre viene acquisito e per l'oggetto nel suo complesso quando il caricamento multiparte viene completato.  Nelle seguenti circostanze, ciò potrebbe comportare posizionamenti diversi da quelli previsti:
++
+** *Se ILM cambia mentre è in corso un caricamento multiparte S3*: poiché ogni parte viene posizionata in base alla regola attiva al momento dell'acquisizione della parte, alcune parti dell'oggetto potrebbero non soddisfare i requisiti ILM correnti al termine del caricamento multiparte.  In questi casi l'acquisizione dell'oggetto non fallisce.  Invece, qualsiasi parte non posizionata correttamente viene messa in coda per la rivalutazione ILM e successivamente spostata nella posizione corretta.
+** *Quando le regole ILM filtrano in base alle dimensioni*: quando si valuta ILM per una parte, StorageGRID filtra in base alle dimensioni della parte, non in base alle dimensioni dell'oggetto.  Ciò significa che parti di un oggetto possono essere archiviate in posizioni che non soddisfano i requisiti ILM per l'oggetto nel suo complesso.  Ad esempio, se una regola specifica che tutti gli oggetti da 10 GB o più grandi vengono archiviati in DC1 mentre tutti gli oggetti più piccoli vengono archiviati in DC2, al momento dell'acquisizione ogni parte da 1 GB di un caricamento multiparte da 10 parti viene archiviata in DC2.  Quando l'ILM viene valutato per l'oggetto, tutte le parti dell'oggetto vengono spostate in DC1.
+
+
+* *(Rigoroso) L'inserimento non fallisce quando i tag degli oggetti o i metadati vengono aggiornati e non è possibile effettuare nuovi posizionamenti richiesti*: con Rigoroso, ci si aspetta che gli oggetti vengano posizionati come descritto dalla regola ILM oppure che l'inserimento fallisca.  Tuttavia, quando si aggiornano i metadati o i tag per un oggetto già archiviato nella griglia, l'oggetto non viene reinserito.  Ciò significa che le modifiche al posizionamento degli oggetti attivate dall'aggiornamento non vengono apportate immediatamente.  Le modifiche al posizionamento vengono apportate quando l'ILM viene rivalutato tramite i normali processi ILM in background.  Se non è possibile apportare le modifiche di posizionamento richieste (ad esempio perché una posizione appena richiesta non è disponibile), l'oggetto aggiornato mantiene la sua posizione attuale finché non saranno possibili le modifiche di posizionamento.
+
+
+
+
+== Limitazioni sul posizionamento degli oggetti con le opzioni Bilanciato e Rigoroso
+
+Le opzioni Bilanciato o Rigoroso non possono essere utilizzate per le regole ILM che hanno una qualsiasi di queste istruzioni di posizionamento:
+
+* Posizionamento in un Cloud Storage Pool al giorno 0.
+* Posizionamenti in un pool di archiviazione cloud quando la regola ha un orario di creazione definito dall'utente come orario di riferimento.
+
+
+Queste restrizioni esistono perché StorageGRID non può creare copie sincrone su un Cloud Storage Pool e un orario di creazione definito dall'utente potrebbe essere risolto nel presente.
+
+
+
+== Come le regole e la coerenza ILM interagiscono per influenzare la protezione dei dati
+
+Sia la regola ILM che la scelta della coerenza influiscono sul modo in cui gli oggetti vengono protetti.  Queste impostazioni possono interagire.
+
+Ad esempio, il comportamento di acquisizione selezionato per una regola ILM influisce sul posizionamento iniziale delle copie degli oggetti, mentre la coerenza utilizzata quando un oggetto viene archiviato influisce sul posizionamento iniziale dei metadati degli oggetti.  Poiché StorageGRID richiede l'accesso sia ai dati che ai metadati di un oggetto per soddisfare le richieste dei client, la selezione di livelli di protezione corrispondenti per la coerenza e il comportamento di acquisizione può garantire una migliore protezione iniziale dei dati e risposte di sistema più prevedibili.
+
+Ecco un breve riepilogo dei valori di coerenza disponibili in StorageGRID:
+
+* *Tutti*: tutti i nodi ricevono immediatamente i metadati dell'oggetto, altrimenti la richiesta non andrà a buon fine.
+* *Strong-global*: i metadati degli oggetti vengono distribuiti immediatamente a tutti i siti.  Garantisce la coerenza di lettura e scrittura per tutte le richieste dei clienti su tutti i siti.
+* *Strong-site*: i metadati degli oggetti vengono immediatamente distribuiti agli altri nodi del sito.  Garantisce la coerenza di lettura e scrittura per tutte le richieste dei client all'interno di un sito.
+* *Lettura dopo nuova scrittura*: garantisce coerenza di lettura dopo scrittura per i nuovi oggetti e coerenza finale per gli aggiornamenti degli oggetti.  Offre elevate garanzie di disponibilità e protezione dei dati.  Consigliato nella maggior parte dei casi.
+* *Disponibile*: fornisce coerenza finale sia per i nuovi oggetti che per gli aggiornamenti degli oggetti.  Per i bucket S3, utilizzare solo se necessario (ad esempio, per un bucket che contiene valori di log che vengono letti raramente o per operazioni HEAD o GET su chiavi inesistenti).  Non supportato per i bucket S3 FabricPool .
+
+
+
+NOTE: Prima di selezionare un valore di coerenza,link:../s3/consistency-controls.html["leggi la descrizione completa della coerenza"] . Prima di modificare il valore predefinito, è necessario comprenderne i vantaggi e le limitazioni.
+
+
+
+== Esempio di come la coerenza e le regole ILM possono interagire
+
+Supponiamo di avere una griglia a due siti con la seguente regola ILM e la seguente coerenza:
+
+* *Regola ILM*: creare due copie dell'oggetto, una nel sito locale e una in un sito remoto. Utilizzare un comportamento di acquisizione rigoroso.
+* *coerenza*: Strong-global (i metadati degli oggetti vengono distribuiti immediatamente a tutti i siti).
+
+
+Quando un client memorizza un oggetto nella griglia, StorageGRID esegue entrambe le copie dell'oggetto e distribuisce i metadati a entrambi i siti prima di restituire l'esito positivo al client.
+
+L'oggetto è completamente protetto contro la perdita al momento dell'acquisizione corretta del messaggio. Ad esempio, se il sito locale viene perso poco dopo l'acquisizione, copie sia dei dati dell'oggetto sia dei metadati dell'oggetto sono ancora presenti nel sito remoto.  L'oggetto è completamente recuperabile.
+
+Se invece si utilizzasse la stessa regola ILM e la coerenza del sito forte, il client potrebbe ricevere un messaggio di successo dopo che i dati dell'oggetto sono stati replicati sul sito remoto, ma prima che i metadati dell'oggetto vengano distribuiti lì. In questo caso, il livello di protezione dei metadati degli oggetti non corrisponde al livello di protezione dei dati degli oggetti. Se il sito locale viene perso subito dopo l'acquisizione, anche i metadati dell'oggetto vengono persi. L'oggetto non può essere recuperato.
+
+L'interrelazione tra coerenza e regole ILM può essere complessa.  Se hai bisogno di assistenza, contatta NetApp .
+
+.Informazioni correlate
+link:example-5-ilm-rules-and-policy-for-strict-ingest-behavior.html["Esempio 5: regole e policy ILM per un comportamento di acquisizione rigoroso"]

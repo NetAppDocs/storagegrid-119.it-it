@@ -1,0 +1,100 @@
+---
+permalink: audit/client-write-audit-messages.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, messages, client write, OVWR, SDEL, SPOS, SPUT, SUPD, WDEL, WPUT, S3 
+summary: 'I messaggi di controllo di scrittura del client vengono registrati quando un"applicazione client S3 effettua una richiesta per creare o modificare un oggetto.' 
+---
+= Il cliente scrive messaggi di audit
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+I messaggi di controllo di scrittura del client vengono registrati quando un'applicazione client S3 effettua una richiesta per creare o modificare un oggetto.
+
+[cols="1a,3a,1a,1a"]
+|===
+| Codice | Descrizione | Utilizzato da | Vedere 
+
+
+ a| 
+OVWR
+ a| 
+Sovrascrittura oggetto: registra una transazione per sovrascrivere un oggetto con un altro oggetto.
+ a| 
+Client S3 e Swift
+ a| 
+link:ovwr-object-overwrite.html["OVWR: sovrascrittura oggetto"]
+
+
+
+ a| 
+SDEL
+ a| 
+S3 DELETE: registra una transazione riuscita per eliminare un oggetto o un bucket.
+
+*Nota:* se la transazione opera su una sottorisorsa, il messaggio di controllo includerà il campo S3SR.
+ a| 
+Cliente S3
+ a| 
+link:sdel-s3-delete.html["SDEL: S3 ELIMINA"]
+
+
+
+ a| 
+SPOS
+ a| 
+S3 POST: registra una transazione riuscita per ripristinare un oggetto dallo storage AWS Glacier a un Cloud Storage Pool.
+ a| 
+Cliente S3
+ a| 
+link:spos-s3-post.html["SPOS: S3 POST"]
+
+
+
+ a| 
+SPUT
+ a| 
+S3 PUT: registra una transazione riuscita per creare un nuovo oggetto o bucket.
+
+*Nota:* se la transazione opera su una sottorisorsa, il messaggio di controllo includerà il campo S3SR.
+ a| 
+Cliente S3
+ a| 
+link:sput-s3-put.html["SPUT: S3 PUT"]
+
+
+
+ a| 
+SUPD
+ a| 
+Metadati S3 aggiornati: registra una transazione riuscita per aggiornare i metadati per un oggetto o un bucket esistente.
+ a| 
+Cliente S3
+ a| 
+link:supd-s3-metadata-updated.html["SUPD: Metadati S3 aggiornati"]
+
+
+
+ a| 
+WDEL
+ a| 
+Swift DELETE: registra una transazione riuscita per eliminare un oggetto o un contenitore.
+ a| 
+Cliente Swift
+ a| 
+link:wdel-swift-delete.html["WDEL: CANCELLA rapida"]
+
+
+
+ a| 
+WPUT
+ a| 
+Swift PUT: registra una transazione riuscita per creare un nuovo oggetto o contenitore.
+ a| 
+Cliente Swift
+ a| 
+link:wput-swift-put.html["WPUT: PUT rapido"]
+
+|===

@@ -1,0 +1,36 @@
+---
+permalink: maintain/considerations-for-decommissioning-admin-or-gateway-nodes.html 
+sidebar: sidebar 
+keywords: storagegrid, decommission admin node, decommission gateway node 
+summary: Esaminare le considerazioni per la dismissione di un nodo amministrativo o di un nodo gateway. 
+---
+= Considerazioni sulla dismissione dei nodi di amministrazione o gateway
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Esaminare le considerazioni per la dismissione di un nodo amministrativo o di un nodo gateway.
+
+
+
+== Considerazioni per il nodo di amministrazione
+
+* Non è possibile disattivare il nodo di amministrazione primario.
+* Non è possibile dismettere un nodo amministrativo se una delle sue interfacce di rete fa parte di un gruppo ad alta disponibilità (HA).  Per prima cosa è necessario rimuovere le interfacce di rete dal gruppo HA. Vedi le istruzioni perlink:../admin/managing-high-availability-groups.html["gestione dei gruppi HA"] .
+* Se necessario, è possibile modificare in modo sicuro i criteri ILM durante la dismissione di un nodo amministrativo.
+* Se si dismette un nodo di amministrazione e per il sistema StorageGRID è abilitato l'accesso singolo (SSO), è necessario ricordarsi di rimuovere il trust della parte affidabile del nodo da Active Directory Federation Services (AD FS).
+* Se usilink:../admin/grid-federation-overview.html["federazione di rete"] , assicurarsi che l'indirizzo IP del nodo che si sta dismettendo non sia stato specificato per una connessione di federazione di griglia.
+* Quando si dismette un nodo amministrativo disconnesso, si perdono i registri di controllo di quel nodo; tuttavia, questi registri dovrebbero essere presenti anche sul nodo amministrativo primario.
+
+
+
+
+== Considerazioni per il nodo gateway
+
+* Non è possibile dismettere un Gateway Node se una delle sue interfacce di rete fa parte di un gruppo ad alta disponibilità (HA).  Per prima cosa è necessario rimuovere le interfacce di rete dal gruppo HA. Vedi le istruzioni perlink:../admin/managing-high-availability-groups.html["gestione dei gruppi HA"] .
+* Se necessario, è possibile modificare in modo sicuro i criteri ILM durante la dismissione di un nodo gateway.
+* Se usilink:../admin/grid-federation-overview.html["federazione di rete"] , assicurarsi che l'indirizzo IP del nodo che si sta dismettendo non sia stato specificato per una connessione di federazione di griglia.
+* È possibile disattivare in tutta sicurezza un Gateway Node mentre è disconnesso.
+

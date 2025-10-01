@@ -1,0 +1,37 @@
+---
+permalink: tenant/manage-bucket-policy.html 
+sidebar: sidebar 
+keywords: how to create S3 tenant groups, federated group, local group 
+summary: 'È possibile controllare l"accesso utente per un bucket S3 e per gli oggetti in quel bucket.' 
+---
+= Gestisci i criteri del bucket
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile controllare l'accesso utente per un bucket S3 e per gli oggetti in quel bucket.
+
+.Prima di iniziare
+* Hai effettuato l'accesso al Tenant Manager tramite unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Appartieni a un gruppo di utenti che ha illink:tenant-management-permissions.html["Permesso di accesso root"] .  Le autorizzazioni Visualizza tutti i bucket e Gestisci tutti i bucket consentono solo la visualizzazione.
+* Hai verificato che sia disponibile il numero richiesto di nodi di archiviazione e siti.  Se due o più nodi di archiviazione non sono disponibili in nessun sito, oppure se un sito non è disponibile, le modifiche a queste impostazioni potrebbero non essere disponibili.
+
+
+.Passi
+. Seleziona *Bucket*, quindi seleziona il bucket che desideri gestire.
+. Nella pagina dei dettagli del bucket, seleziona *Accesso al bucket* > *Criterio bucket*.
+. Eseguire una delle seguenti operazioni:
++
+** Immettere un criterio di bucket selezionando la casella di controllo *Abilita criterio*.  Quindi inserisci una stringa valida in formato JSON.
++
+Ogni criterio di bucket ha un limite di dimensione di 20.480 byte.
+
+** Modificare una policy esistente modificando la stringa.
+** Disattivare un criterio deselezionando *Abilita criterio*.
+
+
+
+
+Per informazioni dettagliate sulle policy dei bucket, inclusa la sintassi del linguaggio e gli esempi, vederelink:../s3/example-bucket-policies.html["Criteri di esempio per i bucket"] .

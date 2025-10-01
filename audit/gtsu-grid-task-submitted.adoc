@@ -1,0 +1,114 @@
+---
+permalink: audit/gtsu-grid-task-submitted.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, GTSU, Grid Task Submitted 
+summary: 'Questo messaggio di controllo indica che un"attività di griglia è stata inviata al servizio CMN.' 
+---
+= GTSU: compito di griglia inviato
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Questo messaggio di controllo indica che un'attività di griglia è stata inviata al servizio CMN.
+
+[cols="1a,1a,4a"]
+|===
+| Codice | Campo | Descrizione 
+
+
+ a| 
+TSID
+ a| 
+ID attività
+ a| 
+Identifica in modo univoco un'attività di griglia generata e consente di gestirla durante il suo ciclo di vita.
+
+*Nota:* l'ID attività viene assegnato al momento della generazione di un'attività della griglia, non al momento dell'invio.  È possibile che una determinata attività della griglia venga inviata più volte e, in questo caso, il campo ID attività non è sufficiente per collegare in modo univoco i messaggi di controllo Inviato, Iniziato e Terminato.
+
+
+
+ a| 
+TTYP
+ a| 
+Tipo di attività
+ a| 
+Il tipo di attività della griglia.
+
+
+
+ a| 
+TVER
+ a| 
+Versione dell'attività
+ a| 
+Un numero che indica la versione dell'attività della griglia.
+
+
+
+ a| 
+TDSC
+ a| 
+Descrizione dell'attività
+ a| 
+Una descrizione leggibile dall'uomo dell'attività della griglia.
+
+
+
+ a| 
+IVA
+ a| 
+Valido dopo il timestamp
+ a| 
+Il momento più remoto (UINT64 microsecondi dal 1° gennaio 1970 - ora UNIX) in cui l'attività della griglia è valida.
+
+
+
+ a| 
+VBTS
+ a| 
+Valido prima del timestamp
+ a| 
+L'ultima ora (UINT64 microsecondi dal 1° gennaio 1970 - ora UNIX) in cui l'attività della griglia è valida.
+
+
+
+ a| 
+TSRC
+ a| 
+Fonte
+ a| 
+La fonte del compito:
+
+* TXTB: l'attività della griglia è stata inviata tramite il sistema StorageGRID come blocco di testo firmato.
+* GRIGLIA: l'attività della griglia è stata inviata tramite il servizio interno di invio delle attività della griglia.
+
+
+
+
+ a| 
+ACTV
+ a| 
+Tipo di attivazione
+ a| 
+Il tipo di attivazione:
+
+* AUTO: l'attività della griglia è stata inviata per l'attivazione automatica.
+* PEND: l'attività della griglia è stata inviata alla tabella in sospeso.  Questa è l'unica possibilità per la sorgente TXTB.
+
+
+
+
+ a| 
+RSLT
+ a| 
+Risultato
+ a| 
+Il risultato dell'invio:
+
+* SUCS: L'attività della griglia è stata inviata correttamente.
+* FAIL: l'attività è stata spostata direttamente nella tabella storica.
+
+
+|===

@@ -1,0 +1,46 @@
+---
+permalink: ilm/editing-storage-pool.html 
+sidebar: sidebar 
+keywords: edit storage pool 
+summary: È possibile modificare un pool di archiviazione per cambiarne il nome o per aggiornare i siti e i livelli di archiviazione. 
+---
+= Modifica pool di archiviazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile modificare un pool di archiviazione per cambiarne il nome o per aggiornare i siti e i livelli di archiviazione.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Hailink:../admin/admin-group-permissions.html["autorizzazioni di accesso specifiche"] .
+* Hai esaminato illink:guidelines-for-creating-storage-pools.html["linee guida per la creazione di pool di archiviazione"] .
+* Se si prevede di modificare un pool di archiviazione utilizzato da una regola nel criterio ILM attivo, è necessario considerare in che modo le modifiche influiranno sul posizionamento dei dati degli oggetti.
+
+
+.Informazioni su questo compito
+Se si aggiunge un nuovo sito o un nuovo livello di archiviazione a un pool di archiviazione utilizzato nella policy ILM attiva, tenere presente che i nodi di archiviazione nel nuovo sito o livello di archiviazione non verranno utilizzati automaticamente.  Per forzare StorageGRID a utilizzare un nuovo sito o un nuovo livello di archiviazione, è necessario attivare un nuovo criterio ILM dopo aver salvato il pool di archiviazione modificato.
+
+.Passi
+. Selezionare *ILM* > *Pool di archiviazione*.
+. Selezionare la casella di controllo per il pool di archiviazione che si desidera modificare.
++
+Non è possibile modificare il pool di archiviazione All Storage Nodes (StorageGRID 11.6 e versioni precedenti).
+
+. Selezionare *Modifica*.
+. Se necessario, modificare il nome del pool di archiviazione.
+. Se necessario, selezionare altri siti e gradi di stoccaggio.
++
+Non è possibile modificare il sito o il grado di archiviazione se il pool di archiviazione viene utilizzato in un profilo di codifica di cancellazione e la modifica renderebbe non valido lo schema di codifica di cancellazione.  Ad esempio, se un pool di archiviazione utilizzato in un profilo di codifica di cancellazione include attualmente un grado di archiviazione con un solo sito, non è possibile utilizzare un grado di archiviazione con due siti perché la modifica renderebbe non valido lo schema di codifica di cancellazione.
+
++
+
+CAUTION: L'aggiunta o la rimozione di siti da un pool di archiviazione esistente non sposterà alcun dato codificato per la cancellazione esistente.  Se si desidera spostare i dati esistenti dal sito, è necessario creare un nuovo pool di archiviazione e un profilo EC per ricodificare i dati.
+
+. Seleziona *Salva*.
+
+
+.Dopo aver finito
+Se hai aggiunto un nuovo sito o un nuovo livello di archiviazione a un pool di archiviazione utilizzato nel criterio ILM attivo, attiva un nuovo criterio ILM per forzare StorageGRID a utilizzare il nuovo sito o livello di archiviazione.  Ad esempio, clona la tua policy ILM esistente e poi attiva il clone. Vedere link:working-with-ilm-rules-and-ilm-policies.html["Lavorare con le regole e le politiche ILM"] .

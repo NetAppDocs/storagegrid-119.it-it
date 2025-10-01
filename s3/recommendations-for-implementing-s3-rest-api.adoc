@@ -1,0 +1,61 @@
+---
+permalink: s3/recommendations-for-implementing-s3-rest-api.html 
+sidebar: sidebar 
+keywords: implement s3 rest api 
+summary: 'Quando si implementa l"API REST S3 per l"uso con StorageGRID, è necessario seguire queste raccomandazioni.' 
+---
+= Raccomandazioni per l'implementazione dell'API REST S3
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Quando si implementa l'API REST S3 per l'uso con StorageGRID, è necessario seguire queste raccomandazioni.
+
+
+
+== Raccomandazioni per HEAD su oggetti inesistenti
+
+Se la tua applicazione controlla regolarmente se un oggetto esiste in un percorso in cui non ti aspetti che l'oggetto esista effettivamente, dovresti usare "Disponibile"link:consistency-controls.html["coerenza"] . Ad esempio, dovresti usare la coerenza "Disponibile" se la tua applicazione esegue l'HEAD di una posizione prima di eseguirvi un PUT.
+
+In caso contrario, se l'operazione HEAD non trova l'oggetto, è possibile che venga visualizzato un numero elevato di errori 500 Internal Server se due o più nodi di archiviazione nello stesso sito non sono disponibili o un sito remoto non è raggiungibile.
+
+È possibile impostare la coerenza "Disponibile" per ogni bucket utilizzandolink:put-bucket-consistency-request.html["PUT Consistenza del secchio"] richiesta oppure è possibile specificare la coerenza nell'intestazione della richiesta per una singola operazione API.
+
+
+
+== Raccomandazioni per le chiavi degli oggetti
+
+Seguire questi consigli per i nomi delle chiavi degli oggetti, in base al momento in cui il bucket è stato creato per la prima volta.
+
+.Bucket creati in StorageGRID 11.4 o versioni precedenti
+* Non utilizzare valori casuali come primi quattro caratteri delle chiavi degli oggetti.  Ciò è in contrasto con la precedente raccomandazione di AWS per i prefissi delle chiavi.  Utilizzare invece prefissi non casuali e non univoci, come ad esempio `image` .
+* Se si segue la precedente raccomandazione di AWS di utilizzare caratteri casuali e univoci nei prefissi delle chiavi, aggiungere un nome di directory come prefisso alle chiavi degli oggetti.  Cioè, usa questo formato:
++
+`mybucket/mydir/f8e3-image3132.jpg`
+
++
+Invece di questo formato:
+
++
+`mybucket/f8e3-image3132.jpg`
+
+
+
+.Bucket creati in StorageGRID 11.4 o versioni successive
+Non è necessario limitare i nomi delle chiavi degli oggetti per soddisfare le migliori pratiche in termini di prestazioni.  Nella maggior parte dei casi, è possibile utilizzare valori casuali per i primi quattro caratteri dei nomi delle chiavi degli oggetti.
+
+
+TIP: Un'eccezione è il carico di lavoro S3 che rimuove continuamente tutti gli oggetti dopo un breve periodo di tempo.  Per ridurre al minimo l'impatto sulle prestazioni in questo caso d'uso, modificare una parte iniziale del nome della chiave ogni diverse migliaia di oggetti con qualcosa come la data.  Ad esempio, supponiamo che un client S3 scriva in genere 2.000 oggetti al secondo e che la policy ILM o del ciclo di vita del bucket rimuova tutti gli oggetti dopo tre giorni.  Per ridurre al minimo l'impatto sulle prestazioni, potresti denominare le chiavi utilizzando uno schema come questo: `/mybucket/mydir/_yyyymmddhhmmss_-_random_UUID_.jpg`
+
+
+
+== Consigli per le "letture di intervallo"
+
+Se illink:../admin/configuring-stored-object-compression.html["opzione globale per comprimere gli oggetti memorizzati"] è abilitato, le applicazioni client S3 dovrebbero evitare di eseguire operazioni GetObject che specificano un intervallo di byte da restituire.  Queste operazioni di "lettura di intervallo" sono inefficienti perché StorageGRID deve effettivamente decomprimere gli oggetti per accedere ai byte richiesti.  Le operazioni GetObject che richiedono un intervallo ridotto di byte da un oggetto molto grande sono particolarmente inefficienti; ad esempio, non è efficiente leggere un intervallo di 10 MB da un oggetto compresso da 50 GB.
+
+Se gli intervalli vengono letti da oggetti compressi, le richieste del client potrebbero scadere.
+
+
+NOTE: Se è necessario comprimere oggetti e l'applicazione client deve utilizzare letture di intervallo, aumentare il timeout di lettura per l'applicazione.

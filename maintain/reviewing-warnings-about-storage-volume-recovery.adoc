@@ -1,0 +1,39 @@
+---
+permalink: maintain/reviewing-warnings-about-storage-volume-recovery.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, volume warning 
+summary: Prima di ripristinare i volumi di archiviazione non riusciti per un nodo di archiviazione, è necessario leggere i seguenti avvisi. 
+---
+= Avvisi per il ripristino del volume di archiviazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Prima di ripristinare volumi di archiviazione non riusciti per un nodo di archiviazione, leggere i seguenti avvisi.
+
+I volumi di archiviazione (o rangedb) in un nodo di archiviazione sono identificati da un numero esadecimale, noto come ID volume.  Ad esempio, 0000 è il primo volume e 000F è il sedicesimo volume.  Il primo archivio oggetti (volume 0) su ciascun nodo di archiviazione utilizza fino a 4 TB di spazio per i metadati degli oggetti e le operazioni del database Cassandra; tutto lo spazio rimanente su tale volume viene utilizzato per i dati degli oggetti.  Tutti gli altri volumi di archiviazione vengono utilizzati esclusivamente per i dati degli oggetti.
+
+Se il volume 0 non funziona e deve essere ripristinato, il database Cassandra potrebbe essere ricostruito come parte della procedura di ripristino del volume.  Cassandra potrebbe anche essere ricostruita nelle seguenti circostanze:
+
+* Un nodo di archiviazione viene riportato online dopo essere stato offline per più di 15 giorni.
+* L'unità di sistema e uno o più volumi di archiviazione si guastano e vengono ripristinati.
+
+
+Quando Cassandra viene ricostruita, il sistema utilizza le informazioni provenienti da altri nodi di archiviazione. Se troppi nodi di archiviazione sono offline, alcuni dati Cassandra potrebbero non essere disponibili. Se Cassandra è stata ricostruita di recente, i dati di Cassandra potrebbero non essere ancora coerenti in tutta la griglia.  La perdita di dati può verificarsi se Cassandra viene ricostruita quando troppi nodi di archiviazione sono offline o se due o più nodi di archiviazione vengono ricostruiti entro 15 giorni l'uno dall'altro.
+
+
+CAUTION: Se più di un nodo di archiviazione è guasto (o è offline), contattare l'assistenza tecnica. Non eseguire la seguente procedura di ripristino. Potrebbe verificarsi una perdita di dati.
+
+
+CAUTION: Se si tratta del secondo guasto del nodo di archiviazione in meno di 15 giorni dopo un guasto o un ripristino del nodo di archiviazione, contattare l'assistenza tecnica.  La ricostruzione di Cassandra su due o più nodi di archiviazione entro 15 giorni può comportare la perdita di dati.
+
+
+NOTE: Se più di un nodo di archiviazione in un sito presenta un guasto, potrebbe essere necessaria una procedura di ripristino del sito. Vedere link:how-site-recovery-is-performed-by-technical-support.html["Come il supporto tecnico recupera un sito"] .
+
+
+CAUTION: Se le regole ILM sono configurate per archiviare solo una copia replicata e la copia esiste su un volume di archiviazione che ha subito un errore, non sarà possibile ripristinare l'oggetto.
+
+.Informazioni correlate
+link:warnings-and-considerations-for-grid-node-recovery.html["Avvertenze e considerazioni per il ripristino del nodo della griglia"]

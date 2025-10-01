@@ -1,0 +1,65 @@
+---
+permalink: ilm/creating-and-assigning-storage-grades.html 
+sidebar: sidebar 
+keywords: what is a storage grade, create storage grade 
+summary: I gradi di archiviazione identificano il tipo di archiviazione utilizzato da un nodo di archiviazione.  È possibile creare gradi di archiviazione se si desidera che le regole ILM posizionino determinati oggetti su determinati nodi di archiviazione. 
+---
+= Creare e assegnare gradi di archiviazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+I gradi di archiviazione identificano il tipo di archiviazione utilizzato da un nodo di archiviazione.  È possibile creare gradi di archiviazione se si desidera che le regole ILM posizionino determinati oggetti su determinati nodi di archiviazione.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Hailink:../admin/admin-group-permissions.html["autorizzazioni di accesso specifiche"] .
+
+
+.Informazioni su questo compito
+Quando installi StorageGRID per la prima volta, il livello di archiviazione *Predefinito* viene assegnato automaticamente a ogni nodo di archiviazione nel tuo sistema.  Se necessario, è possibile definire gradi di archiviazione personalizzati e assegnarli a diversi nodi di archiviazione.
+
+Utilizzando gradi di archiviazione personalizzati è possibile creare pool di archiviazione ILM che contengono solo un tipo specifico di nodo di archiviazione.  Ad esempio, potresti voler archiviare determinati oggetti sui nodi di archiviazione più veloci, come gli storage appliance all-flash StorageGRID .
+
+
+NOTE: Durante l'installazione, è possibile configurare i nodi di archiviazione in modo che contengano solo metadati degli oggetti e non dati degli oggetti. Ai nodi di archiviazione solo metadati non può essere assegnato un grado di archiviazione. Per ulteriori informazioni, consultare link:../primer/what-storage-node-is.html#types-of-storage-nodes["Tipi di nodi di archiviazione"] .
+
+Se il grado di archiviazione non è un problema (ad esempio, tutti i nodi di archiviazione sono identici), è possibile saltare questa procedura e utilizzare la selezione *include tutti i gradi di archiviazione* per il grado di archiviazione quando silink:creating-storage-pool.html["creare pool di archiviazione"] .  Utilizzando questa selezione si garantisce che il pool di archiviazione includa tutti i nodi di archiviazione del sito, indipendentemente dal loro grado di archiviazione.
+
+
+NOTE: Non creare più livelli di archiviazione del necessario.  Ad esempio, non creare un grado di archiviazione per ogni nodo di archiviazione.  Assegna invece ogni grado di archiviazione a due o più nodi.  I gradi di archiviazione assegnati a un solo nodo possono causare arretrati ILM se il nodo in questione non è più disponibile.
+
+.Passi
+. Selezionare *ILM* > *Gradi di archiviazione*.
+. Definisci gradi di archiviazione personalizzati:
++
+.. Per ogni grado di archiviazione personalizzato che desideri aggiungere, seleziona *Inserisci*image:../media/icon_nms_insert.gif["inserisci icona"] per aggiungere una riga.
+.. Inserisci un'etichetta descrittiva.
++
+image::../media/editing_storage_grades.gif[Pagina dei gradi di conservazione]
+
+.. Selezionare *Applica modifiche*.
+.. Facoltativamente, se devi modificare un'etichetta salvata, seleziona *Modifica*image:../media/icon_nms_edit.gif["icona di modifica"] e seleziona *Applica modifiche*.
++
+
+NOTE: Non è possibile eliminare i gradi di archiviazione.
+
+
+
+. Assegna nuovi gradi di archiviazione ai nodi di archiviazione:
++
+.. Individuare il nodo di archiviazione nell'elenco LDR e selezionare la relativa icona *Modifica*image:../media/icon_nms_edit.gif["icona di modifica"] .
+.. Selezionare dall'elenco il grado di conservazione appropriato.
++
+image::../media/assigning_storage_grades_to_storage_nodes.gif[Pagina dei gradi di conservazione]
+
++
+
+NOTE: Assegnare un grado di archiviazione a un determinato nodo di archiviazione una sola volta.  Un nodo di archiviazione ripristinato dopo un errore mantiene il grado di archiviazione assegnato in precedenza.  Non modificare questa assegnazione dopo l'attivazione della policy ILM.  Se l'assegnazione viene modificata, i dati vengono archiviati in base al nuovo grado di archiviazione.
+
+.. Selezionare *Applica modifiche*.
+
+
+

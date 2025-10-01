@@ -1,0 +1,64 @@
+---
+permalink: primer/storagegrid-architecture-and-network-topology.html 
+sidebar: sidebar 
+keywords: architecture, deployment, topology, site, node redundancy, services, nodes 
+summary: Un sistema StorageGRID è costituito da più tipi di nodi di griglia in uno o più siti di data center. 
+---
+= Architettura StorageGRID e topologia di rete
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Un sistema StorageGRID è costituito da più tipi di nodi di griglia in uno o più siti di data center.
+
+Vedi illink:nodes-and-services.html["descrizioni dei tipi di nodi della griglia"] .
+
+Per ulteriori informazioni sulla topologia di rete StorageGRID , sui requisiti e sulle comunicazioni di rete, vederelink:../network/index.html["Linee guida per il networking"] .
+
+
+
+== Topologie di distribuzione
+
+Il sistema StorageGRID può essere distribuito in un singolo sito di data center o in più siti di data center.
+
+
+
+=== Sito singolo
+
+In una distribuzione con un singolo sito, l'infrastruttura e le operazioni del sistema StorageGRID sono centralizzate.
+
+image::../media/data_center_site_single.png[Sito di un singolo data center]
+
+
+
+=== Siti multipli
+
+In una distribuzione con più siti, è possibile installare in ciascun sito diversi tipi e numeri di risorse StorageGRID .  Ad esempio, potrebbe essere necessario più spazio di archiviazione in un data center rispetto a un altro.
+
+Spesso siti diversi si trovano in posizioni geografiche diverse, in domini di guasto diversi, come una faglia sismica o una pianura alluvionale. La condivisione dei dati e il ripristino in caso di disastro vengono ottenuti mediante la distribuzione automatizzata dei dati ad altri siti.
+
+image::../media/data_center_sites_multiple.png[Sito con più data center]
+
+All'interno di un singolo data center possono esistere anche più siti logici per consentire l'uso della replica distribuita e della codifica di cancellazione per aumentare la disponibilità e la resilienza.
+
+
+
+=== Ridondanza dei nodi della griglia
+
+In una distribuzione a sito singolo o multi-sito, è possibile includere facoltativamente più di un nodo di amministrazione o nodo gateway per ridondanza.  Ad esempio, è possibile installare più di un nodo di amministrazione in un singolo sito o in più siti.  Tuttavia, ogni sistema StorageGRID può avere un solo nodo amministrativo primario.
+
+
+
+== Architettura del sistema
+
+Questo diagramma mostra come sono disposti i nodi della griglia all'interno di un sistema StorageGRID .
+
+image::../media/grid_nodes_and_components.png[diagramma descritto dal testo circostante]
+
+I client S3 archiviano e recuperano oggetti in StorageGRID.  Altri client vengono utilizzati per inviare notifiche e-mail, per accedere all'interfaccia di gestione StorageGRID e, facoltativamente, per accedere alla condivisione di controllo.
+
+I client S3 possono connettersi a un nodo gateway o a un nodo di amministrazione per utilizzare l'interfaccia di bilanciamento del carico per i nodi di archiviazione.  In alternativa, i client S3 possono connettersi direttamente ai nodi di archiviazione tramite HTTPS.
+
+Gli oggetti possono essere archiviati in StorageGRID su nodi di archiviazione basati su software o hardware oppure in pool di archiviazione cloud, costituiti da bucket S3 esterni o contenitori di archiviazione BLOB di Azure.

@@ -1,0 +1,210 @@
+---
+permalink: admin/admin-group-permissions.html 
+sidebar: sidebar 
+keywords: admin group permissions 
+summary: 'Quando si creano gruppi di utenti amministratori, si selezionano una o più autorizzazioni per controllare l"accesso a funzionalità specifiche di Grid Manager.  È quindi possibile assegnare ciascun utente a uno o più di questi gruppi di amministratori per determinare quali attività può eseguire quell"utente.' 
+---
+= Autorizzazioni del gruppo amministratore
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Quando si creano gruppi di utenti amministratori, si selezionano una o più autorizzazioni per controllare l'accesso a funzionalità specifiche di Grid Manager.  È quindi possibile assegnare ciascun utente a uno o più di questi gruppi di amministratori per determinare quali attività può eseguire quell'utente.
+
+È necessario assegnare almeno un'autorizzazione a ciascun gruppo; in caso contrario, gli utenti appartenenti a quel gruppo non potranno accedere a Grid Manager o all'API Grid Management.
+
+Per impostazione predefinita, qualsiasi utente appartenente a un gruppo che dispone di almeno un'autorizzazione può eseguire le seguenti attività:
+
+* Sign in a Grid Manager
+* Visualizza la dashboard
+* Visualizza le pagine dei nodi
+* Visualizza gli avvisi correnti e risolti
+* Cambiare la propria password (solo utenti locali)
+* Visualizzare alcune informazioni fornite nelle pagine Configurazione e Manutenzione
+
+
+
+
+== Interazione tra permessi e modalità di accesso
+
+Per tutte le autorizzazioni, l'impostazione *Modalità di accesso* del gruppo determina se gli utenti possono modificare le impostazioni ed eseguire operazioni oppure se possono solo visualizzare le impostazioni e le funzionalità correlate.  Se un utente appartiene a più gruppi e uno qualsiasi di essi è impostato su *Sola lettura*, l'utente avrà accesso in sola lettura a tutte le impostazioni e funzionalità selezionate.
+
+Nelle sezioni seguenti vengono descritte le autorizzazioni che è possibile assegnare durante la creazione o la modifica di un gruppo di amministratori.  Per qualsiasi funzionalità non esplicitamente menzionata è necessario il permesso di *accesso root*.
+
+
+
+== Accesso root
+
+Questa autorizzazione fornisce l'accesso a tutte le funzionalità di amministrazione della griglia.
+
+
+
+== Cambia la password di root del tenant
+
+Questa autorizzazione fornisce l'accesso all'opzione *Cambia password di root* nella pagina Tenant, consentendo di controllare chi può modificare la password per l'utente root locale del tenant.  Questa autorizzazione viene utilizzata anche per la migrazione delle chiavi S3 quando è abilitata la funzionalità di importazione delle chiavi S3.  Gli utenti che non dispongono di questa autorizzazione non possono visualizzare l'opzione *Cambia password di root*.
+
+
+NOTE: Per concedere l'accesso alla pagina Tenant, che contiene l'opzione *Cambia password di root*, assegnare anche l'autorizzazione *Account tenant*.
+
+
+
+== Configurazione della pagina della topologia della griglia
+
+Questa autorizzazione consente di accedere alle schede Configurazione nella pagina *SUPPORTO* > *Strumenti* > *Topologia griglia*.
+
+
+NOTE: La pagina Topologia griglia è stata deprecata e verrà rimossa in una versione futura.
+
+
+
+== ILM
+
+Questa autorizzazione fornisce l'accesso alle seguenti opzioni del menu *ILM*:
+
+* Regole
+* Politiche
+* Tag di policy
+* Pool di stoccaggio
+* Gradi di stoccaggio
+* Regioni
+* Ricerca metadati oggetto
+
+
+
+NOTE: Per gestire i gradi di archiviazione, gli utenti devono disporre delle autorizzazioni *Altra configurazione della griglia* e *Configurazione della pagina della topologia della griglia*.
+
+
+
+== Manutenzione
+
+Per utilizzare queste opzioni, gli utenti devono disporre dell'autorizzazione di manutenzione:
+
+* *CONFIGURAZIONE* > *Controllo accessi*:
++
+** Password di griglia
+
+
+* *CONFIGURAZIONE* > *Rete*:
++
+** Nomi di dominio endpoint S3
+
+
+* *MANUTENZIONE* > *Attività*:
++
+** Dismissione
+** Espansione
+** Controllo dell'esistenza dell'oggetto
+** Recupero
+
+
+* *MANUTENZIONE* > *Sistema*:
++
+** Pacchetto di recupero
+** Aggiornamento software
+
+
+* *SUPPORTO* > *Strumenti*:
++
+** Registri
+
+
+
+
+Gli utenti che non dispongono dell'autorizzazione di manutenzione possono visualizzare, ma non modificare, queste pagine:
+
+* *MANUTENZIONE* > *Rete*:
++
+** server DNS
+** Rete a griglia
+** server NTP
+
+
+* *MANUTENZIONE* > *Sistema*:
++
+** Licenza
+
+
+* *CONFIGURAZIONE* > *Rete*:
++
+** Nomi di dominio endpoint S3
+
+
+* *CONFIGURAZIONE* > *Sicurezza*:
++
+** Certificati
+
+
+* *CONFIGURAZIONE* > *Monitoraggio*:
++
+** Server di audit e syslog
+
+
+
+
+
+
+== Gestisci gli avvisi
+
+Questa autorizzazione fornisce l'accesso alle opzioni per la gestione degli avvisi.  Gli utenti devono disporre di questa autorizzazione per gestire silenzi, notifiche di avviso e regole di avviso.
+
+
+
+== Query sulle metriche
+
+Questa autorizzazione fornisce l'accesso a:
+
+* Pagina *SUPPORTO* > *Strumenti* > *Metriche*
+* Query personalizzate sulle metriche Prometheus utilizzando la sezione *Metriche* dell'API di gestione della griglia
+* Schede della dashboard di Grid Manager che contengono metriche
+
+
+
+
+== Ricerca metadati oggetto
+
+Questa autorizzazione fornisce l'accesso alla pagina *ILM* > *Ricerca metadati oggetto*.
+
+
+
+== Altra configurazione della griglia
+
+Questa autorizzazione fornisce l'accesso ad ulteriori opzioni di configurazione della griglia.
+
+
+TIP: Per visualizzare queste opzioni aggiuntive, gli utenti devono disporre anche dell'autorizzazione *Configurazione della pagina topologia griglia*.
+
+* *ILM*:
++
+** Gradi di stoccaggio
+
+
+* *CONFIGURAZIONE* > *Sistema*:
+* *SUPPORTO* > *Altro*:
++
+** Costo del collegamento
+
+
+
+
+
+
+== Amministratore dell'appliance di archiviazione
+
+Questa autorizzazione prevede:
+
+* Accesso a E-Series SANtricity System Manager su dispositivi di storage tramite Grid Manager.
+* Possibilità di eseguire attività di risoluzione dei problemi e manutenzione nella scheda Gestisci unità per gli apparecchi che supportano queste operazioni.
+
+
+
+
+== Conti degli inquilini
+
+Questa autorizzazione fornisce la possibilità di:
+
+* Accedi alla pagina Inquilini, dove puoi creare, modificare e rimuovere gli account degli inquilini
+* Visualizza le policy di classificazione del traffico esistenti
+* Visualizza le schede della dashboard di Grid Manager che contengono i dettagli del tenant
+

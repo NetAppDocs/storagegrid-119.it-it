@@ -1,0 +1,22 @@
+---
+permalink: network/admin-network-requirements.html 
+sidebar: sidebar 
+keywords: admin network requirements, guidelines for admin network, aesl 
+summary: La rete di amministrazione è facoltativa.  Se si prevede di configurare una rete di amministrazione, seguire questi requisiti e linee guida. 
+---
+= Requisiti della rete di amministrazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+La rete di amministrazione è facoltativa.  Se si prevede di configurare una rete di amministrazione, seguire questi requisiti e linee guida.
+
+Gli utilizzi tipici della rete di amministrazione includono connessioni di gestione, AutoSupport, KMS e connessioni a server critici quali NTP, DNS e LDAP se queste connessioni non vengono fornite tramite la rete Grid o la rete client.
+
+
+NOTE: La rete di amministrazione e l'AESL possono essere univoche per ciascun nodo, purché i servizi di rete e i client desiderati siano raggiungibili.
+
+
+NOTE: È necessario definire almeno una subnet sulla rete di amministrazione per abilitare le connessioni in entrata da subnet esterne.  Le rotte statiche vengono generate automaticamente su ciascun nodo per ciascuna sottorete nell'AESL.

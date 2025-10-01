@@ -1,0 +1,28 @@
+---
+permalink: expand/adding-storage-capacity-for-erasure-coded-objects.html 
+sidebar: sidebar 
+keywords: erasure coding, capacity, storage nodes, ec, expand, expansion 
+summary: 'Se la policy ILM include una regola che crea copie con codice di cancellazione, è necessario pianificare dove e quando aggiungere nuovo spazio di archiviazione.  La quantità di spazio di archiviazione aggiunto e la tempistica dell"aggiunta possono influire sulla capacità di archiviazione utilizzabile della rete.' 
+---
+= Aggiungere capacità di archiviazione per oggetti con codice di cancellazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se la policy ILM include una regola che crea copie con codice di cancellazione, è necessario pianificare dove e quando aggiungere nuovo spazio di archiviazione.  La quantità di spazio di archiviazione aggiunto e la tempistica dell'aggiunta possono influire sulla capacità di archiviazione utilizzabile della rete.
+
+Il primo passo nella pianificazione di un'espansione dello storage è esaminare le regole della policy ILM che creano oggetti con codice di cancellazione.  Poiché StorageGRID crea _k+m_ frammenti per ogni oggetto con codice di cancellazione e memorizza ogni frammento su un nodo di archiviazione diverso, è necessario assicurarsi che almeno _k+m_ nodi di archiviazione dispongano di spazio per i nuovi dati con codice di cancellazione dopo l'espansione.  Se il profilo di codifica di cancellazione fornisce protezione contro la perdita del sito, è necessario aggiungere spazio di archiviazione a ciascun sito.  Vederelink:../ilm/what-erasure-coding-schemes-are.html["Cosa sono gli schemi di codifica di cancellazione"] per informazioni sui profili di codifica di cancellazione.
+
+Il numero di nodi da aggiungere dipende anche da quanto sono pieni i nodi esistenti quando si esegue l'espansione.
+
+
+
+== Raccomandazione generale per l'aggiunta di capacità di archiviazione per oggetti con codice di cancellazione
+
+Se si desidera evitare calcoli dettagliati, è possibile aggiungere due nodi di archiviazione per sito quando i nodi di archiviazione esistenti raggiungono il 70% della capacità.
+
+Questa raccomandazione generale fornisce risultati ragionevoli in un'ampia gamma di schemi di codifica di cancellazione sia per griglie a sito singolo sia per griglie in cui la codifica di cancellazione fornisce protezione contro la perdita del sito.
+
+Per comprendere meglio i fattori che hanno portato a questa raccomandazione o per sviluppare un piano più preciso per il tuo sito, consultalink:considerations-for-rebalancing-erasure-coded-data.html["Considerazioni per il ribilanciamento dei dati codificati con cancellazione"] .  Per una raccomandazione personalizzata ottimizzata per la tua situazione, contatta il tuo consulente NetApp Professional Services.

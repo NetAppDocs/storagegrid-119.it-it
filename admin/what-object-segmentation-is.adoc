@@ -1,0 +1,26 @@
+---
+permalink: admin/what-object-segmentation-is.html 
+sidebar: sidebar 
+keywords: object segmentation, multipart upload 
+summary: 'La segmentazione degli oggetti è il processo di suddivisione di un oggetto in una raccolta di oggetti più piccoli di dimensioni fisse per ottimizzare l"archiviazione e l"utilizzo delle risorse per oggetti di grandi dimensioni.  Il caricamento multiparte di S3 crea anche oggetti segmentati, con un oggetto che rappresenta ogni parte.' 
+---
+= Che cos'è la segmentazione degli oggetti?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+La segmentazione degli oggetti è il processo di suddivisione di un oggetto in una raccolta di oggetti più piccoli di dimensioni fisse per ottimizzare l'archiviazione e l'utilizzo delle risorse per oggetti di grandi dimensioni.  Il caricamento multiparte di S3 crea anche oggetti segmentati, con un oggetto che rappresenta ogni parte.
+
+Quando un oggetto viene inserito nel sistema StorageGRID , il servizio LDR lo suddivide in segmenti e crea un contenitore di segmenti che elenca le informazioni di intestazione di tutti i segmenti come contenuto.
+
+image::../media/object_segmentation_diagram.gif[Flusso di lavoro di segmentazione degli oggetti]
+
+Al recupero di un contenitore di segmenti, il servizio LDR assembla l'oggetto originale dai suoi segmenti e restituisce l'oggetto al client.
+
+Il contenitore e i segmenti non sono necessariamente archiviati sullo stesso nodo di archiviazione.  Il contenitore e i segmenti possono essere archiviati su qualsiasi nodo di archiviazione all'interno del pool di archiviazione specificato nella regola ILM.
+
+Ogni segmento viene trattato in modo indipendente dal sistema StorageGRID e contribuisce al conteggio di attributi quali oggetti gestiti e oggetti archiviati.  Ad esempio, se un oggetto archiviato nel sistema StorageGRID viene suddiviso in due segmenti, il valore degli oggetti gestiti aumenta di tre volte al termine dell'acquisizione, come segue:
+
+`segment container + segment 1 + segment 2 = three stored objects`

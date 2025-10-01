@@ -1,0 +1,40 @@
+---
+permalink: audit/scmt-object-store-commit.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, SCMT, Object Store Commit 
+summary: 'Il contenuto della griglia non viene reso disponibile o riconosciuto come memorizzato finché non viene eseguito il commit (ovvero finché non viene memorizzato in modo persistente).  Il contenuto memorizzato in modo persistente è stato completamente scritto su disco e ha superato i relativi controlli di integrità.  Questo messaggio viene visualizzato quando un blocco di contenuto viene salvato nell"archivio.' 
+---
+= SCMT: Commit dell'archivio oggetti
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Il contenuto della griglia non viene reso disponibile o riconosciuto come memorizzato finché non viene eseguito il commit (ovvero finché non viene memorizzato in modo persistente).  Il contenuto memorizzato in modo persistente è stato completamente scritto su disco e ha superato i relativi controlli di integrità.  Questo messaggio viene visualizzato quando un blocco di contenuto viene salvato nell'archivio.
+
+[cols="1a,1a,4a"]
+|===
+| Codice | Campo | Descrizione 
+
+
+ a| 
+CBID
+ a| 
+Identificatore del blocco di contenuto
+ a| 
+Identificatore univoco del blocco di contenuto impegnato nell'archiviazione permanente.
+
+
+
+ a| 
+RSLT
+ a| 
+Codice risultato
+ a| 
+Stato al momento in cui l'oggetto è stato memorizzato sul disco:
+
+SUCS: Oggetto memorizzato correttamente.
+
+|===
+Questo messaggio significa che un determinato blocco di contenuto è stato completamente archiviato e verificato e ora può essere richiesto.  Può essere utilizzato per tracciare il flusso di dati all'interno del sistema.

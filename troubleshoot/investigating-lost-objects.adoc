@@ -1,0 +1,139 @@
+---
+permalink: troubleshoot/investigating-lost-objects.html 
+sidebar: sidebar 
+keywords: lost objects, investigating, objects 
+summary: 'Quando viene attivato l"avviso *Oggetti smarriti*, è necessario indagare immediatamente. Raccogliere informazioni sugli oggetti interessati e contattare l"assistenza tecnica.' 
+---
+= Indagare sugli oggetti smarriti
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Quando viene attivato l'avviso *Oggetti smarriti*, è necessario indagare immediatamente. Raccogliere informazioni sugli oggetti interessati e contattare l'assistenza tecnica.
+
+.Prima di iniziare
+* Devi aver effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Hailink:../admin/admin-group-permissions.html["autorizzazioni di accesso specifiche"] .
+* Devi avere il `Passwords.txt` file.
+
+
+.Informazioni su questo compito
+L'avviso *Oggetti persi* indica che StorageGRID ritiene che non vi siano copie di un oggetto nella griglia. I dati potrebbero essere andati persi definitivamente.
+
+Indagare immediatamente sugli avvisi di oggetti smarriti.  Potrebbe essere necessario adottare misure per evitare ulteriori perdite di dati.  In alcuni casi, potresti riuscire a recuperare un oggetto smarrito se intervieni tempestivamente.
+
+.Passi
+. Selezionare *NODES*.
+. Selezionare *_Nodo di archiviazione_* > *Oggetti*.
+. Esamina il numero di oggetti smarriti mostrato nella tabella Conteggio oggetti.
++
+Questo numero indica il numero totale di oggetti che questo nodo della griglia rileva come mancanti dall'intero sistema StorageGRID .  Il valore è la somma dei contatori degli oggetti persi del componente Archivio dati all'interno dei servizi LDR e DDS.
+
++
+image::../media/nodes_storage_nodes_objects_page_lost_object.png[Nodi Nodi di archiviazione Oggetto Pagina oggetto perso]
+
+. Da un nodo di amministrazione,link:../audit/accessing-audit-log-file.html["accedere al registro di controllo"] per determinare l'identificatore univoco (UUID) dell'oggetto che ha attivato l'avviso *Oggetti persi*:
++
+.. Accedi al nodo della griglia:
++
+... Immettere il seguente comando: `ssh admin@grid_node_IP`
+... Inserisci la password elencata nel `Passwords.txt` file.
+... Immettere il seguente comando per passare alla root: `su -`
+... Inserisci la password elencata nel `Passwords.txt` file.  Quando si accede come root, il prompt cambia da `$` A `#` .
+
+
+.. Passare alla directory in cui si trovano i registri di controllo.
++
+--
+La directory del registro di controllo e i nodi applicabili dipendono dalle impostazioni di destinazione del controllo.
+
+[cols="1a,2a"]
+|===
+| Opzione | Destinazione 
+
+
+ a| 
+Nodi locali (predefiniti)
+ a| 
+`/var/local/log/localaudit.log`
+
+
+
+ a| 
+Nodi amministrativi/nodi locali
+ a| 
+*** Nodi amministrativi (primari e non primari): `/var/local/audit/export/audit.log`
+*** Tutti i nodi: Il `/var/local/log/localaudit.log` in questa modalità il file è solitamente vuoto o mancante.
+
+
+
+
+ a| 
+Server syslog esterno
+ a| 
+`/var/local/log/localaudit.log`
+
+|===
+A seconda delle impostazioni di destinazione dell'audit, immettere: `cd /var/local/log` O `/var/local/audit/export/`
+
+Per saperne di più, fare riferimento alink:../monitor/configure-audit-messages.html#select-audit-information-destinations["Seleziona le destinazioni delle informazioni di audit"] .
+
+--
+.. Utilizzare grep per estrarre i messaggi di controllo Object Lost (OLST).  Inserisci: `grep OLST audit_file_name`
+.. Prendere nota del valore UUID incluso nel messaggio.
++
+[listing]
+----
+Admin: # grep OLST audit.log
+2020-02-12T19:18:54.780426 [AUDT:[CBID(UI64):0x38186FE53E3C49A5][UUID(CSTR):"926026C4-00A4-449B-AC72-BCCA72DD1311"]
+[PATH(CSTR):"source/cats"][NOID(UI32):12288733][VOLI(UI64):3222345986][RSLT(FC32):NONE][AVER(UI32):10]
+[ATIM(UI64):1581535134780426][ATYP(FC32):OLST][ANID(UI32):12448208][AMID(FC32):ILMX][ATID(UI64):7729403978647354233]]
+----
+
+
+. Cerca i metadati dell'oggetto smarrito utilizzando l'UUID:
++
+.. Selezionare *ILM* > *Ricerca metadati oggetto*.
+.. Inserisci l'UUID e seleziona *Cerca*.
+.. Esaminare le posizioni nei metadati e adottare le misure appropriate:
++
+[cols="2a,4a"]
+|===
+| Metadati | Conclusione 
+
+
+ a| 
+Oggetto <identificatore_oggetto> non trovato
+ a| 
+Se l'oggetto non viene trovato, viene restituito il messaggio "ERROR":"".
+
+Se l'oggetto non viene trovato, è possibile reimpostare il conteggio degli *Oggetti persi* per cancellare l'avviso. La mancanza di un oggetto indica che l'oggetto è stato eliminato intenzionalmente.
+
+
+
+ a| 
+Posizioni > 0
+ a| 
+Se nell'output sono elencate delle posizioni, l'avviso *Oggetti persi* potrebbe essere un falso positivo.
+
+Conferma che gli oggetti esistono.  Utilizzare l'ID nodo e il percorso file elencati nell'output per confermare che il file oggetto si trova nella posizione indicata.
+
+(La procedura perlink:searching-for-and-restoring-potentially-lost-objects.html["ricerca di oggetti potenzialmente persi"] spiega come utilizzare l'ID nodo per trovare il nodo di archiviazione corretto.)
+
+Se gli oggetti esistono, puoi reimpostare il conteggio degli *Oggetti persi* per cancellare l'avviso.
+
+
+
+ a| 
+Posizioni = 0
+ a| 
+Se nell'output non sono elencate posizioni, l'oggetto potrebbe essere mancante. Puoi provare alink:searching-for-and-restoring-potentially-lost-objects.html["cercare e ripristinare l'oggetto"] oppure puoi contattare l'assistenza tecnica.
+
+L'assistenza tecnica potrebbe chiederti di verificare se è in corso una procedura di ripristino dell'archiviazione.  Vedi le informazioni sulink:../maintain/restoring-volume.html["ripristino dei dati degli oggetti tramite Grid Manager"] Elink:../maintain/restoring-object-data-to-storage-volume.html["ripristino dei dati dell'oggetto su un volume di archiviazione"] .
+
+|===
+
+
+

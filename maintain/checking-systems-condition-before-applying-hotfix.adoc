@@ -1,0 +1,33 @@
+---
+permalink: maintain/checking-systems-condition-before-applying-hotfix.html 
+sidebar: sidebar 
+keywords: storagegrid, hotfix 
+summary: 'È necessario verificare che il sistema sia pronto ad accogliere l"hotfix.' 
+---
+= Controllare le condizioni del sistema prima di applicare l'hotfix
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario verificare che il sistema sia pronto ad accogliere l'hotfix.
+
+. Sign in a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+. Se possibile, assicurarsi che il sistema funzioni normalmente e che tutti i nodi della rete siano collegati alla rete.
++
+I nodi connessi hanno segni di spunta verdiimage:../media/icon_alert_green_checkmark.png["icona avviso segno di spunta verde"] nella pagina Nodi.
+
+. Se possibile, verificare la presenza di eventuali avvisi in corso e risolverli.
+. Assicurarsi che non siano in corso altre procedure di manutenzione, come ad esempio aggiornamenti, ripristini, espansioni o dismissioni.
++
+Prima di applicare un hotfix, è opportuno attendere il completamento di eventuali procedure di manutenzione attive.
+
++
+Non è possibile applicare un hotfix StorageGRID quando è in esecuzione un'altra procedura di manutenzione.  Ad esempio, non è possibile applicare un hotfix mentre è in esecuzione una procedura di dismissione, espansione o ripristino.
+
++
+
+NOTE: Se un nodo o un sitolink:pausing-and-resuming-decommission-process-for-storage-nodes.html["la procedura di dismissione è sospesa"] , puoi applicare in tutta sicurezza un hotfix.  Inoltre, potresti essere in grado di applicare un hotfix durante le fasi finali di una procedura di aggiornamento StorageGRID . Vedi le istruzioni perlink:../upgrade/index.html["aggiornamento del software StorageGRID"] .
+
+

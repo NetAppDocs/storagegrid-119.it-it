@@ -1,0 +1,57 @@
+---
+permalink: troubleshoot/confirming-object-data-locations.html 
+sidebar: sidebar 
+keywords: how to confirm object location, object metadata lookup 
+summary: 'A seconda del problema, potrebbe essere necessario verificare dove vengono archiviati i dati dell"oggetto.  Ad esempio, potresti voler verificare che la policy ILM funzioni come previsto e che i dati degli oggetti vengano archiviati dove previsto.' 
+---
+= Confermare le posizioni dei dati degli oggetti
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+A seconda del problema, potresti volerlink:../audit/object-ingest-transactions.html["confermare dove vengono archiviati i dati dell'oggetto"] .  Ad esempio, potresti voler verificare che la policy ILM funzioni come previsto e che i dati degli oggetti vengano archiviati dove previsto.
+
+.Prima di iniziare
+* È necessario disporre di un identificatore di oggetto, che può essere uno dei seguenti:
++
+** *UUID*: Identificatore univoco universale dell'oggetto. Inserire il UUID in maiuscolo.
+** *CBID*: Identificatore univoco dell'oggetto all'interno StorageGRID . È possibile ottenere il CBID di un oggetto dal registro di controllo. Inserire il CBID in maiuscolo.
+** *Chiave oggetto e bucket S3*: quando un oggetto viene ingerito tramitelink:../s3/operations-on-objects.html["Interfaccia S3"] , l'applicazione client utilizza una combinazione di bucket e chiave oggetto per memorizzare e identificare l'oggetto.
+
+
+
+
+.Passi
+. Selezionare *ILM* > *Ricerca metadati oggetto*.
+. Digitare l'identificatore dell'oggetto nel campo *Identificatore*.
++
+È possibile immettere un UUID, CBID, bucket S3/chiave oggetto o contenitore Swift/nome oggetto.
+
+. Se si desidera cercare una versione specifica dell'oggetto, immettere l'ID della versione (facoltativo).
++
+image::../media/object_lookup.png[Pagina di ricerca degli oggetti]
+
+. Seleziona *Cerca*.
++
+ILlink:../ilm/verifying-ilm-policy-with-object-metadata-lookup.html["risultati della ricerca dei metadati degli oggetti"] apparire.  In questa pagina sono elencati i seguenti tipi di informazioni:
+
++
+** Metadati di sistema, tra cui l'ID dell'oggetto (UUID), l'ID della versione (facoltativo), il nome dell'oggetto, il nome del contenitore, il nome o l'ID dell'account tenant, la dimensione logica dell'oggetto, la data e l'ora in cui l'oggetto è stato creato per la prima volta e la data e l'ora in cui l'oggetto è stato modificato per l'ultima volta.
+** Qualsiasi coppia chiave-valore di metadati utente personalizzati associata all'oggetto.
+** Per gli oggetti S3, qualsiasi coppia chiave-valore del tag oggetto associata all'oggetto.
+** Per le copie di oggetti replicati, la posizione di archiviazione corrente di ciascuna copia.
+** Per le copie di oggetti con codice di cancellazione, la posizione di archiviazione corrente di ciascun frammento.
+** Per le copie di oggetti in un Cloud Storage Pool, la posizione dell'oggetto, incluso il nome del bucket esterno e l'identificatore univoco dell'oggetto.
+** Per oggetti segmentati e oggetti multiparte, un elenco di segmenti di oggetti, inclusi gli identificatori di segmento e le dimensioni dei dati.  Per gli oggetti con più di 100 segmenti, vengono mostrati solo i primi 100 segmenti.
+** Tutti i metadati degli oggetti nel formato di archiviazione interna non elaborato.  Questi metadati grezzi includono metadati di sistema interni la cui persistenza da una versione all'altra non è garantita.
++
+L'esempio seguente mostra i risultati della ricerca dei metadati dell'oggetto per un oggetto di test S3 archiviato come due copie replicate.
+
+
+
++
+image::../media/object_lookup_results.png[Risultati della ricerca degli oggetti]
+
+

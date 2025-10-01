@@ -1,0 +1,36 @@
+---
+permalink: ilm/resolving-consistency-errors-when-updating-bucket-s3-object-lock-configuration.html 
+sidebar: sidebar 
+keywords: consistency error, s3 object lock and consistency 
+summary: Se un sito del data center o più nodi di archiviazione in un sito diventano non disponibili, potrebbe essere necessario aiutare gli utenti del tenant S3 ad applicare le modifiche al blocco degli oggetti S3 o alla configurazione di conformità legacy. 
+---
+= Risolvi gli errori di coerenza durante l'aggiornamento del blocco degli oggetti S3 o della configurazione di conformità legacy
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se un sito del data center o più nodi di archiviazione in un sito diventano non disponibili, potrebbe essere necessario aiutare gli utenti del tenant S3 ad applicare le modifiche al blocco degli oggetti S3 o alla configurazione di conformità legacy.
+
+Gli utenti tenant che dispongono di bucket con S3 Object Lock (o legacy Compliance) abilitato possono modificare determinate impostazioni.  Ad esempio, un utente tenant che utilizza S3 Object Lock potrebbe dover mettere una versione dell'oggetto in conservazione legale.
+
+Quando un utente tenant aggiorna le impostazioni per un bucket S3 o una versione di oggetto, StorageGRID tenta di aggiornare immediatamente i metadati del bucket o dell'oggetto in tutta la griglia.  Se il sistema non riesce ad aggiornare i metadati perché un sito del data center o più nodi di archiviazione non sono disponibili, restituisce un errore:
+
+[listing]
+----
+503: Service Unavailable
+Unable to update compliance settings because the settings can't be consistently applied on enough storage services. Contact your grid administrator for assistance.
+----
+Per risolvere questo errore, segui questi passaggi:
+
+. Tentare di rendere nuovamente disponibili tutti i nodi o siti di archiviazione il prima possibile.
+. Se non riesci a rendere disponibili sufficienti nodi di archiviazione in ogni sito, contatta l'assistenza tecnica, che può aiutarti a ripristinare i nodi e a garantire che le modifiche vengano applicate in modo coerente in tutta la griglia.
+. Una volta risolto il problema di fondo, ricorda all'utente tenant di riprovare ad apportare le modifiche alla configurazione.
+
+
+.Informazioni correlate
+* link:../tenant/index.html["Utilizzare un account tenant"]
+* link:../s3/index.html["Utilizzare l'API REST S3"]
+* link:../maintain/index.html["Recuperare e mantenere"]
+

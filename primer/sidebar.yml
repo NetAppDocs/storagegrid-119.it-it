@@ -1,0 +1,47 @@
+---
+section: primer
+title: Scopri di più su StorageGRID
+entries:
+- title: Che cos'è StorageGRID?
+  pdf-filename: Manuale di griglia StorageGRID
+  url: "/primer/index.html"
+- title: Cloud ibridi con StorageGRID
+  url: "/primer/hybrid-clouds-with-storagegrid.html"
+- title: Architettura e topologia di rete
+  url: "/primer/storagegrid-architecture-and-network-topology.html"
+- title: Nodi e servizi della griglia
+  entries:
+  - title: Nodi e servizi
+    url: "/primer/nodes-and-services.html"
+    pdf-filename: Nodi e servizi
+  - title: Che cos'è un nodo di amministrazione
+    url: "/primer/what-admin-node-is.html"
+  - title: Che cos'è un nodo di archiviazione
+    url: "/primer/what-storage-node-is.html"
+  - title: Che cos'è un nodo gateway
+    url: "/primer/what-gateway-node-is.html"
+  - title: Che cos'è un nodo archivio
+    url: "/primer/what-archive-node-is.html"
+- title: Come StorageGRID gestisce i dati
+  entries:
+  - title: Che cosa è un oggetto
+    pdf-filename: Come StorageGRID gestisce i dati - panoramica
+    url: "/primer/how-storagegrid-manages-data.html"
+  - title: La vita di un oggetto
+    url: "/primer/life-of-object.html"
+  - title: Flusso di dati di acquisizione
+    url: "/primer/ingest-data-flow.html"
+  - title: Gestione delle copie
+    url: "/primer/copy-management.html"
+  - title: Recupera il flusso di dati
+    url: "/primer/retrieve-data-flow.html"
+  - title: Elimina flusso di dati
+    url: "/primer/delete-data-flow.html"
+  - title: Gestione del ciclo di vita delle informazioni
+    url: "/primer/using-information-lifecycle-management.html"
+- title: Esplora StorageGRID
+  entries:
+  - title: Esplora Grid Manager
+    url: "/primer/exploring-grid-manager.html"
+  - title: Esplora Tenant Manager
+    url: "/primer/exploring-tenant-manager.html"

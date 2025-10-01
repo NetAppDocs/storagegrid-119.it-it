@@ -1,0 +1,1382 @@
+---
+permalink: monitor/alerts-reference.html 
+sidebar: sidebar 
+keywords: alerts reference 
+summary: In questo riferimento sono elencati gli avvisi predefiniti visualizzati in Grid Manager.  Le azioni consigliate sono riportate nel messaggio di avviso ricevuto. 
+---
+= Riferimento avvisi
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+In questo riferimento sono elencati gli avvisi predefiniti visualizzati in Grid Manager.  Le azioni consigliate sono riportate nel messaggio di avviso ricevuto.
+
+Se necessario, è possibile creare regole di avviso personalizzate per adattarle al proprio approccio di gestione del sistema.
+
+Alcuni degli avvisi predefiniti utilizzanolink:commonly-used-prometheus-metrics.html["Metriche di Prometeo"] .
+
+
+
+== Avvisi sugli elettrodomestici
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Batteria dell'apparecchio scaduta
+ a| 
+La batteria nel controller di accumulo dell'apparecchio è scaduta.
+
+
+
+ a| 
+Batteria dell'apparecchio guasta
+ a| 
+La batteria nel controller di accumulo dell'apparecchio è guasta.
+
+
+
+ a| 
+La batteria dell'apparecchio ha una capacità di apprendimento insufficiente
+ a| 
+La batteria nel controller di accumulo dell'apparecchio non ha una capacità di apprendimento sufficiente.
+
+
+
+ a| 
+Batteria dell'apparecchio prossima alla scadenza
+ a| 
+La batteria nel controller di accumulo dell'apparecchio sta per esaurirsi.
+
+
+
+ a| 
+Batteria dell'apparecchio rimossa
+ a| 
+Manca la batteria nel controller di accumulo dell'apparecchio.
+
+
+
+ a| 
+Batteria dell'apparecchio troppo calda
+ a| 
+La batteria nel controller di accumulo dell'apparecchio è surriscaldata.
+
+
+
+ a| 
+Errore di comunicazione BMC dell'apparecchio
+ a| 
+La comunicazione con il controller di gestione della scheda madre (BMC) è stata interrotta.
+
+
+
+ a| 
+Rilevato errore del dispositivo di avvio dell'appliance
+ a| 
+È stato rilevato un problema con il dispositivo di avvio nell'appliance.
+
+
+
+ a| 
+Errore del dispositivo di backup della cache dell'appliance
+ a| 
+Un dispositivo di backup della cache persistente non è riuscito.
+
+
+
+ a| 
+Capacità insufficiente del dispositivo di backup della cache dell'appliance
+ a| 
+La capacità del dispositivo di backup della cache è insufficiente.
+
+
+
+ a| 
+Dispositivo di backup della cache dell'appliance protetto da scrittura
+ a| 
+Un dispositivo di backup della cache è protetto da scrittura.
+
+
+
+ a| 
+Mancata corrispondenza delle dimensioni della memoria cache dell'appliance
+ a| 
+I due controller nell'appliance hanno dimensioni di cache diverse.
+
+
+
+ a| 
+Guasto della batteria CMOS dell'apparecchio
+ a| 
+È stato rilevato un problema con la batteria CMOS dell'apparecchio.
+
+
+
+ a| 
+Temperatura dello chassis del controller di elaborazione dell'appliance troppo alta
+ a| 
+La temperatura del controller di elaborazione in un dispositivo StorageGRID ha superato una soglia nominale.
+
+
+
+ a| 
+Temperatura della CPU del controller di elaborazione dell'appliance troppo alta
+ a| 
+La temperatura della CPU nel controller di elaborazione di un dispositivo StorageGRID ha superato una soglia nominale.
+
+
+
+ a| 
+Il controller di elaborazione dell'appliance necessita di attenzione
+ a| 
+È stato rilevato un guasto hardware nel controller di elaborazione di un dispositivo StorageGRID .
+
+
+
+ a| 
+L'alimentatore A del controller di elaborazione dell'apparecchio presenta un problema
+ a| 
+L'alimentatore A nel controller di elaborazione presenta un problema.
+
+
+
+ a| 
+L'alimentatore B del controller di elaborazione dell'apparecchio presenta un problema
+ a| 
+L'alimentatore B nel controller di elaborazione presenta un problema.
+
+
+
+ a| 
+Servizio di monitoraggio dell'hardware di elaborazione dell'appliance bloccato
+ a| 
+Il servizio che monitora lo stato dell'hardware di archiviazione è bloccato.
+
+
+
+ a| 
+L'unità DAS dell'appliance supera il limite di dati scritti al giorno
+ a| 
+Ogni giorno viene scritta una quantità eccessiva di dati su un'unità, il che potrebbe invalidarne la garanzia.
+
+
+
+ a| 
+Rilevato guasto dell'unità DAS dell'apparecchio
+ a| 
+È stato rilevato un problema con un'unità di archiviazione collegata direttamente (DAS) nell'appliance.
+
+
+
+ a| 
+Spia di localizzazione dell'unità DAS dell'apparecchio accesa
+ a| 
+La spia di individuazione dell'unità per una o più unità di archiviazione collegate direttamente (DAS) in un nodo di archiviazione dell'appliance è accesa.
+
+
+
+ a| 
+Ricostruzione dell'unità DAS dell'appliance
+ a| 
+Un'unità di archiviazione collegata direttamente (DAS) è in fase di ricostruzione.  Ciò è previsto se è stato sostituito o rimosso/reinserito di recente.
+
+
+
+ a| 
+Rilevato guasto alla ventola dell'apparecchio
+ a| 
+È stato rilevato un problema con un'unità ventola nell'apparecchio.
+
+
+
+ a| 
+Rilevato guasto Fibre Channel dell'appliance
+ a| 
+È stato rilevato un problema di collegamento Fibre Channel tra il controller di archiviazione dell'appliance e il controller di elaborazione
+
+
+
+ a| 
+Errore della porta HBA Fibre Channel dell'appliance
+ a| 
+Una porta HBA Fibre Channel è guasta o è guasta.
+
+
+
+ a| 
+Unità cache flash dell'appliance non ottimali
+ a| 
+Le unità utilizzate per la cache SSD non sono ottimali.
+
+
+
+ a| 
+Interconnessione dell'apparecchio/contenitore della batteria rimosso
+ a| 
+Manca il contenitore di interconnessione/batteria.
+
+
+
+ a| 
+Porta LACP dell'appliance mancante
+ a| 
+Una porta su un dispositivo StorageGRID non partecipa al bond LACP.
+
+
+
+ a| 
+Rilevato guasto della scheda di rete dell'apparecchio
+ a| 
+È stato rilevato un problema con una scheda di interfaccia di rete (NIC) nell'appliance.
+
+
+
+ a| 
+Alimentazione elettrica complessiva dell'apparecchio degradata
+ a| 
+La potenza di un dispositivo StorageGRID si è discostata dalla tensione operativa consigliata.
+
+
+
+ a| 
+Avviso critico SSD dell'appliance
+ a| 
+Un SSD dell'apparecchio segnala un avviso critico.
+
+
+
+ a| 
+Errore del controller di archiviazione dell'apparecchio A
+ a| 
+Il controller di archiviazione A in un dispositivo StorageGRID non funziona.
+
+
+
+ a| 
+Guasto del controller di archiviazione dell'apparecchio B
+ a| 
+Il controller di archiviazione B in un dispositivo StorageGRID non funziona.
+
+
+
+ a| 
+Guasto dell'unità del controller di archiviazione dell'appliance
+ a| 
+Una o più unità in un dispositivo StorageGRID sono guaste o non sono ottimali.
+
+
+
+ a| 
+Problema hardware del controller di archiviazione dell'appliance
+ a| 
+Il software SANtricity segnala "Richiede attenzione" per un componente in un dispositivo StorageGRID .
+
+
+
+ a| 
+Guasto dell'alimentatore del controller di archiviazione dell'apparecchio A
+ a| 
+L'alimentatore A in un dispositivo StorageGRID si è discostato dalla tensione di esercizio consigliata.
+
+
+
+ a| 
+Guasto all'alimentatore B del controller di archiviazione dell'apparecchio
+ a| 
+L'alimentatore B in un dispositivo StorageGRID si è discostato dalla tensione di esercizio consigliata.
+
+
+
+ a| 
+Servizio di monitoraggio dell'hardware di archiviazione degli elettrodomestici bloccato
+ a| 
+Il servizio che monitora lo stato dell'hardware di archiviazione è bloccato.
+
+
+
+ a| 
+Ripiani di stoccaggio degli elettrodomestici degradati
+ a| 
+Lo stato di uno dei componenti nello scaffale di archiviazione di un dispositivo di archiviazione è degradato.
+
+
+
+ a| 
+Temperatura dell'apparecchio superata
+ a| 
+È stata superata la temperatura nominale o massima del regolatore di accumulo dell'apparecchio.
+
+
+
+ a| 
+Sensore di temperatura dell'apparecchio rimosso
+ a| 
+È stato rimosso un sensore di temperatura.
+
+
+
+ a| 
+Errore di avvio sicuro UEFI dell'appliance
+ a| 
+Un dispositivo non è stato avviato in modo sicuro.
+
+
+
+ a| 
+L'I/O del disco è molto lento
+ a| 
+Un I/O del disco molto lento potrebbe influire sulle prestazioni della griglia.
+
+
+
+ a| 
+Rilevato guasto della ventola dell'apparecchio di archiviazione
+ a| 
+È stato rilevato un problema con un'unità ventola nel controller di archiviazione di un dispositivo.
+
+
+
+ a| 
+Connettività di archiviazione dell'appliance di archiviazione degradata
+ a| 
+Si è verificato un problema con una o più connessioni tra il controller di elaborazione e il controller di archiviazione.
+
+
+
+ a| 
+Dispositivo di archiviazione inaccessibile
+ a| 
+Non è possibile accedere a un dispositivo di archiviazione.
+
+|===
+
+
+== Avvisi di audit e syslog
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+I registri di controllo vengono aggiunti alla coda in memoria
+ a| 
+Il nodo non riesce a inviare log al server syslog locale e la coda in memoria si sta riempiendo.
+
+
+
+ a| 
+Errore di inoltro del server syslog esterno
+ a| 
+Il nodo non può inoltrare i log al server syslog esterno.
+
+
+
+ a| 
+Ampia coda di controllo
+ a| 
+La coda del disco per i messaggi di controllo è piena. Se questa condizione non viene risolta, le operazioni S3 o Swift potrebbero non riuscire.
+
+
+
+ a| 
+I registri vengono aggiunti alla coda su disco
+ a| 
+Il nodo non riesce a inoltrare i log al server syslog esterno e la coda su disco si sta riempiendo.
+
+|===
+
+
+== Avvisi bucket
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Il bucket FabricPool ha un'impostazione di coerenza del bucket non supportata
+ a| 
+Un bucket FabricPool utilizza il livello di coerenza Available o Strong-site, che non è supportato.
+
+
+
+ a| 
+Il bucket FabricPool ha un'impostazione di controllo delle versioni non supportata
+ a| 
+Un bucket FabricPool ha abilitato il controllo delle versioni o il blocco degli oggetti S3, che non sono supportati.
+
+|===
+
+
+== Avvisi di Cassandra
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Errore del compattatore automatico Cassandra
+ a| 
+Si è verificato un errore nel compattatore automatico Cassandra.
+
+
+
+ a| 
+Le metriche del compattatore automatico Cassandra non sono aggiornate
+ a| 
+Le metriche che descrivono l'autocompattatore Cassandra non sono aggiornate.
+
+
+
+ a| 
+Errore di comunicazione di Cassandra
+ a| 
+I nodi che eseguono il servizio Cassandra hanno problemi di comunicazione tra loro.
+
+
+
+ a| 
+Compattazioni di Cassandra sovraccariche
+ a| 
+Il processo di compattazione di Cassandra è sovraccarico.
+
+
+
+ a| 
+Errore di scrittura sovradimensionato di Cassandra
+ a| 
+Un processo StorageGRID interno ha inviato a Cassandra una richiesta di scrittura troppo grande.
+
+
+
+ a| 
+Le metriche di riparazione di Cassandra sono obsolete
+ a| 
+Le metriche che descrivono i lavori di riparazione di Cassandra non sono aggiornate.
+
+
+
+ a| 
+I progressi nella riparazione di Cassandra sono lenti
+ a| 
+I progressi nelle riparazioni del database Cassandra sono lenti.
+
+
+
+ a| 
+Servizio di riparazione Cassandra non disponibile
+ a| 
+Il servizio di riparazione Cassandra non è disponibile.
+
+
+
+ a| 
+Corruzione della tabella Cassandra
+ a| 
+Cassandra ha rilevato un danneggiamento della tabella.  Cassandra si riavvia automaticamente se rileva un danneggiamento della tabella.
+
+|===
+
+
+== Avvisi di Cloud Storage Pool
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Errore di connettività del pool di archiviazione cloud
+ a| 
+Il controllo dello stato di Cloud Storage Pool ha rilevato uno o più nuovi errori.
+
+
+
+ a| 
+Scadenza della certificazione dell'entità finale di IAM Roles Anywhere
+ a| 
+Il certificato dell'entità finale di IAM Roles Anywhere sta per scadere.
+
+|===
+
+
+== Avvisi di replicazione tra griglie
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Errore permanente della replicazione tra griglie
+ a| 
+Si è verificato un errore di replicazione tra griglie che richiede l'intervento dell'utente per essere risolto.
+
+
+
+ a| 
+Risorse di replicazione cross-grid non disponibili
+ a| 
+Le richieste di replicazione tra griglie sono in sospeso perché una risorsa non è disponibile.
+
+|===
+
+
+== Avvisi DHCP
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Contratto di locazione DHCP scaduto
+ a| 
+Il lease DHCP su un'interfaccia di rete è scaduto.
+
+
+
+ a| 
+La scadenza del contratto di locazione DHCP è imminente
+ a| 
+Il lease DHCP su un'interfaccia di rete sta per scadere.
+
+
+
+ a| 
+Server DHCP non disponibile
+ a| 
+Il server DHCP non è disponibile.
+
+|===
+
+
+== Avvisi di debug e traccia
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Impatto sulle prestazioni di debug
+ a| 
+Quando la modalità debug è abilitata, le prestazioni del sistema potrebbero essere influenzate negativamente.
+
+
+
+ a| 
+Configurazione della traccia abilitata
+ a| 
+Quando la configurazione della traccia è abilitata, le prestazioni del sistema potrebbero subire un impatto negativo.
+
+|===
+
+
+== Avvisi via e-mail e AutoSupport
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Impossibile inviare il messaggio AutoSupport
+ a| 
+Il messaggio AutoSupport più recente non è stato inviato.
+
+
+
+ a| 
+Errore nella risoluzione del nome di dominio
+ a| 
+Il nodo StorageGRID non è riuscito a risolvere i nomi di dominio.
+
+
+
+ a| 
+Errore di notifica e-mail
+ a| 
+Non è stato possibile inviare la notifica via e-mail per un avviso.
+
+
+
+ a| 
+Errori informativi SNMP
+ a| 
+Errori durante l'invio di notifiche informative SNMP a una destinazione trap.
+
+
+
+ a| 
+Rilevato accesso SSH o console
+ a| 
+Nelle ultime 24 ore, un utente ha effettuato l'accesso tramite Web Console o SSH.
+
+|===
+
+
+== Avvisi di codifica di cancellazione (EC)
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Errore di ribilanciamento della CE
+ a| 
+La procedura di riequilibrio della CE è fallita o è stata interrotta.
+
+
+
+ a| 
+Guasto alla riparazione della CE
+ a| 
+Un processo di riparazione dei dati EC non è riuscito o è stato interrotto.
+
+
+
+ a| 
+Riparazione EC bloccata
+ a| 
+Un lavoro di riparazione dei dati EC è bloccato.
+
+
+
+ a| 
+Errore di verifica del frammento codificato tramite cancellazione
+ a| 
+I frammenti con codice di cancellazione non possono più essere verificati.  I frammenti danneggiati potrebbero non essere riparati.
+
+|===
+
+
+== Avvisi di scadenza dei certificati
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Scadenza del certificato CA del proxy di amministrazione
+ a| 
+Uno o più certificati nel bundle CA del server proxy di amministrazione stanno per scadere.
+
+
+
+ a| 
+Scadenza del certificato client
+ a| 
+Uno o più certificati client stanno per scadere.
+
+
+
+ a| 
+Scadenza del certificato server globale per S3 e Swift
+ a| 
+Il certificato server globale per S3 e Swift sta per scadere.
+
+
+
+ a| 
+Scadenza del certificato dell'endpoint del bilanciatore del carico
+ a| 
+Uno o più certificati dell'endpoint del bilanciatore del carico stanno per scadere.
+
+
+
+ a| 
+Scadenza del certificato del server per l'interfaccia di gestione
+ a| 
+Il certificato del server utilizzato per l'interfaccia di gestione sta per scadere.
+
+
+
+ a| 
+Scadenza del certificato CA syslog esterno
+ a| 
+Il certificato dell'autorità di certificazione (CA) utilizzato per firmare il certificato del server syslog esterno sta per scadere.
+
+
+
+ a| 
+Scadenza del certificato client syslog esterno
+ a| 
+Il certificato client per un server syslog esterno sta per scadere.
+
+
+
+ a| 
+Scadenza del certificato del server syslog esterno
+ a| 
+Il certificato del server presentato dal server syslog esterno sta per scadere.
+
+|===
+
+
+== Avvisi di rete
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Mancata corrispondenza MTU della rete di griglia
+ a| 
+L'impostazione MTU per l'interfaccia Grid Network (eth0) varia notevolmente tra i nodi della griglia.
+
+|===
+
+
+== Avvisi sulla federazione della griglia
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Scadenza del certificato di federazione della rete
+ a| 
+Uno o più certificati di federazione di griglia stanno per scadere.
+
+
+
+ a| 
+Errore di connessione alla federazione di rete
+ a| 
+La connessione di federazione della rete tra la rete locale e quella remota non funziona.
+
+|===
+
+
+== Avvisi di utilizzo elevato o di latenza elevata
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Utilizzo elevato dell'heap Java
+ a| 
+Viene utilizzata un'elevata percentuale di spazio heap Java.
+
+
+
+ a| 
+Elevata latenza per le query sui metadati
+ a| 
+Il tempo medio per le query sui metadati di Cassandra è troppo lungo.
+
+|===
+
+
+== Avvisi di federazione delle identità
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Errore di sincronizzazione della federazione delle identità
+ a| 
+Impossibile sincronizzare i gruppi e gli utenti federati dall'origine dell'identità.
+
+
+
+ a| 
+Errore di sincronizzazione della federazione delle identità per un tenant
+ a| 
+Impossibile sincronizzare gruppi e utenti federati dall'origine identità configurata da un tenant.
+
+|===
+
+
+== Avvisi sulla gestione del ciclo di vita delle informazioni (ILM)
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Posizionamento ILM non realizzabile
+ a| 
+Per determinati oggetti non è possibile ottenere un'istruzione di posizionamento in una regola ILM.
+
+
+
+ a| 
+Bassa frequenza di scansione ILM
+ a| 
+La velocità di scansione ILM è impostata su meno di 100 oggetti/secondo.
+
+|===
+
+
+== Avvisi del server di gestione delle chiavi (KMS)
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Scadenza del certificato CA KMS
+ a| 
+Il certificato dell'autorità di certificazione (CA) utilizzato per firmare il certificato del server di gestione delle chiavi (KMS) sta per scadere.
+
+
+
+ a| 
+Scadenza del certificato client KMS
+ a| 
+Il certificato client per un server di gestione delle chiavi sta per scadere
+
+
+
+ a| 
+Impossibile caricare la configurazione KMS
+ a| 
+La configurazione per il server di gestione delle chiavi esiste ma non è stata caricata.
+
+
+
+ a| 
+Errore di connettività KMS
+ a| 
+Un nodo appliance non è riuscito a connettersi al server di gestione delle chiavi per il proprio sito.
+
+
+
+ a| 
+Nome della chiave di crittografia KMS non trovato
+ a| 
+Il server di gestione delle chiavi configurato non dispone di una chiave di crittografia corrispondente al nome fornito.
+
+
+
+ a| 
+Rotazione della chiave di crittografia KMS non riuscita
+ a| 
+Tutti i volumi dell'appliance sono stati decrittografati correttamente, ma uno o più volumi non sono riusciti a ruotare alla chiave più recente.
+
+
+
+ a| 
+KMS non è configurato
+ a| 
+Per questo sito non esiste alcun server di gestione delle chiavi.
+
+
+
+ a| 
+La chiave KMS non è riuscita a decrittografare un volume dell'appliance
+ a| 
+Uno o più volumi su un dispositivo con crittografia dei nodi abilitata non possono essere decrittografati con la chiave KMS corrente.
+
+
+
+ a| 
+Scadenza del certificato del server KMS
+ a| 
+Il certificato del server utilizzato dal server di gestione delle chiavi (KMS) sta per scadere.
+
+
+
+ a| 
+Errore di connettività del server KMS
+ a| 
+Un nodo appliance non è riuscito a connettersi a uno o più server nel cluster del server di gestione delle chiavi per il suo sito.
+
+|===
+
+
+== Avvisi del bilanciatore del carico
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Connessioni di bilanciamento del carico con richiesta zero elevate
+ a| 
+Una percentuale elevata di connessioni agli endpoint del bilanciatore del carico si è interrotta senza eseguire richieste.
+
+|===
+
+
+== Avvisi di scostamento dell'orologio locale
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Grande offset orario dell'orologio locale
+ a| 
+Lo scostamento tra l'orologio locale e l'ora del Network Time Protocol (NTP) è troppo grande.
+
+|===
+
+
+== Avvisi di memoria o spazio insufficienti
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Bassa capacità del disco del registro di controllo
+ a| 
+Lo spazio disponibile per i registri di controllo è limitato. Se questa condizione non viene risolta, le operazioni S3 o Swift potrebbero non riuscire.
+
+
+
+ a| 
+Memoria del nodo disponibile insufficiente
+ a| 
+La quantità di RAM disponibile su un nodo è bassa.
+
+
+
+ a| 
+Spazio libero insufficiente per il pool di archiviazione
+ a| 
+Lo spazio disponibile per l'archiviazione dei dati degli oggetti nel nodo di archiviazione è limitato.
+
+
+
+ a| 
+Bassa memoria del nodo installata
+ a| 
+La quantità di memoria installata su un nodo è bassa.
+
+
+
+ a| 
+Basso spazio di archiviazione dei metadati
+ a| 
+Lo spazio disponibile per l'archiviazione dei metadati degli oggetti è limitato.
+
+
+
+ a| 
+Bassa capacità del disco metrico
+ a| 
+Lo spazio disponibile per il database delle metriche è limitato.
+
+
+
+ a| 
+Bassa capacità di archiviazione dei dati degli oggetti
+ a| 
+Lo spazio disponibile per l'archiviazione dei dati degli oggetti è limitato.
+
+
+
+ a| 
+Sovrascrittura della filigrana di sola lettura bassa
+ a| 
+L'override della filigrana di sola lettura software del volume di archiviazione è inferiore alla filigrana minima ottimizzata per un nodo di archiviazione.
+
+
+
+ a| 
+Bassa capacità del disco radice
+ a| 
+Lo spazio disponibile sul disco radice è basso.
+
+
+
+ a| 
+Bassa capacità di dati del sistema
+ a| 
+Lo spazio disponibile per /var/local è basso. Se questa condizione non viene risolta, le operazioni S3 o Swift potrebbero non riuscire.
+
+
+
+ a| 
+Spazio libero nella directory tmp basso
+ a| 
+Lo spazio disponibile nella directory /tmp è basso.
+
+|===
+
+
+== Avvisi di nodo o di rete di nodi
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Utilizzo della rete di amministrazione ricevuto
+ a| 
+L'utilizzo della ricezione sulla rete di amministrazione è elevato.
+
+
+
+ a| 
+Utilizzo della trasmissione della rete amministrativa
+ a| 
+L'utilizzo della trasmissione sulla rete di amministrazione è elevato.
+
+
+
+ a| 
+Errore di configurazione del firewall
+ a| 
+Impossibile applicare la configurazione del firewall.
+
+
+
+ a| 
+Endpoint dell'interfaccia di gestione in modalità fallback
+ a| 
+Per troppo tempo tutti gli endpoint dell'interfaccia di gestione sono tornati alle porte predefinite.
+
+
+
+ a| 
+Errore di connettività della rete del nodo
+ a| 
+Si sono verificati errori durante il trasferimento dei dati tra i nodi.
+
+
+
+ a| 
+Errore di ricezione del frame della rete del nodo
+ a| 
+Un'alta percentuale di frame di rete ricevuti da un nodo presentava errori.
+
+
+
+ a| 
+Nodo non sincronizzato con il server NTP
+ a| 
+Il nodo non è sincronizzato con il server NTP (Network Time Protocol).
+
+
+
+ a| 
+Nodo non bloccato con il server NTP
+ a| 
+Il nodo non è bloccato su un server NTP (Network Time Protocol).
+
+
+
+ a| 
+Rete di nodi non elettrodomestici inattiva
+ a| 
+Uno o più dispositivi di rete sono inattivi o disconnessi.
+
+
+
+ a| 
+Collegamento dell'appliance dei servizi non attivo sulla rete di amministrazione
+ a| 
+L'interfaccia dell'appliance alla rete di amministrazione (eth1) è inattiva o disconnessa.
+
+
+
+ a| 
+Collegamento dell'appliance dei servizi non attivo sulla porta 1 della rete di amministrazione
+ a| 
+La porta di rete amministrativa 1 sull'appliance è inattiva o disconnessa.
+
+
+
+ a| 
+Collegamento dell'appliance dei servizi non attivo sulla rete client
+ a| 
+L'interfaccia dell'appliance alla rete client (eth2) è inattiva o disconnessa.
+
+
+
+ a| 
+Collegamento dell'appliance di servizi non attivo sulla porta di rete 1
+ a| 
+La porta di rete 1 sull'apparecchio è inattiva o disconnessa.
+
+
+
+ a| 
+Collegamento dell'appliance di servizi non attivo sulla porta di rete 2
+ a| 
+La porta di rete 2 dell'apparecchio è inattiva o disconnessa.
+
+
+
+ a| 
+Collegamento dell'appliance di servizi non attivo sulla porta di rete 3
+ a| 
+La porta di rete 3 dell'apparecchio è inattiva o disconnessa.
+
+
+
+ a| 
+Collegamento dell'appliance di servizi non attivo sulla porta di rete 4
+ a| 
+La porta di rete 4 sull'apparecchio è inattiva o disconnessa.
+
+
+
+ a| 
+Collegamento dell'appliance di archiviazione non attivo sulla rete di amministrazione
+ a| 
+L'interfaccia dell'appliance alla rete di amministrazione (eth1) è inattiva o disconnessa.
+
+
+
+ a| 
+Collegamento dell'appliance di archiviazione non attivo sulla porta 1 della rete di amministrazione
+ a| 
+La porta di rete amministrativa 1 sull'appliance è inattiva o disconnessa.
+
+
+
+ a| 
+Collegamento dell'appliance di archiviazione non funzionante sulla rete client
+ a| 
+L'interfaccia dell'appliance alla rete client (eth2) è inattiva o disconnessa.
+
+
+
+ a| 
+Collegamento dell'appliance di archiviazione non attivo sulla porta di rete 1
+ a| 
+La porta di rete 1 sull'apparecchio è inattiva o disconnessa.
+
+
+
+ a| 
+Collegamento dell'appliance di archiviazione non attivo sulla porta di rete 2
+ a| 
+La porta di rete 2 dell'apparecchio è inattiva o disconnessa.
+
+
+
+ a| 
+Collegamento dell'appliance di archiviazione non attivo sulla porta di rete 3
+ a| 
+La porta di rete 3 dell'apparecchio è inattiva o disconnessa.
+
+
+
+ a| 
+Collegamento dell'appliance di archiviazione non attivo sulla porta di rete 4
+ a| 
+La porta di rete 4 sull'apparecchio è inattiva o disconnessa.
+
+
+
+ a| 
+Il nodo di archiviazione non si trova nello stato di archiviazione desiderato
+ a| 
+Il servizio LDR su un nodo di archiviazione non può passare allo stato desiderato a causa di un errore interno o di un problema relativo al volume
+
+
+
+ a| 
+Utilizzo della connessione TCP
+ a| 
+Il numero di connessioni TCP su questo nodo si sta avvicinando al numero massimo che può essere monitorato.
+
+
+
+ a| 
+Impossibile comunicare con il nodo
+ a| 
+Uno o più servizi non rispondono oppure il nodo non è raggiungibile.
+
+
+
+ a| 
+Riavvio imprevisto del nodo
+ a| 
+Un nodo si è riavviato inaspettatamente nelle ultime 24 ore.
+
+|===
+
+
+== Avvisi sugli oggetti
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Controllo esistenza oggetto fallito
+ a| 
+Il processo di controllo dell'esistenza dell'oggetto non è riuscito.
+
+
+
+ a| 
+Controllo dell'esistenza dell'oggetto bloccato
+ a| 
+Il processo di controllo dell'esistenza dell'oggetto si è bloccato.
+
+
+
+ a| 
+Oggetti persi
+ a| 
+Uno o più oggetti sono stati persi dalla griglia.
+
+
+
+ a| 
+S3 PUT dimensione dell'oggetto troppo grande
+ a| 
+Un client sta tentando un'operazione PUT Object che supera i limiti di dimensione S3.
+
+
+
+ a| 
+Rilevato oggetto corrotto non identificato
+ a| 
+È stato trovato un file nell'archivio oggetti replicati che non è stato possibile identificare come oggetto replicato.
+
+|===
+
+
+== Avvisi sui servizi della piattaforma
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Capacità richiesta in sospeso dei servizi della piattaforma bassa
+ a| 
+Il numero di richieste in sospeso dei Servizi della piattaforma sta per raggiungere la capacità massima.
+
+
+
+ a| 
+Servizi della piattaforma non disponibili
+ a| 
+In un sito sono in esecuzione o disponibili troppi nodi di archiviazione con il servizio RSM.
+
+|===
+
+
+== Avvisi sul volume di archiviazione
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Il volume di archiviazione richiede attenzione
+ a| 
+Un volume di archiviazione è offline e necessita di attenzione.
+
+
+
+ a| 
+Il volume di archiviazione deve essere ripristinato
+ a| 
+Un volume di archiviazione è stato recuperato e deve essere ripristinato.
+
+
+
+ a| 
+Volume di archiviazione offline
+ a| 
+Un volume di archiviazione è stato offline per più di 5 minuti.
+
+
+
+ a| 
+Tentativo di rimontaggio del volume di archiviazione
+ a| 
+Un volume di archiviazione era offline e ha attivato un rimontaggio automatico.  Ciò potrebbe indicare un problema dell'unità o errori del file system.
+
+
+
+ a| 
+Il ripristino del volume non è riuscito ad avviare la riparazione dei dati replicati
+ a| 
+Non è stato possibile avviare automaticamente la riparazione dei dati replicati per un volume riparato.
+
+|===
+
+
+== Avvisi dei servizi StorageGRID
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+servizio nginx che utilizza la configurazione di backup
+ a| 
+La configurazione del servizio nginx non è valida.  Ora viene utilizzata la configurazione precedente.
+
+
+
+ a| 
+servizio nginx-gw che utilizza la configurazione di backup
+ a| 
+La configurazione del servizio nginx-gw non è valida.  Ora viene utilizzata la configurazione precedente.
+
+
+
+ a| 
+Riavvio richiesto per disabilitare FIPS
+ a| 
+La policy di sicurezza non richiede la modalità FIPS, ma il modulo di sicurezza crittografica NetApp è abilitato.
+
+
+
+ a| 
+Riavvio richiesto per abilitare FIPS
+ a| 
+La policy di sicurezza richiede la modalità FIPS, ma il modulo di sicurezza crittografica NetApp è disabilitato.
+
+
+
+ a| 
+Servizio SSH che utilizza la configurazione di backup
+ a| 
+La configurazione del servizio SSH non è valida.  Ora viene utilizzata la configurazione precedente.
+
+|===
+
+
+== Avvisi agli inquilini
+
+[cols="1a,2a"]
+|===
+| Nome dell'avviso | Descrizione 
+
+
+ a| 
+Elevato utilizzo della quota degli inquilini
+ a| 
+Viene utilizzata un'elevata percentuale di spazio quota.  Questa regola è disabilitata per impostazione predefinita perché potrebbe causare troppe notifiche.
+
+|===

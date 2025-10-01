@@ -1,0 +1,59 @@
+---
+permalink: rhel/index.html 
+sidebar: sidebar 
+keywords: red hat enterprise linux, rhel, quick start 
+summary: 'Per installare un nodo Linux StorageGRID di Red Hat Enterprise Linux \(RHEL\), seguire questi passaggi generali.' 
+---
+= Guida rapida all'installazione di StorageGRID su Red Hat Enterprise Linux
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Per installare un nodo Linux StorageGRID di Red Hat Enterprise Linux (RHEL), seguire questi passaggi generali.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Uno"]Preparazione
+[role="quick-margin-list"]
+* Scopri di piùlink:../primer/storagegrid-architecture-and-network-topology.html["Architettura StorageGRID e topologia di rete"] .
+* Scopri le specifiche dilink:../network/index.html["Rete StorageGRID"] .
+* Raccogliere e preparare illink:required-materials.html["Informazioni e materiali richiesti"] .
+* Preparare il necessariolink:cpu-and-ram-requirements.html["CPU e RAM"] .
+* Provvedere alink:storage-and-performance-requirements.html["requisiti di archiviazione e prestazioni"] .
+* link:how-host-wide-settings-change.html["Preparare i server Linux"]che ospiterà i tuoi nodi StorageGRID .
+
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["Due"]Distribuzione
+[role="quick-margin-para"]
+Distribuisci i nodi della griglia.  Quando si distribuiscono i nodi della griglia, questi vengono creati come parte del sistema StorageGRID e connessi a una o più reti.
+
+[role="quick-margin-list"]
+* Per distribuire nodi di griglia basati su software sugli host preparati nel passaggio 1, utilizzare la riga di comando di Linux elink:creating-node-configuration-files.html["file di configurazione del nodo"] .
+* Per distribuire i nodi dell'appliance StorageGRID , seguire le istruzioni https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/index.html["Avvio rapido per l'installazione dell'hardware"^] .
+
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Tre"]Configurazione
+[role="quick-margin-para"]
+Quando tutti i nodi sono stati distribuiti, utilizzare Grid Manager perlink:navigating-to-grid-manager.html["configurare la griglia e completare l'installazione"] .
+
+
+
+== Automatizzare l'installazione
+
+Per risparmiare tempo e garantire coerenza, è possibile automatizzare l'installazione del servizio host StorageGRID e la configurazione dei nodi della griglia.
+
+* Utilizzare un framework di orchestrazione standard come Ansible, Puppet o Chef per automatizzare:
++
+** Installazione di RHEL
+** Configurazione di rete e storage
+** Installazione del motore del contenitore e del servizio host StorageGRID
+** Distribuzione di nodi di griglia virtuali
+
+
++
+Vedere link:automating-installation.html#automate-the-installation-and-configuration-of-the-storagegrid-host-service["Automatizza l'installazione e la configurazione del servizio host StorageGRID"] .
+
+* Dopo aver distribuito i nodi della griglia,link:automating-installation.html#automate-the-configuration-of-storagegrid["automatizzare la configurazione del sistema StorageGRID"] utilizzando lo script di configurazione Python fornito nell'archivio di installazione.
+* https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/automating-appliance-installation-and-configuration.html["Automatizzare l'installazione e la configurazione dei nodi della griglia degli elettrodomestici"^]
+* Se sei uno sviluppatore avanzato di distribuzioni StorageGRID , automatizza l'installazione dei nodi della griglia utilizzandolink:overview-of-installation-rest-api.html["installazione REST API"] .
+

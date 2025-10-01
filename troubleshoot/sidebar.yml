@@ -1,0 +1,46 @@
+---
+section: troubleshoot
+title: Risoluzione dei problemi del sistema StorageGRID
+entries:
+- title: Linee guida per la risoluzione dei problemi
+  pdf-filename: Risoluzione dei problemi del sistema StorageGRID
+  url: "/troubleshoot/index.html"
+- title: Risolvere i problemi relativi agli oggetti e all'archiviazione
+  entries:
+  - title: Confermare le posizioni dei dati degli oggetti
+    url: "/troubleshoot/confirming-object-data-locations.html"
+  - title: Errori dell'archivio oggetti
+    url: "/troubleshoot/object-store-storage-volume-failures.html"
+  - title: Verificare l'integrità dell'oggetto
+    url: "/troubleshoot/verifying-object-integrity.html"
+  - title: Risoluzione dei problemi S3 PUT Avviso di dimensione dell'oggetto troppo
+      grande
+    url: "/troubleshoot/troubleshoot-s3-put-object-size-too-large-alert.html"
+  - title: Risolvere i problemi relativi ai dati degli oggetti persi e mancanti
+    entries:
+    - title: Metodi per il recupero di oggetti
+      pdf-filename: Risolvere i problemi relativi ai dati degli oggetti persi e mancanti
+      url: "/troubleshoot/troubleshooting-lost-and-missing-object-data.html"
+    - title: Indagare sugli oggetti smarriti
+      url: "/troubleshoot/investigating-lost-objects.html"
+    - title: Cercare e ripristinare oggetti potenzialmente persi
+      url: "/troubleshoot/searching-for-and-restoring-potentially-lost-objects.html"
+    - title: Reimposta il conteggio degli oggetti persi e mancanti
+      url: "/troubleshoot/resetting-lost-and-missing-object-counts.html"
+  - title: Risoluzione dei problemi relativi all'avviso di spazio di archiviazione
+      dati dell'oggetto insufficiente
+    url: "/troubleshoot/troubleshooting-low-object-data-storage-alert.html"
+  - title: Risoluzione dei problemi relativi agli avvisi di override della filigrana
+      di sola lettura bassa
+    url: "/troubleshoot/troubleshoot-low-watermark-alert.html"
+- title: Risolvere i problemi relativi ai metadati
+  url: "/troubleshoot/troubleshooting-metadata-issues.html"
+- title: Risolvere gli errori del certificato
+  url: "/troubleshoot/troubleshooting-certificate-errors.html"
+- title: Risolvere i problemi relativi al nodo di amministrazione e all'interfaccia
+    utente
+  url: "/troubleshoot/troubleshooting-admin-node-and-user-interface-issues.html"
+- title: Risolvi i problemi di rete, hardware e piattaforma
+  url: "/troubleshoot/troubleshooting-network-hardware-and-platform-issues.html"
+- title: Risoluzione dei problemi del server syslog esterno
+  url: "/troubleshoot/troubleshooting-syslog-server.html"

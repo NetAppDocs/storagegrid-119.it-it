@@ -1,0 +1,201 @@
+---
+permalink: admin/managing-users.html 
+sidebar: sidebar 
+keywords: how to manage local users 
+summary: È possibile visualizzare gli utenti locali e federati.  È anche possibile creare utenti locali e assegnarli a gruppi di amministratori locali per determinare a quali funzionalità di Grid Manager possono accedere questi utenti. 
+---
+= Gestisci utenti
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile visualizzare gli utenti locali e federati.  È anche possibile creare utenti locali e assegnarli a gruppi di amministratori locali per determinare a quali funzionalità di Grid Manager possono accedere questi utenti.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Hailink:admin-group-permissions.html["autorizzazioni di accesso specifiche"] .
+
+
+
+
+== Crea un utente locale
+
+È possibile creare uno o più utenti locali e assegnare ciascun utente a uno o più gruppi locali.  Le autorizzazioni del gruppo controllano a quali funzionalità di Grid Manager e Grid Management API l'utente può accedere.
+
+È possibile creare solo utenti locali.  Utilizzare la fonte di identità esterna per gestire utenti e gruppi federati.
+
+Grid Manager include un utente locale predefinito, denominato "root".  Non è possibile rimuovere l'utente root.
+
+
+NOTE: Se è abilitato l'accesso Single Sign-On (SSO), gli utenti locali non possono accedere a StorageGRID.
+
+
+
+=== Accedi alla procedura guidata
+
+.Passi
+. Selezionare *CONFIGURAZIONE* > *Controllo accessi* > *Utenti amministratori*.
+. Seleziona *Crea utente*.
+
+
+
+
+=== Inserisci le credenziali utente
+
+.Passi
+. Inserisci il nome completo dell'utente, un nome utente univoco e una password.
+. Facoltativamente, seleziona *Sì* se questo utente non deve avere accesso a Grid Manager o all'API Grid Management.
+. Selezionare *Continua*.
+
+
+
+
+=== Assegna ai gruppi
+
+.Passi
+. Facoltativamente, assegnare l'utente a uno o più gruppi per determinare le autorizzazioni dell'utente.
++
+Se non hai ancora creato gruppi, puoi salvare l'utente senza selezionare i gruppi.  Puoi aggiungere questo utente a un gruppo nella pagina Gruppi.
+
++
+Se un utente appartiene a più gruppi, le autorizzazioni sono cumulative. Vederelink:managing-admin-groups.html["Gestisci gruppi di amministratori"] per i dettagli.
+
+. Selezionare *Crea utente* e poi *Fine*.
+
+
+
+
+== Visualizza e modifica gli utenti locali
+
+È possibile visualizzare i dettagli degli utenti locali e federati esistenti.  È possibile modificare un utente locale per cambiarne il nome completo, la password o l'appartenenza al gruppo.  È anche possibile impedire temporaneamente a un utente di accedere a Grid Manager e all'API Grid Management.
+
+È possibile modificare solo gli utenti locali.  Utilizzare la fonte di identità esterna per gestire gli utenti federati.
+
+* Per visualizzare le informazioni di base per tutti gli utenti locali e federati, consultare la tabella nella pagina Utenti.
+* Per visualizzare tutti i dettagli di un utente specifico, modificare un utente locale o cambiare la password di un utente locale, utilizzare il menu *Azioni* o la pagina dei dettagli.
++
+Tutte le modifiche verranno applicate la volta successiva che l'utente si disconnette e accede nuovamente a Grid Manager.
+
++
+
+NOTE: Gli utenti locali possono modificare le proprie password utilizzando l'opzione *Cambia password* nel banner di Grid Manager.
+
++
+[cols="1a,2a,2a"]
+|===
+| Compito | Menu Azioni | Pagina dei dettagli 
+
+
+ a| 
+Visualizza i dettagli dell'utente
+ a| 
+.. Selezionare la casella di controllo per l'utente.
+.. Seleziona *Azioni* > *Visualizza dettagli utente*.
+
+ a| 
+Selezionare il nome dell'utente nella tabella.
+
+
+
+ a| 
+Modifica il nome completo (solo utenti locali)
+ a| 
+.. Selezionare la casella di controllo per l'utente.
+.. Seleziona *Azioni* > *Modifica nome completo*.
+.. Inserisci il nuovo nome.
+.. Seleziona *Salva modifiche*.
+
+ a| 
+.. Selezionare il nome dell'utente per visualizzarne i dettagli.
+.. Seleziona l'icona di modificaimage:../media/icon_edit_tm.png["Icona di modifica"] .
+.. Inserisci il nuovo nome.
+.. Seleziona *Salva modifiche*.
+
+
+
+
+ a| 
+Nega o consenti l'accesso a StorageGRID
+ a| 
+.. Selezionare la casella di controllo per l'utente.
+.. Seleziona *Azioni* > *Visualizza dettagli utente*.
+.. Selezionare la scheda Accesso.
+.. Selezionare *Sì* per impedire all'utente di accedere a Grid Manager o all'API di gestione della griglia, oppure selezionare *No* per consentire all'utente di accedere.
+.. Seleziona *Salva modifiche*.
+
+ a| 
+.. Selezionare il nome dell'utente per visualizzarne i dettagli.
+.. Selezionare la scheda Accesso.
+.. Selezionare *Sì* per impedire all'utente di accedere a Grid Manager o all'API di gestione della griglia, oppure selezionare *No* per consentire all'utente di accedere.
+.. Seleziona *Salva modifiche*.
+
+
+
+
+ a| 
+Cambia password (solo utenti locali)
+ a| 
+.. Selezionare la casella di controllo per l'utente.
+.. Seleziona *Azioni* > *Visualizza dettagli utente*.
+.. Selezionare la scheda Password.
+.. Inserisci una nuova password.
+.. Seleziona *Cambia password*.
+
+ a| 
+.. Selezionare il nome dell'utente per visualizzarne i dettagli.
+.. Selezionare la scheda Password.
+.. Inserisci una nuova password.
+.. Seleziona *Cambia password*.
+
+
+
+
+ a| 
+Cambia gruppi (solo utenti locali)
+ a| 
+.. Selezionare la casella di controllo per l'utente.
+.. Seleziona *Azioni* > *Visualizza dettagli utente*.
+.. Selezionare la scheda Gruppi.
+.. Facoltativamente, seleziona il collegamento dopo il nome di un gruppo per visualizzare i dettagli del gruppo in una nuova scheda del browser.
+.. Selezionare *Modifica gruppi* per selezionare gruppi diversi.
+.. Seleziona *Salva modifiche*.
+
+ a| 
+.. Selezionare il nome dell'utente per visualizzarne i dettagli.
+.. Selezionare la scheda Gruppi.
+.. Facoltativamente, seleziona il collegamento dopo il nome di un gruppo per visualizzare i dettagli del gruppo in una nuova scheda del browser.
+.. Selezionare *Modifica gruppi* per selezionare gruppi diversi.
+.. Seleziona *Salva modifiche*.
+
+
+|===
+
+
+
+
+== Duplica un utente
+
+È possibile duplicare un utente esistente per crearne uno nuovo con le stesse autorizzazioni.
+
+.Passi
+. Selezionare la casella di controllo per l'utente.
+. Selezionare *Azioni* > *Duplica utente*.
+. Completa la procedura guidata Duplica utente.
+
+
+
+
+== Elimina un utente
+
+È possibile eliminare un utente locale per rimuoverlo definitivamente dal sistema.
+
+
+NOTE: Non è possibile eliminare l'utente root.
+
+.Passi
+. Nella pagina Utenti, seleziona la casella di controllo per ogni utente che desideri rimuovere.
+. Selezionare *Azioni* > *Elimina utente*.
+. Seleziona *Elimina utente*.
+

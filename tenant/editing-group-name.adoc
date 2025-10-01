@@ -1,0 +1,39 @@
+---
+permalink: tenant/editing-group-name.html 
+sidebar: sidebar 
+keywords: how to edit tenant group name 
+summary: È possibile modificare il nome visualizzato per un gruppo.  Non è possibile modificare il nome univoco di un gruppo. 
+---
+= Modifica il nome del gruppo
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile modificare il nome visualizzato per un gruppo.  Non è possibile modificare il nome univoco di un gruppo.
+
+.Prima di iniziare
+* Hai effettuato l'accesso al Tenant Manager tramite unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Appartieni a un gruppo di utenti che dispone dell'autorizzazione di accesso Root. Vedere link:tenant-management-permissions.html["Autorizzazioni di gestione degli inquilini"] .
+
+
+.Passi
+. Selezionare *GESTIONE ACCESSI* > *Gruppi*.
+. Seleziona la casella di controllo relativa al gruppo di cui desideri modificare il nome visualizzato.
+. Seleziona *Azioni* > *Modifica nome gruppo*.
++
+Viene visualizzata la finestra di dialogo Modifica nome gruppo.
+
++
+image::../media/edit_group_name.png[Modifica il nome del gruppo]
+
+. Se stai modificando un gruppo locale, aggiorna il nome visualizzato secondo necessità.
++
+Non è possibile modificare il nome univoco di un gruppo.  Non è possibile modificare il nome visualizzato per un gruppo federato.
+
+. Seleziona *Salva modifiche*.
++
+Nell'angolo in alto a destra della pagina appare un messaggio di conferma.
+
+

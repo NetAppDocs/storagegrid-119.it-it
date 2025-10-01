@@ -1,0 +1,34 @@
+---
+permalink: tenant/viewing-your-s3-access-keys.html 
+sidebar: sidebar 
+keywords: how to view your s3 access key 
+summary: 'Se si utilizza un tenant S3 e si dispone delle autorizzazioni appropriate, è possibile visualizzare un elenco delle chiavi di accesso S3.  È possibile ordinare l"elenco in base alla data di scadenza, in modo da poter determinare quali chiavi scadranno presto.  Se necessario, puoi creare nuove chiavi o eliminare quelle che non utilizzi più.' 
+---
+= Visualizza le tue chiavi di accesso S3
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se si utilizza un tenant S3 e si dispone dilink:tenant-management-permissions.html["autorizzazione appropriata"] , puoi visualizzare un elenco delle tue chiavi di accesso S3.  È possibile ordinare l'elenco in base alla data di scadenza, in modo da poter determinare quali chiavi scadranno presto.  Se necessario, puoilink:creating-your-own-s3-access-keys.html["creare nuove chiavi"] Olink:deleting-your-own-s3-access-keys.html["cancellare i tasti"] che non utilizzi più.
+
+
+CAUTION: È possibile accedere ai bucket e agli oggetti S3 appartenenti al tuo account utilizzando l'ID chiave di accesso e la chiave di accesso segreta visualizzati per il tuo account in Tenant Manager.  Per questo motivo, proteggi le chiavi di accesso come faresti con una password.  Ruota regolarmente le chiavi di accesso, rimuovi dal tuo account quelle non utilizzate e non condividerle mai con altri utenti.
+
+.Prima di iniziare
+* Hai effettuato l'accesso al Tenant Manager tramite unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Appartieni a un gruppo di utenti che ha la possibilità di gestire le proprie credenziali S3link:tenant-management-permissions.html["permesso"] .
+
+
+.Passi
+. Selezionare *ARCHIVIAZIONE (S3)* > *Le mie chiavi di accesso*.
+. Dalla pagina Le mie chiavi di accesso, ordina tutte le chiavi di accesso esistenti in base a *Ora di scadenza* o *ID chiave di accesso*.
+. Se necessario, crea nuove chiavi o elimina quelle che non utilizzi più.
++
+Se crei nuove chiavi prima che quelle esistenti scadano, puoi iniziare a utilizzare le nuove chiavi senza perdere temporaneamente l'accesso agli oggetti nell'account.
+
++
+Le chiavi scadute vengono rimosse automaticamente.
+
+

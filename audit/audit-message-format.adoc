@@ -1,0 +1,47 @@
+---
+permalink: audit/audit-message-format.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message formats, message format 
+summary: 'I messaggi di controllo scambiati all"interno del sistema StorageGRID includono informazioni standard comuni a tutti i messaggi e contenuti specifici che descrivono l"evento o l"attività segnalata.' 
+---
+= Formato del messaggio di controllo
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+I messaggi di controllo scambiati all'interno del sistema StorageGRID includono informazioni standard comuni a tutti i messaggi e contenuti specifici che descrivono l'evento o l'attività segnalata.
+
+Se le informazioni riassuntive fornite dallink:using-audit-explain-tool.html["audit-spiegazione"] Elink:using-audit-sum-tool.html["somma di controllo"] strumenti non è sufficiente, fare riferimento a questa sezione per comprendere il formato generale di tutti i messaggi di audit.
+
+Di seguito è riportato un esempio di messaggio di controllo, così come potrebbe apparire nel file di registro di controllo:
+
+[listing]
+----
+2014-07-17T03:50:47.484627
+[AUDT:[RSLT(FC32):VRGN][AVER(UI32):10][ATIM(UI64):1405569047484627][ATYP(FC32):SYSU][ANID(UI32):11627225][AMID(FC32):ARNI][ATID(UI64):9445736326500603516]]
+----
+Ogni messaggio di controllo contiene una stringa di elementi di attributo.  L'intera stringa è racchiusa tra parentesi(`[ ]` ), e ogni elemento attributo nella stringa ha le seguenti caratteristiche:
+
+* Racchiuso tra parentesi `[ ]`
+* Introdotto dalla stringa `AUDT` , che indica un messaggio di controllo
+* Senza delimitatori (senza virgole o spazi) prima o dopo
+* Terminato da un carattere di avanzamento riga `\n`
+
+
+Ogni elemento include un codice attributo, un tipo di dati e un valore che vengono riportati nel seguente formato:
+
+[listing]
+----
+[ATTR(type):value][ATTR(type):value]...
+[ATTR(type):value]\n
+----
+Il numero di elementi attributo nel messaggio dipende dal tipo di evento del messaggio.  Gli elementi attributo non sono elencati in un ordine particolare.
+
+L'elenco seguente descrive gli elementi dell'attributo:
+
+* `ATTR`è un codice di quattro caratteri per l'attributo segnalato.  Alcuni attributi sono comuni a tutti i messaggi di controllo, mentre altri sono specifici dell'evento.
+* `type`è un identificatore di quattro caratteri del tipo di dati di programmazione del valore, ad esempio UI64, FC32 e così via.  Il tipo è racchiuso tra parentesi `( )` .
+* `value`è il contenuto dell'attributo, in genere un valore numerico o di testo.  I valori seguono sempre i due punti(`:` ).  I valori del tipo di dati CSTR sono racchiusi tra virgolette doppie " ".
+

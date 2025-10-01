@@ -1,0 +1,217 @@
+---
+permalink: network/storagegrid-network-types.html 
+sidebar: sidebar 
+keywords: network types, grid traffic, admin traffic, client traffic, grid network, admin network, client network 
+summary: I nodi della griglia in un sistema StorageGRID elaborano il traffico della griglia, il traffico amministrativo e il traffico client.  È necessario configurare la rete in modo appropriato per gestire questi tre tipi di traffico e garantire controllo e sicurezza. 
+---
+= Tipi di rete StorageGRID
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+I nodi della griglia in un sistema StorageGRID elaborano il _traffico della griglia_, il _traffico amministrativo_ e il _traffico client_.  È necessario configurare la rete in modo appropriato per gestire questi tre tipi di traffico e garantire controllo e sicurezza.
+
+
+
+== Tipi di traffico
+
+[cols="1a,4a,2a"]
+|===
+| Tipo di traffico | Descrizione | Tipo di rete 
+
+
+ a| 
+Traffico in griglia
+ a| 
+Il traffico StorageGRID interno che viaggia tra tutti i nodi della griglia.  Tutti i nodi della griglia devono essere in grado di comunicare con tutti gli altri nodi della griglia tramite questa rete.
+ a| 
+Rete di griglia (obbligatorio)
+
+
+
+ a| 
+Traffico amministrativo
+ a| 
+Traffico utilizzato per l'amministrazione e la manutenzione del sistema.
+ a| 
+Rete di amministrazione (facoltativa),<<Reti VLAN opzionali,Rete VLAN (facoltativa)>>
+
+
+
+ a| 
+Traffico clienti
+ a| 
+Il traffico che viaggia tra le applicazioni client esterne e la griglia, incluse tutte le richieste di archiviazione di oggetti dai client S3.
+ a| 
+Rete client (facoltativo),<<Reti VLAN opzionali,Rete VLAN (facoltativa)>>
+
+|===
+È possibile configurare la rete nei seguenti modi:
+
+* Solo rete di griglia
+* Reti di griglia e di amministrazione
+* Reti di griglia e client
+* Reti di griglia, amministrazione e client
+
+
+La rete Grid è obbligatoria e può gestire tutto il traffico di rete.  Le reti Admin e Client possono essere incluse al momento dell'installazione o aggiunte in un secondo momento per adattarsi ai cambiamenti dei requisiti.  Sebbene la rete amministrativa e la rete client siano facoltative, quando si utilizzano queste reti per gestire il traffico amministrativo e client, la rete Grid può essere isolata e protetta.
+
+Le porte interne sono accessibili solo tramite la rete Grid.  Le porte esterne sono accessibili da tutti i tipi di rete.  Questa flessibilità offre molteplici opzioni per progettare una distribuzione StorageGRID e impostare il filtraggio di IP e porte esterne in switch e firewall. Vederelink:../network/internal-grid-node-communications.html["comunicazioni interne del nodo della griglia"] Elink:../network/external-communications.html["comunicazioni esterne"] .
+
+
+
+== Interfacce di rete
+
+I nodi StorageGRID sono connessi a ciascuna rete tramite le seguenti interfacce specifiche:
+
+[cols="1a,1a"]
+|===
+| Rete | Nome dell'interfaccia 
+
+
+ a| 
+Rete di griglia (obbligatorio)
+ a| 
+eth0
+
+
+
+ a| 
+Rete di amministrazione (facoltativa)
+ a| 
+eth1
+
+
+
+ a| 
+Rete clienti (facoltativa)
+ a| 
+eth2
+
+|===
+Per i dettagli sulla mappatura delle porte virtuali o fisiche alle interfacce di rete dei nodi, consultare le istruzioni di installazione:
+
+.Nodi basati su software
+* link:../rhel/index.html["Installa StorageGRID su Red Hat Enterprise Linux"]
+* link:../ubuntu/index.html["Installa StorageGRID su Ubuntu o Debian"]
+* link:../vmware/index.html["Installa StorageGRID su VMware"]
+
+
+.Nodi dell'appliance
+* https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/hardware-description-sg6100.html["Dispositivo di archiviazione SG6160"^]
+* https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/hardware-description-sg6100.html["Dispositivo di archiviazione SGF6112"^]
+* https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/hardware-description-sg6000.html["Dispositivo di archiviazione SG6000"^]
+* https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/hardware-description-sg5800.html["Dispositivo di archiviazione SG5800"^]
+* https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/hardware-description-sg5700.html["Dispositivo di archiviazione SG5700"^]
+* https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/hardware-description-sg110-and-1100.html["Apparecchiature di servizio SG110 e SG1100"^]
+* https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/hardware-description-sg100-and-1000.html["Apparecchiature di servizio SG100 e SG1000"^]
+
+
+
+
+=== Informazioni di rete per ogni nodo
+
+Per ogni rete abilitata su un nodo è necessario configurare quanto segue:
+
+* indirizzo IP
+* Maschera di sottorete
+* Indirizzo IP del gateway
+
+
+È possibile configurare una sola combinazione indirizzo IP/maschera/gateway per ciascuna delle tre reti su ciascun nodo della griglia.  Se non si desidera configurare un gateway per una rete, è necessario utilizzare l'indirizzo IP come indirizzo del gateway.
+
+
+
+=== Gruppi ad alta disponibilità
+
+I gruppi ad alta disponibilità (HA) offrono la possibilità di aggiungere indirizzi IP virtuali (VIP) all'interfaccia Grid o Client Network. Per ulteriori informazioni, consultare link:../admin/managing-high-availability-groups.html["Gestire gruppi ad alta disponibilità"] .
+
+
+
+== Rete a griglia
+
+È richiesta la rete Grid.  Viene utilizzato per tutto il traffico StorageGRID interno.  La rete Grid fornisce connettività tra tutti i nodi della griglia, in tutti i siti e le sottoreti.  Tutti i nodi della rete Grid devono essere in grado di comunicare con tutti gli altri nodi.  La rete Grid può essere composta da più subnet.  Anche le reti contenenti servizi di griglia critici, come NTP, possono essere aggiunte come subnet di griglia.
+
+
+NOTE: StorageGRID non supporta la traduzione degli indirizzi di rete (NAT) tra nodi.
+
+La rete Grid può essere utilizzata per tutto il traffico amministrativo e per tutto il traffico client, anche se sono configurate la rete amministrativa e la rete client.  Il gateway Grid Network è il gateway predefinito del nodo, a meno che il nodo non abbia configurato la rete client.
+
+
+CAUTION: Quando si configura la rete Grid, è necessario assicurarsi che la rete sia protetta da client non attendibili, come quelli presenti sulla rete Internet aperta.
+
+Si prega di notare i seguenti requisiti e dettagli per il gateway Grid Network:
+
+* Se sono presenti più subnet della griglia, è necessario configurare il gateway della rete di griglia.
+* Il gateway Grid Network è il gateway predefinito del nodo finché la configurazione della griglia non è completata.
+* Le rotte statiche vengono generate automaticamente per tutti i nodi verso tutte le subnet configurate nell'elenco globale delle subnet della rete Grid.
+* Se viene aggiunta una rete client, il gateway predefinito passa dal gateway della rete di griglia al gateway della rete client al termine della configurazione della griglia.
+
+
+
+
+== Rete di amministrazione
+
+La rete di amministrazione è facoltativa.  Una volta configurato, può essere utilizzato per l'amministrazione del sistema e per il traffico di manutenzione.  La rete di amministrazione è in genere una rete privata e non deve essere instradabile tra i nodi.
+
+È possibile scegliere su quali nodi della griglia abilitare la rete di amministrazione.
+
+Quando si utilizza la rete di amministrazione, il traffico amministrativo e di manutenzione non deve attraversare la rete Grid.  Gli utilizzi tipici della rete di amministrazione includono quanto segue:
+
+* Accesso alle interfacce utente Grid Manager e Tenant Manager.
+* Accesso a servizi critici quali server NTP, server DNS, server di gestione delle chiavi esterne (KMS) e server Lightweight Directory Access Protocol (LDAP).
+* Accesso ai registri di controllo sui nodi amministrativi.
+* Accesso tramite Secure Shell Protocol (SSH) per manutenzione e supporto.
+
+
+La rete di amministrazione non viene mai utilizzata per il traffico interno della griglia.  Viene fornito un gateway di rete amministrativa che consente alla rete amministrativa di comunicare con più subnet esterne.  Tuttavia, il gateway di rete di amministrazione non viene mai utilizzato come gateway predefinito del nodo.
+
+Tenere presente i seguenti requisiti e dettagli per il gateway della rete di amministrazione:
+
+* Il gateway della rete amministrativa è necessario se le connessioni verranno effettuate dall'esterno della subnet della rete amministrativa o se sono configurate più subnet della rete amministrativa.
+* Vengono create rotte statiche per ogni subnet configurata nell'elenco delle subnet della rete di amministrazione del nodo.
+
+
+
+
+== Rete clienti
+
+La rete client è facoltativa.  Una volta configurato, viene utilizzato per fornire l'accesso ai servizi di griglia per applicazioni client come S3.  Se si prevede di rendere i dati StorageGRID accessibili a una risorsa esterna (ad esempio, un Cloud Storage Pool o il servizio di replica StorageGRID CloudMirror), la risorsa esterna può utilizzare anche la rete client.  I nodi della griglia possono comunicare con qualsiasi subnet raggiungibile tramite il gateway della rete client.
+
+È possibile scegliere su quali nodi della griglia abilitare la rete client.  Non è necessario che tutti i nodi si trovino sulla stessa rete client e i nodi non comunicheranno mai tra loro tramite la rete client.  La rete client non diventa operativa finché non è completata l'installazione della rete.
+
+Per una maggiore sicurezza, è possibile specificare che l'interfaccia di rete client di un nodo non sia attendibile, in modo che la rete client sia più restrittiva riguardo alle connessioni consentite.  Se l'interfaccia di rete client di un nodo non è attendibile, l'interfaccia accetta connessioni in uscita come quelle utilizzate dalla replica di CloudMirror, ma accetta solo connessioni in entrata su porte che sono state configurate esplicitamente come endpoint del bilanciatore del carico. Vederelink:../admin/manage-firewall-controls.html["Gestire i controlli del firewall"] Elink:../admin/configuring-load-balancer-endpoints.html["Configurare gli endpoint del bilanciatore del carico"] .
+
+Quando si utilizza una rete client, il traffico client non deve attraversare la rete Grid.  Il traffico di rete può essere suddiviso in una rete sicura e non instradabile.  I seguenti tipi di nodo sono spesso configurati con una rete client:
+
+* Nodi gateway, perché questi nodi forniscono l'accesso al servizio StorageGRID Load Balancer e l'accesso client S3 alla griglia.
+* Nodi di archiviazione, perché questi nodi forniscono l'accesso al protocollo S3, ai pool di archiviazione cloud e al servizio di replica CloudMirror.
+* Nodi amministrativi, per garantire che gli utenti tenant possano connettersi al Tenant Manager senza dover utilizzare la rete amministrativa.
+
+
+Per il gateway della rete client, tenere presente quanto segue:
+
+* Il gateway della rete client è necessario se la rete client è configurata.
+* Una volta completata la configurazione della griglia, il gateway della rete client diventa il percorso predefinito per il nodo della griglia.
+
+
+
+
+== Reti VLAN opzionali
+
+Se necessario, è possibile utilizzare facoltativamente reti LAN virtuali (VLAN) per il traffico client e per alcuni tipi di traffico amministrativo.  Il traffico di rete, tuttavia, non può utilizzare un'interfaccia VLAN.  Il traffico StorageGRID interno tra i nodi deve sempre utilizzare la rete Grid su eth0.
+
+Per supportare l'utilizzo delle VLAN, è necessario configurare una o più interfacce su un nodo come interfacce trunk sullo switch.  È possibile configurare l'interfaccia di rete Grid (eth0) o l'interfaccia di rete client (eth2) come trunk, oppure è possibile aggiungere interfacce trunk al nodo.
+
+Se eth0 è configurato come trunk, il traffico della rete Grid scorre sull'interfaccia nativa del trunk, come configurato sullo switch.  Allo stesso modo, se eth2 è configurato come trunk e anche la rete client è configurata sullo stesso nodo, la rete client utilizza la VLAN nativa della porta trunk come configurata sullo switch.
+
+Sulle reti VLAN è supportato solo il traffico amministrativo in entrata, come quello utilizzato per SSH, Grid Manager o Tenant Manager.  Il traffico in uscita, come quello utilizzato per NTP, DNS, LDAP, KMS e Cloud Storage Pools, non è supportato sulle reti VLAN.
+
+
+NOTE: Le interfacce VLAN possono essere aggiunte solo ai nodi amministrativi e ai nodi gateway.  Non è possibile utilizzare un'interfaccia VLAN per l'accesso client o amministratore ai nodi di archiviazione.
+
+Vederelink:../admin/configure-vlan-interfaces.html["Configurare le interfacce VLAN"] per istruzioni e linee guida.
+
+Le interfacce VLAN vengono utilizzate solo nei gruppi HA e vengono assegnati indirizzi VIP sul nodo attivo.  Vederelink:../admin/managing-high-availability-groups.html["Gestire gruppi ad alta disponibilità"] per istruzioni e linee guida.

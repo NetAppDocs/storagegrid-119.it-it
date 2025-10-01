@@ -1,0 +1,109 @@
+---
+permalink: maintain/identifying-and-unmounting-failed-storage-volumes.html 
+sidebar: sidebar 
+keywords: storagegrid, storage volume, failed storage volume, unmount failed volume 
+summary: Quando si ripristina un nodo di archiviazione con volumi di archiviazione non riusciti, è necessario identificare e smontare i volumi non riusciti.  È necessario verificare che solo i volumi di archiviazione non riusciti vengano riformattati come parte della procedura di ripristino. 
+---
+= Identificare e smontare i volumi di archiviazione non riusciti
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Quando si ripristina un nodo di archiviazione con volumi di archiviazione non riusciti, è necessario identificare e smontare i volumi non riusciti.  È necessario verificare che solo i volumi di archiviazione non riusciti vengano riformattati come parte della procedura di ripristino.
+
+.Prima di iniziare
+Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+
+.Informazioni su questo compito
+È necessario ripristinare i volumi di archiviazione non riusciti il prima possibile.
+
+Il primo passaggio del processo di ripristino consiste nel rilevare i volumi che si sono staccati, che devono essere smontati o che presentano errori di I/O.  Se i volumi danneggiati sono ancora collegati ma hanno un file system danneggiato in modo casuale, il sistema potrebbe non rilevare alcun danneggiamento nelle parti inutilizzate o non allocate del disco.
+
+
+NOTE: È necessario completare questa procedura prima di eseguire passaggi manuali per ripristinare i volumi, ad esempio aggiungere o ricollegare i dischi, arrestare il nodo, avviare il nodo o riavviare.  Altrimenti, quando esegui il `reformat_storage_block_devices.rb` script, potresti riscontrare un errore del file system che causa il blocco o il fallimento dello script.
+
+
+NOTE: Riparare l'hardware e collegare correttamente i dischi prima di eseguire il `reboot` comando.
+
+
+CAUTION: Identificare attentamente i volumi di archiviazione non riusciti.  Utilizzerai queste informazioni per verificare quali volumi devono essere riformattati.  Dopo aver riformattato un volume, i dati in esso contenuti non possono essere recuperati.
+
+Per ripristinare correttamente i volumi di archiviazione non riusciti, è necessario conoscere sia i nomi dei dispositivi dei volumi di archiviazione non riusciti sia i relativi ID volume.
+
+Durante l'installazione, a ciascun dispositivo di archiviazione viene assegnato un identificatore univoco universale (UUID) del file system e viene montato in una directory rangedb sul nodo di archiviazione utilizzando tale UUID del file system assegnato. L'UUID del file system e la directory rangedb sono elencati in `/etc/fstab` file. Il nome del dispositivo, la directory rangedb e la dimensione del volume montato vengono visualizzati in Grid Manager.
+
+Nell'esempio seguente, dispositivo `/dev/sdc` ha una dimensione del volume di 4 TB, è montato su `/var/local/rangedb/0` , utilizzando il nome del dispositivo `/dev/disk/by-uuid/822b0547-3b2b-472e-ad5e-e1cf1809faba` nel/`etc/fstab` file:
+
+image::../media/mounting_storage_devices.gif[Esempio di dimensione del volume]
+
+.Passi
+. Completare i seguenti passaggi per registrare i volumi di archiviazione non riusciti e i relativi nomi di dispositivo:
++
+.. Selezionare *SUPPORTO* > *Strumenti* > *Topologia griglia*.
+.. Selezionare *sito* > *nodo di archiviazione non riuscito* > *LDR* > *Archiviazione* > *Panoramica* > *Principale* e cercare gli archivi di oggetti con allarmi.
++
+image::../media/ldr_storage_object_stores.gif[Sezione negozi di oggetti]
+
+.. Selezionare *sito* > *nodo di archiviazione non riuscito* > *SSM* > *Risorse* > *Panoramica* > *Principale*.  Determinare il punto di montaggio e la dimensione del volume di ciascun volume di archiviazione non riuscito identificato nel passaggio precedente.
++
+Gli archivi di oggetti sono numerati in notazione esadecimale.  Ad esempio, 0000 è il primo volume e 000F è il sedicesimo volume.  Nell'esempio, l'archivio oggetti con ID 0000 corrisponde a `/var/local/rangedb/0` con nome dispositivo sdc e dimensione pari a 107 GB.
+
++
+image::../media/ssm_storage_volumes.gif[esempio che mostra gli archivi degli oggetti e i punti di montaggio]
+
+
+
+. Accedi al nodo di archiviazione non riuscito:
++
+.. Immettere il seguente comando: `ssh admin@_grid_node_IP_`
+.. Inserisci la password elencata nel `Passwords.txt` file.
+.. Immettere il seguente comando per passare alla root: `su -`
+.. Inserisci la password elencata nel `Passwords.txt` file.
+
+
++
+Quando si accede come root, il prompt cambia da `$` A `#` .
+
+. Eseguire lo script seguente per smontare un volume di archiviazione non riuscito:
++
+`sn-unmount-volume object_store_ID`
+
++
+IL `object_store_ID` è l'ID del volume di archiviazione non riuscito.  Ad esempio, specificare `0` nel comando per un archivio oggetti con ID 0000.
+
+. Se richiesto, premere *y* per interrompere il servizio Cassandra in base al volume di archiviazione 0.
++
+
+NOTE: Se il servizio Cassandra è già stato arrestato, non verrà visualizzato alcun messaggio.  Il servizio Cassandra è interrotto solo per il volume 0.
+
++
+[listing]
+----
+root@Storage-180:~/var/local/tmp/storage~ # sn-unmount-volume 0
+Services depending on storage volume 0 (cassandra) aren't down.
+Services depending on storage volume 0 must be stopped before running this script.
+Stop services that require storage volume 0 [y/N]? y
+Shutting down services that require storage volume 0.
+Services requiring storage volume 0 stopped.
+Unmounting /var/local/rangedb/0
+/var/local/rangedb/0 is unmounted.
+----
++
+In pochi secondi il volume verrà smontato.  Vengono visualizzati messaggi che indicano ogni fase del processo.  Il messaggio finale indica che il volume è smontato.
+
+. Se lo smontaggio fallisce perché il volume è occupato, è possibile forzare lo smontaggio utilizzando `--use-umountof` opzione:
++
+
+NOTE: Forzare uno smontaggio utilizzando `--use-umountof` L'opzione potrebbe causare un comportamento imprevisto o un arresto anomalo dei processi o dei servizi che utilizzano il volume.
+
++
+[listing]
+----
+root@Storage-180:~ # sn-unmount-volume --use-umountof /var/local/rangedb/2
+Unmounting /var/local/rangedb/2 using umountof
+/var/local/rangedb/2 is unmounted.
+Informing LDR service of changes to storage volumes
+----
+

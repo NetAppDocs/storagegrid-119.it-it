@@ -1,0 +1,92 @@
+---
+permalink: s3/operations-for-multipart-uploads.html 
+sidebar: sidebar 
+keywords: operations, multipart uploads, uploads, rest API 
+summary: Questa sezione descrive come StorageGRID supporta le operazioni per i caricamenti multiparte. 
+---
+= Operazioni per caricamenti multiparte
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Questa sezione descrive come StorageGRID supporta le operazioni per i caricamenti multiparte.
+
+Le seguenti condizioni e note si applicano a tutte le operazioni di caricamento multiparte:
+
+* Non dovresti superare i 1.000 caricamenti multipart simultanei in un singolo bucket perché i risultati delle query ListMultipartUploads per quel bucket potrebbero restituire risultati incompleti.
+* StorageGRID impone limiti dimensionali AWS per le parti multiparte.  I client S3 devono seguire queste linee guida:
++
+** Ogni parte di un caricamento multiparte deve avere una dimensione compresa tra 5 MiB (5.242.880 byte) e 5 GiB (5.368.709.120 byte).
+** L'ultima parte può essere inferiore a 5 MiB (5.242.880 byte).
+** In generale, le dimensioni delle parti dovrebbero essere le più grandi possibile.  Ad esempio, utilizzare dimensioni di parti pari a 5 GiB per un oggetto da 100 GiB.  Poiché ogni parte è considerata un oggetto unico, l'utilizzo di parti di grandi dimensioni riduce il sovraccarico dei metadati StorageGRID .
+** Per oggetti di dimensioni inferiori a 5 GiB, si consiglia di utilizzare il caricamento non multiparte.
+
+
+* ILM viene valutato per ogni parte di un oggetto multiparte mentre viene ingerito e per l'oggetto nel suo complesso quando il caricamento multiparte viene completato, se la regola ILM utilizza Bilanciato o Rigorosolink:../ilm/data-protection-options-for-ingest.html["opzione di ingestione"] .  È necessario essere consapevoli di come ciò influisce sul posizionamento di oggetti e parti:
++
+** Se ILM cambia mentre è in corso un caricamento multiparte S3, alcune parti dell'oggetto potrebbero non soddisfare i requisiti ILM correnti al termine del caricamento multiparte.  Ogni parte non posizionata correttamente viene messa in coda per la rivalutazione ILM e successivamente spostata nella posizione corretta.
+** Quando si valuta l'ILM per una parte, StorageGRID filtra in base alle dimensioni della parte, non in base alle dimensioni dell'oggetto.  Ciò significa che parti di un oggetto possono essere archiviate in posizioni che non soddisfano i requisiti ILM per l'oggetto nel suo complesso.  Ad esempio, se una regola specifica che tutti gli oggetti da 10 GB o più grandi vengono archiviati in DC1 mentre tutti gli oggetti più piccoli vengono archiviati in DC2, ogni parte da 1 GB di un caricamento multiparte da 10 parti viene archiviata in DC2 al momento dell'acquisizione.  Tuttavia, quando l'ILM viene valutato per l'oggetto nel suo complesso, tutte le parti dell'oggetto vengono spostate in DC1.
+
+
+* Tutte le operazioni di caricamento multiparte supportano StorageGRIDlink:consistency-controls.html["valori di coerenza"] .
+* Quando un oggetto viene ingerito tramite caricamento multiparte,link:../admin/what-object-segmentation-is.html["soglia di segmentazione degli oggetti (1 GiB)"] non viene applicato.
+* Se necessario, puoi utilizzarelink:using-server-side-encryption.html["crittografia lato server"] con caricamenti in più parti.  Per utilizzare SSE (crittografia lato server con chiavi gestite da StorageGRID), è necessario includere `x-amz-server-side-encryption` intestazione della richiesta solo nella richiesta CreateMultipartUpload.  Per utilizzare SSE-C (crittografia lato server con chiavi fornite dal cliente), è necessario specificare le stesse tre intestazioni di richiesta della chiave di crittografia nella richiesta CreateMultipartUpload e in ogni successiva richiesta UploadPart.
+
+
+[cols="2a,3a"]
+|===
+| Operazione | Implementazione 
+
+
+ a| 
+Annulla caricamento multiparte
+ a| 
+Implementato con tutti i comportamenti dell'API REST di Amazon S3.  Soggetto a modifiche senza preavviso.
+
+
+
+ a| 
+Caricamento multiparte completo
+ a| 
+Vederelink:complete-multipart-upload.html["Caricamento multiparte completo"]
+
+
+
+ a| 
+CreaCaricamentoMultiparte
+
+(in precedenza denominato Avvia caricamento multiparte)
+ a| 
+Vederelink:initiate-multipart-upload.html["CreaCaricamentoMultiparte"]
+
+
+
+ a| 
+Caricamenti multiparte di List
+ a| 
+Vederelink:list-multipart-uploads.html["Caricamenti multiparte di List"]
+
+
+
+ a| 
+ElencoParti
+ a| 
+Implementato con tutti i comportamenti dell'API REST di Amazon S3.  Soggetto a modifiche senza preavviso.
+
+
+
+ a| 
+CaricaParte
+ a| 
+Vederelink:upload-part.html["CaricaParte"]
+
+
+
+ a| 
+CaricaParteCopia
+ a| 
+Vederelink:upload-part-copy.html["CaricaParteCopia"]
+
+|===

@@ -1,0 +1,32 @@
+---
+permalink: admin/managing-full-storage-nodes.html 
+sidebar: sidebar 
+keywords: storage node is full 
+summary: 'Quando i nodi di archiviazione raggiungono la capacità massima, è necessario espandere il sistema StorageGRID aggiungendo nuovo spazio di archiviazione.  Sono disponibili tre opzioni: aggiunta di volumi di archiviazione, aggiunta di ripiani di espansione dell"archiviazione e aggiunta di nodi di archiviazione.' 
+---
+= Gestisci nodi di archiviazione completi
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Quando i nodi di archiviazione raggiungono la capacità massima, è necessario espandere il sistema StorageGRID aggiungendo nuovo spazio di archiviazione.  Sono disponibili tre opzioni: aggiunta di volumi di archiviazione, aggiunta di ripiani di espansione dell'archiviazione e aggiunta di nodi di archiviazione.
+
+
+
+== Aggiungere volumi di archiviazione
+
+Ogni nodo di archiviazione supporta un numero massimo di volumi di archiviazione.  Il massimo definito varia a seconda della piattaforma.  Se un nodo di archiviazione contiene un numero di volumi di archiviazione inferiore al massimo consentito, è possibile aggiungere volumi per aumentarne la capacità. Vedi le istruzioni perlink:../expand/index.html["espansione di un sistema StorageGRID"] .
+
+
+
+== Aggiungere ripiani di espansione per lo stoccaggio
+
+Alcuni nodi di archiviazione dell'appliance StorageGRID , come SG6060 o SG6160, possono supportare ripiani di archiviazione aggiuntivi.  Se si dispone di dispositivi StorageGRID con capacità di espansione che non sono ancora stati ampliati alla capacità massima, è possibile aggiungere ripiani di archiviazione per aumentare la capacità. Vedi le istruzioni perlink:../expand/index.html["espansione di un sistema StorageGRID"] .
+
+
+
+== Aggiungi nodi di archiviazione
+
+È possibile aumentare la capacità di archiviazione aggiungendo nodi di archiviazione.  Quando si aggiunge spazio di archiviazione, è necessario valutare attentamente le regole ILM attualmente attive e i requisiti di capacità. Vedi le istruzioni perlink:../expand/index.html["espansione di un sistema StorageGRID"] .

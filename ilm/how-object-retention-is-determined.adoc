@@ -1,0 +1,96 @@
+---
+permalink: ilm/how-object-retention-is-determined.html 
+sidebar: sidebar 
+keywords: how object retention is determined 
+summary: 'StorageGRID offre opzioni sia agli amministratori della griglia sia ai singoli utenti tenant per specificare per quanto tempo archiviare gli oggetti.  In generale, tutte le istruzioni di conservazione fornite da un utente tenant hanno la precedenza sulle istruzioni di conservazione fornite dall"amministratore della griglia.' 
+---
+= Come viene determinata la ritenzione dell'oggetto
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+StorageGRID offre opzioni sia agli amministratori della griglia sia ai singoli utenti tenant per specificare per quanto tempo archiviare gli oggetti.  In generale, tutte le istruzioni di conservazione fornite da un utente tenant hanno la precedenza sulle istruzioni di conservazione fornite dall'amministratore della griglia.
+
+
+
+== Come gli utenti tenant controllano la conservazione degli oggetti
+
+Gli utenti tenant possono utilizzare questi metodi per controllare per quanto tempo i loro oggetti vengono archiviati in StorageGRID:
+
+* Se l'impostazione globale Blocco oggetti S3 è abilitata per la griglia, gli utenti del tenant S3 possono creare bucket con Blocco oggetti S3 abilitato e quindi selezionare un *Periodo di conservazione predefinito* per ciascun bucket.
+* Se l'impostazione globale S3 Object Lock è abilitata per la griglia, gli utenti del tenant S3 possono creare bucket con S3 Object Lock abilitato e quindi utilizzare l'API REST S3 per specificare le impostazioni di conservazione fino alla data di scadenza e di conservazione legale per ogni versione dell'oggetto aggiunta a tale bucket.
++
+** Una versione di un oggetto sottoposta a conservazione legale non può essere eliminata con alcun metodo.
+** Prima che venga raggiunta la data di conservazione di una versione di un oggetto, tale versione non può essere eliminata con alcun metodo.
+** Gli oggetti nei bucket con S3 Object Lock abilitato vengono conservati da ILM "per sempre".  Tuttavia, una volta raggiunta la data di conservazione, una versione dell'oggetto può essere eliminata da una richiesta del client o dalla scadenza del ciclo di vita del bucket. Vedere link:managing-objects-with-s3-object-lock.html["Gestisci gli oggetti con S3 Object Lock"] .
+
+
+* Gli utenti del tenant S3 possono aggiungere ai propri bucket una configurazione del ciclo di vita che specifica un'azione di scadenza.  Se esiste un ciclo di vita del bucket, StorageGRID archivia un oggetto finché non viene raggiunta la data o il numero di giorni specificati nell'azione Scadenza, a meno che il client non elimini prima l'oggetto. Vedere link:../s3/create-s3-lifecycle-configuration.html["Crea la configurazione del ciclo di vita S3"] .
+* Un client S3 può inviare una richiesta di eliminazione di un oggetto.  StorageGRID dà sempre priorità alle richieste di eliminazione del client rispetto al ciclo di vita del bucket S3 o all'ILM quando decide se eliminare o conservare un oggetto.
+
+
+
+
+== Come gli amministratori della griglia controllano la conservazione degli oggetti
+
+Gli amministratori della griglia possono utilizzare questi metodi per controllare la conservazione degli oggetti:
+
+* Imposta un periodo massimo di conservazione del blocco degli oggetti S3 per ciascun tenant.  Quindi, gli utenti tenant possono impostare un periodo di conservazione predefinito per ciascuno dei loro bucket.  Il periodo di conservazione massimo viene applicato anche a tutti gli oggetti appena acquisiti per quel bucket (data di conservazione dell'oggetto).
+* Creare istruzioni di posizionamento ILM per controllare per quanto tempo gli oggetti vengono conservati.  Quando gli oggetti corrispondono a una regola ILM, StorageGRID li memorizza finché non è trascorso l'ultimo periodo di tempo nella regola ILM.  Gli oggetti vengono conservati indefinitamente se nelle istruzioni di posizionamento è specificato "per sempre".
+* Indipendentemente da chi controlla per quanto tempo gli oggetti vengono conservati, le impostazioni ILM controllano quali tipi di copie degli oggetti (replicate o con codice di cancellazione) vengono archiviate e dove si trovano le copie (nodi di archiviazione o pool di archiviazione cloud).
+
+
+
+
+== Come interagiscono il ciclo di vita del bucket S3 e ILM
+
+Quando viene configurato un ciclo di vita del bucket S3, le azioni di scadenza del ciclo di vita sovrascrivono il criterio ILM per gli oggetti che corrispondono al filtro del ciclo di vita.  Di conseguenza, un oggetto potrebbe essere mantenuto sulla griglia anche dopo che sono scadute tutte le istruzioni ILM per il posizionamento dell'oggetto.
+
+
+
+== Esempi di conservazione degli oggetti
+
+Per comprendere meglio le interazioni tra S3 Object Lock, impostazioni del ciclo di vita del bucket, richieste di eliminazione client e ILM, prendere in considerazione i seguenti esempi.
+
+
+
+=== Esempio 1: il ciclo di vita del bucket S3 conserva gli oggetti più a lungo di ILM
+
+ILM:: Conservare due copie per 1 anno (365 giorni)
+Ciclo di vita del bucket:: Scadenza degli oggetti in 2 anni (730 giorni)
+Risultato:: StorageGRID memorizza l'oggetto per 730 giorni.  StorageGRID utilizza le impostazioni del ciclo di vita del bucket per determinare se eliminare o conservare un oggetto.
+
+
+
+NOTE: Se il ciclo di vita del bucket specifica che gli oggetti devono essere conservati più a lungo di quanto specificato da ILM, StorageGRID continua a utilizzare le istruzioni di posizionamento ILM quando determina il numero e il tipo di copie da archiviare.  In questo esempio, due copie dell'oggetto continueranno a essere archiviate in StorageGRID dal giorno 366 al giorno 730.
+
+
+
+=== Esempio 2: il ciclo di vita del bucket S3 fa scadere gli oggetti prima di ILM
+
+ILM:: Conservare due copie per 2 anni (730 giorni)
+Ciclo di vita del bucket:: Scadenza degli oggetti in 1 anno (365 giorni)
+Risultato:: StorageGRID elimina entrambe le copie dell'oggetto dopo il giorno 365.
+
+
+
+
+=== Esempio 3: l'eliminazione del client sovrascrive il ciclo di vita del bucket e ILM
+
+ILM:: Conserva due copie sui nodi di archiviazione "per sempre"
+Ciclo di vita del bucket:: Scadenza degli oggetti in 2 anni (730 giorni)
+Richiesta di eliminazione del cliente:: Emesso il giorno 400
+Risultato:: StorageGRID elimina entrambe le copie dell'oggetto il giorno 400 in risposta alla richiesta di eliminazione del client.
+
+
+
+
+=== Esempio 4: S3 Object Lock sovrascrive la richiesta di eliminazione del client
+
+Blocco oggetto S3:: La data di conservazione per una versione dell'oggetto è il 31/03/2026.  Non è in vigore alcun blocco legale.
+Regola ILM conforme:: Conserva due copie sui nodi di archiviazione "per sempre"
+Richiesta di eliminazione del cliente:: Pubblicato il 31/03/2024
+Risultato:: StorageGRID non eliminerà la versione dell'oggetto perché la data di conservazione è ancora lontana 2 anni.
+

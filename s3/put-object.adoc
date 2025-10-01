@@ -1,0 +1,247 @@
+---
+permalink: s3/put-object.html 
+sidebar: sidebar 
+keywords: object, add object, put, PutObject request 
+summary: È possibile utilizzare la richiesta S3 PutObject per aggiungere un oggetto a un bucket. 
+---
+= MettiOggetto
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile utilizzare la richiesta S3 PutObject per aggiungere un oggetto a un bucket.
+
+
+
+== Risolvere i conflitti
+
+Le richieste dei client in conflitto, ad esempio due client che scrivono sulla stessa chiave, vengono risolte in base al principio "latest-wins".  La tempistica per la valutazione "latest-wins" si basa sul momento in cui il sistema StorageGRID completa una determinata richiesta e non su quando i client S3 iniziano un'operazione.
+
+
+
+== Dimensione dell'oggetto
+
+La dimensione massima _consigliata_ per una singola operazione PutObject è 5 GiB (5.368.709.120 byte).  Se hai oggetti più grandi di 5 GiB, usalink:operations-for-multipart-uploads.html["caricamento multiparte"] Invece.
+
+La dimensione massima _supportata_ per una singola operazione PutObject è 5 TiB (5.497.558.138.880 byte).
+
+
+NOTE: Se hai eseguito l'aggiornamento da StorageGRID 11.6 o da una versione precedente, verrà attivato l'avviso S3 PUT Object size too large (Dimensioni oggetto troppo grandi) se tenti di caricare un oggetto che supera i 5 GiB.  Se si dispone di una nuova installazione di StorageGRID 11.7 o 11.8, in questo caso l'avviso non verrà attivato.  Tuttavia, per allinearsi allo standard AWS S3, le future versioni di StorageGRID non supporteranno caricamenti di oggetti di dimensioni superiori a 5 GiB.
+
+
+
+== Dimensione dei metadati utente
+
+Amazon S3 limita la dimensione dei metadati definiti dall'utente all'interno di ogni intestazione di richiesta PUT a 2 KB.  StorageGRID limita i metadati utente a 24 KiB.  La dimensione dei metadati definiti dall'utente viene misurata sommando il numero di byte nella codifica UTF-8 di ciascuna chiave e valore.
+
+
+
+== Caratteri UTF-8 nei metadati utente
+
+Se una richiesta include valori UTF-8 (non sottoposti a escape) nel nome della chiave o nel valore dei metadati definiti dall'utente, il comportamento StorageGRID non è definito.
+
+StorageGRID non analizza né interpreta i caratteri UTF-8 con escape inclusi nel nome della chiave o nel valore dei metadati definiti dall'utente.  I caratteri UTF-8 sottoposti a escape vengono trattati come caratteri ASCII:
+
+* Le richieste PutObject, CopyObject, GetObject e HeadObject hanno esito positivo se i metadati definiti dall'utente includono caratteri UTF-8 con escape.
+* StorageGRID non restituisce il `x-amz-missing-meta` intestazione se il valore interpretato del nome o del valore della chiave include caratteri non stampabili.
+
+
+
+
+== Limiti dei tag degli oggetti
+
+Puoi aggiungere tag ai nuovi oggetti quando li carichi oppure puoi aggiungerli agli oggetti esistenti.  Sia StorageGRID che Amazon S3 supportano fino a 10 tag per ciascun oggetto.  I tag associati a un oggetto devono avere chiavi tag univoche.  Una chiave tag può avere una lunghezza massima di 128 caratteri Unicode e i valori tag possono avere una lunghezza massima di 256 caratteri Unicode.  Le chiavi e i valori sono sensibili alle maiuscole e alle minuscole.
+
+
+
+== Proprietà dell'oggetto
+
+In StorageGRID, tutti gli oggetti sono di proprietà dell'account proprietario del bucket, compresi gli oggetti creati da un account non proprietario o da un utente anonimo.
+
+
+
+== Intestazioni di richiesta supportate
+
+Sono supportate le seguenti intestazioni di richiesta:
+
+* `Cache-Control`
+* `Content-Disposition`
+* `Content-Encoding`
++
+Quando specifichi `aws-chunked` per``Content-Encoding`` StorageGRID non verifica i seguenti elementi:
+
++
+** StorageGRID non verifica il `chunk-signature` rispetto ai dati in blocco.
+** StorageGRID non verifica il valore fornito per `x-amz-decoded-content-length` contro l'oggetto.
+
+
+* `Content-Language`
+* `Content-Length`
+* `Content-MD5`
+* `Content-Type`
+* `Expires`
+* `Transfer-Encoding`
++
+La codifica di trasferimento in blocchi è supportata se `aws-chunked` viene utilizzata anche la firma del payload.
+
+* `x-amz-checksum-sha256`
+* `x-amz-meta-`, seguito da una coppia nome-valore contenente metadati definiti dall'utente.
++
+Quando si specifica la coppia nome-valore per i metadati definiti dall'utente, utilizzare questo formato generale:
+
++
+[listing, subs="specialcharacters,quotes"]
+----
+x-amz-meta-_name_: _value_
+----
++
+Se si desidera utilizzare l'opzione *Ora di creazione definita dall'utente* come ora di riferimento per una regola ILM, è necessario utilizzare `creation-time` come nome dei metadati che registrano quando è stato creato l'oggetto. Per esempio:
+
++
+[listing]
+----
+x-amz-meta-creation-time: 1443399726
+----
++
+Il valore per `creation-time` viene valutato in secondi a partire dal 1° gennaio 1970.
+
++
+
+NOTE: Una regola ILM non può utilizzare sia un *orario di creazione definito dall'utente* per l'orario di riferimento sia l'opzione di acquisizione bilanciata o rigorosa.  Viene restituito un errore quando viene creata la regola ILM.
+
+* `x-amz-tagging`
+* Intestazioni di richiesta di blocco degli oggetti S3
++
+** `x-amz-object-lock-mode`
+** `x-amz-object-lock-retain-until-date`
+** `x-amz-object-lock-legal-hold`
++
+Se viene effettuata una richiesta senza queste intestazioni, vengono utilizzate le impostazioni di conservazione predefinite del bucket per calcolare la modalità di versione dell'oggetto e la data di conservazione fino alla data di scadenza. Vedere link:../s3/use-s3-api-for-s3-object-lock.html["Utilizzare l'API REST S3 per configurare S3 Object Lock"] .
+
+
+
+* Intestazioni delle richieste SSE:
++
+** `x-amz-server-side-encryption`
+** `x-amz-server-side-encryption-customer-key-MD5`
+** `x-amz-server-side-encryption-customer-key`
+** `x-amz-server-side-encryption-customer-algorithm`
++
+Vedere<<Intestazioni di richiesta per la crittografia lato server>>
+
+
+
+
+
+
+
+== Intestazioni di richiesta non supportate
+
+Le seguenti intestazioni di richiesta non sono supportate:
+
+* `x-amz-acl`
+* `x-amz-sdk-checksum-algorithm`
+* `x-amz-trailer`
+* `x-amz-website-redirect-location`
++
+IL `x-amz-website-redirect-location` intestazione ritorna `XNotImplemented` .
+
+
+
+
+
+== Opzioni di classe di archiviazione
+
+IL `x-amz-storage-class` è supportata l'intestazione della richiesta.  Il valore inviato per `x-amz-storage-class` influisce sul modo in cui StorageGRID protegge i dati degli oggetti durante l'acquisizione e non sul numero di copie persistenti dell'oggetto archiviate nel sistema StorageGRID (determinato da ILM).
+
+Se la regola ILM corrispondente a un oggetto ingerito utilizza l'opzione di ingestione rigorosa, `x-amz-storage-class` l'intestazione non ha alcun effetto.
+
+I seguenti valori possono essere utilizzati per `x-amz-storage-class` :
+
+* `STANDARD`(Predefinito)
++
+** *Doppio commit*: se la regola ILM specifica l'opzione Doppio commit per Comportamento di acquisizione, non appena un oggetto viene acquisito, viene creata una seconda copia di tale oggetto e distribuita a un diverso nodo di archiviazione (doppio commit).  Quando l'ILM viene valutato, StorageGRID determina se queste copie provvisorie iniziali soddisfano le istruzioni di posizionamento nella regola.  In caso contrario, potrebbe essere necessario creare nuove copie dell'oggetto in posizioni diverse e le copie provvisorie iniziali potrebbero dover essere eliminate.
+** *Bilanciato*: se la regola ILM specifica l'opzione Bilanciato e StorageGRID non riesce a effettuare immediatamente tutte le copie specificate nella regola, StorageGRID effettua due copie provvisorie su nodi di archiviazione diversi.
++
+Se StorageGRID può creare immediatamente tutte le copie degli oggetti specificate nella regola ILM (posizionamento sincrono), `x-amz-storage-class` l'intestazione non ha alcun effetto.
+
+
+
+* `REDUCED_REDUNDANCY`
++
+** *Doppio commit*: se la regola ILM specifica l'opzione Doppio commit per Comportamento di acquisizione, StorageGRID crea una singola copia provvisoria durante l'acquisizione dell'oggetto (singolo commit).
+** *Bilanciato*: se la regola ILM specifica l'opzione Bilanciato, StorageGRID esegue una singola copia provvisoria solo se il sistema non riesce a eseguire immediatamente tutte le copie specificate nella regola.  Se StorageGRID può eseguire il posizionamento sincrono, questa intestazione non ha alcun effetto.  IL `REDUCED_REDUNDANCY` L'opzione è più indicata quando la regola ILM che corrisponde all'oggetto crea una singola copia replicata.  In questo caso utilizzando `REDUCED_REDUNDANCY` elimina la creazione e l'eliminazione non necessarie di una copia extra dell'oggetto per ogni operazione di acquisizione.
+
+
++
+Utilizzando il `REDUCED_REDUNDANCY` questa opzione non è consigliata in altre circostanze. `REDUCED_REDUNDANCY` aumenta il rischio di perdita di dati degli oggetti durante l'acquisizione.  Ad esempio, si potrebbero perdere dati se la singola copia viene inizialmente archiviata su un nodo di archiviazione che si guasta prima che possa aver luogo la valutazione ILM.
+
+
+
+
+CAUTION: Disporre di una sola copia replicata per qualsiasi periodo di tempo espone i dati al rischio di perdita permanente.  Se esiste una sola copia replicata di un oggetto, tale oggetto viene perso se un nodo di archiviazione si guasta o presenta un errore significativo.  Inoltre, durante le procedure di manutenzione, come gli aggiornamenti, si perde temporaneamente l'accesso all'oggetto.
+
+Specificando `REDUCED_REDUNDANCY` influisce solo sul numero di copie create quando un oggetto viene acquisito per la prima volta.  Non influisce sul numero di copie dell'oggetto effettuate quando l'oggetto viene valutato dai criteri ILM attivi e non determina l'archiviazione dei dati a livelli inferiori di ridondanza nel sistema StorageGRID .
+
+
+NOTE: Se si sta inserendo un oggetto in un bucket con S3 Object Lock abilitato, `REDUCED_REDUNDANCY` l'opzione viene ignorata.  Se si sta ingerendo un oggetto in un bucket conforme legacy, `REDUCED_REDUNDANCY` l'opzione restituisce un errore.  StorageGRID eseguirà sempre un inserimento a doppio commit per garantire che i requisiti di conformità siano soddisfatti.
+
+
+
+== Intestazioni di richiesta per la crittografia lato server
+
+È possibile utilizzare le seguenti intestazioni di richiesta per crittografare un oggetto con la crittografia lato server.  Le opzioni SSE e SSE-C si escludono a vicenda.
+
+* *SSE*: utilizzare la seguente intestazione se si desidera crittografare l'oggetto con una chiave univoca gestita da StorageGRID.
++
+** `x-amz-server-side-encryption`
++
+Quando il `x-amz-server-side-encryption` l'intestazione non è inclusa nella richiesta PutObject, la griglialink:../admin/changing-network-options-object-encryption.html["impostazione di crittografia degli oggetti memorizzati"] viene omesso dalla risposta PutObject.
+
+
+
+* *SSE-C*: utilizzare tutte e tre queste intestazioni se si desidera crittografare l'oggetto con una chiave univoca fornita e gestita dall'utente.
++
+** `x-amz-server-side-encryption-customer-algorithm`: Specificare `AES256` .
+** `x-amz-server-side-encryption-customer-key`: Specifica la chiave di crittografia per il nuovo oggetto.
+** `x-amz-server-side-encryption-customer-key-MD5`: Specificare il digest MD5 della chiave di crittografia del nuovo oggetto.
+
+
+
+
+
+CAUTION: Le chiavi di crittografia fornite non vengono mai memorizzate.  Se si perde una chiave di crittografia, si perde anche l'oggetto corrispondente.  Prima di utilizzare le chiavi fornite dal cliente per proteggere i dati degli oggetti, rivedere le considerazioni perlink:using-server-side-encryption.html["utilizzando la crittografia lato server"] .
+
+
+NOTE: Se un oggetto è crittografato con SSE o SSE-C, tutte le impostazioni di crittografia a livello di bucket o di griglia vengono ignorate.
+
+
+
+== Controllo delle versioni
+
+Se il controllo delle versioni è abilitato per un bucket, univoco `versionId` viene generato automaticamente per la versione dell'oggetto memorizzato.  Questo `versionId` viene restituito anche nella risposta utilizzando il `x-amz-version-id` intestazione di risposta.
+
+Se il controllo delle versioni è sospeso, la versione dell'oggetto viene memorizzata con un valore nullo `versionId` e se esiste già una versione nulla, questa verrà sovrascritta.
+
+
+
+== Calcoli della firma per l'intestazione di autorizzazione
+
+Quando si utilizza il `Authorization` intestazione per autenticare le richieste, StorageGRID differisce da AWS nei seguenti modi:
+
+* StorageGRID non richiede `host` intestazioni da includere all'interno `CanonicalHeaders` .
+* StorageGRID non richiede `Content-Type` da includere all'interno `CanonicalHeaders` .
+* StorageGRID non richiede `x-amz-*` intestazioni da includere all'interno `CanonicalHeaders` .
+
+
+
+NOTE: Come buona pratica generale, includi sempre queste intestazioni all'interno `CanonicalHeaders` per garantire che siano verificati; tuttavia, se si escludono queste intestazioni, StorageGRID non restituisce un errore.
+
+Per i dettagli, fare riferimento a https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-header-based-auth.html["Calcoli della firma per l'intestazione di autorizzazione: trasferimento del payload in un singolo blocco (AWS Signature versione 4)"^] .
+
+.Informazioni correlate
+* link:../ilm/index.html["Gestire gli oggetti con ILM"]
+* link:https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html["Riferimento API di Amazon Simple Storage Service: PutObject"^]
+

@@ -1,0 +1,1035 @@
+= Posizione per i file di configurazione del nodo
+:allow-uri-read: 
+
+
+
+
+== Posizione per i file di configurazione del nodo
+
+Posizionare il file di configurazione per ciascun nodo StorageGRID nel `/etc/storagegrid/nodes` directory sull'host in cui verrà eseguito il nodo.  Ad esempio, se si prevede di eseguire un nodo di amministrazione, un nodo gateway e un nodo di archiviazione su HostA, è necessario posizionare tre file di configurazione del nodo in `/etc/storagegrid/nodes` su HostA.
+
+È possibile creare i file di configurazione direttamente su ciascun host utilizzando un editor di testo, come vim o nano, oppure è possibile crearli altrove e spostarli su ciascun host.
+
+
+
+== Denominazione dei file di configurazione dei nodi
+
+I nomi dei file di configurazione sono significativi.  Il formato è `node-name.conf` , Dove `node-name` è un nome che assegni al nodo.  Questo nome appare nel programma di installazione StorageGRID e viene utilizzato per le operazioni di manutenzione dei nodi, come la migrazione dei nodi.
+
+I nomi dei nodi devono seguire queste regole:
+
+* Deve essere unico
+* Deve iniziare con una lettera
+* Può contenere i caratteri dalla A alla Z e dalla a alla z
+* Può contenere i numeri da 0 a 9
+* Può contenere uno o più trattini (-)
+* Non deve contenere più di 32 caratteri, escluso il `.conf` estensione
+
+
+Tutti i file in `/etc/storagegrid/nodes` che non seguono queste convenzioni di denominazione non verranno analizzati dal servizio host.
+
+Se hai pianificato una topologia multi-sito per la tua griglia, uno schema di denominazione tipico dei nodi potrebbe essere:
+
+`site-nodetype-nodenumber.conf`
+
+Ad esempio, potresti usare `dc1-adm1.conf` per il primo nodo amministrativo nel Data Center 1 e `dc2-sn3.conf` per il terzo nodo di archiviazione nel Data Center 2.  Tuttavia, puoi usare qualsiasi schema tu preferisca, purché tutti i nomi dei nodi seguano le regole di denominazione.
+
+
+
+== Contenuto di un file di configurazione del nodo
+
+Un file di configurazione contiene coppie chiave/valore, con una chiave e un valore per riga.  Per ogni coppia chiave/valore, seguire queste regole:
+
+* La chiave e il valore devono essere separati da un segno di uguale(`=` ) e spazi vuoti facoltativi.
+* Le chiavi non possono contenere spazi.
+* I valori possono contenere spazi incorporati.
+* Eventuali spazi iniziali o finali vengono ignorati.
+
+
+La tabella seguente definisce i valori per tutte le chiavi supportate.  Ogni tasto ha una delle seguenti designazioni:
+
+* *Obbligatorio*: obbligatorio per ogni nodo o per i tipi di nodo specificati
+* *Migliore pratica*: Facoltativo, sebbene consigliato
+* *Facoltativo*: facoltativo per tutti i nodi
+
+
+
+
+=== Chiavi di rete amministrative
+
+
+
+==== ADMIN_IP
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Indirizzo IPv4 della rete Grid del nodo di amministrazione primario per la griglia a cui appartiene questo nodo.  Utilizzare lo stesso valore specificato per GRID_NETWORK_IP per il nodo della griglia con NODE_TYPE = VM_Admin_Node e ADMIN_ROLE = Primary. Se si omette questo parametro, il nodo tenta di individuare un nodo amministrativo primario tramite mDNS.
+
+link:how-grid-nodes-discover-primary-admin-node.html["Come i nodi della griglia scoprono il nodo di amministrazione primario"]
+
+*Nota*: questo valore viene ignorato e potrebbe essere vietato sul nodo di amministrazione primario.
+ a| 
+Le migliori pratiche
+
+|===
+
+
+==== ADMIN_NETWORK_CONFIG
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+DHCP, STATICO o DISABILITATO
+ a| 
+Opzionale
+
+|===
+
+
+==== ADMIN_NETWORK_ESL
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Elenco separato da virgole delle subnet in notazione CIDR con cui questo nodo deve comunicare tramite il gateway di rete di amministrazione.
+
+Esempio: `172.16.0.0/21,172.17.0.0/21`
+ a| 
+Opzionale
+
+|===
+
+
+==== GATEWAY DI RETE AMMINISTRATIVA
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Indirizzo IPv4 del gateway di rete di amministrazione locale per questo nodo.  Deve trovarsi nella subnet definita da ADMIN_NETWORK_IP e ADMIN_NETWORK_MASK.  Questo valore viene ignorato per le reti configurate tramite DHCP.
+
+Esempi:
+
+`1.1.1.1`
+
+`10.224.4.81`
+ a| 
+Obbligatorio se `ADMIN_NETWORK_ESL` è specificato.  Altrimenti facoltativo.
+
+|===
+
+
+==== IP_RETE_AMMINISTRATIVO
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Indirizzo IPv4 di questo nodo sulla rete di amministrazione.  Questa chiave è richiesta solo quando ADMIN_NETWORK_CONFIG = STATIC; non specificarla per altri valori.
+
+Esempi:
+
+`1.1.1.1`
+
+`10.224.4.81`
+ a| 
+Obbligatorio quando ADMIN_NETWORK_CONFIG = STATIC.
+
+Altrimenti facoltativo.
+
+|===
+
+
+==== AMMINISTRAZIONE_RETE_MAC
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+L'indirizzo MAC per l'interfaccia di rete di amministrazione nel contenitore.
+
+Questo campo è facoltativo.  Se omesso, verrà generato automaticamente un indirizzo MAC.
+
+Deve essere composto da 6 coppie di cifre esadecimali separate da due punti.
+
+Esempio: `b2:9c:02:c2:27:10`
+ a| 
+Opzionale
+
+|===
+
+
+==== MASCHERA_DI_RETE_ADMIN
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Maschera di rete IPv4 per questo nodo, sulla rete di amministrazione.  Specificare questa chiave quando ADMIN_NETWORK_CONFIG = STATIC; non specificarla per altri valori.
+
+Esempi:
+
+`255.255.255.0`
+
+`255.255.248.0`
+ a| 
+Obbligatorio se è specificato ADMIN_NETWORK_IP e ADMIN_NETWORK_CONFIG = STATIC.
+
+Altrimenti facoltativo.
+
+|===
+
+
+==== ADMIN_NETWORK_MTU
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+L'unità di trasmissione massima (MTU) per questo nodo sulla rete di amministrazione.  Non specificare se ADMIN_NETWORK_CONFIG = DHCP.  Se specificato, il valore deve essere compreso tra 1280 e 9216.  Se omesso, viene utilizzato 1500.
+
+Se si desidera utilizzare i jumbo frame, impostare l'MTU su un valore adatto ai jumbo frame, ad esempio 9000.  Altrimenti, mantieni il valore predefinito.
+
+*IMPORTANTE*: Il valore MTU della rete deve corrispondere al valore configurato sulla porta dello switch a cui è connesso il nodo.  In caso contrario, potrebbero verificarsi problemi di prestazioni di rete o perdita di pacchetti.
+
+Esempi:
+
+`1500`
+
+`8192`
+ a| 
+Opzionale
+
+|===
+
+
+==== AMMINISTRAZIONE_RETE_TARGET
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Nome del dispositivo host che verrà utilizzato per l'accesso alla rete di amministrazione da parte del nodo StorageGRID .  Sono supportati solo i nomi delle interfacce di rete.  In genere, si utilizza un nome di interfaccia diverso da quello specificato per GRID_NETWORK_TARGET o CLIENT_NETWORK_TARGET.
+
+*Nota*: non utilizzare dispositivi bond o bridge come destinazione di rete.  Configurare una VLAN (o un'altra interfaccia virtuale) sul dispositivo di bonding oppure utilizzare un bridge e una coppia Ethernet virtuale (veth).
+
+*Migliore pratica*: specificare un valore anche se inizialmente questo nodo non avrà un indirizzo IP di rete amministrativa.  Successivamente potrai aggiungere un indirizzo IP di rete amministrativa, senza dover riconfigurare il nodo sull'host.
+
+Esempi:
+
+`bond0.1002`
+
+`ens256`
+ a| 
+Le migliori pratiche
+
+|===
+
+
+==== TIPO_TARGET_RETE_AMMINISTRAZIONE
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Interfaccia (questo è l'unico valore supportato.)
+ a| 
+Opzionale
+
+|===
+
+
+==== ADMIN_NETWORK_TARGET_TYPE_INTERFACE_CLONE_MAC
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Vero o falso
+
+Impostare la chiave su "true" per far sì che il contenitore StorageGRID utilizzi l'indirizzo MAC dell'interfaccia di destinazione host sulla rete di amministrazione.
+
+*Migliore pratica:* nelle reti in cui sarebbe richiesta la modalità promiscua, utilizzare invece la chiave ADMIN_NETWORK_TARGET_TYPE_INTERFACE_CLONE_MAC.
+
+Per maggiori dettagli sulla clonazione MAC:
+
+* link:../rhel/configuring-host-network.html#considerations-and-recommendations-for-mac-address-cloning["Considerazioni e raccomandazioni per la clonazione degli indirizzi MAC (Red Hat Enterprise Linux)"]
+* link:../ubuntu/configuring-host-network.html#considerations-and-recommendations-for-mac-address-cloning["Considerazioni e raccomandazioni per la clonazione dell'indirizzo MAC (Ubuntu o Debian)"]
+
+ a| 
+Le migliori pratiche
+
+|===
+
+
+==== RUOLO_AMMINISTRATORE
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Primario o non primario
+
+Questa chiave è richiesta solo quando NODE_TYPE = VM_Admin_Node; non specificarla per altri tipi di nodo.
+ a| 
+Obbligatorio quando NODE_TYPE = VM_Admin_Node
+
+Altrimenti facoltativo.
+
+|===
+
+
+=== Blocca le chiavi del dispositivo
+
+
+
+==== BLOCK_DEVICE_AUDIT_LOGS
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Percorso e nome del file speciale del dispositivo a blocchi che questo nodo utilizzerà per l'archiviazione persistente dei registri di controllo.
+
+Esempi:
+
+`/dev/disk/by-path/pci-0000:03:00.0-scsi-0:0:0:0`
+
+`/dev/disk/by-id/wwn-0x600a09800059d6df000060d757b475fd`
+
+`/dev/mapper/sgws-adm1-audit-logs`
+ a| 
+Obbligatorio per i nodi con NODE_TYPE = VM_Admin_Node.  Non specificarlo per altri tipi di nodo.
+
+|===
+
+
+==== BLOCK_DEVICE_RANGEDB_nnn
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Percorso e nome del file speciale del dispositivo a blocchi che questo nodo utilizzerà per l'archiviazione persistente degli oggetti.  Questa chiave è richiesta solo per i nodi con NODE_TYPE = VM_Storage_Node; non specificarla per altri tipi di nodo.
+
+È obbligatorio solo BLOCK_DEVICE_RANGEDB_000; gli altri sono facoltativi.  Il dispositivo a blocchi specificato per BLOCK_DEVICE_RANGEDB_000 deve essere di almeno 4 TB; gli altri possono essere più piccoli.
+
+Non lasciare spazi vuoti.  Se si specifica BLOCK_DEVICE_RANGEDB_005, è necessario specificare anche BLOCK_DEVICE_RANGEDB_004.
+
+*Nota*: per garantire la compatibilità con le distribuzioni esistenti, per i nodi aggiornati sono supportate chiavi a due cifre.
+
+Esempi:
+
+`/dev/disk/by-path/pci-0000:03:00.0-scsi-0:0:0:0`
+
+`/dev/disk/by-id/wwn-0x600a09800059d6df000060d757b475fd`
+
+`/dev/mapper/sgws-sn1-rangedb-000`
+ a| 
+Necessario:
+
+BLOCK_DEVICE_RANGEDB_000
+
+Opzionale:
+
+BLOCK_DEVICE_RANGEDB_001
+
+BLOCK_DEVICE_RANGEDB_002
+
+BLOCK_DEVICE_RANGEDB_003
+
+BLOCK_DEVICE_RANGEDB_004
+
+BLOCK_DEVICE_RANGEDB_005
+
+BLOCK_DEVICE_RANGEDB_006
+
+BLOCK_DEVICE_RANGEDB_007
+
+BLOCK_DEVICE_RANGEDB_008
+
+BLOCK_DEVICE_RANGEDB_009
+
+BLOCK_DEVICE_RANGEDB_010
+
+BLOCK_DEVICE_RANGEDB_011
+
+BLOCK_DEVICE_RANGEDB_012
+
+BLOCK_DEVICE_RANGEDB_013
+
+BLOCK_DEVICE_RANGEDB_014
+
+BLOCK_DEVICE_RANGEDB_015
+
+|===
+
+
+==== TABELLE_DISPOSITIVI_BLOCCHI
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Percorso e nome del file speciale del dispositivo a blocchi che questo nodo utilizzerà per l'archiviazione persistente delle tabelle del database.  Questa chiave è richiesta solo per i nodi con NODE_TYPE = VM_Admin_Node; non specificarla per altri tipi di nodo.
+
+Esempi:
+
+`/dev/disk/by-path/pci-0000:03:00.0-scsi-0:0:0:0`
+
+`/dev/disk/by-id/wwn-0x600a09800059d6df000060d757b475fd`
+
+`/dev/mapper/sgws-adm1-tables`
+ a| 
+Necessario
+
+|===
+
+
+==== BLOCK_DEVICE_VAR_LOCAL
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Percorso e nome del file speciale del dispositivo a blocchi che questo nodo utilizzerà per il suo `/var/local` archiviazione persistente.
+
+Esempi:
+
+`/dev/disk/by-path/pci-0000:03:00.0-scsi-0:0:0:0`
+
+`/dev/disk/by-id/wwn-0x600a09800059d6df000060d757b475fd`
+
+`/dev/mapper/sgws-sn1-var-local`
+ a| 
+Necessario
+
+|===
+
+
+=== Chiavi di rete del cliente
+
+
+
+==== CLIENT_NETWORK_CONFIG
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+DHCP, STATICO o DISABILITATO
+ a| 
+Opzionale
+
+|===
+
+
+==== GATEWAY_RETE_CLIENT
+
+[cols="4a,2a"]
+|===
+
+
+ a| 
+Valore
+ a| 
+Designazione
+
+
+
+ a| 
+Indirizzo IPv4 del gateway di rete client locale per questo nodo, che deve trovarsi nella subnet definita da CLIENT_NETWORK_IP e CLIENT_NETWORK_MASK.  Questo valore viene ignorato per le reti configurate tramite DHCP.
+
+Esempi:
+
+`1.1.1.1`
+
+`10.224.4.81`
+ a| 
+Opzionale
+
+|===
+
+
+==== IP_RETE_CLIENTE
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Indirizzo IPv4 di questo nodo sulla rete client.
+
+Questa chiave è richiesta solo quando CLIENT_NETWORK_CONFIG = STATIC; non specificarla per altri valori.
+
+Esempi:
+
+`1.1.1.1`
+
+`10.224.4.81`
+ a| 
+Obbligatorio quando CLIENT_NETWORK_CONFIG = STATIC
+
+Altrimenti facoltativo.
+
+|===
+
+
+==== CLIENT_NETWORK_MAC
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+L'indirizzo MAC per l'interfaccia di rete client nel contenitore.
+
+Questo campo è facoltativo.  Se omesso, verrà generato automaticamente un indirizzo MAC.
+
+Deve essere composto da 6 coppie di cifre esadecimali separate da due punti.
+
+Esempio: `b2:9c:02:c2:27:20`
+ a| 
+Opzionale
+
+|===
+
+
+==== CLIENT_NETWORK_MASK
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Maschera di rete IPv4 per questo nodo sulla rete client.
+
+Specificare questa chiave quando CLIENT_NETWORK_CONFIG = STATIC; non specificarla per altri valori.
+
+Esempi:
+
+`255.255.255.0`
+
+`255.255.248.0`
+ a| 
+Obbligatorio se è specificato CLIENT_NETWORK_IP e CLIENT_NETWORK_CONFIG = STATIC
+
+Altrimenti facoltativo.
+
+|===
+
+
+==== CLIENT_NETWORK_MTU
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+L'unità di trasmissione massima (MTU) per questo nodo sulla rete client.  Non specificare se CLIENT_NETWORK_CONFIG = DHCP.  Se specificato, il valore deve essere compreso tra 1280 e 9216.  Se omesso, viene utilizzato 1500.
+
+Se si desidera utilizzare i jumbo frame, impostare l'MTU su un valore adatto ai jumbo frame, ad esempio 9000.  Altrimenti, mantieni il valore predefinito.
+
+*IMPORTANTE*: Il valore MTU della rete deve corrispondere al valore configurato sulla porta dello switch a cui è connesso il nodo.  In caso contrario, potrebbero verificarsi problemi di prestazioni di rete o perdita di pacchetti.
+
+Esempi:
+
+`1500`
+
+`8192`
+ a| 
+Opzionale
+
+|===
+
+
+==== CLIENT_NETWORK_TARGET
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Nome del dispositivo host che verrà utilizzato per l'accesso alla rete client da parte del nodo StorageGRID .  Sono supportati solo i nomi delle interfacce di rete.  In genere, si utilizza un nome di interfaccia diverso da quello specificato per GRID_NETWORK_TARGET o ADMIN_NETWORK_TARGET.
+
+*Nota*: non utilizzare dispositivi bond o bridge come destinazione di rete.  Configurare una VLAN (o un'altra interfaccia virtuale) sul dispositivo di bonding oppure utilizzare un bridge e una coppia Ethernet virtuale (veth).
+
+*Procedura consigliata:* specificare un valore anche se inizialmente questo nodo non avrà un indirizzo IP di rete client.  Successivamente è possibile aggiungere un indirizzo IP di rete client, senza dover riconfigurare il nodo sull'host.
+
+Esempi:
+
+`bond0.1003`
+
+`ens423`
+ a| 
+Le migliori pratiche
+
+|===
+
+
+==== TIPO_DESTINAZIONE_RETE_CLIENT
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Interfaccia (Questo è l'unico valore supportato.)
+ a| 
+Opzionale
+
+|===
+
+
+==== CLIENT_NETWORK_TARGET_TYPE_INTERFACE_CLONE_MAC
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Vero o falso
+
+Impostare la chiave su "true" per far sì che il contenitore StorageGRID utilizzi l'indirizzo MAC dell'interfaccia di destinazione host sulla rete client.
+
+*Migliore pratica:* nelle reti in cui sarebbe richiesta la modalità promiscua, utilizzare invece la chiave CLIENT_NETWORK_TARGET_TYPE_INTERFACE_CLONE_MAC.
+
+Per maggiori dettagli sulla clonazione MAC:
+
+* link:../rhel/configuring-host-network.html#considerations-and-recommendations-for-mac-address-cloning["Considerazioni e raccomandazioni per la clonazione degli indirizzi MAC (Red Hat Enterprise Linux)"]
+* link:../ubuntu/configuring-host-network.html#considerations-and-recommendations-for-mac-address-cloning["Considerazioni e raccomandazioni per la clonazione dell'indirizzo MAC (Ubuntu o Debian)"]
+
+ a| 
+Le migliori pratiche
+
+|===
+
+
+=== Chiavi di rete della griglia
+
+
+
+==== GRID_NETWORK_CONFIG
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+STATICO o DHCP
+
+Se non specificato, il valore predefinito è STATIC.
+ a| 
+Le migliori pratiche
+
+|===
+
+
+==== GRID_NETWORK_GATEWAY
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Indirizzo IPv4 del gateway di rete Grid locale per questo nodo, che deve trovarsi nella subnet definita da GRID_NETWORK_IP e GRID_NETWORK_MASK.  Questo valore viene ignorato per le reti configurate tramite DHCP.
+
+Se la rete Grid è una singola subnet senza gateway, utilizzare l'indirizzo gateway standard per la subnet (XYZ1) o il valore GRID_NETWORK_IP di questo nodo; entrambi i valori semplificheranno le potenziali espansioni future della rete Grid.
+ a| 
+Necessario
+
+|===
+
+
+==== IP_RETE_GRIGLIA
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Indirizzo IPv4 di questo nodo sulla rete Grid.  Questa chiave è richiesta solo quando GRID_NETWORK_CONFIG = STATIC; non specificarla per altri valori.
+
+Esempi:
+
+`1.1.1.1`
+
+`10.224.4.81`
+ a| 
+Obbligatorio quando GRID_NETWORK_CONFIG = STATIC
+
+Altrimenti facoltativo.
+
+|===
+
+
+==== GRID_NETWORK_MAC
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+L'indirizzo MAC per l'interfaccia Grid Network nel contenitore.
+
+Deve essere composto da 6 coppie di cifre esadecimali separate da due punti.
+
+Esempio: `b2:9c:02:c2:27:30`
+ a| 
+Opzionale
+
+Se omesso, verrà generato automaticamente un indirizzo MAC.
+
+|===
+
+
+==== GRID_NETWORK_MASK
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Maschera di rete IPv4 per questo nodo sulla rete Grid.  Specificare questa chiave quando GRID_NETWORK_CONFIG = STATIC; non specificarla per altri valori.
+
+Esempi:
+
+`255.255.255.0`
+
+`255.255.248.0`
+ a| 
+Obbligatorio quando è specificato GRID_NETWORK_IP e GRID_NETWORK_CONFIG = STATIC.
+
+Altrimenti facoltativo.
+
+|===
+
+
+==== GRID_NETWORK_MTU
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+L'unità di trasmissione massima (MTU) per questo nodo sulla rete Grid.  Non specificare se GRID_NETWORK_CONFIG = DHCP.  Se specificato, il valore deve essere compreso tra 1280 e 9216.  Se omesso, viene utilizzato 1500.
+
+Se si desidera utilizzare i jumbo frame, impostare l'MTU su un valore adatto ai jumbo frame, ad esempio 9000.  Altrimenti, mantieni il valore predefinito.
+
+*IMPORTANTE*: Il valore MTU della rete deve corrispondere al valore configurato sulla porta dello switch a cui è connesso il nodo.  In caso contrario, potrebbero verificarsi problemi di prestazioni di rete o perdita di pacchetti.
+
+*IMPORTANTE*: Per ottenere le migliori prestazioni di rete, tutti i nodi devono essere configurati con valori MTU simili sulle loro interfacce di rete Grid.  L'avviso *Mancata corrispondenza MTU della rete Grid* viene attivato se si verifica una differenza significativa nelle impostazioni MTU per la rete Grid sui singoli nodi.  I valori MTU non devono essere gli stessi per tutti i tipi di rete.
+
+Esempi:
+
+`1500`
+
+`8192`
+ a| 
+Opzionale
+
+|===
+
+
+==== GRID_NETWORK_TARGET
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Nome del dispositivo host che verrà utilizzato per l'accesso alla rete Grid da parte del nodo StorageGRID .  Sono supportati solo i nomi delle interfacce di rete.  In genere, si utilizza un nome di interfaccia diverso da quello specificato per ADMIN_NETWORK_TARGET o CLIENT_NETWORK_TARGET.
+
+*Nota*: non utilizzare dispositivi bond o bridge come destinazione di rete.  Configurare una VLAN (o un'altra interfaccia virtuale) sul dispositivo di bonding oppure utilizzare un bridge e una coppia Ethernet virtuale (veth).
+
+Esempi:
+
+`bond0.1001`
+
+`ens192`
+ a| 
+Necessario
+
+|===
+
+
+==== TIPO_TARGET_RETE_GRIGLIA
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Interfaccia (questo è l'unico valore supportato.)
+ a| 
+Opzionale
+
+|===
+
+
+==== GRID_NETWORK_TARGET_TYPE_INTERFACE_CLONE_MAC
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Vero o falso
+
+Impostare il valore della chiave su "true" per far sì che il contenitore StorageGRID utilizzi l'indirizzo MAC dell'interfaccia di destinazione host sulla rete Grid.
+
+*Migliore pratica:* nelle reti in cui sarebbe richiesta la modalità promiscua, utilizzare invece la chiave GRID_NETWORK_TARGET_TYPE_INTERFACE_CLONE_MAC.
+
+Per maggiori dettagli sulla clonazione MAC:
+
+* link:../rhel/configuring-host-network.html#considerations-and-recommendations-for-mac-address-cloning["Considerazioni e raccomandazioni per la clonazione degli indirizzi MAC (Red Hat Enterprise Linux)"]
+* link:../ubuntu/configuring-host-network.html#considerations-and-recommendations-for-mac-address-cloning["Considerazioni e raccomandazioni per la clonazione dell'indirizzo MAC (Ubuntu o Debian)"]
+
+ a| 
+Le migliori pratiche
+
+|===
+
+
+=== Chiave password di installazione (temporanea)
+
+
+
+==== HASH_PASSWORD_TEMPORANEO_PERSONALIZZATO
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Per il nodo di amministrazione primario, impostare una password temporanea predefinita per l'API di installazione StorageGRID durante l'installazione.
+
+*Nota*: impostare una password di installazione solo sul nodo di amministrazione primario.  Se si tenta di impostare una password su un altro tipo di nodo, la convalida del file di configurazione del nodo fallirà.
+
+L'impostazione di questo valore non ha alcun effetto al termine dell'installazione.
+
+Se questa chiave viene omessa, per impostazione predefinita non viene impostata alcuna password temporanea.  In alternativa, è possibile impostare una password temporanea utilizzando l'API di installazione StorageGRID .
+
+Deve essere un `crypt()` Hash della password SHA-512 con formato `$6$<salt>$<password hash>` per una password di almeno 8 e non più di 32 caratteri.
+
+Questo hash può essere generato utilizzando strumenti CLI, come `openssl passwd` comando in modalità SHA-512.
+ a| 
+Le migliori pratiche
+
+|===
+
+
+=== Chiave delle interfacce
+
+
+
+==== INTERFACCIA_DESTINAZIONE_nnnn
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Nome e descrizione facoltativa per un'interfaccia aggiuntiva che si desidera aggiungere a questo nodo.  È possibile aggiungere più interfacce extra a ciascun nodo.
+
+Per _nnnn_, specificare un numero univoco per ogni voce INTERFACE_TARGET che si sta aggiungendo.
+
+Per il valore, specificare il nome dell'interfaccia fisica sull'host bare-metal.  Quindi, facoltativamente, aggiungere una virgola e fornire una descrizione dell'interfaccia, che viene visualizzata nella pagina Interfacce VLAN e nella pagina Gruppi HA.
+
+Esempio: `INTERFACE_TARGET_0001=ens256, Trunk`
+
+Se si aggiunge un'interfaccia trunk, è necessario configurare un'interfaccia VLAN in StorageGRID.  Se si aggiunge un'interfaccia di accesso, è possibile aggiungerla direttamente a un gruppo HA; non è necessario configurare un'interfaccia VLAN.
+ a| 
+Opzionale
+
+|===
+
+
+=== Chiave RAM massima
+
+
+
+==== RAM MASSIMA
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+La quantità massima di RAM che questo nodo può consumare.  Se questa chiave viene omessa, il nodo non ha restrizioni di memoria.  Quando si imposta questo campo per un nodo di livello di produzione, specificare un valore pari ad almeno 24 GB e da 16 a 32 GB in meno rispetto alla RAM totale del sistema.
+
+*Nota*: il valore della RAM influisce sullo spazio effettivo riservato ai metadati di un nodo. Vedi illink:../admin/managing-object-metadata-storage.html["descrizione di cosa è lo spazio riservato ai metadati"] .
+
+Il formato per questo campo è `_numberunit_` , Dove `_unit_` può essere `b` , `k` , `m` , O `g` .
+
+Esempi:
+
+`24g`
+
+`38654705664b`
+
+*Nota*: se si desidera utilizzare questa opzione, è necessario abilitare il supporto del kernel per i cgroup di memoria.
+ a| 
+Opzionale
+
+|===
+
+
+=== Chiavi di tipo nodo
+
+
+
+==== TIPO_NODO
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Tipo di nodo:
+
+* Nodo amministratore VM
+* Nodo di archiviazione VM
+* VM_Archive_Node
+* Gateway VM_API
+
+ a| 
+Necessario
+
+|===
+
+
+==== TIPO_DI_ARCHIVIAZIONE
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Definisce il tipo di oggetti contenuti in un nodo di archiviazione. Per ulteriori informazioni, consultare link:../primer/what-storage-node-is.html#types-of-storage-nodes["Tipi di nodi di archiviazione"] .  Questa chiave è richiesta solo per i nodi con NODE_TYPE = VM_Storage_Node; non specificarla per altri tipi di nodo.  Tipi di archiviazione:
+
+* combinato
+* dati
+* metadati
+
+
+*Nota*: se STORAGE_TYPE non è specificato, per impostazione predefinita il tipo di nodo di archiviazione è impostato su combinato (dati e metadati).
+ a| 
+Opzionale
+
+|===
+
+
+=== Tasti di rimappatura delle porte
+
+
+
+==== PORT_REMAP
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Riassegna qualsiasi porta utilizzata da un nodo per le comunicazioni interne del nodo della griglia o per le comunicazioni esterne.  La rimappatura delle porte è necessaria se i criteri di rete aziendale limitano una o più porte utilizzate da StorageGRID, come descritto inlink:../network/internal-grid-node-communications.html["Comunicazioni interne al nodo della griglia"] Olink:../network/external-communications.html["Comunicazioni esterne"] .
+
+*IMPORTANTE*: non rimappare le porte che intendi utilizzare per configurare gli endpoint del bilanciatore del carico.
+
+*Nota*: se è impostato solo PORT_REMAP, la mappatura specificata viene utilizzata sia per le comunicazioni in entrata che per quelle in uscita.  Se viene specificato anche PORT_REMAP_INBOUND, PORT_REMAP si applica solo alle comunicazioni in uscita.
+
+Il formato utilizzato è: `_network type_/_protocol_/_default port used by grid node_/_new port_` , Dove `_network type_` è griglia, amministratore o client e `_protocol_` è tcp o udp.
+
+Esempio: `PORT_REMAP = client/tcp/18082/443`
+
+È anche possibile rimappare più porte utilizzando un elenco separato da virgole.
+
+Esempio: `PORT_REMAP = client/tcp/18082/443, client/tcp/18083/80`
+ a| 
+Opzionale
+
+|===
+
+
+==== PORT_REMAP_INBOUND
+
+[cols="4a,2a"]
+|===
+| Valore | Designazione 
+
+
+ a| 
+Riassegna le comunicazioni in entrata alla porta specificata.  Se si specifica PORT_REMAP_INBOUND ma non si specifica un valore per PORT_REMAP, le comunicazioni in uscita per la porta rimangono invariate.
+
+*IMPORTANTE*: non rimappare le porte che intendi utilizzare per configurare gli endpoint del bilanciatore del carico.
+
+Il formato utilizzato è: `_network type_/_protocol_/_remapped port_/_default port used by grid node_` , Dove `_network type_` è griglia, amministratore o client e `_protocol_` è tcp o udp.
+
+Esempio: `PORT_REMAP_INBOUND = grid/tcp/3022/22`
+
+È anche possibile rimappare più porte in ingresso utilizzando un elenco separato da virgole.
+
+Esempio: `PORT_REMAP_INBOUND = grid/tcp/3022/22, admin/tcp/3022/22`
+ a| 
+Opzionale
+
+|===

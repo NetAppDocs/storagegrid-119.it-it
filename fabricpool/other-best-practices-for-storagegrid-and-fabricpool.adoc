@@ -1,0 +1,51 @@
+---
+permalink: fabricpool/other-best-practices-for-storagegrid-and-fabricpool.html 
+sidebar: sidebar 
+keywords: fabricPool, best practices, audit log, encryption, compressions, tiering, ontap, consistency 
+summary: 'Quando si configura un sistema StorageGRID per l"utilizzo con FabricPool, potrebbe essere necessario modificare altre opzioni StorageGRID .  Prima di modificare un"impostazione globale, valutare l"impatto della modifica sulle altre applicazioni S3.' 
+---
+= Altre best practice per StorageGRID e FabricPool
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Quando si configura un sistema StorageGRID per l'utilizzo con FabricPool, potrebbe essere necessario modificare altre opzioni StorageGRID .  Prima di modificare un'impostazione globale, valutare l'impatto della modifica sulle altre applicazioni S3.
+
+
+
+== Destinazioni dei messaggi di controllo e dei registri
+
+I carichi di lavoro FabricPool presentano spesso un elevato tasso di operazioni di lettura, che può generare un volume elevato di messaggi di audit.
+
+* Se non è necessario un record delle operazioni di lettura del client per FabricPool o qualsiasi altra applicazione S3, è possibile passare facoltativamente a *CONFIGURAZIONE* > *Monitoraggio* > *Server di audit e syslog*. Modificare l'impostazione *Letture client* su *Errore* per ridurre il numero di messaggi di controllo registrati nel registro di controllo. Vederelink:../monitor/configure-audit-messages.html["Configurare i messaggi di controllo e le destinazioni dei registri"] per i dettagli.
+* Se si dispone di una griglia di grandi dimensioni, si utilizzano più tipi di applicazioni S3 o si desidera conservare tutti i dati di audit, configurare un server syslog esterno e salvare le informazioni di audit in remoto.  L'utilizzo di un server esterno riduce al minimo l'impatto sulle prestazioni della registrazione dei messaggi di controllo senza ridurre la completezza dei dati di controllo. Vederelink:../monitor/considerations-for-external-syslog-server.html["Considerazioni per il server syslog esterno"] per i dettagli.
+
+
+
+
+== Crittografia degli oggetti
+
+Durante la configurazione di StorageGRID, è possibile abilitare facoltativamentelink:../admin/changing-network-options-object-encryption.html["opzione globale per la crittografia degli oggetti memorizzati"] se è richiesta la crittografia dei dati per altri client StorageGRID .  I dati suddivisi in livelli da FabricPool a StorageGRID sono già crittografati, pertanto non è necessario abilitare l'impostazione StorageGRID .  Le chiavi di crittografia lato client sono di proprietà di ONTAP.
+
+
+
+== Compressione degli oggetti
+
+Quando si configura StorageGRID, non abilitarelink:../admin/configuring-stored-object-compression.html["opzione globale per comprimere gli oggetti memorizzati"] .  I dati suddivisi in livelli da FabricPool a StorageGRID sono già compressi.  L'utilizzo dell'opzione StorageGRID non ridurrà ulteriormente le dimensioni di un oggetto.
+
+
+
+== Consistenza del secchio
+
+Per i bucket FabricPool , la coerenza consigliata è *Read-after-new-write*, che è la coerenza predefinita per un nuovo bucket.  Non modificare i bucket FabricPool per utilizzare *Disponibile* o *Strong-site*.
+
+
+
+== Struttura a FabricPool
+
+Se un nodo StorageGRID utilizza storage assegnato da un sistema NetApp ONTAP , verificare che il volume non abbia un criterio di suddivisione in livelli FabricPool abilitato.  Ad esempio, se un nodo StorageGRID è in esecuzione su un host VMware, assicurarsi che il volume che supporta il datastore per il nodo StorageGRID non abbia un criterio di suddivisione in livelli FabricPool abilitato.  La disattivazione della suddivisione in livelli FabricPool per i volumi utilizzati con i nodi StorageGRID semplifica la risoluzione dei problemi e le operazioni di archiviazione.
+
+
+CAUTION: Non utilizzare mai FabricPool per riportare i dati relativi a StorageGRID a StorageGRID stesso.  Il riordino dei dati StorageGRID su StorageGRID aumenta la complessità operativa e la risoluzione dei problemi.

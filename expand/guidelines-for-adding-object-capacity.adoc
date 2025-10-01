@@ -1,0 +1,65 @@
+---
+permalink: expand/guidelines-for-adding-object-capacity.html 
+sidebar: sidebar 
+keywords: adding storage capacity, guidelines, storage volumes, expansion 
+summary: 'È possibile espandere la capacità di archiviazione degli oggetti del sistema StorageGRID aggiungendo volumi di archiviazione ai nodi di archiviazione esistenti oppure aggiungendo nuovi nodi di archiviazione ai siti esistenti.  È necessario aggiungere capacità di archiviazione in modo da soddisfare i requisiti della politica di gestione del ciclo di vita delle informazioni (ILM).' 
+---
+= Linee guida per l'aggiunta di capacità dell'oggetto
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile espandere la capacità di archiviazione degli oggetti del sistema StorageGRID aggiungendo volumi di archiviazione ai nodi di archiviazione esistenti oppure aggiungendo nuovi nodi di archiviazione ai siti esistenti.  È necessario aggiungere capacità di archiviazione in modo da soddisfare i requisiti della politica di gestione del ciclo di vita delle informazioni (ILM).
+
+
+
+== Linee guida per l'aggiunta di volumi di archiviazione
+
+Prima di aggiungere volumi di archiviazione ai nodi di archiviazione esistenti, rivedere le seguenti linee guida e limitazioni:
+
+* È necessario esaminare le attuali regole ILM per determinare dove e quandolink:../expand/adding-storage-volumes-to-storage-nodes.html["aggiungere volumi di archiviazione"] per aumentare lo spazio di archiviazione disponibile perlink:../ilm/what-replication-is.html["oggetti replicati"] Olink:../ilm/what-erasure-coding-schemes-are.html["oggetti con codice di cancellazione"] .
+* Non è possibile aumentare la capacità dei metadati del sistema aggiungendo volumi di archiviazione perché i metadati degli oggetti vengono archiviati solo sul volume 0.
+* Ogni nodo di archiviazione basato su software può supportare un massimo di 48 volumi di archiviazione.  Se è necessario aggiungere ulteriore capacità, è necessario aggiungere nuovi nodi di archiviazione.
+* È possibile aggiungere uno o due ripiani di espansione a ciascun apparecchio SG6060.  Ogni ripiano di espansione aggiunge 16 volumi di stoccaggio.  Con entrambi i ripiani di espansione installati, l'SG6060 può supportare un totale di 48 volumi di archiviazione.
+* È possibile aggiungere uno o due ripiani di espansione a ciascun elettrodomestico SG6160.  Ogni ripiano di espansione aggiunge 60 volumi di stoccaggio.  Con entrambi i ripiani di espansione installati, l'SG6160 può supportare un totale di 180 volumi di archiviazione.
+* Non è possibile aggiungere volumi di archiviazione ad altri dispositivi di archiviazione.
+* Non è possibile aumentare le dimensioni di un volume di archiviazione esistente.
+* Non è possibile aggiungere volumi di archiviazione a un nodo di archiviazione contemporaneamente all'esecuzione di un aggiornamento del sistema, di un'operazione di ripristino o di un'altra espansione.
+
+
+Dopo aver deciso di aggiungere volumi di archiviazione e aver determinato quali nodi di archiviazione è necessario espandere per soddisfare i criteri ILM, seguire le istruzioni per il tipo di nodo di archiviazione:
+
+* Per aggiungere uno o due ripiani di espansione a un dispositivo di archiviazione SG6060, vai a https://docs.netapp.com/us-en/storagegrid-appliances/sg6000/adding-expansion-shelf-to-deployed-sg6060.html["Aggiungere uno scaffale di espansione al SG6060 distribuito"^] .
+* Per aggiungere uno o due ripiani di espansione a un dispositivo di archiviazione SG6160, vai a https://docs.netapp.com/us-en/storagegrid-appliances/sg6100/adding-expansion-shelf-to-deployed-sg6160.html["Aggiungere uno scaffale di espansione al SG6160 distribuito"^]
+* Per un nodo basato su software, seguire le istruzioni perlink:adding-storage-volumes-to-storage-nodes.html["aggiunta di volumi di archiviazione ai nodi di archiviazione"] .
+
+
+
+
+== Linee guida per l'aggiunta di nodi di archiviazione
+
+Prima di aggiungere nodi di archiviazione ai siti esistenti, rivedere le seguenti linee guida e limitazioni:
+
+* È necessario esaminare le attuali regole ILM per determinare dove e quando aggiungere nodi di archiviazione per aumentare lo spazio di archiviazione disponibile perlink:../ilm/what-replication-is.html["oggetti replicati"] Olink:../ilm/what-erasure-coding-schemes-are.html["oggetti con codice di cancellazione"] .
+* Non dovresti aggiungere più di 10 nodi di archiviazione in una singola procedura di espansione.
+* È possibile aggiungere nodi di archiviazione a più siti con un'unica procedura di espansione.
+* È possibile aggiungere nodi di archiviazione e altri tipi di nodi in un'unica procedura di espansione.
+* Prima di avviare la procedura di espansione, è necessario confermare che tutte le operazioni di riparazione dei dati eseguite come parte di un ripristino siano state completate. Vedere link:../maintain/checking-data-repair-jobs.html["Controlla i lavori di riparazione dei dati"] .
+* Se è necessario rimuovere i nodi di archiviazione prima o dopo aver eseguito un'espansione, non si dovrebbero dismettere più di 10 nodi di archiviazione in un'unica procedura di dismissione del nodo.
+
+
+
+
+== Linee guida per il servizio ADC sui nodi di archiviazione
+
+Durante la configurazione dell'espansione, è necessario scegliere se includere il servizio Administrative Domain Controller (ADC) su ogni nuovo nodo di archiviazione. Il servizio ADC tiene traccia della posizione e della disponibilità dei servizi di rete.
+
+* Il sistema StorageGRID richiede unlink:../maintain/understanding-adc-service-quorum.html["quorum dei servizi ADC"] essere disponibili in ogni sede e in ogni momento.
+* Almeno tre nodi di archiviazione in ogni sito devono includere il servizio ADC.
+* Non è consigliabile aggiungere il servizio ADC a ogni nodo di archiviazione.  L'inclusione di troppi servizi ADC può causare rallentamenti dovuti all'aumento della quantità di comunicazioni tra i nodi.
+* Una singola griglia non dovrebbe avere più di 48 nodi di archiviazione con il servizio ADC.  Ciò equivale a 16 siti con tre servizi ADC in ogni sito.
+* In generale, quando si seleziona l'impostazione *Servizio ADC* per un nuovo nodo, è necessario selezionare *Automatico*. Selezionare *Sì* solo se il nuovo nodo sostituirà un altro nodo di archiviazione che include il servizio ADC. Poiché non è possibile dismettere un nodo di archiviazione se rimangono troppo pochi servizi ADC, ciò garantisce che un nuovo servizio ADC sia disponibile prima che il vecchio servizio venga rimosso.
+* Non è possibile aggiungere il servizio ADC a un nodo dopo averlo distribuito.
+

@@ -1,0 +1,43 @@
+---
+permalink: maintain/preparing-appliance-storage-node-for-reinstallation.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, appliance, reinstallation appliance, reinstall appliance 
+summary: 'Quando si ripristina un nodo di archiviazione dell"appliance, è necessario innanzitutto preparare l"appliance per la reinstallazione del software StorageGRID .' 
+---
+= Preparare il nodo di archiviazione dell'appliance per la reinstallazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Quando si ripristina un nodo di archiviazione dell'appliance, è necessario innanzitutto preparare l'appliance per la reinstallazione del software StorageGRID .
+
+.Passi
+. Accedi al nodo di archiviazione non riuscito:
++
+.. Immettere il seguente comando: `ssh admin@_grid_node_IP_`
+.. Inserisci la password elencata nel `Passwords.txt` file.
+.. Immettere il seguente comando per passare alla root: `su -`
+.. Inserisci la password elencata nel `Passwords.txt` file.
+
+
++
+Quando si accede come root, il prompt cambia da `$` A `#` .
+
+. Preparare l'appliance Storage Node per l'installazione del software StorageGRID . `sgareinstall`
+. Quando ti viene chiesto di continuare, inserisci: `y`
++
+L'appliance si riavvia e la sessione SSH termina.  In genere occorrono circa 5 minuti prima che StorageGRID Appliance Installer diventi disponibile, anche se in alcuni casi potrebbe essere necessario attendere fino a 30 minuti.
+
++
+
+CAUTION: Non tentare di accelerare il riavvio spegnendo e riaccendendo il dispositivo o reimpostandolo in altro modo.  Potresti interrompere gli aggiornamenti automatici del BIOS, BMC o di altri firmware.
+
++
+Il nodo di archiviazione dell'appliance StorageGRID viene reimpostato e i dati sul nodo di archiviazione non sono più accessibili.  Gli indirizzi IP configurati durante il processo di installazione originale dovrebbero rimanere intatti; tuttavia, si consiglia di confermarlo al termine della procedura.
+
++
+Dopo aver eseguito il `sgareinstall` comando, tutti gli account, le password e le chiavi SSH forniti StorageGRID vengono rimossi e vengono generate nuove chiavi host.
+
+

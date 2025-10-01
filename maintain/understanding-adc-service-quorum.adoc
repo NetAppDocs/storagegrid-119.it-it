@@ -1,0 +1,29 @@
+---
+permalink: maintain/understanding-adc-service-quorum.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, adc, adc quorum 
+summary: 'Potrebbe non essere possibile dismettere determinati nodi di archiviazione in un sito se dopo la dismissione rimangono troppo pochi servizi Administrative Domain Controller \(ADC\).' 
+---
+= Qual è il quorum dell'ADC?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Potrebbe non essere possibile dismettere determinati nodi di archiviazione in un sito se dopo la dismissione rimangono troppo pochi servizi di controller di dominio amministrativo (ADC).
+
+Il servizio ADC, presente su alcuni nodi di archiviazione, gestisce le informazioni sulla topologia della griglia e fornisce servizi di configurazione alla griglia.  Il sistema StorageGRID richiede che un quorum di servizi ADC sia disponibile in ogni sito e in ogni momento.
+
+Non è possibile dismettere un nodo di archiviazione se la rimozione del nodo impedirebbe il raggiungimento del quorum ADC.  Per soddisfare il quorum ADC durante una dismissione, almeno tre nodi di archiviazione in ogni sito devono disporre del servizio ADC.  Se un sito ha più di tre nodi di archiviazione con il servizio ADC, la maggioranza semplice di tali nodi deve rimanere disponibile dopo la dismissione: `((0.5 * _Storage Nodes with ADC_) + 1)`
+
+
+CAUTION: Prestare attenzione quando si dismettono nodi di archiviazione in una griglia contenente nodi basati solo su software.  Se si dismettono tutti i nodi configurati per archiviare sia oggetti che metadati, la possibilità di archiviare oggetti viene rimossa dalla griglia.  Vederelink:../primer/what-storage-node-is.html#types-of-storage-nodes["Tipi di nodi di archiviazione"] per ulteriori informazioni sui nodi di archiviazione solo metadati.
+
+Ad esempio, supponiamo che un sito includa attualmente sei nodi di archiviazione con servizi ADC e che si desideri dismettere tre nodi di archiviazione.  A causa del requisito del quorum ADC, è necessario completare due procedure di dismissione, come segue:
+
+* Nella prima procedura di dismissione, è necessario assicurarsi che rimangano disponibili quattro nodi di archiviazione con servizi ADC: `((0.5 * 6) + 1)` .  Ciò significa che inizialmente è possibile dismettere solo due nodi di archiviazione.
+* Nella seconda procedura di dismissione, è possibile rimuovere il terzo nodo di archiviazione perché il quorum ADC richiede ora che rimangano disponibili solo tre servizi ADC: `((0.5 * 4) + 1)` .
+
+
+Se è necessario dismettere un nodo di archiviazione ma non è possibile a causa del requisito di quorum ADC, aggiungere un nuovo nodo di archiviazione in unlink:../expand/index.html["espansione"] e specificare che dovrebbe avere un servizio ADC.  Quindi, dismettere il nodo di archiviazione esistente.

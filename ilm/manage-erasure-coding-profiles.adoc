@@ -1,0 +1,166 @@
+---
+permalink: ilm/manage-erasure-coding-profiles.html 
+sidebar: sidebar 
+keywords: rename erasure-coding profile, ec profile 
+summary: È possibile visualizzare i dettagli di un profilo di codifica di cancellazione e, se necessario, rinominare un profilo.  È possibile disattivare un profilo di codifica di cancellazione se non è attualmente utilizzato in alcuna regola ILM. 
+---
+= Gestisci i profili di codifica di cancellazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile visualizzare i dettagli di un profilo di codifica di cancellazione e, se necessario, rinominare un profilo.  È possibile disattivare un profilo di codifica di cancellazione se non è attualmente utilizzato in alcuna regola ILM.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Tu hai illink:../admin/admin-group-permissions.html["autorizzazioni di accesso richieste"] .
+
+
+
+
+== Visualizza i dettagli del profilo di codifica di cancellazione
+
+È possibile visualizzare i dettagli di un profilo di codifica di cancellazione per determinarne lo stato, lo schema di codifica di cancellazione utilizzato e altre informazioni.
+
+.Passi
+. Selezionare *CONFIGURAZIONE* > *Sistema* > *Codifica di cancellazione*.
+. Seleziona il profilo.  Viene visualizzata la pagina dei dettagli del profilo.
+. Facoltativamente, visualizza la scheda Regole ILM per un elenco delle regole ILM che utilizzano il profilo e i criteri ILM che utilizzano tali regole.
+. Facoltativamente, visualizza la scheda Nodi di archiviazione per i dettagli su ciascun nodo di archiviazione nel pool di archiviazione del profilo, ad esempio il sito in cui si trova e l'utilizzo dello spazio di archiviazione.
+
+
+
+
+== Rinominare un profilo di codifica di cancellazione
+
+Potresti voler rinominare un profilo di codifica di cancellazione per rendere più evidente la sua funzione.
+
+.Passi
+. Selezionare *CONFIGURAZIONE* > *Sistema* > *Codifica di cancellazione*.
+. Seleziona il profilo che vuoi rinominare.
+. Selezionare *Rinomina*.
+. Immettere un nome univoco per il profilo di codifica di cancellazione.
++
+Il nome del profilo di codifica di cancellazione viene aggiunto al nome del pool di archiviazione nelle istruzioni di posizionamento per una regola ILM.
+
++
+
+NOTE: I nomi dei profili di codifica di cancellazione devono essere univoci.  Si verifica un errore di convalida se si utilizza il nome di un profilo esistente, anche se tale profilo è stato disattivato.
+
+. Seleziona *Salva*.
+
+
+
+
+== Disattivare un profilo di codifica di cancellazione
+
+È possibile disattivare un profilo di codifica di cancellazione se non si prevede più di utilizzarlo e se il profilo non è attualmente utilizzato in alcuna regola ILM.
+
+
+TIP: Verificare che non siano in corso operazioni di riparazione di dati codificati tramite cancellazione o procedure di disattivazione.  Se si tenta di disattivare un profilo di codifica di cancellazione mentre è in corso una di queste operazioni, viene visualizzato un messaggio di errore.
+
+.Informazioni su questo compito
+StorageGRID impedisce la disattivazione di un profilo di codifica di cancellazione se si verifica una delle seguenti condizioni:
+
+* Il profilo di codifica della cancellazione è attualmente utilizzato in una regola ILM.
+* Il profilo di codifica della cancellazione non è più utilizzato in nessuna regola ILM, ma i dati degli oggetti e i frammenti di parità per il profilo esistono ancora.
+
+
+.Passi
+. Selezionare *CONFIGURAZIONE* > *Sistema* > *Codifica di cancellazione*.
+. Nella scheda Attivo, rivedere la colonna *Stato* per confermare che il profilo di codifica di cancellazione che si desidera disattivare non sia utilizzato in alcuna regola ILM.
++
+Non è possibile disattivare un profilo di codifica di cancellazione se è utilizzato in una regola ILM.  Nell'esempio, il profilo 2+1 Data Center 1 viene utilizzato in almeno una regola ILM.
+
++
+image::../media/ec_profile_used_in_ilm_rule.png[Profilo EC utilizzato nella norma ILM]
+
+. Se il profilo viene utilizzato in una regola ILM, attenersi alla seguente procedura:
++
+.. Selezionare *ILM* > *Regole*.
+.. Selezionare ciascuna regola e rivedere il diagramma di conservazione per determinare se la regola utilizza il profilo di codifica di cancellazione che si desidera disattivare.
+.. Se la regola ILM utilizza il profilo di codifica di cancellazione che si desidera disattivare, determinare se la regola viene utilizzata in un criterio ILM.
+.. Completare i passaggi aggiuntivi nella tabella, in base al punto in cui viene utilizzato il profilo di codifica di cancellazione.
++
+[cols="2a,4a,1a"]
+|===
+| Dove è stato utilizzato il profilo? | Ulteriori passaggi da eseguire prima di disattivare il profilo | Fare riferimento a queste istruzioni aggiuntive 
+
+
+ a| 
+Mai utilizzato in nessuna regola ILM
+ a| 
+Non sono richiesti passaggi aggiuntivi.  Continuare con questa procedura.
+ a| 
+_Nessuno_
+
+
+
+ a| 
+In una regola ILM che non è mai stata utilizzata in nessuna politica ILM
+ a| 
+... Modifica o elimina tutte le regole ILM interessate.  Se modifichi la regola, rimuovi tutti i posizionamenti che utilizzano il profilo di codifica di cancellazione.
+... Continuare con questa procedura.
+
+ a| 
+link:working-with-ilm-rules-and-ilm-policies.html["Lavorare con le regole e le politiche ILM"]
+
+
+
+ a| 
+In una regola ILM che è attualmente in una policy ILM attiva
+ a| 
+... Clonare la policy.
+... Rimuovere la regola ILM che utilizza il profilo di codifica di cancellazione.
+... Aggiungere una o più nuove regole ILM per garantire la protezione degli oggetti.
+... Salva, simula e attiva la nuova policy.
+... Attendi che la nuova policy venga applicata e che gli oggetti esistenti vengano spostati in nuove posizioni in base alle nuove regole aggiunte.
++
+*Nota:* a seconda del numero di oggetti e delle dimensioni del sistema StorageGRID , potrebbero essere necessarie settimane o addirittura mesi prima che le operazioni ILM spostino gli oggetti in nuove posizioni, in base alle nuove regole ILM.
+
++
+Sebbene sia possibile tentare in tutta sicurezza di disattivare un profilo di codifica di cancellazione mentre è ancora associato ai dati, l'operazione di disattivazione non andrà a buon fine.  Un messaggio di errore ti informerà se il profilo non è ancora pronto per essere disattivato.
+
+... Modifica o elimina la regola rimossa dal criterio.  Se modifichi la regola, rimuovi tutti i posizionamenti che utilizzano il profilo di codifica di cancellazione.
+... Continuare con questa procedura.
+
+ a| 
+link:creating-ilm-policy.html["Creare una policy ILM"]
+
+link:working-with-ilm-rules-and-ilm-policies.html["Lavorare con le regole e le politiche ILM"]
+
+
+
+ a| 
+In una regola ILM che è attualmente in una politica ILM
+ a| 
+... Modifica la politica.
+... Rimuovere la regola ILM che utilizza il profilo di codifica di cancellazione.
+... Aggiungere una o più nuove regole ILM per garantire che tutti gli oggetti siano protetti.
+... Salva la polizza.
+... Modifica o elimina la regola rimossa dal criterio.  Se modifichi la regola, rimuovi tutti i posizionamenti che utilizzano il profilo di codifica di cancellazione.
+... Continuare con questa procedura.
+
+ a| 
+link:creating-ilm-policy.html["Creare una policy ILM"]
+
+link:working-with-ilm-rules-and-ilm-policies.html["Lavorare con le regole e le politiche ILM"]
+
+|===
+.. Aggiornare la pagina Profili di codifica di cancellazione per assicurarsi che il profilo non venga utilizzato in una regola ILM.
+
+
+. Se il profilo non viene utilizzato in una regola ILM, selezionare il pulsante di opzione e scegliere *Disattiva*.  Viene visualizzata la finestra di dialogo Disattiva profilo di codifica di cancellazione.
++
+
+TIP: È possibile selezionare più profili da disattivare contemporaneamente, a condizione che ciascun profilo non venga utilizzato in alcuna regola.
+
+. Se sei sicuro di voler disattivare il profilo, seleziona *Disattiva*.
+
+
+.Risultati
+* Se StorageGRID è in grado di disattivare il profilo di codifica di cancellazione, il suo stato è Disattivato.  Non è più possibile selezionare questo profilo per nessuna regola ILM.  Non è possibile riattivare un profilo disattivato.
+* Se StorageGRID non riesce a disattivare il profilo, viene visualizzato un messaggio di errore.  Ad esempio, viene visualizzato un messaggio di errore se i dati dell'oggetto sono ancora associati a questo profilo.  Potrebbe essere necessario attendere diverse settimane prima di provare nuovamente la procedura di disattivazione.
+

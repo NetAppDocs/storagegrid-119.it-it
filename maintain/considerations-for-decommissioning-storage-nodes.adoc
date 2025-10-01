@@ -1,0 +1,78 @@
+---
+permalink: maintain/considerations-for-decommissioning-storage-nodes.html 
+sidebar: sidebar 
+keywords: storage node decommission, considerations, appliance node clone 
+summary: Prima di dismettere un nodo di archiviazione, valuta se è possibile clonarlo.  Quindi, se si decide di dismettere il nodo, verificare come StorageGRID gestisce gli oggetti e i metadati durante la procedura di dismissione. 
+---
+= Considerazioni per la dismissione dei nodi di archiviazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Prima di dismettere un nodo di archiviazione, valuta se è possibile clonarlo.  Quindi, se si decide di dismettere il nodo, verificare come StorageGRID gestisce gli oggetti e i metadati durante la procedura di dismissione.
+
+
+
+== Quando clonare un nodo invece di dismetterlo
+
+Se si desidera sostituire un vecchio nodo di archiviazione con un dispositivo più nuovo o più grande, si consiglia di clonare il nodo del dispositivo anziché aggiungere un nuovo dispositivo in un'espansione e quindi dismettere il vecchio dispositivo.
+
+La clonazione del nodo appliance consente di sostituire facilmente un nodo appliance esistente con un'appliance compatibile nello stesso sito StorageGRID .  Il processo di clonazione trasferisce tutti i dati al nuovo dispositivo, lo mette in servizio e lascia il vecchio dispositivo in uno stato di preinstallazione.
+
+È possibile clonare un nodo appliance se è necessario:
+
+* Sostituisci un elettrodomestico che sta per raggiungere la fine del suo ciclo di vita.
+* Aggiorna un nodo esistente per sfruttare i vantaggi della tecnologia avanzata degli elettrodomestici.
+* Aumenta la capacità di archiviazione della griglia senza modificare il numero di nodi di archiviazione nel tuo sistema StorageGRID .
+* Migliorare l'efficienza di archiviazione, ad esempio modificando la modalità RAID.
+
+
+Vedere https://docs.netapp.com/us-en/storagegrid-appliances/commonhardware/how-appliance-node-cloning-works.html["Clonazione del nodo dell'appliance"^] per i dettagli.
+
+
+
+== Considerazioni sui nodi di archiviazione connessi
+
+Esaminare le considerazioni per la dismissione di un nodo di archiviazione connesso.
+
+* Non dovresti dismettere più di 10 nodi di archiviazione in un'unica procedura di dismissione del nodo.
+* Il sistema deve, in ogni momento, includere un numero sufficiente di nodi di archiviazione per soddisfare i requisiti operativi, tra cuilink:understanding-adc-service-quorum.html["Quorum ADC"] e l'attivolink:reviewing-ilm-policy-and-storage-configuration.html["Politica ILM"] .  Per soddisfare questa restrizione, potrebbe essere necessario aggiungere un nuovo nodo di archiviazione in un'operazione di espansione prima di poter dismettere un nodo di archiviazione esistente.
++
+Prestare attenzione quando si dismettono nodi di archiviazione in una griglia contenente nodi basati solo su software.  Se si dismettono tutti i nodi configurati per archiviare sia oggetti che metadati, la possibilità di archiviare oggetti viene rimossa dalla griglia.  Vederelink:../primer/what-storage-node-is.html#types-of-storage-nodes["Tipi di nodi di archiviazione"] per ulteriori informazioni sui nodi di archiviazione solo metadati.
+
+* Quando si rimuove un nodo di archiviazione, grandi volumi di dati di oggetti vengono trasferiti sulla rete.  Sebbene questi trasferimenti non dovrebbero influire sul normale funzionamento del sistema, possono influire sulla quantità totale di larghezza di banda di rete consumata dal sistema StorageGRID .
+* Alle attività associate alla dismissione del nodo di archiviazione viene assegnata una priorità inferiore rispetto alle attività associate alle normali operazioni di sistema.  Ciò significa che la dismissione non interferisce con le normali operazioni del sistema StorageGRID e non deve essere programmata per un periodo di inattività del sistema.  Poiché la dismissione viene eseguita in background, è difficile stimare quanto tempo ci vorrà per completarla.  In generale, la dismissione viene completata più rapidamente quando il sistema è inattivo o se viene rimosso un solo nodo di archiviazione alla volta.
+* Potrebbero essere necessari giorni o settimane per dismettere un nodo di archiviazione.  Pianificare questa procedura di conseguenza.  Sebbene il processo di dismissione sia concepito per non influire sulle operazioni del sistema, può limitare altre procedure.  In generale, è opportuno eseguire eventuali aggiornamenti o espansioni pianificati del sistema prima di rimuovere i nodi della griglia.
+* Se è necessario eseguire un'altra procedura di manutenzione mentre i nodi di archiviazione vengono rimossi, è possibilelink:pausing-and-resuming-decommission-process-for-storage-nodes.html["sospendere la procedura di dismissione"] e riprenderla dopo aver completato l'altra procedura.
++
+
+NOTE: Il pulsante *Pausa* è abilitato solo quando vengono raggiunte le fasi di valutazione ILM o di disattivazione dei dati codificati in cancellazione; tuttavia, la valutazione ILM (migrazione dei dati) continuerà a essere eseguita in background.
+
+* Non è possibile eseguire operazioni di riparazione dei dati su alcun nodo della griglia quando è in esecuzione un'attività di dismissione.
+* Non apportare modifiche a una policy ILM mentre un nodo di archiviazione è in fase di dismissione.
+* Per rimuovere i dati in modo permanente e sicuro, è necessario cancellare le unità del nodo di archiviazione una volta completata la procedura di dismissione.
+
+
+
+
+== Considerazioni sui nodi di archiviazione disconnessi
+
+Esaminare le considerazioni per la dismissione di un nodo di archiviazione disconnesso.
+
+* Non disattivare mai un nodo disconnesso a meno che non si sia certi che non possa essere riattivato o ripristinato.
++
+
+CAUTION: Non eseguire questa procedura se ritieni che sia possibile recuperare i dati dell'oggetto dal nodo.  Contattare invece l'assistenza tecnica per verificare se è possibile il ripristino del nodo.
+
+* Quando si dismette un nodo di archiviazione disconnesso, StorageGRID utilizza i dati di altri nodi di archiviazione per ricostruire i dati e i metadati degli oggetti presenti sul nodo disconnesso.
+* Potrebbe verificarsi una perdita di dati se si dismette più di un nodo di archiviazione disconnesso.  Il sistema potrebbe non essere in grado di ricostruire i dati se non sono disponibili sufficienti copie di oggetti, frammenti con codice di cancellazione o metadati di oggetti.  Quando si dismettono i nodi di archiviazione in una griglia con nodi basati solo su software, la dismissione di tutti i nodi configurati per archiviare sia oggetti che metadati rimuove tutto lo storage degli oggetti dalla griglia.  Vederelink:../primer/what-storage-node-is.html#types-of-storage-nodes["Tipi di nodi di archiviazione"] per ulteriori informazioni sui nodi di archiviazione solo metadati.
++
+
+CAUTION: Se hai più di un nodo di archiviazione disconnesso che non riesci a ripristinare, contatta l'assistenza tecnica per determinare la soluzione migliore.
+
+* Quando si dismette un nodo di archiviazione disconnesso, StorageGRID avvia i processi di riparazione dei dati al termine del processo di dismissione.  Questi lavori tentano di ricostruire i dati e i metadati dell'oggetto archiviati sul nodo disconnesso.
+* Quando si dismette un nodo di archiviazione disconnesso, la procedura di dismissione si completa in tempi relativamente rapidi.  Tuttavia, i lavori di riparazione dei dati possono richiedere giorni o settimane e non vengono monitorati dalla procedura di disattivazione.  È necessario monitorare manualmente questi lavori e riavviarli quando necessario. Vedere link:checking-data-repair-jobs.html["Controlla i lavori di riparazione dei dati"] .
+* Se si dismette un nodo di archiviazione disconnesso che contiene l'unica copia di un oggetto, l'oggetto andrà perso.  I processi di riparazione dei dati possono ricostruire e recuperare oggetti solo se sui nodi di archiviazione attualmente connessi è presente almeno una copia replicata o un numero sufficiente di frammenti con codice di cancellazione.
+

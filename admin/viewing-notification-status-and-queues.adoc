@@ -1,0 +1,20 @@
+---
+permalink: admin/viewing-notification-status-and-queues.html 
+sidebar: sidebar 
+keywords: NMS service, network management system, interface engine 
+summary: 'Il servizio Network Management System (NMS) sui nodi amministrativi invia notifiche al server di posta.  È possibile visualizzare lo stato attuale del servizio NMS e la dimensione della coda delle notifiche nella pagina Interface Engine.' 
+---
+= Visualizza lo stato delle notifiche e le code
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Il servizio Network Management System (NMS) sui nodi amministrativi invia notifiche al server di posta.  È possibile visualizzare lo stato attuale del servizio NMS e la dimensione della coda delle notifiche nella pagina Interface Engine.
+
+Per accedere alla pagina Interface Engine, selezionare *SUPPORTO* > *Strumenti* > *Topologia griglia*.  Quindi seleziona *_site_* > *_Admin Node_* > *NMS* > *Interface Engine*.
+
+image::../media/email_notification_status_and_queues.gif[Pagina del motore di interfaccia]
+
+Le notifiche vengono elaborate tramite la coda delle notifiche e-mail e inviate al server di posta una dopo l'altra nell'ordine in cui vengono attivate.  Se si verifica un problema (ad esempio, un errore di connessione di rete) e il server di posta non è disponibile quando si tenta di inviare la notifica, viene effettuato un tentativo di inviare nuovamente la notifica al server di posta per un periodo di 60 secondi.  Se la notifica non viene inviata al server di posta entro 60 secondi, viene eliminata dalla coda delle notifiche e viene effettuato un tentativo di inviare la notifica successiva nella coda.

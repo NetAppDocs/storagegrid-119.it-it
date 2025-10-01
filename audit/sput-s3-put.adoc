@@ -1,0 +1,306 @@
+---
+permalink: audit/sput-s3-put.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, SPUT, S3 PUT 
+summary: Quando un client S3 emette una transazione PUT, viene effettuata una richiesta per creare un nuovo oggetto o bucket.  Questo messaggio viene emesso dal server se la transazione ha esito positivo. 
+---
+= SPUT: S3 PUT
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Quando un client S3 emette una transazione PUT, viene effettuata una richiesta per creare un nuovo oggetto o bucket oppure per rimuovere una sotto-risorsa bucket/oggetto.  Questo messaggio viene emesso dal server se la transazione ha esito positivo.
+
+[cols="1a,1a,4a"]
+|===
+| Codice | Campo | Descrizione 
+
+
+ a| 
+CBID
+ a| 
+Identificatore del blocco di contenuto
+ a| 
+Identificatore univoco del blocco di contenuto richiesto.  Se il CBID è sconosciuto, questo campo è impostato su 0.  Le operazioni sui bucket non includono questo campo.
+
+
+
+ a| 
+CMPS
+ a| 
+Impostazioni di conformità
+ a| 
+Le impostazioni di conformità utilizzate durante la creazione del bucket, se presenti nella richiesta (troncate ai primi 1024 caratteri).
+
+
+
+ a| 
+CNCH
+ a| 
+Intestazione di controllo della coerenza
+ a| 
+Valore dell'intestazione della richiesta HTTP Consistency-Control, se presente nella richiesta.
+
+
+
+ a| 
+CNID
+ a| 
+Identificatore di connessione
+ a| 
+Identificatore di sistema univoco per la connessione TCP/IP.
+
+
+
+ a| 
+CSIZ
+ a| 
+Dimensione del contenuto
+ a| 
+La dimensione dell'oggetto recuperato in byte.  Le operazioni sui bucket non includono questo campo.
+
+
+
+ a| 
+GFID
+ a| 
+ID di connessione della federazione di griglia
+ a| 
+ID di connessione della federazione di griglia associata a una richiesta PUT di replicazione tra griglie.  Incluso solo nei registri di controllo sulla griglia di destinazione.
+
+
+
+ a| 
+GFSA
+ a| 
+ID account sorgente della federazione di griglia
+ a| 
+ID account del tenant sulla griglia di origine per una richiesta PUT di replica tra griglie.  Incluso solo nei registri di controllo sulla griglia di destinazione.
+
+
+
+ a| 
+HTRH
+ a| 
+Intestazione richiesta HTTP
+ a| 
+Elenco dei nomi e dei valori delle intestazioni delle richieste HTTP registrate, selezionati durante la configurazione.
+
+ `X-Forwarded-For`viene automaticamente incluso se è presente nella richiesta e se il `X-Forwarded-For` il valore è diverso dall'indirizzo IP del mittente della richiesta (campo di controllo SAIP).
+
+`x-amz-bypass-governance-retention`viene incluso automaticamente se presente nella richiesta.
+
+
+
+ a| 
+LKEN
+ a| 
+Blocco oggetto abilitato
+ a| 
+Valore dell'intestazione della richiesta `x-amz-bucket-object-lock-enabled` , se presente nella richiesta.
+
+
+
+ a| 
+LKLH
+ a| 
+Blocco oggetto in attesa legale
+ a| 
+Valore dell'intestazione della richiesta `x-amz-object-lock-legal-hold` , se presente nella richiesta PutObject.
+
+
+
+ a| 
+LKMD
+ a| 
+Modalità di mantenimento del blocco degli oggetti
+ a| 
+Valore dell'intestazione della richiesta `x-amz-object-lock-mode` , se presente nella richiesta PutObject.
+
+
+
+ a| 
+LKRU
+ a| 
+Blocco oggetto Conserva fino alla data
+ a| 
+Valore dell'intestazione della richiesta `x-amz-object-lock-retain-until-date` , se presente nella richiesta PutObject.  I valori sono limitati a 100 anni dalla data in cui l'oggetto è stato ingerito.
+
+
+
+ a| 
+MTME
+ a| 
+Ultima modifica
+ a| 
+Timestamp Unix, in microsecondi, che indica quando l'oggetto è stato modificato l'ultima volta.
+
+
+
+ a| 
+RSLT
+ a| 
+Codice risultato
+ a| 
+Risultato della transazione PUT.  Il risultato è sempre:
+
+SUCS: Riuscito
+
+
+
+ a| 
+S3AI
+ a| 
+ID account tenant S3 (mittente della richiesta)
+ a| 
+ID dell'account tenant dell'utente che ha inviato la richiesta.  Un valore vuoto indica un accesso anonimo.
+
+
+
+ a| 
+S3AK
+ a| 
+ID chiave di accesso S3 (mittente della richiesta)
+ a| 
+ID della chiave di accesso S3 con hash per l'utente che ha inviato la richiesta.  Un valore vuoto indica un accesso anonimo.
+
+
+
+ a| 
+S3BK
+ a| 
+Secchio S3
+ a| 
+Nome del bucket S3.
+
+
+
+ a| 
+S3KY
+ a| 
+Chiave S3
+ a| 
+Nome della chiave S3, escluso il nome del bucket.  Le operazioni sui bucket non includono questo campo.
+
+
+
+ a| 
+S3SR
+ a| 
+Sottorisorsa S3
+ a| 
+Se applicabile, il bucket o la sottorisorsa oggetto su cui si sta operando.
+
+
+
+ a| 
+SACC
+ a| 
+Nome dell'account tenant S3 (mittente della richiesta)
+ a| 
+Nome dell'account tenant dell'utente che ha inviato la richiesta.  Vuoto per richieste anonime.
+
+
+
+ a| 
+SAIP
+ a| 
+Indirizzo IP (mittente della richiesta)
+ a| 
+L'indirizzo IP dell'applicazione client che ha effettuato la richiesta.
+
+
+
+ a| 
+SBAC
+ a| 
+Nome dell'account tenant S3 (proprietario del bucket)
+ a| 
+Nome dell'account tenant per il proprietario del bucket.  Utilizzato per identificare l'accesso multiaccount o anonimo.
+
+
+
+ a| 
+SBAI
+ a| 
+ID account tenant S3 (proprietario del bucket)
+ a| 
+ID dell'account tenant del proprietario del bucket di destinazione.  Utilizzato per identificare l'accesso multiaccount o anonimo.
+
+
+
+ a| 
+SRCF
+ a| 
+Configurazione delle sottorisorse
+ a| 
+La nuova configurazione delle sottorisorse (troncata ai primi 1024 caratteri).
+
+
+
+ a| 
+SUSR
+ a| 
+URN utente S3 (mittente della richiesta)
+ a| 
+L'ID dell'account tenant e il nome utente dell'utente che effettua la richiesta.  L'utente può essere un utente locale o un utente LDAP. Ad esempio:  `urn:sgws:identity::03393893651506583485:root`
+
+Vuoto per richieste anonime.
+
+
+
+ a| 
+TEMPO
+ a| 
+Tempo
+ a| 
+Tempo totale di elaborazione della richiesta in microsecondi.
+
+
+
+ a| 
+TLIP
+ a| 
+Indirizzo IP del bilanciatore di carico attendibile
+ a| 
+Se la richiesta è stata instradata da un bilanciatore del carico di Livello 7 attendibile, l'indirizzo IP del bilanciatore del carico.
+
+
+
+ a| 
+ULID
+ a| 
+Carica ID
+ a| 
+Incluso solo nei messaggi SPUT per le operazioni CompleteMultipartUpload.  Indica che tutte le parti sono state caricate e assemblate.
+
+
+
+ a| 
+UUID
+ a| 
+Identificatore univoco universale
+ a| 
+Identificatore dell'oggetto all'interno del sistema StorageGRID .
+
+
+
+ a| 
+VSID
+ a| 
+ID versione
+ a| 
+ID versione di un nuovo oggetto creato in un bucket con versione.  Le operazioni sui bucket e sugli oggetti nei bucket senza versione non includono questo campo.
+
+
+
+ a| 
+VSST
+ a| 
+Stato di controllo delle versioni
+ a| 
+Il nuovo stato di controllo delle versioni di un bucket.  Vengono utilizzati due stati: "abilitato" o "sospeso".  Le operazioni sugli oggetti non includono questo campo.
+
+|===

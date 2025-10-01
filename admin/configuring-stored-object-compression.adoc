@@ -1,0 +1,46 @@
+---
+permalink: admin/configuring-stored-object-compression.html 
+sidebar: sidebar 
+keywords: object compression, compress stored objects 
+summary: È possibile abilitare la compressione degli oggetti per ridurre le dimensioni degli oggetti archiviati in StorageGRID, in modo che occupino meno spazio di archiviazione. 
+---
+= Comprimi gli oggetti memorizzati
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile abilitare la compressione degli oggetti per ridurre le dimensioni degli oggetti archiviati in StorageGRID, in modo che occupino meno spazio di archiviazione.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Hailink:admin-group-permissions.html["autorizzazioni di accesso specifiche"] .
+
+
+.Informazioni su questo compito
+Per impostazione predefinita, la compressione degli oggetti è disabilitata.  Se si abilita la compressione, StorageGRID tenta di comprimere ogni oggetto durante il salvataggio, utilizzando la compressione senza perdita di dati.
+
+
+NOTE: Se si modifica questa impostazione, ci vorrà circa un minuto prima che la nuova impostazione venga applicata.  Il valore configurato viene memorizzato nella cache per migliorare le prestazioni e il ridimensionamento.
+
+Prima di abilitare la compressione degli oggetti, tenere presente quanto segue:
+
+* Non selezionare *Comprimi oggetti memorizzati* a meno che non si sia certi che i dati memorizzati siano comprimibili.
+* Le applicazioni che salvano oggetti in StorageGRID potrebbero comprimerli prima di salvarli.  Se un'applicazione client ha già compresso un oggetto prima di salvarlo in StorageGRID, la selezione di questa opzione non ridurrà ulteriormente le dimensioni dell'oggetto.
+* Non selezionare *Comprimi oggetti archiviati* se si utilizza NetApp FabricPool con StorageGRID.
+* Se è selezionata l'opzione *Comprimi oggetti archiviati*, le applicazioni client S3 devono evitare di eseguire operazioni GetObject che specificano un intervallo di byte da restituire.  Queste operazioni di "lettura di intervallo" sono inefficienti perché StorageGRID deve effettivamente decomprimere gli oggetti per accedere ai byte richiesti.  Le operazioni GetObject che richiedono un intervallo ridotto di byte da un oggetto molto grande sono particolarmente inefficienti; ad esempio, è inefficiente leggere un intervallo di 10 MB da un oggetto compresso da 50 GB.
++
+Se gli intervalli vengono letti da oggetti compressi, le richieste del client potrebbero scadere.
+
++
+
+NOTE: Se è necessario comprimere oggetti e l'applicazione client deve utilizzare letture di intervallo, aumentare il timeout di lettura per l'applicazione.
+
+
+
+.Passi
+. Selezionare *CONFIGURAZIONE* > *Sistema* > *Impostazioni di archiviazione* > *Compressione oggetti*.
+. Selezionare la casella di controllo *Comprimi oggetti memorizzati*.
+. Seleziona *Salva*.
+

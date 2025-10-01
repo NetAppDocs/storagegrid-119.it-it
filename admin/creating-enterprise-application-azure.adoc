@@ -1,0 +1,102 @@
+---
+permalink: admin/creating-enterprise-application-azure.html 
+sidebar: sidebar 
+keywords: enterprise application, azure ad, single sign on, sso 
+summary: 'Puoi utilizzare Azure AD per creare un"applicazione aziendale per ogni nodo di amministrazione del tuo sistema.' 
+---
+= Crea applicazioni aziendali in Azure AD
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Puoi utilizzare Azure AD per creare un'applicazione aziendale per ogni nodo di amministrazione del tuo sistema.
+
+.Prima di iniziare
+* Hai iniziato a configurare l'accesso Single Sign-On per StorageGRID e hai selezionato *Azure* come tipo di SSO.
+* La *modalità sandbox* è selezionata nella pagina Single sign-on in Grid Manager. Vedere link:../admin/using-sandbox-mode.html["Utilizza la modalità sandbox"] .
+* Per ogni nodo amministrativo del sistema è disponibile il *nome dell'applicazione aziendale*. È possibile copiare questi valori dalla tabella dei dettagli del nodo di amministrazione nella pagina Single Sign-on StorageGRID .
++
+
+NOTE: È necessario creare un'applicazione aziendale per ciascun nodo amministrativo nel sistema StorageGRID .  Disporre di un'applicazione aziendale per ciascun nodo amministrativo garantisce che gli utenti possano accedere e uscire in modo sicuro da qualsiasi nodo amministrativo.
+
+* Hai esperienza nella creazione di applicazioni aziendali in Azure Active Directory.
+* Hai un account Azure con una sottoscrizione attiva.
+* Nell'account Azure ricopri uno dei seguenti ruoli: amministratore globale, amministratore dell'applicazione cloud, amministratore dell'applicazione o proprietario dell'entità servizio.
+
+
+
+
+== Accedi ad Azure AD
+
+.Passi
+. Accedi al https://portal.azure.com["Portale di Azure"^] .
+. Vai a https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade["Azure Active Directory"^] .
+. Selezionare https://portal.azure.com/#blade/Microsoft_AAD_IAM/StartboardApplicationsMenuBlade/Overview/menuId/["Applicazioni aziendali"^] .
+
+
+
+
+== Crea applicazioni aziendali e salva la configurazione StorageGRID SSO
+
+Per salvare la configurazione SSO per Azure in StorageGRID, è necessario utilizzare Azure per creare un'applicazione aziendale per ciascun nodo di amministrazione.  Copiare gli URL dei metadati della federazione da Azure e incollarli nei campi *URL metadati della federazione* corrispondenti nella pagina Single Sign-on di StorageGRID .
+
+.Passi
+. Ripetere i seguenti passaggi per ciascun nodo di amministrazione.
++
+.. Nel riquadro Applicazioni aziendali di Azure, seleziona *Nuova applicazione*.
+.. Seleziona *Crea la tua applicazione*.
+.. Per il nome, immettere il *Nome dell'applicazione aziendale* copiato dalla tabella dei dettagli del nodo di amministrazione nella pagina Single Sign-on StorageGRID .
+.. Lascia selezionato il pulsante di opzione *Integra qualsiasi altra applicazione non presente nella galleria (Non nella galleria)*.
+.. Seleziona *Crea*.
+.. Selezionare il link *Inizia* nel *2.  Impostare la casella Single Sign-On* oppure selezionare il collegamento *Single Sign-On* sul margine sinistro.
+.. Selezionare la casella *SAML*.
+.. Copia l'*URL dei metadati della federazione app*, che puoi trovare in *Certificato di firma SAML del passaggio 3*.
+.. Vai alla pagina StorageGRID Single Sign-on e incolla l'URL nel campo *URL metadati federazione* che corrisponde al *Nome applicazione aziendale* utilizzato.
+
+
+. Dopo aver incollato un URL dei metadati di federazione per ciascun nodo di amministrazione e aver apportato tutte le altre modifiche necessarie alla configurazione SSO, selezionare *Salva* nella pagina StorageGRID Single Sign-on.
+
+
+
+
+== Scarica i metadati SAML per ogni nodo amministrativo
+
+Dopo aver salvato la configurazione SSO, puoi scaricare un file di metadati SAML per ogni nodo amministrativo nel tuo sistema StorageGRID .
+
+.Passi
+. Ripetere questi passaggi per ogni nodo di amministrazione.
++
+.. Sign in a StorageGRID dal nodo di amministrazione.
+.. Selezionare *CONFIGURAZIONE* > *Controllo accessi* > *Single sign-on*.
+.. Selezionare il pulsante per scaricare i metadati SAML per quel nodo di amministrazione.
+.. Salva il file che caricherai in Azure AD.
+
+
+
+
+
+
+== Carica i metadati SAML in ogni applicazione aziendale
+
+Dopo aver scaricato un file di metadati SAML per ogni nodo di amministrazione StorageGRID , eseguire i seguenti passaggi in Azure AD:
+
+.Passi
+. Torna al portale di Azure.
+. Ripetere questi passaggi per ogni applicazione aziendale:
++
+
+NOTE: Potrebbe essere necessario aggiornare la pagina Applicazioni aziendali per visualizzare le applicazioni aggiunte in precedenza all'elenco.
+
++
+.. Vai alla pagina Proprietà dell'applicazione aziendale.
+.. Impostare *Assegnazione richiesta* su *No* (a meno che non si desideri configurare separatamente le assegnazioni).
+.. Vai alla pagina Single Sign-On.
+.. Completare la configurazione SAML.
+.. Selezionare il pulsante *Carica file metadati* e selezionare il file metadati SAML scaricato per il nodo di amministrazione corrispondente.
+.. Dopo aver caricato il file, seleziona *Salva* e poi *X* per chiudere il riquadro.  Verrai reindirizzato alla pagina Imposta Single Sign-On con SAML.
+
+
+. Segui i passaggi inlink:../admin/using-sandbox-mode.html["Utilizza la modalità sandbox"] per testare ogni applicazione.
+

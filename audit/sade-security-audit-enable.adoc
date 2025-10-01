@@ -1,0 +1,47 @@
+---
+permalink: audit/sade-security-audit-enable.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, SADE, Security Audit Enable 
+summary: 'Questo messaggio indica che il servizio di origine \(ID nodo\) ha ripristinato la registrazione dei messaggi di controllo; i messaggi di controllo vengono nuovamente raccolti e recapitati.' 
+---
+= SADE: Abilitazione controllo sicurezza
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Questo messaggio indica che il servizio di origine (ID nodo) ha ripristinato la registrazione dei messaggi di controllo; i messaggi di controllo vengono nuovamente raccolti e recapitati.
+
+[cols="1a,1a,4a"]
+|===
+| Codice | Campo | Descrizione 
+
+
+ a| 
+AETM
+ a| 
+Abilita metodo
+ a| 
+Il metodo utilizzato per abilitare l'audit.
+
+
+
+ a| 
+AEUN
+ a| 
+Nome utente
+ a| 
+Nome utente che ha eseguito il comando per abilitare la registrazione di controllo.
+
+
+
+ a| 
+RSLT
+ a| 
+Risultato
+ a| 
+Questo campo ha il valore NESSUNO.  RSLT è un campo del messaggio obbligatorio, ma non è rilevante per questo messaggio.  Viene utilizzato NONE anziché SUCS in modo che questo messaggio non venga filtrato.
+
+|===
+Il messaggio implica che la registrazione era stata precedentemente disabilitata (SADD), ma ora è stata ripristinata.  In genere, questa opzione viene utilizzata solo durante l'acquisizione in blocco per migliorare le prestazioni del sistema.  Dopo l'attività di massa, l'audit viene ripristinato e la possibilità di disabilitarlo viene bloccata in modo permanente.

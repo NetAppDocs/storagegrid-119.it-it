@@ -1,0 +1,136 @@
+---
+permalink: vmware/approving-pending-grid-nodes.html 
+sidebar: sidebar 
+keywords: how to approve pending grid nodes 
+summary: È necessario approvare ciascun nodo della griglia prima che possa unirsi al sistema StorageGRID . 
+---
+= Approva i nodi della griglia in sospeso
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario approvare ciascun nodo della griglia prima che possa unirsi al sistema StorageGRID .
+
+.Prima di iniziare
+Sono stati distribuiti tutti i nodi griglia virtuali e degli appliance StorageGRID .
+
+
+NOTE: È più efficiente eseguire un'unica installazione di tutti i nodi, piuttosto che installare alcuni nodi ora e altri in seguito.
+
+.Passi
+. Esaminare l'elenco dei nodi in sospeso e verificare che mostri tutti i nodi della griglia distribuiti.
++
+
+NOTE: Se un nodo della griglia risulta mancante, verificare che sia stato distribuito correttamente e che abbia impostato l'IP di rete della griglia corretto del nodo di amministrazione primario per ADMIN_IP.
+
+. Selezionare il pulsante di opzione accanto al nodo in sospeso che si desidera approvare.
++
+image::../media/5_gmi_installer_grid_nodes_pending.gif[Questa immagine è spiegata dal testo circostante.]
+
+. Fare clic su *Approva*.
+. Nelle Impostazioni generali, modificare le impostazioni per le seguenti proprietà, se necessario:
++
+** *Sito*: il nome di sistema del sito per questo nodo della griglia.
+** *Nome*: il nome di sistema per il nodo.  Il nome predefinito è quello specificato durante la configurazione del nodo.
++
+I nomi di sistema sono necessari per le operazioni interne StorageGRID e non possono essere modificati dopo aver completato l'installazione.  Tuttavia, durante questa fase del processo di installazione, è possibile modificare i nomi dei sistemi in base alle proprie esigenze.
+
++
+
+NOTE: Per un nodo VMware, è possibile modificare il nome qui, ma questa azione non modificherà il nome della macchina virtuale in vSphere.
+
+** *Ruolo NTP*: il ruolo del Network Time Protocol (NTP) del nodo della griglia.  Le opzioni sono *Automatico*, *Principale* e *Client*.  Selezionando *Automatico* il ruolo primario viene assegnato ai nodi di amministrazione, ai nodi di archiviazione con servizi ADC, ai nodi gateway e a tutti i nodi della griglia dotati di indirizzi IP non statici.  A tutti gli altri nodi della griglia viene assegnato il ruolo Client.
++
+
+CAUTION: Assicurarsi che almeno due nodi in ogni sito possano accedere ad almeno quattro fonti NTP esterne.  Se solo un nodo in un sito riesce a raggiungere le sorgenti NTP, si verificheranno problemi di temporizzazione se quel nodo non funziona.  Inoltre, la designazione di due nodi per sito come fonti NTP primarie garantisce una temporizzazione accurata se un sito è isolato dal resto della griglia.
+
+** *Tipo di archiviazione* (solo nodi di archiviazione): specifica che un nuovo nodo di archiviazione deve essere utilizzato esclusivamente per i dati, solo per i metadati o per entrambi.  Le opzioni sono *Dati e metadati* ("combinati"), *Solo dati* e *Solo metadati*.
++
+
+CAUTION: Vederelink:../primer/what-storage-node-is.html#types-of-storage-nodes["Tipi di nodi di archiviazione"] per informazioni sui requisiti per questi tipi di nodo.
+
+** *Servizio ADC* (solo nodi di archiviazione): selezionare *Automatico* per consentire al sistema di determinare se il nodo richiede il servizio Administrative Domain Controller (ADC). Il servizio ADC tiene traccia della posizione e della disponibilità dei servizi di rete. Almeno tre nodi di archiviazione in ogni sito devono includere il servizio ADC.  Non è possibile aggiungere il servizio ADC a un nodo dopo averlo distribuito.
+
+
+. In Grid Network, modificare le impostazioni per le seguenti proprietà secondo necessità:
++
+** *Indirizzo IPv4 (CIDR)*: l'indirizzo di rete CIDR per l'interfaccia di rete Grid (eth0 all'interno del contenitore).  Ad esempio: 192.168.1.234/21
+** *Gateway*: Il gateway della rete Grid.  Ad esempio: 192.168.0.1
++
+
+NOTE: Il gateway è necessario se sono presenti più subnet della griglia.
+
++
+
+NOTE: Se hai selezionato DHCP per la configurazione della rete Grid e modifichi il valore qui, il nuovo valore verrà configurato come indirizzo statico sul nodo.  È necessario assicurarsi che l'indirizzo IP configurato non sia compreso in un pool di indirizzi DHCP.
+
+
+
+. Se si desidera configurare la rete di amministrazione per il nodo della griglia, aggiungere o aggiornare le impostazioni nella sezione Rete di amministrazione, secondo necessità.
++
+Immettere le subnet di destinazione delle rotte in uscita da questa interfaccia nella casella di testo *Subnet (CIDR)*.  Se sono presenti più subnet di amministrazione, è necessario il gateway di amministrazione.
+
++
+
+NOTE: Se hai selezionato DHCP per la configurazione della rete di amministrazione e modifichi il valore qui, il nuovo valore verrà configurato come indirizzo statico sul nodo.  È necessario assicurarsi che l'indirizzo IP configurato non sia compreso in un pool di indirizzi DHCP.
+
++
+*Appliance:* per un'appliance StorageGRID , se la rete di amministrazione non è stata configurata durante l'installazione iniziale tramite StorageGRID Appliance Installer, non può essere configurata in questa finestra di dialogo Grid Manager.  Invece, devi seguire questi passaggi:
+
++
+.. Riavviare l'appliance: nell'Appliance Installer, selezionare *Avanzate* > *Riavvia*.
++
+Il riavvio può richiedere diversi minuti.
+
+.. Selezionare *Configura rete* > *Configurazione collegamento* e abilitare le reti appropriate.
+.. Selezionare *Configura rete* > *Configurazione IP* e configurare le reti abilitate.
+.. Torna alla Home page e clicca su *Avvia installazione*.
+.. In Grid Manager: se il nodo è elencato nella tabella Nodi approvati, rimuoverlo.
+.. Rimuovere il nodo dalla tabella Nodi in sospeso.
+.. Attendi che il nodo riappaia nell'elenco dei nodi in sospeso.
+.. Verificare di poter configurare le reti appropriate.  Dovrebbero già essere compilati con le informazioni fornite nella pagina Configurazione IP dell'Appliance Installer.
++
+Per ulteriori informazioni, vedere il https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/index.html["Avvio rapido per l'installazione dell'hardware"^] per trovare le istruzioni per il tuo elettrodomestico.
+
+
+
+. Se si desidera configurare la rete client per il nodo della griglia, aggiungere o aggiornare le impostazioni nella sezione Rete client secondo necessità.  Se la rete client è configurata, il gateway è obbligatorio e diventa il gateway predefinito per il nodo dopo l'installazione.
++
+
+NOTE: Se hai selezionato DHCP per la configurazione della rete client e modifichi il valore qui, il nuovo valore verrà configurato come indirizzo statico sul nodo.  È necessario assicurarsi che l'indirizzo IP configurato non sia compreso in un pool di indirizzi DHCP.
+
++
+*Appliance:* per un'appliance StorageGRID , se la rete client non è stata configurata durante l'installazione iniziale tramite StorageGRID Appliance Installer, non può essere configurata in questa finestra di dialogo Grid Manager.  Invece, devi seguire questi passaggi:
+
++
+.. Riavviare l'appliance: nell'Appliance Installer, selezionare *Avanzate* > *Riavvia*.
++
+Il riavvio può richiedere diversi minuti.
+
+.. Selezionare *Configura rete* > *Configurazione collegamento* e abilitare le reti appropriate.
+.. Selezionare *Configura rete* > *Configurazione IP* e configurare le reti abilitate.
+.. Torna alla Home page e clicca su *Avvia installazione*.
+.. In Grid Manager: se il nodo è elencato nella tabella Nodi approvati, rimuoverlo.
+.. Rimuovere il nodo dalla tabella Nodi in sospeso.
+.. Attendi che il nodo riappaia nell'elenco dei nodi in sospeso.
+.. Verificare di poter configurare le reti appropriate.  Dovrebbero già essere compilati con le informazioni fornite nella pagina Configurazione IP dell'Appliance Installer.
++
+Per ulteriori informazioni, vedere il https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/index.html["Avvio rapido per l'installazione dell'hardware"^] per trovare le istruzioni per il tuo elettrodomestico.
+
+
+
+. Fare clic su *Salva*.
++
+La voce del nodo della griglia viene spostata nell'elenco dei nodi approvati.
+
++
+image::../media/7_gmi_installer_grid_nodes_approved.gif[Questa immagine è spiegata dal testo circostante.]
+
+. Ripetere questi passaggi per ogni nodo della griglia in sospeso che si desidera approvare.
++
+Devi approvare tutti i nodi che desideri nella griglia.  Tuttavia, puoi tornare a questa pagina in qualsiasi momento prima di fare clic su *Installa* nella pagina Riepilogo.  È possibile modificare le proprietà di un nodo della griglia approvato selezionando il relativo pulsante di opzione e facendo clic su *Modifica*.
+
+. Una volta completata l'approvazione dei nodi della griglia, fare clic su *Avanti*.
+

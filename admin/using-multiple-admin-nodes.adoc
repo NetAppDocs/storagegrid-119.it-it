@@ -1,0 +1,30 @@
+---
+permalink: admin/using-multiple-admin-nodes.html 
+sidebar: sidebar 
+keywords: admin nodes, more than one admin node, multiple admin nodes 
+summary: Un sistema StorageGRID può includere più nodi amministrativi per consentirti di monitorare e configurare continuamente il tuo sistema StorageGRID anche in caso di guasto di un nodo amministrativo. 
+---
+= Utilizzare più nodi di amministrazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Un sistema StorageGRID può includere più nodi amministrativi per consentirti di monitorare e configurare continuamente il tuo sistema StorageGRID anche in caso di guasto di un nodo amministrativo.
+
+Se un nodo di amministrazione non è più disponibile, l'elaborazione degli attributi continua, gli avvisi vengono comunque attivati ​​e le notifiche e-mail e i pacchetti AutoSupport vengono comunque inviati.  Tuttavia, la presenza di più nodi amministrativi non garantisce la protezione dal failover, fatta eccezione per le notifiche e i pacchetti AutoSupport .
+
+image::../media/admin_node_redundancy.png[Diagramma di ridondanza del nodo amministrativo]
+
+Esistono due opzioni per continuare a visualizzare e configurare il sistema StorageGRID in caso di errore di un nodo di amministrazione:
+
+* I client Web possono riconnettersi a qualsiasi altro nodo di amministrazione disponibile.
+* Se un amministratore di sistema ha configurato un gruppo ad alta disponibilità di nodi amministrativi, i client Web possono continuare ad accedere a Grid Manager o Tenant Manager utilizzando l'indirizzo IP virtuale del gruppo HA. Vedere link:managing-high-availability-groups.html["Gestire gruppi ad alta disponibilità"] .
++
+
+NOTE: Quando si utilizza un gruppo HA, l'accesso viene interrotto se il nodo di amministrazione attivo non funziona.  Gli utenti devono effettuare nuovamente l'accesso dopo che l'indirizzo IP virtuale del gruppo HA ha eseguito il failover su un altro nodo di amministrazione nel gruppo.
+
+
+
+Alcune attività di manutenzione possono essere eseguite solo tramite il nodo di amministrazione primario.  Se il nodo di amministrazione primario si guasta, è necessario ripristinarlo prima che il sistema StorageGRID torni a funzionare correttamente.

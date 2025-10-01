@@ -1,0 +1,126 @@
+= Testare la connessione e salvare la configurazione
+:allow-uri-read: 
+
+
+. Selezionare *Abilita federazione delle identità*.
+. Nella sezione Tipo di servizio LDAP, seleziona il tipo di servizio LDAP che desideri configurare.
++
+image::../media/ldap_service_type.png[Pagina di Identity Federation che mostra le opzioni del tipo di servizio LDAP]
+
++
+Selezionare *Altro* per configurare i valori per un server LDAP che utilizza Oracle Directory Server.
+
+. Se hai selezionato *Altro*, compila i campi nella sezione Attributi LDAP. procedere al passaggio successivo.
++
+** *Nome univoco utente*: il nome dell'attributo che contiene l'identificatore univoco di un utente LDAP. Questo attributo è equivalente a `sAMAccountName` per Active Directory e `uid` per OpenLDAP. Se si sta configurando Oracle Directory Server, immettere `uid` .
+** *UUID utente*: il nome dell'attributo che contiene l'identificatore univoco permanente di un utente LDAP. Questo attributo è equivalente a `objectGUID` per Active Directory e `entryUUID` per OpenLDAP. Se si sta configurando Oracle Directory Server, immettere `nsuniqueid` . Il valore di ciascun utente per l'attributo specificato deve essere un numero esadecimale di 32 cifre in formato stringa o a 16 byte, in cui i trattini vengono ignorati.
+** *Nome univoco del gruppo*: il nome dell'attributo che contiene l'identificatore univoco di un gruppo LDAP. Questo attributo è equivalente a `sAMAccountName` per Active Directory e `cn` per OpenLDAP. Se si sta configurando Oracle Directory Server, immettere `cn` .
+** *UUID gruppo*: il nome dell'attributo che contiene l'identificatore univoco permanente di un gruppo LDAP. Questo attributo è equivalente a `objectGUID` per Active Directory e `entryUUID` per OpenLDAP. Se si sta configurando Oracle Directory Server, immettere `nsuniqueid` . Il valore di ciascun gruppo per l'attributo specificato deve essere un numero esadecimale di 32 cifre in formato stringa o a 16 byte, in cui i trattini vengono ignorati.
+
+
+. Per tutti i tipi di servizio LDAP, immettere le informazioni richieste sul server LDAP e sulla connessione di rete nella sezione Configura server LDAP.
++
+** *Nome host*: nome di dominio completo (FQDN) o indirizzo IP del server LDAP.
+** *Porta*: la porta utilizzata per connettersi al server LDAP.
++
+
+NOTE: La porta predefinita per STARTTLS è 389, mentre la porta predefinita per LDAPS è 636.  Tuttavia, puoi utilizzare qualsiasi porta, a patto che il firewall sia configurato correttamente.
+
+** *Nome utente*: percorso completo del nome distinto (DN) dell'utente che si connetterà al server LDAP.
++
+Per Active Directory, è anche possibile specificare il nome di accesso di livello inferiore o il nome dell'entità utente.
+
++
+L'utente specificato deve avere l'autorizzazione per elencare gruppi e utenti e per accedere ai seguenti attributi:
+
++
+*** `sAMAccountName`O `uid`
+*** `objectGUID`, `entryUUID` , O `nsuniqueid`
+*** `cn`
+*** `memberOf`O `isMemberOf`
+*** *Directory attiva*: `objectSid` , `primaryGroupID` , `userAccountControl` , E `userPrincipalName`
+*** *Azzurro*: `accountEnabled` E `userPrincipalName`
+
+
+** *Password*: la password associata al nome utente.
++
+
+NOTE: Se in futuro dovessi cambiare la password, dovrai aggiornarla in questa pagina.
+
+** *DN base gruppo*: percorso completo del nome distinto (DN) per un sottoalbero LDAP in cui si desidera cercare i gruppi.  Nell'esempio di Active Directory (sotto), tutti i gruppi il cui nome distinto è relativo al DN di base (DC=storagegrid,DC=example,DC=com) possono essere utilizzati come gruppi federati.
++
+
+NOTE: I valori *Nome univoco del gruppo* devono essere univoci all'interno del *DN di base del gruppo* a cui appartengono.
+
+** *DN base utente*: percorso completo del nome distinto (DN) di un sottoalbero LDAP in cui si desidera cercare gli utenti.
++
+
+NOTE: I valori *Nome univoco utente* devono essere univoci all'interno del *Nome base utente* a cui appartengono.
+
+** *Formato nome utente associato* (facoltativo): il modello di nome utente predefinito che StorageGRID dovrebbe utilizzare se il modello non può essere determinato automaticamente.
++
+Si consiglia di fornire il *formato nome utente di associazione* perché può consentire agli utenti di accedere se StorageGRID non è in grado di associarsi all'account di servizio.
+
++
+Inserisci uno di questi modelli:
+
++
+*** *Modello UserPrincipalName (Active Directory e Azure)*: `[USERNAME]@_example_.com`
+*** *Modello di nome di accesso di livello inferiore (Active Directory e Azure)*: `_example_\[USERNAME]`
+*** *Modello di nome distinto*: `CN=[USERNAME],CN=Users,DC=_example_,DC=com`
++
+Includi *[USERNAME]* esattamente come scritto.
+
+
+
+
+
+. Nella sezione Transport Layer Security (TLS), seleziona un'impostazione di sicurezza.
++
+** *Usa STARTTLS*: usa STARTTLS per proteggere le comunicazioni con il server LDAP. Questa è l'opzione consigliata per Active Directory, OpenLDAP o Altro, ma non è supportata per Azure.
+** *Usa LDAPS*: l'opzione LDAPS (LDAP su SSL) utilizza TLS per stabilire una connessione al server LDAP. È necessario selezionare questa opzione per Azure.
+** *Non utilizzare TLS*: il traffico di rete tra il sistema StorageGRID e il server LDAP non sarà protetto.  Questa opzione non è supportata per Azure.
++
+
+NOTE: L'utilizzo dell'opzione *Non utilizzare TLS* non è supportato se il server Active Directory impone la firma LDAP. È necessario utilizzare STARTTLS o LDAPS.
+
+
+
+. Se hai selezionato STARTTLS o LDAPS, scegli il certificato utilizzato per proteggere la connessione.
++
+** *Utilizza il certificato CA del sistema operativo*: utilizza il certificato Grid CA predefinito installato sul sistema operativo per proteggere le connessioni.
+** *Utilizza certificato CA personalizzato*: utilizza un certificato di sicurezza personalizzato.
++
+Se selezioni questa impostazione, copia e incolla il certificato di sicurezza personalizzato nella casella di testo Certificato CA.
+
+
+
+
+
+
+
+=== Testare la connessione e salvare la configurazione
+
+Dopo aver immesso tutti i valori, è necessario testare la connessione prima di poter salvare la configurazione.  StorageGRID verifica le impostazioni di connessione per il server LDAP e il formato del nome utente associato, se ne è stato fornito uno.
+
+.Passi
+. Selezionare *Test connessione*.
+. Se non hai fornito un formato di nome utente di associazione:
++
+** Se le impostazioni di connessione sono valide, viene visualizzato il messaggio "Test di connessione riuscito".  Selezionare *Salva* per salvare la configurazione.
+** Se le impostazioni di connessione non sono valide, viene visualizzato il messaggio "Impossibile stabilire la connessione di prova".  Selezionare *Chiudi*.  Quindi, risolvi eventuali problemi e verifica nuovamente la connessione.
+
+
+. Se hai fornito un formato di nome utente vincolato, inserisci il nome utente e la password di un utente federato valido.
++
+Ad esempio, inserisci il tuo nome utente e la tua password.  Non includere caratteri speciali nel nome utente, come @ o /.
+
++
+image::../media/identity_federation_test_connection.png[Richiesta di federazione delle identità per convalidare il formato del nome utente associato]
+
++
+** Se le impostazioni di connessione sono valide, viene visualizzato il messaggio "Test di connessione riuscito".  Selezionare *Salva* per salvare la configurazione.
+** Se le impostazioni di connessione, il formato del nome utente associato o il nome utente e la password di prova non sono validi, viene visualizzato un messaggio di errore.  Risolvi eventuali problemi e verifica nuovamente la connessione.
+
+
+

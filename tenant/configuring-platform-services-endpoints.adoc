@@ -1,0 +1,53 @@
+---
+permalink: tenant/configuring-platform-services-endpoints.html 
+sidebar: sidebar 
+keywords: how to configure platform services endpoint 
+summary: Prima di poter configurare un servizio di piattaforma per un bucket, è necessario configurare almeno un endpoint come destinazione per il servizio di piattaforma. 
+---
+= Configurare gli endpoint dei servizi della piattaforma
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Prima di poter configurare un servizio di piattaforma per un bucket, è necessario configurare almeno un endpoint come destinazione per il servizio di piattaforma.
+
+L'accesso ai servizi della piattaforma è abilitato per ogni tenant da un amministratore StorageGRID .  Per creare o utilizzare un endpoint dei servizi di piattaforma, è necessario essere un utente tenant con autorizzazione di gestione degli endpoint o di accesso root, in una griglia la cui rete è stata configurata per consentire ai nodi di archiviazione di accedere alle risorse degli endpoint esterni.  Per un singolo tenant è possibile configurare un massimo di 500 endpoint dei servizi della piattaforma.  Per ulteriori informazioni, contattare l'amministratore StorageGRID .
+
+
+
+== Che cos'è un endpoint dei servizi di piattaforma?
+
+Un endpoint dei servizi di piattaforma specifica le informazioni di cui StorageGRID ha bisogno per accedere alla destinazione esterna.
+
+Ad esempio, se si desidera replicare oggetti da un bucket StorageGRID a un bucket Amazon S3, è necessario creare un endpoint dei servizi di piattaforma che includa le informazioni e le credenziali necessarie a StorageGRID per accedere al bucket di destinazione su Amazon.
+
+Ogni tipo di servizio di piattaforma richiede il proprio endpoint, quindi è necessario configurare almeno un endpoint per ogni servizio di piattaforma che si intende utilizzare.  Dopo aver definito un endpoint dei servizi della piattaforma, si utilizza l'URN dell'endpoint come destinazione nell'XML di configurazione utilizzato per abilitare il servizio.
+
+È possibile utilizzare lo stesso endpoint come destinazione per più di un bucket di origine.  Ad esempio, è possibile configurare più bucket di origine per inviare metadati di oggetti allo stesso endpoint di integrazione della ricerca, in modo da poter eseguire ricerche su più bucket.  È anche possibile configurare un bucket di origine in modo che utilizzi più di un endpoint come destinazione, il che consente di eseguire operazioni come l'invio di notifiche sulla creazione di oggetti a un argomento Amazon Simple Notification Service (Amazon SNS) e notifiche sull'eliminazione di oggetti a un secondo argomento Amazon SNS.
+
+
+
+== Endpoint per la replica CloudMirror
+
+StorageGRID supporta endpoint di replica che rappresentano bucket S3.  Questi bucket potrebbero essere ospitati su Amazon Web Services, sullo stesso o su una distribuzione StorageGRID remota, oppure su un altro servizio.
+
+
+
+== Endpoint per le notifiche
+
+StorageGRID supporta gli endpoint Amazon SNS e Kafka. Gli endpoint Simple Queue Service (SQS) o AWS Lambda non sono supportati.
+
+Per gli endpoint Kafka, Mutual TLS non è supportato. Di conseguenza, se hai `ssl.client.auth` impostato su `required` nella configurazione del broker Kafka, potrebbe causare problemi di configurazione dell'endpoint Kafka.
+
+
+
+== Endpoint per il servizio di integrazione della ricerca
+
+StorageGRID supporta endpoint di integrazione della ricerca che rappresentano cluster Elasticsearch.  Questi cluster Elasticsearch possono trovarsi in un data center locale oppure essere ospitati in un cloud AWS o altrove.
+
+L'endpoint di integrazione della ricerca fa riferimento a un indice e a un tipo Elasticsearch specifici.  È necessario creare l'indice in Elasticsearch prima di creare l'endpoint in StorageGRID, altrimenti la creazione dell'endpoint non riuscirà.  Non è necessario creare il tipo prima di creare l'endpoint.  StorageGRID creerà il tipo, se necessario, quando invia i metadati dell'oggetto all'endpoint.
+
+.Informazioni correlate
+link:../admin/index.html["Amministra StorageGRID"]

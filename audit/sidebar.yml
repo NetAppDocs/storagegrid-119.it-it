@@ -1,0 +1,156 @@
+---
+section: audit
+title: Esaminare i registri di controllo
+entries:
+- title: Messaggi e registri di controllo
+  pdf-filename: Esaminare i registri di controllo StorageGRID
+  url: "/audit/index.html"
+- title: Flusso e conservazione dei messaggi di audit
+  url: "/audit/audit-message-flow-and-retention.html"
+- title: Accedi al file di registro di controllo
+  url: "/audit/accessing-audit-log-file.html"
+- title: Rotazione del file di registro di controllo
+  url: "/audit/audit-log-file-rotation.html"
+- title: Formato del file di registro di controllo
+  entries:
+  - title: Esempio di formato del registro di controllo
+    pdf-filename: Formato del file di registro di controllo
+    url: "/audit/audit-log-file-format.html"
+  - title: Utilizzare lo strumento di verifica e spiegazione
+    url: "/audit/using-audit-explain-tool.html"
+  - title: Utilizzare lo strumento audit-sum
+    url: "/audit/using-audit-sum-tool.html"
+- title: Formato del messaggio di controllo
+  entries:
+  - title: Esempio di messaggio di controllo
+    pdf-filename: Formato del messaggio di controllo
+    url: "/audit/audit-message-format.html"
+  - title: Tipi di dati
+    url: "/audit/data-types.html"
+  - title: Dati specifici dell'evento
+    url: "/audit/event-specific-data.html"
+  - title: Elementi comuni nei messaggi di audit
+    url: "/audit/common-elements-in-audit-messages.html"
+  - title: Esempi di messaggi di audit
+    url: "/audit/audit-message-examples.html"
+- title: Messaggi di audit e ciclo di vita degli oggetti
+  entries:
+  - title: Quando vengono generati i messaggi di audit?
+    url: "/audit/audit-messages-and-object-lifecycle.html"
+  - title: Transazioni di acquisizione di oggetti
+    url: "/audit/object-ingest-transactions.html"
+  - title: Transazioni di eliminazione degli oggetti
+    url: "/audit/object-delete-transactions.html"
+  - title: Transazioni di recupero degli oggetti
+    url: "/audit/object-retrieve-transactions.html"
+  - title: Messaggi di aggiornamento dei metadati
+    url: "/audit/metadata-update-messages.html"
+- title: Messaggi di controllo
+  entries:
+  - title: Descrizioni dei messaggi
+    pdf-filename: Messaggi di controllo
+    url: "/audit/audit-messages-main.html"
+  - title: Categorie di messaggi di audit
+    entries:
+    - title: Messaggi di controllo del sistema
+      url: "/audit/system-audit-messages.html"
+    - title: Messaggi di controllo dell'archiviazione degli oggetti
+      url: "/audit/object-storage-audit-messages.html"
+    - title: Il cliente ha letto i messaggi di controllo
+      url: "/audit/client-read-audit-messages.html"
+    - title: Il cliente scrive messaggi di audit
+      url: "/audit/client-write-audit-messages.html"
+    - title: Messaggio di controllo di gestione
+      url: "/audit/management-audit-message.html"
+    - title: Messaggi di controllo ILM
+      url: "/audit/ilm-audit-messages.html"
+  - title: Riferimento al messaggio di audit
+    entries:
+    - title: 'BROR: Richiesta di sola lettura del bucket'
+      url: "/audit/bror-bucket-read-only-request.html"
+    - title: 'CBRB: Oggetto Ricevi Inizio'
+      url: "/audit/cbrb-object-receive-begin.html"
+    - title: 'CBRE: Oggetto Ricevente Fine'
+      url: "/audit/cbre-object-receive-end.html"
+    - title: 'CBSB: Inizio invio oggetto'
+      url: "/audit/cbsb-object-send-begin.html"
+    - title: 'CBSE: Fine invio oggetto'
+      url: "/audit/cbse-object-send-end.html"
+    - title: 'CGRR: richiesta di replicazione tra griglie'
+      url: "/audit/cgrr-cross-grid-replication-request.html"
+    - title: 'EBDL: Eliminazione bucket vuoto'
+      url: "/audit/ebdl-empty-bucket-delete.html"
+    - title: 'EBKR: Richiesta bucket vuoto'
+      url: "/audit/ebkr-empty-bucket-request.html"
+    - title: 'ECMC: frammento di dati codificato in modo cancellabile mancante'
+      url: "/audit/ecmc-missing-erasure-coded-data-fragment.html"
+    - title: 'ECOC: Frammento di dati corrotti con codice di cancellazione'
+      url: "/audit/ecoc-corrupt-erasure-coded-data-fragment.html"
+    - title: 'ETAF: Autenticazione di sicurezza non riuscita'
+      url: "/audit/etaf-security-authentication-failed.html"
+    - title: 'GNRG: Registrazione GNDS'
+      url: "/audit/gnrg-gnds-registration.html"
+    - title: 'GNUR: Annullamento della registrazione GNDS'
+      url: "/audit/gnur-gnds-unregistration.html"
+    - title: 'GTED: attività di griglia terminata'
+      url: "/audit/gted-grid-task-ended.html"
+    - title: 'GTST: Attività di griglia avviata'
+      url: "/audit/gtst-grid-task-started.html"
+    - title: 'GTSU: compito di griglia inviato'
+      url: "/audit/gtsu-grid-task-submitted.html"
+    - title: 'IDEL: ILM ha avviato l''eliminazione'
+      url: "/audit/idel-ilm-initiated-delete.html"
+    - title: 'LKCU: Pulizia degli oggetti sovrascritti'
+      url: "/audit/lkcu-overwritten-object-cleanup.html"
+    - title: 'LKDM: Pulizia degli oggetti trapelati'
+      url: "/audit/lkdm-leaked-object-cleanup.html"
+    - title: 'LLST: Posizione persa'
+      url: "/audit/llst-location-lost.html"
+    - title: 'MGAU: Messaggio di audit di gestione'
+      url: "/audit/mgau-management-audit-message.html"
+    - title: 'OLST: il sistema ha rilevato un oggetto smarrito'
+      url: "/audit/olst-system-detected-lost-object.html"
+    - title: 'ORLM: Regole dell''oggetto soddisfatte'
+      url: "/audit/orlm-object-rules-met.html"
+    - title: 'OVWR: sovrascrittura oggetto'
+      url: "/audit/ovwr-object-overwrite.html"
+    - title: 'S3SL: Richiesta di selezione S3'
+      url: "/audit/s3-select-request.html"
+    - title: 'SADD: Disabilitazione controllo sicurezza'
+      url: "/audit/sadd-security-audit-disable.html"
+    - title: 'SADE: Abilitazione controllo sicurezza'
+      url: "/audit/sade-security-audit-enable.html"
+    - title: 'SCMT: Commit dell''archivio oggetti'
+      url: "/audit/scmt-object-store-commit.html"
+    - title: 'SDEL: S3 ELIMINA'
+      url: "/audit/sdel-s3-delete.html"
+    - title: 'SGET: S3 GET'
+      url: "/audit/sget-s3-get.html"
+    - title: 'SHEA: TESTA S3'
+      url: "/audit/shea-s3-head.html"
+    - title: 'SPOS: S3 POST'
+      url: "/audit/spos-s3-post.html"
+    - title: 'SPUT: S3 PUT'
+      url: "/audit/sput-s3-put.html"
+    - title: 'SREM: Rimozione dell''archivio oggetti'
+      url: "/audit/srem-object-store-remove.html"
+    - title: 'SUPD: Metadati S3 aggiornati'
+      url: "/audit/supd-s3-metadata-updated.html"
+    - title: 'SVRF: Errore di verifica dell''archivio oggetti'
+      url: "/audit/svrf-object-store-verify-fail.html"
+    - title: 'SVRU: Verifica archivio oggetti sconosciuto'
+      url: "/audit/svru-object-store-verify-unknown.html"
+    - title: 'SYSD: arresto del nodo'
+      url: "/audit/sysd-node-stop.html"
+    - title: 'SYST: Arresto del nodo'
+      url: "/audit/syst-node-stopping.html"
+    - title: 'SYSU: Avvio del nodo'
+      url: "/audit/sysu-node-start.html"
+    - title: 'WDEL: CANCELLA rapida'
+      url: "/audit/wdel-swift-delete.html"
+    - title: 'WGET: GET rapido'
+      url: "/audit/wget-swift-get.html"
+    - title: 'WHEA: TESTA Veloce'
+      url: "/audit/whea-swift-head.html"
+    - title: 'WPUT: PUT rapido'
+      url: "/audit/wput-swift-put.html"

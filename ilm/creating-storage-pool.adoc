@@ -1,0 +1,73 @@
+---
+permalink: ilm/creating-storage-pool.html 
+sidebar: sidebar 
+keywords: create storage pool 
+summary: È possibile creare pool di archiviazione per determinare dove il sistema StorageGRID archivia i dati degli oggetti e il tipo di archiviazione utilizzato.  Ogni pool di archiviazione include uno o più siti e uno o più gradi di archiviazione. 
+---
+= Creare un pool di archiviazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile creare pool di archiviazione per determinare dove il sistema StorageGRID archivia i dati degli oggetti e il tipo di archiviazione utilizzato.  Ogni pool di archiviazione include uno o più siti e uno o più gradi di archiviazione.
+
+
+NOTE: Quando si installa StorageGRID 11.9 su una nuova griglia, vengono creati automaticamente pool di archiviazione per ciascun sito. Tuttavia, se inizialmente hai installato StorageGRID 11.6 o una versione precedente, i pool di archiviazione non vengono creati automaticamente per ogni sito.
+
+Se si desidera creare pool di archiviazione cloud per archiviare dati di oggetti al di fuori del sistema StorageGRID , vederelink:what-cloud-storage-pool-is.html["informazioni sull'utilizzo dei pool di archiviazione cloud"] .
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Hailink:../admin/admin-group-permissions.html["autorizzazioni di accesso specifiche"] .
+* Hai esaminato le linee guida per la creazione di pool di archiviazione.
+
+
+.Informazioni su questo compito
+I pool di archiviazione determinano dove vengono archiviati i dati degli oggetti.  Il numero di pool di archiviazione necessari dipende dal numero di siti nella griglia e dal tipo di copie desiderate: replicate o con codice di cancellazione.
+
+* Per la replicazione e la codifica di cancellazione a sito singolo, creare un pool di archiviazione per ciascun sito.  Ad esempio, se si desidera archiviare copie di oggetti replicati in tre siti, creare tre pool di archiviazione.
+* Per la codifica di cancellazione in tre o più siti, creare un pool di archiviazione che includa una voce per ciascun sito.  Ad esempio, se si desidera eliminare oggetti di codice in tre siti, creare un pool di archiviazione.
++
+
+NOTE: Non includere il sito Tutti i siti in un pool di archiviazione che verrà utilizzato in un profilo di codifica di cancellazione.  Aggiungere invece una voce separata al pool di archiviazione per ogni sito in cui verranno archiviati i dati con codice di cancellazione.  Vedere<<entries,questo passo>> per fare un esempio.
+
+* Se si dispone di più di un livello di archiviazione, non creare un pool di archiviazione che includa diversi livelli di archiviazione in un singolo sito. Vedi illink:guidelines-for-creating-storage-pools.html["Linee guida per la creazione di pool di archiviazione"] .
+
+
+.Passi
+. Selezionare *ILM* > *Pool di archiviazione*.
++
+Nella scheda Pool di archiviazione sono elencati tutti i pool di archiviazione definiti.
+
++
+
+NOTE: Per le nuove installazioni di StorageGRID 11.6 o versioni precedenti, il pool di archiviazione All Storage Nodes viene aggiornato automaticamente ogni volta che si aggiungono nuovi siti di data center.  Non utilizzare questo pool nelle regole ILM.
+
+. Per creare un nuovo pool di archiviazione, selezionare *Crea*.
+. Immettere un nome univoco per il pool di archiviazione.  Utilizzare un nome che sia facile da identificare quando si configurano i profili di codifica di cancellazione e le regole ILM.
+. Dall'elenco a discesa *Sito*, selezionare un sito per questo pool di archiviazione.
++
+Quando si seleziona un sito, il numero di nodi di archiviazione nella tabella viene aggiornato automaticamente.
+
++
+In generale, non utilizzare il sito Tutti i siti in nessun pool di archiviazione.  Le regole ILM che utilizzano un pool di archiviazione All Sites posizionano gli oggetti in qualsiasi sito disponibile, riducendo il controllo sul posizionamento degli oggetti.  Inoltre, un pool di archiviazione All Sites utilizza immediatamente i nodi di archiviazione in un nuovo sito, il che potrebbe non essere il comportamento previsto.
+
+. Dall'elenco a discesa *Livello di archiviazione*, selezionare il tipo di archiviazione che verrà utilizzato se una regola ILM utilizza questo pool di archiviazione.
++
+Il grado di archiviazione, _include tutti i gradi di archiviazione_, include tutti i nodi di archiviazione nel sito selezionato.  Se hai creato gradi di archiviazione aggiuntivi per i nodi di archiviazione nella tua griglia, questi vengono elencati nel menu a discesa.
+
+. [[voci]]Se si desidera utilizzare il pool di archiviazione in un profilo di codifica di cancellazione multi-sito, selezionare *Aggiungi altri nodi* per aggiungere una voce per ciascun sito al pool di archiviazione.
++
+
+NOTE: Se aggiungi più di una voce con diversi gradi di archiviazione per un sito, verrai avvisato.
+
++
+Per rimuovere una voce, seleziona l'icona Eliminaimage:../media/icon-x-to-remove.png["icona di eliminazione"] .
+
+. Quando sei soddisfatto delle tue selezioni, seleziona *Salva*.
++
+Il nuovo pool di archiviazione viene aggiunto all'elenco.
+
+

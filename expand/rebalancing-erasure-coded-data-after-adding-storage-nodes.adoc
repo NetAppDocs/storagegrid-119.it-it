@@ -1,0 +1,150 @@
+---
+permalink: expand/rebalancing-erasure-coded-data-after-adding-storage-nodes.html 
+sidebar: sidebar 
+keywords: erasure coding, EC, rebalancing, site rebalance procedure 
+summary: Dopo aver aggiunto i nodi di archiviazione, è possibile utilizzare la procedura di ribilanciamento della codifica di cancellazione per ridistribuire i frammenti codificati con la codifica di cancellazione tra i nodi di archiviazione esistenti e quelli nuovi. 
+---
+= Ribilancia i dati codificati tramite cancellazione dopo l'aggiunta di nodi di archiviazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dopo aver aggiunto i nodi di archiviazione, è possibile utilizzare la procedura di ribilanciamento della codifica di cancellazione (EC) per ridistribuire i frammenti codificati tramite codifica di cancellazione tra i nodi di archiviazione esistenti e quelli nuovi.
+
+.Prima di iniziare
+* Sono stati completati i passaggi di espansione per aggiungere i nuovi nodi di archiviazione.
+* Hai esaminato illink:considerations-for-rebalancing-erasure-coded-data.html["considerazioni per il ribilanciamento dei dati codificati con cancellazione"] .
+* L'utente è consapevole che i dati degli oggetti replicati non verranno spostati da questa procedura e che la procedura di ribilanciamento EC non considera l'utilizzo dei dati replicati su ciascun nodo di archiviazione quando determina dove spostare i dati con codice di cancellazione.
+* Tu hai il `Passwords.txt` file.
+
+
+.Cosa succede quando viene eseguita questa procedura
+Prima di iniziare la procedura, tenere presente quanto segue:
+
+* La procedura di ribilanciamento EC non verrà avviata se uno o più volumi sono offline (smontati) o se sono online (montati) ma in stato di errore.
+* La procedura di riequilibrio della CE riserva temporaneamente una grande quantità di stoccaggio.  Potrebbero essere attivati avvisi di archiviazione, ma verranno risolti al termine del ribilanciamento.  Se non c'è abbastanza spazio per la prenotazione, la procedura di ribilanciamento EC fallirà.  Le prenotazioni di archiviazione vengono rilasciate al termine della procedura di ribilanciamento EC, indipendentemente dal fatto che la procedura sia fallita o riuscita.
+* Se un volume va offline mentre è in corso la procedura di ribilanciamento EC, la procedura di ribilanciamento verrà terminata.  Tutti i frammenti di dati già spostati rimarranno nelle nuove posizioni e nessun dato andrà perso.
++
+È possibile eseguire nuovamente la procedura dopo che tutti i volumi saranno di nuovo online.
+
+* Quando è in esecuzione la procedura di ribilanciamento EC, le prestazioni delle operazioni ILM e delle operazioni client S3 potrebbero essere compromesse.
++
+
+NOTE: Le operazioni API S3 per caricare oggetti (o parti di oggetti) potrebbero non riuscire durante la procedura di ribilanciamento EC se richiedono più di 24 ore per essere completate.  Le operazioni PUT di lunga durata non riusciranno se la regola ILM applicabile utilizza il posizionamento Bilanciato o Rigoroso durante l'acquisizione.  Verrà segnalato il seguente errore: `500 Internal Server Error` .
+
+* Durante questa procedura tutti i nodi hanno un limite di capacità di archiviazione dell'80%.  I nodi che superano questo limite, ma che comunque memorizzano dati al di sotto della partizione di destinazione, sono esclusi da:
++
+** Il valore dello squilibrio del sito
+** Eventuali condizioni di completamento del lavoro
++
+
+NOTE: La partizione dei dati di destinazione viene calcolata dividendo i dati totali di un sito per il numero di nodi.
+
+
+
+* *Condizioni di completamento del lavoro*.  La procedura di ribilanciamento della CE è considerata completa quando si verifica una delle seguenti condizioni:
++
+** Non è più possibile spostare dati con codice di cancellazione.
+** I dati in tutti i nodi rientrano in una deviazione del 5% rispetto alla partizione dati di destinazione.
+** La procedura è in corso da 30 giorni.
+
+
+
+
+.Passi
+. [[review_object_storage]]Esamina i dettagli attuali dell'archiviazione degli oggetti per il sito che intendi ribilanciare.
++
+.. Selezionare *NODES*.
+.. Selezionare il primo nodo di archiviazione nel sito.
+.. Selezionare la scheda *Archiviazione*.
+.. Posiziona il cursore sul grafico Spazio di archiviazione utilizzato - Dati oggetto per visualizzare la quantità corrente di dati replicati e dati con codice di cancellazione sul nodo di archiviazione.
+.. Ripetere questi passaggi per visualizzare gli altri nodi di archiviazione nel sito.
+
+
+. Accedi al nodo di amministrazione principale:
++
+.. Immettere il seguente comando: `ssh admin@_primary_Admin_Node_IP_`
+.. Inserisci la password elencata nel `Passwords.txt` file.
+.. Immettere il seguente comando per passare alla root: `su -`
+.. Inserisci la password elencata nel `Passwords.txt` file.
++
+Quando si accede come root, il prompt cambia da `$` A `#` .
+
+
+
+. Avviare la procedura:
++
+`rebalance-data start --site "_nome-sito_"
+
++
+Per "_site-name_", specificare il primo sito in cui sono stati aggiunti nuovi nodi di archiviazione.  Allegare `site-name` tra virgolette.
+
++
+Viene avviata la procedura di ribilanciamento EC e viene restituito un ID processo.
+
+. Copia l'ID del lavoro.
+. [[view-status]]Monitorare lo stato della procedura di riequilibrio della CE.
++
+** Per visualizzare lo stato di una singola procedura di ribilanciamento EC:
++
+`rebalance-data status --job-id _job-id_`
+
++
+Per `_job-id_` , specificare l'ID restituito quando è stata avviata la procedura.
+
+** Per visualizzare lo stato della procedura di ribilanciamento EC in corso e di tutte le procedure completate in precedenza:
++
+`rebalance-data status`
+
++
+[NOTE]
+====
+Per ottenere assistenza sul comando rebalance-data:
+
+`rebalance-data --help`
+
+====
+
+
+. Eseguire passaggi aggiuntivi, in base allo stato restituito:
++
+** Se `State` È `In progress` , l'operazione di riequilibrio della CE è ancora in corso.  È necessario monitorare periodicamente la procedura fino al suo completamento.
++
+Utilizzare il `Site Imbalance` valore per valutare quanto sia sbilanciato l'utilizzo dei dati del codice di cancellazione tra i nodi di archiviazione del sito.  Questo valore può variare da 1,0 a 0, dove 0 indica che l'utilizzo dei dati di codifica di cancellazione è completamente bilanciato su tutti i nodi di archiviazione del sito.
+
++
+Il processo di ribilanciamento EC è considerato completo e si interromperà quando i dati in tutti i nodi si troveranno entro una deviazione del 5% dalla partizione dati di destinazione.
+
+** Se `State` È `Success` , facoltativamente<<review_object_storage,rivedere l'archiviazione degli oggetti>> per vedere i dettagli aggiornati del sito.
++
+I dati con codice di cancellazione dovrebbero ora essere più bilanciati tra i nodi di archiviazione del sito.
+
+** Se `State` È `Failure` :
++
+... Verificare che tutti i nodi di archiviazione del sito siano collegati alla rete.
+... Verificare e risolvere eventuali avvisi che potrebbero interessare questi nodi di archiviazione.
+... Riavviare la procedura di ribilanciamento della CE:
++
+`rebalance-data start –-job-id _job-id_`
+
+... <<view-status,Visualizza lo stato>>della nuova procedura.  Se `State` è ancora `Failure` , contattare l'assistenza tecnica.
+
+
+
+
+. Se la procedura di ribilanciamento EC genera un carico eccessivo (ad esempio, sono interessate le operazioni di acquisizione), mettere in pausa la procedura.
++
+`rebalance-data pause --job-id _job-id_`
+
+. Se è necessario terminare la procedura di ribilanciamento EC (ad esempio, per poter eseguire un aggiornamento del software StorageGRID ), immettere quanto segue:
++
+`rebalance-data terminate --job-id _job-id_`
+
++
+
+NOTE: Quando si termina una procedura di ribilanciamento EC, tutti i frammenti di dati già spostati rimangono nelle loro nuove posizioni.  I dati non vengono spostati nella posizione originale.
+
+. Se si utilizza la codifica di cancellazione in più di un sito, eseguire questa procedura per tutti gli altri siti interessati.
+

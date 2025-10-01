@@ -1,0 +1,238 @@
+---
+permalink: admin/using-identity-federation.html 
+sidebar: sidebar 
+keywords: how to use identity federation, how to use federated groups with Grid Manager 
+summary: 'L"utilizzo della federazione delle identità velocizza la configurazione di gruppi e utenti e consente agli utenti di accedere a StorageGRID utilizzando credenziali familiari.' 
+---
+= Utilizzare la federazione delle identità
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+L'utilizzo della federazione delle identità velocizza la configurazione di gruppi e utenti e consente agli utenti di accedere a StorageGRID utilizzando credenziali familiari.
+
+
+
+== Configurare la federazione delle identità per Grid Manager
+
+È possibile configurare la federazione delle identità in Grid Manager se si desidera che i gruppi di amministratori e gli utenti vengano gestiti in un altro sistema, ad esempio Active Directory, Azure Active Directory (Azure AD), OpenLDAP o Oracle Directory Server.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Hailink:admin-group-permissions.html["autorizzazioni di accesso specifiche"] .
+* Stai utilizzando Active Directory, Azure AD, OpenLDAP o Oracle Directory Server come provider di identità.
++
+
+NOTE: Se si desidera utilizzare un servizio LDAP v3 non presente nell'elenco, contattare l'assistenza tecnica.
+
+* Se si prevede di utilizzare OpenLDAP, è necessario configurare il server OpenLDAP. Vedere <<Linee guida per la configurazione di un server OpenLDAP>> .
+* Se si prevede di abilitare l'accesso singolo (SSO), è necessario aver esaminato illink:requirements-for-sso.html["requisiti e considerazioni per l'accesso unico"] .
+* Se si prevede di utilizzare Transport Layer Security (TLS) per le comunicazioni con il server LDAP, il provider di identità utilizza TLS 1.2 o 1.3. Vedere link:supported-ciphers-for-outgoing-tls-connections.html["Cifrature supportate per le connessioni TLS in uscita"] .
+
+
+.Informazioni su questo compito
+È possibile configurare un'origine identità per Grid Manager se si desidera importare gruppi da un altro sistema, ad esempio Active Directory, Azure AD, OpenLDAP o Oracle Directory Server. È possibile importare i seguenti tipi di gruppi:
+
+* Gruppi di amministrazione.  Gli utenti nei gruppi di amministrazione possono accedere a Grid Manager ed eseguire attività in base alle autorizzazioni di gestione assegnate al gruppo.
+* Gruppi di utenti tenant per tenant che non utilizzano una propria fonte di identità.  Gli utenti nei gruppi di tenant possono accedere a Tenant Manager ed eseguire attività in base alle autorizzazioni assegnate al gruppo in Tenant Manager.  Vederelink:creating-tenant-account.html["Crea un account inquilino"] Elink:../tenant/index.html["Utilizzare un account tenant"] per i dettagli.
+
+
+
+
+=== Inserisci la configurazione
+
+.Passi
+. Selezionare *CONFIGURAZIONE* > *Controllo accessi* > *Federazione identità*.
+. Selezionare *Abilita federazione delle identità*.
+. Nella sezione Tipo di servizio LDAP, seleziona il tipo di servizio LDAP che desideri configurare.
++
+image::../media/ldap_service_type.png[Pagina di Identity Federation che mostra le opzioni del tipo di servizio LDAP]
+
++
+Selezionare *Altro* per configurare i valori per un server LDAP che utilizza Oracle Directory Server.
+
+. Se hai selezionato *Altro*, compila i campi nella sezione Attributi LDAP. procedere al passaggio successivo.
++
+** *Nome univoco utente*: il nome dell'attributo che contiene l'identificatore univoco di un utente LDAP. Questo attributo è equivalente a `sAMAccountName` per Active Directory e `uid` per OpenLDAP. Se si sta configurando Oracle Directory Server, immettere `uid` .
+** *UUID utente*: il nome dell'attributo che contiene l'identificatore univoco permanente di un utente LDAP. Questo attributo è equivalente a `objectGUID` per Active Directory e `entryUUID` per OpenLDAP. Se si sta configurando Oracle Directory Server, immettere `nsuniqueid` . Il valore di ciascun utente per l'attributo specificato deve essere un numero esadecimale di 32 cifre in formato stringa o a 16 byte, in cui i trattini vengono ignorati.
+** *Nome univoco del gruppo*: il nome dell'attributo che contiene l'identificatore univoco di un gruppo LDAP. Questo attributo è equivalente a `sAMAccountName` per Active Directory e `cn` per OpenLDAP. Se si sta configurando Oracle Directory Server, immettere `cn` .
+** *UUID gruppo*: il nome dell'attributo che contiene l'identificatore univoco permanente di un gruppo LDAP. Questo attributo è equivalente a `objectGUID` per Active Directory e `entryUUID` per OpenLDAP. Se si sta configurando Oracle Directory Server, immettere `nsuniqueid` . Il valore di ciascun gruppo per l'attributo specificato deve essere un numero esadecimale di 32 cifre in formato stringa o a 16 byte, in cui i trattini vengono ignorati.
+
+
+. Per tutti i tipi di servizio LDAP, immettere le informazioni richieste sul server LDAP e sulla connessione di rete nella sezione Configura server LDAP.
++
+** *Nome host*: nome di dominio completo (FQDN) o indirizzo IP del server LDAP.
+** *Porta*: la porta utilizzata per connettersi al server LDAP.
++
+
+NOTE: La porta predefinita per STARTTLS è 389, mentre la porta predefinita per LDAPS è 636.  Tuttavia, puoi utilizzare qualsiasi porta, a patto che il firewall sia configurato correttamente.
+
+** *Nome utente*: percorso completo del nome distinto (DN) dell'utente che si connetterà al server LDAP.
++
+Per Active Directory, è anche possibile specificare il nome di accesso di livello inferiore o il nome dell'entità utente.
+
++
+L'utente specificato deve avere l'autorizzazione per elencare gruppi e utenti e per accedere ai seguenti attributi:
+
++
+*** `sAMAccountName`O `uid`
+*** `objectGUID`, `entryUUID` , O `nsuniqueid`
+*** `cn`
+*** `memberOf`O `isMemberOf`
+*** *Directory attiva*: `objectSid` , `primaryGroupID` , `userAccountControl` , E `userPrincipalName`
+*** *Azzurro*: `accountEnabled` E `userPrincipalName`
+
+
+** *Password*: la password associata al nome utente.
++
+
+NOTE: Se in futuro dovessi cambiare la password, dovrai aggiornarla in questa pagina.
+
+** *DN base gruppo*: percorso completo del nome distinto (DN) per un sottoalbero LDAP in cui si desidera cercare i gruppi.  Nell'esempio di Active Directory (sotto), tutti i gruppi il cui nome distinto è relativo al DN di base (DC=storagegrid,DC=example,DC=com) possono essere utilizzati come gruppi federati.
++
+
+NOTE: I valori *Nome univoco del gruppo* devono essere univoci all'interno del *DN di base del gruppo* a cui appartengono.
+
+** *DN base utente*: percorso completo del nome distinto (DN) di un sottoalbero LDAP in cui si desidera cercare gli utenti.
++
+
+NOTE: I valori *Nome univoco utente* devono essere univoci all'interno del *Nome base utente* a cui appartengono.
+
+** *Formato nome utente associato* (facoltativo): il modello di nome utente predefinito che StorageGRID dovrebbe utilizzare se il modello non può essere determinato automaticamente.
++
+Si consiglia di fornire il *formato nome utente di associazione* perché può consentire agli utenti di accedere se StorageGRID non è in grado di associarsi all'account di servizio.
+
++
+Inserisci uno di questi modelli:
+
++
+*** *Modello UserPrincipalName (Active Directory e Azure)*: `[USERNAME]@_example_.com`
+*** *Modello di nome di accesso di livello inferiore (Active Directory e Azure)*: `_example_\[USERNAME]`
+*** *Modello di nome distinto*: `CN=[USERNAME],CN=Users,DC=_example_,DC=com`
++
+Includi *[USERNAME]* esattamente come scritto.
+
+
+
+
+
+. Nella sezione Transport Layer Security (TLS), seleziona un'impostazione di sicurezza.
++
+** *Usa STARTTLS*: usa STARTTLS per proteggere le comunicazioni con il server LDAP. Questa è l'opzione consigliata per Active Directory, OpenLDAP o Altro, ma non è supportata per Azure.
+** *Usa LDAPS*: l'opzione LDAPS (LDAP su SSL) utilizza TLS per stabilire una connessione al server LDAP. È necessario selezionare questa opzione per Azure.
+** *Non utilizzare TLS*: il traffico di rete tra il sistema StorageGRID e il server LDAP non sarà protetto.  Questa opzione non è supportata per Azure.
++
+
+NOTE: L'utilizzo dell'opzione *Non utilizzare TLS* non è supportato se il server Active Directory impone la firma LDAP. È necessario utilizzare STARTTLS o LDAPS.
+
+
+
+. Se hai selezionato STARTTLS o LDAPS, scegli il certificato utilizzato per proteggere la connessione.
++
+** *Utilizza il certificato CA del sistema operativo*: utilizza il certificato Grid CA predefinito installato sul sistema operativo per proteggere le connessioni.
+** *Utilizza certificato CA personalizzato*: utilizza un certificato di sicurezza personalizzato.
++
+Se selezioni questa impostazione, copia e incolla il certificato di sicurezza personalizzato nella casella di testo Certificato CA.
+
+
+
+
+
+
+
+=== Testare la connessione e salvare la configurazione
+
+Dopo aver immesso tutti i valori, è necessario testare la connessione prima di poter salvare la configurazione.  StorageGRID verifica le impostazioni di connessione per il server LDAP e il formato del nome utente associato, se ne è stato fornito uno.
+
+.Passi
+. Selezionare *Test connessione*.
+. Se non hai fornito un formato di nome utente di associazione:
++
+** Se le impostazioni di connessione sono valide, viene visualizzato il messaggio "Test di connessione riuscito".  Selezionare *Salva* per salvare la configurazione.
+** Se le impostazioni di connessione non sono valide, viene visualizzato il messaggio "Impossibile stabilire la connessione di prova".  Selezionare *Chiudi*.  Quindi, risolvi eventuali problemi e verifica nuovamente la connessione.
+
+
+. Se hai fornito un formato di nome utente vincolato, inserisci il nome utente e la password di un utente federato valido.
++
+Ad esempio, inserisci il tuo nome utente e la tua password.  Non includere caratteri speciali nel nome utente, come @ o /.
+
++
+image::../media/identity_federation_test_connection.png[Richiesta di federazione delle identità per convalidare il formato del nome utente associato]
+
++
+** Se le impostazioni di connessione sono valide, viene visualizzato il messaggio "Test di connessione riuscito".  Selezionare *Salva* per salvare la configurazione.
+** Se le impostazioni di connessione, il formato del nome utente associato o il nome utente e la password di prova non sono validi, viene visualizzato un messaggio di errore.  Risolvi eventuali problemi e verifica nuovamente la connessione.
+
+
+
+
+
+
+== Forza la sincronizzazione con la fonte dell'identità
+
+Il sistema StorageGRID sincronizza periodicamente i gruppi federati e gli utenti dalla fonte di identità.  È possibile forzare l'avvio della sincronizzazione se si desidera abilitare o limitare le autorizzazioni utente il più rapidamente possibile.
+
+.Passi
+. Vai alla pagina Federazione delle identità.
+. Seleziona *Sincronizza server* nella parte superiore della pagina.
++
+Il processo di sincronizzazione potrebbe richiedere del tempo, a seconda dell'ambiente.
+
++
+
+NOTE: L'avviso *Errore di sincronizzazione della federazione delle identità* viene attivato se si verifica un problema durante la sincronizzazione di gruppi e utenti federati dall'origine dell'identità.
+
+
+
+
+
+== Disabilitare la federazione delle identità
+
+È possibile disattivare temporaneamente o permanentemente la federazione delle identità per gruppi e utenti. Quando la federazione delle identità è disabilitata, non c'è comunicazione tra StorageGRID e l'origine dell'identità. Tuttavia, tutte le impostazioni configurate vengono mantenute, consentendoti di riattivare facilmente la federazione delle identità in futuro.
+
+.Informazioni su questo compito
+Prima di disattivare la federazione delle identità, è necessario tenere presente quanto segue:
+
+* Gli utenti federati non potranno effettuare l'accesso.
+* Gli utenti federati attualmente connessi manterranno l'accesso al sistema StorageGRID fino alla scadenza della sessione, ma non potranno effettuare l'accesso dopo la scadenza della sessione.
+* La sincronizzazione tra il sistema StorageGRID e l'origine dell'identità non verrà eseguita e non verranno generati avvisi per gli account che non sono stati sincronizzati.
+* La casella di controllo *Abilita federazione delle identità* è disabilitata se l'accesso Single Sign-On (SSO) è impostato su *Abilitato* o *Modalità Sandbox*. Lo stato SSO nella pagina Single Sign-on deve essere *Disabilitato* prima di poter disabilitare la federazione delle identità. Vedere link:../admin/disabling-single-sign-on.html["Disabilitare l'accesso singolo"] .
+
+
+.Passi
+. Vai alla pagina Federazione delle identità.
+. Deseleziona la casella di controllo *Abilita federazione delle identità*.
+
+
+
+
+== Linee guida per la configurazione di un server OpenLDAP
+
+Se si desidera utilizzare un server OpenLDAP per la federazione delle identità, è necessario configurare impostazioni specifiche sul server OpenLDAP.
+
+
+CAUTION: Per le origini identità diverse da ActiveDirectory o Azure, StorageGRID non bloccherà automaticamente l'accesso S3 agli utenti disabilitati esternamente. Per bloccare l'accesso S3, eliminare tutte le chiavi S3 dell'utente o rimuovere l'utente da tutti i gruppi.
+
+
+
+=== Sovrapposizioni di membri e raffinazione
+
+Le sovrapposizioni memberof e refint dovrebbero essere abilitate.  Per ulteriori informazioni, consultare le istruzioni per la manutenzione inversa dell'appartenenza al gruppo inhttp://www.openldap.org/doc/admin24/index.html["Documentazione OpenLDAP: Guida dell'amministratore versione 2.4"^] .
+
+
+
+=== Indicizzazione
+
+È necessario configurare i seguenti attributi OpenLDAP con le parole chiave di indice specificate:
+
+* `olcDbIndex: objectClass eq`
+* `olcDbIndex: uid eq,pres,sub`
+* `olcDbIndex: cn eq,pres,sub`
+* `olcDbIndex: entryUUID eq`
+
+
+Inoltre, assicurati che i campi menzionati nella guida per Nome utente siano indicizzati per prestazioni ottimali.
+
+Consultare le informazioni sul mantenimento dell'appartenenza al gruppo inverso inhttp://www.openldap.org/doc/admin24/index.html["Documentazione OpenLDAP: Guida dell'amministratore versione 2.4"^] .

@@ -1,0 +1,132 @@
+---
+permalink: maintain/decommissioning-connected-grid-nodes.html 
+sidebar: sidebar 
+keywords: storagegrid, decommission, connected nodes, decommission node 
+summary: È possibile dismettere e rimuovere definitivamente i nodi collegati alla rete. 
+---
+= Disattivare i nodi della rete connessi
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile dismettere e rimuovere definitivamente i nodi collegati alla rete.
+
+.Prima di iniziare
+* Hai compreso le considerazioni per la dismissionelink:considerations-for-decommissioning-admin-or-gateway-nodes.html["Nodi di amministrazione e gateway"] e le considerazioni per la dismissionelink:considerations-for-decommissioning-storage-nodes.html["Nodi di archiviazione"] .
+* Hai raccolto tutto il materiale necessario.
+* Hai verificato che non ci siano processi di riparazione dati attivi.
+* Hai confermato che il ripristino del nodo di archiviazione non è in corso in nessuna parte della griglia.  In tal caso, attendere il completamento di qualsiasi ricostruzione di Cassandra eseguita come parte del ripristino.  Si può quindi procedere con la dismissione.
+* Hai assicurato che non verranno eseguite altre procedure di manutenzione mentre è in esecuzione la procedura di dismissione del nodo, a meno che la procedura di dismissione del nodo non sia in pausa.
+* Hai la passphrase di provisioning.
+* I nodi della griglia sono collegati.
+* La colonna *Dismissione possibile* per il nodo o i nodi che si desidera dismettere include un segno di spunta verde.
++
+
+NOTE: La dismissione non verrà avviata se uno o più volumi sono offline (smontati) o se sono online (montati) ma in stato di errore.
+
++
+
+NOTE: Se uno o più volumi vanno offline mentre è in corso una dismissione, il processo di dismissione viene completato dopo che i volumi tornano online.
+
+* Tutti i nodi della griglia hanno una salute normale (verde)image:../media/icon_alert_green_checkmark.png["icona del segno di spunta verde"] .  Se vedi una di queste icone nella colonna *Salute*, devi provare a risolvere il problema:
++
+[cols="1a,1a,3a"]
+|===
+| Icona | Colore | Gravità 
+
+
+ a| 
+image:../media/icon_alarm_yellow_notice.gif["icona quadrata gialla"]
+ a| 
+Giallo
+ a| 
+Avviso
+
+
+
+ a| 
+image:../media/icon_alert_yellow_minor.png["icona a forma di diamante arancione chiaro"]
+ a| 
+Arancione chiaro
+ a| 
+Minore
+
+
+
+ a| 
+image:../media/icon_alert_orange_major.png["icona a forma di diamante arancione scuro"]
+ a| 
+Arancione scuro
+ a| 
+Maggiore
+
+
+
+ a| 
+image:../media/icon_alert_red_critical.png["icona x rossa"]
+ a| 
+Rosso
+ a| 
+Critico
+
+|===
+* Se in precedenza hai dismesso un nodo di archiviazione disconnesso, tutti i processi di riparazione dei dati sono stati completati correttamente. Vedere link:checking-data-repair-jobs.html["Controlla i lavori di riparazione dei dati"] .
+
+
+
+CAUTION: Non rimuovere la macchina virtuale o altre risorse di un nodo della griglia finché non ti viene richiesto in questa procedura.
+
+
+CAUTION: Prestare attenzione quando si dismettono nodi di archiviazione in una griglia contenente nodi basati solo su software.  Se si dismettono tutti i nodi configurati per archiviare sia oggetti che metadati, la possibilità di archiviare oggetti viene rimossa dalla griglia.  Vederelink:../primer/what-storage-node-is.html#types-of-storage-nodes["Tipi di nodi di archiviazione"] per ulteriori informazioni sui nodi di archiviazione solo metadati.
+
+.Informazioni su questo compito
+Quando un nodo viene dismesso, i suoi servizi vengono disabilitati e il nodo si spegne automaticamente.
+
+.Passi
+. Nella pagina Nodi di dismissione, seleziona la casella di controllo per ogni nodo della griglia che desideri dismettere.
+. Immettere la passphrase di provisioning.
++
+Il pulsante *Avvia disattivazione* è abilitato.
+
+. Selezionare *Avvia dismissione*.
+. Esaminare l'elenco dei nodi nella finestra di dialogo di conferma e selezionare *OK*.
++
+Viene avviata la procedura di dismissione del nodo e per ogni nodo viene visualizzato lo stato di avanzamento.
+
++
+
+CAUTION: Non mettere offline un nodo di archiviazione dopo l'avvio della procedura di dismissione.  La modifica dello stato potrebbe comportare la mancata copia di alcuni contenuti in altre posizioni.
+
+. Non appena il nuovo Pacchetto di ripristino è disponibile, seleziona il collegamento Pacchetto di ripristino nel banner oppure seleziona *MANUTENZIONE* > *Sistema* > *Pacchetto di ripristino* per accedere alla pagina Pacchetto di ripristino. Quindi, scarica il `.zip` file.
++
+Vedere link:downloading-recovery-package.html["scaricando il pacchetto di ripristino"] .
+
++
+
+NOTE: Scarica il pacchetto di ripristino il prima possibile per assicurarti di poter ripristinare la tua rete se qualcosa va storto durante la procedura di dismissione.
+
+. Monitorare periodicamente la pagina Nodi dismessi per assicurarsi che tutti i nodi selezionati vengano dismessi correttamente.
++
+
+TIP: La dismissione dei nodi di archiviazione può richiedere giorni o settimane.
+
++
+Una volta completate tutte le attività, l'elenco di selezione dei nodi viene nuovamente visualizzato con un messaggio di successo.
+
+
+
+.Dopo aver finito
+Completare questi passaggi dopo aver completato la procedura di dismissione del nodo:
+
+. Segui i passaggi appropriati per la tua piattaforma. Per esempio:
++
+** *Linux*: Potresti voler staccare i volumi ed eliminare i file di configurazione del nodo creati durante l'installazione. Vederelink:../rhel/index.html["Installa StorageGRID su Red Hat Enterprise Linux"] Elink:../ubuntu/index.html["Installa StorageGRID su Ubuntu o Debian"] .
+** *VMware*: Potresti voler utilizzare l'opzione "Elimina dal disco" di vCenter per eliminare la macchina virtuale.  Potrebbe anche essere necessario eliminare eventuali dischi dati indipendenti dalla macchina virtuale.
+** * Appliance StorageGRID *: il nodo dell'appliance torna automaticamente a uno stato non distribuito in cui è possibile accedere al programma di installazione dell'appliance StorageGRID .  È possibile spegnere l'apparecchio o aggiungerlo a un altro sistema StorageGRID .
+
+
+. Assicurarsi che le unità del nodo di rete dismesso siano state cancellate.  Utilizzare uno strumento o un servizio di cancellazione dati disponibile in commercio per rimuovere in modo permanente e sicuro i dati dalle unità.
+. Se hai dismesso un nodo dell'appliance e i dati sull'appliance erano protetti tramite crittografia del nodo, usa StorageGRID Appliance Installer per cancellare la configurazione del server di gestione delle chiavi (Clear KMS).  Se si desidera aggiungere l'appliance a un'altra griglia, è necessario cancellare la configurazione KMS. Per le istruzioni, vedere https://docs.netapp.com/us-en/storagegrid-appliances/commonhardware/monitoring-node-encryption-in-maintenance-mode.html["Monitora la crittografia del nodo in modalità di manutenzione"^] .
+

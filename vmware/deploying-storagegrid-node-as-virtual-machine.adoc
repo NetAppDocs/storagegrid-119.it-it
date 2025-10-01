@@ -1,0 +1,312 @@
+---
+permalink: vmware/deploying-storagegrid-node-as-virtual-machine.html 
+sidebar: sidebar 
+keywords: how to deploy grid nodes in vsphere or vsphere web client, port, remap, port remap 
+summary: Per distribuire ogni nodo della griglia come macchina virtuale, si utilizza VMware vSphere Web Client.  Durante la distribuzione, ogni nodo della griglia viene creato e connesso a una o più reti StorageGRID . 
+---
+= Distribuisci un nodo StorageGRID come macchina virtuale
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Per distribuire ogni nodo della griglia come macchina virtuale, si utilizza VMware vSphere Web Client.  Durante la distribuzione, ogni nodo della griglia viene creato e connesso a una o più reti StorageGRID .
+
+Se è necessario distribuire qualsiasi nodo di archiviazione dell'appliance StorageGRID , vedere https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/deploying-appliance-storage-node.html["Distribuisci il nodo di archiviazione dell'appliance"^] .
+
+Facoltativamente, è possibile rimappare le porte del nodo o aumentare le impostazioni della CPU o della memoria per il nodo prima di accenderlo.
+
+.Prima di iniziare
+* Hai esaminato comelink:index.html["pianificare e preparare l'installazione"] e comprendi i requisiti per software, CPU e RAM, nonché per archiviazione e prestazioni.
+* Hai familiarità con VMware vSphere Hypervisor e hai esperienza nella distribuzione di macchine virtuali in questo ambiente.
++
+
+NOTE: IL `open-vm-tools` Il pacchetto, un'implementazione open source simile a VMware Tools, è incluso nella macchina virtuale StorageGRID .  Non è necessario installare VMware Tools manualmente.
+
+* Hai scaricato ed estratto la versione corretta dell'archivio di installazione StorageGRID per VMware.
++
+
+CAUTION: Se si distribuisce il nuovo nodo come parte di un'operazione di espansione o ripristino, è necessario utilizzare la versione di StorageGRID attualmente in esecuzione sulla griglia.
+
+* Hai il disco della macchina virtuale StorageGRID(`.vmdk` ) file:
+
+
+[listing, subs="specialcharacters,quotes"]
+----
+NetApp-_SG-version_-SHA.vmdk
+----
+* Tu hai il `.ovf` E `.mf` file per ogni tipo di nodo della griglia che stai distribuendo:
++
+[cols="1a,1a"]
+|===
+| Nome del file | Descrizione 
+
+
+| vsphere-primary-admin.ovf vsphere-primary-admin.mf  a| 
+Il file modello e il file manifest per il nodo di amministrazione primario.
+
+
+
+| vsphere-non-primary-admin.ovf vsphere-non-primary-admin.mf  a| 
+Il file modello e il file manifest per un nodo di amministrazione non primario.
+
+
+
+| vsphere-storage.ovf vsphere-storage.mf  a| 
+Il file modello e il file manifesto per un nodo di archiviazione.
+
+
+
+| vsphere-gateway.ovf vsphere-gateway.mf  a| 
+Il file modello e il file manifest per un nodo gateway.
+
+|===
+* IL `.vdmk` , `.ovf` , E `.mf` i file sono tutti nella stessa directory.
+* Hai un piano per ridurre al minimo i domini di errore.  Ad esempio, non dovresti distribuire tutti i nodi gateway su un singolo host vSphere ESXi.
++
+
+CAUTION: In una distribuzione di produzione, non eseguire più di un nodo di archiviazione su una singola macchina virtuale.  Non eseguire più macchine virtuali sullo stesso host ESXi se ciò potrebbe creare un problema di dominio di errore inaccettabile.
+
+* Se si sta distribuendo un nodo come parte di un'operazione di espansione o di ripristino, si ha lalink:../expand/index.html["istruzioni per espandere un sistema StorageGRID"] o illink:../maintain/index.html["istruzioni per il recupero e la manutenzione"] .
+* Se si distribuisce un nodo StorageGRID come macchina virtuale con storage assegnato da un sistema NetApp ONTAP , è stato verificato che il volume non ha un criterio di suddivisione in livelli FabricPool abilitato.  Ad esempio, se un nodo StorageGRID è in esecuzione come macchina virtuale su un host VMware, assicurarsi che il volume che supporta il datastore per il nodo non abbia un criterio di suddivisione in livelli FabricPool abilitato.  La disattivazione della suddivisione in livelli FabricPool per i volumi utilizzati con i nodi StorageGRID semplifica la risoluzione dei problemi e le operazioni di archiviazione.
++
+
+NOTE: Non utilizzare mai FabricPool per riportare i dati relativi a StorageGRID a StorageGRID stesso.  Il riordino dei dati StorageGRID su StorageGRID aumenta la complessità operativa e la risoluzione dei problemi.
+
+
+
+.Informazioni su questo compito
+Seguire queste istruzioni per distribuire inizialmente i nodi VMware, aggiungere un nuovo nodo VMware in un'espansione o sostituire un nodo VMware come parte di un'operazione di ripristino.  Salvo quanto indicato nei passaggi, la procedura di distribuzione dei nodi è la stessa per tutti i tipi di nodi, inclusi i nodi amministrativi, i nodi di archiviazione e i nodi gateway.
+
+Se si sta installando un nuovo sistema StorageGRID :
+
+* È possibile distribuire i nodi in qualsiasi ordine.
+* È necessario assicurarsi che ogni macchina virtuale possa connettersi al nodo di amministrazione primario tramite la rete Grid.
+* È necessario distribuire tutti i nodi della griglia prima di configurare la griglia.
+
+
+Se si sta eseguendo un'operazione di espansione o di ripristino:
+
+* È necessario assicurarsi che la nuova macchina virtuale possa connettersi a tutti gli altri nodi sulla rete Grid.
+
+
+Se è necessario rimappare una qualsiasi delle porte del nodo, non accendere il nuovo nodo finché la configurazione della rimappatura delle porte non è completa.
+
+.Passi
+. Utilizzando VCenter, distribuire un modello OVF.
++
+Se specifichi un URL, punta a una cartella contenente i seguenti file.  Altrimenti, seleziona ciascuno di questi file da una directory locale.
+
++
+[listing, subs="specialcharacters,quotes"]
+----
+NetApp-_SG-version_-SHA.vmdk
+vsphere-_node_.ovf
+vsphere-_node_.mf
+----
++
+Ad esempio, se questo è il primo nodo che stai distribuendo, usa questi file per distribuire il nodo di amministrazione primario per il tuo sistema StorageGRID :
+
++
+[listing, subs="specialcharacters,quotes"]
+----
+NetApp-_SG-version_-SHA.vmdk
+vsphere-primary-admin.ovf
+vsphere-primary-admin.mf
+----
+. Fornire un nome per la macchina virtuale.
++
+La prassi standard è quella di utilizzare lo stesso nome sia per la macchina virtuale che per il nodo della griglia.
+
+. Posizionare la macchina virtuale nella vApp o nel pool di risorse appropriato.
+. Se si sta distribuendo il nodo di amministrazione primario, leggere e accettare il Contratto di licenza con l'utente finale.
++
+A seconda della versione di vCenter in uso, l'ordine dei passaggi per accettare il Contratto di licenza con l'utente finale, specificare il nome della macchina virtuale e selezionare un datastore varierà.
+
+. Selezionare l'archiviazione per la macchina virtuale.
++
+Se si sta distribuendo un nodo come parte di un'operazione di ripristino, eseguire le istruzioni in<<step_recovery_storage,fase di recupero dell'archiviazione>> per aggiungere nuovi dischi virtuali, ricollegare i dischi rigidi virtuali dal nodo della griglia non riuscito o entrambe le cose.
+
++
+Quando si distribuisce un nodo di archiviazione, utilizzare 3 o più volumi di archiviazione, ciascuno dei quali deve avere una dimensione pari o superiore a 4 TB.  È necessario assegnare almeno 4 TB al volume 0.
+
++
+
+NOTE: Il file .ovf del nodo di archiviazione definisce diversi VMDK per l'archiviazione.  A meno che questi VMDK non soddisfino i requisiti di archiviazione, è necessario rimuoverli e assegnare VMDK o RDM appropriati per l'archiviazione prima di accendere il nodo.  I VMDK sono più comunemente utilizzati negli ambienti VMware e sono più facili da gestire, mentre gli RDM potrebbero offrire prestazioni migliori per carichi di lavoro che utilizzano dimensioni di oggetti maggiori (ad esempio, superiori a 100 MB).
+
++
+
+NOTE: Alcune installazioni StorageGRID potrebbero utilizzare volumi di archiviazione più grandi e più attivi rispetto ai tipici carichi di lavoro virtualizzati.  Potrebbe essere necessario regolare alcuni parametri dell'hypervisor, come ad esempio `MaxAddressableSpaceTB` , per ottenere prestazioni ottimali.  Se riscontri scarse prestazioni, contatta la risorsa di supporto alla virtualizzazione per determinare se il tuo ambiente potrebbe trarre vantaggio dall'ottimizzazione della configurazione specifica del carico di lavoro.
+
+. Seleziona le reti.
++
+Determina quali reti StorageGRID utilizzerà il nodo selezionando una rete di destinazione per ciascuna rete di origine.
+
++
+** È richiesta la rete Grid.  È necessario selezionare una rete di destinazione nell'ambiente vSphere.  + La rete Grid viene utilizzata per tutto il traffico StorageGRID interno.  Fornisce connettività tra tutti i nodi della griglia, in tutti i siti e le subnet.  Tutti i nodi della rete Grid devono essere in grado di comunicare con tutti gli altri nodi.
+** Se si utilizza la rete di amministrazione, selezionare una rete di destinazione diversa nell'ambiente vSphere.  Se non si utilizza la rete di amministrazione, selezionare la stessa destinazione selezionata per la rete Grid.
+** Se si utilizza la rete client, selezionare una rete di destinazione diversa nell'ambiente vSphere.  Se non si utilizza la rete client, selezionare la stessa destinazione selezionata per la rete Grid.
+** Se si utilizza una rete Admin o Client, i nodi non devono trovarsi sulla stessa rete Admin o Client.
+
+
+. Per *Personalizza modello*, configurare le proprietà richieste del nodo StorageGRID .
++
+.. Inserisci il *Nome del nodo*.
++
+
+NOTE: Se si sta ripristinando un nodo della griglia, è necessario immettere il nome del nodo che si sta ripristinando.
+
+.. Utilizzare il menu a discesa *Password di installazione temporanea* per specificare una password di installazione temporanea, in modo da poter accedere alla console della VM o all'API di installazione StorageGRID , oppure utilizzare SSH, prima che il nuovo nodo si unisca alla griglia.
++
+
+NOTE: La password di installazione temporanea viene utilizzata solo durante l'installazione del nodo.  Dopo che un nodo è stato aggiunto alla griglia, è possibile accedervi utilizzandolink:../admin/change-node-console-password.html["password della console del nodo"] , che è elencato nel `Passwords.txt` file nel pacchetto di ripristino.
+
++
+*** *Usa nome nodo*: il valore fornito per il campo *Nome nodo* viene utilizzato come password di installazione temporanea.
+*** *Usa password personalizzata*: come password di installazione temporanea viene utilizzata una password personalizzata.
+*** *Disabilita password*: non verrà utilizzata alcuna password di installazione temporanea.  Se è necessario accedere alla macchina virtuale per risolvere i problemi di installazione, vederelink:troubleshooting-installation-issues.html["Risolvere i problemi di installazione"] .
+
+
+.. Se hai selezionato *Usa password personalizzata*, specifica la password di installazione temporanea che desideri utilizzare nel campo *Password personalizzata*.
+.. Nella sezione *Rete Grid (eth0)*, selezionare STATICO o DHCP per la *Configurazione IP della rete Grid*.
++
+*** Se si seleziona STATICO, immettere *IP di rete griglia*, *Maschera di rete griglia*, *Gateway di rete griglia* e *MTU di rete griglia*.
+*** Se si seleziona DHCP, *IP di rete griglia*, *Maschera di rete griglia* e *Gateway di rete griglia* vengono assegnati automaticamente.
+
+
+.. Nel campo *IP amministratore primario*, immettere l'indirizzo IP del nodo amministratore primario per la rete Grid.
++
+
+NOTE: Questo passaggio non si applica se il nodo che si sta distribuendo è il nodo di amministrazione primario.
+
++
+Se si omette l'indirizzo IP del nodo di amministrazione primario, l'indirizzo IP verrà rilevato automaticamente se il nodo di amministrazione primario, o almeno un altro nodo della griglia con ADMIN_IP configurato, è presente sulla stessa subnet.  Tuttavia, si consiglia di impostare qui l'indirizzo IP del nodo di amministrazione primario.
+
+.. Nella sezione *Rete amministrativa (eth1)*, selezionare STATICO, DHCP o DISABILITATO per la *configurazione IP della rete amministrativa*.
++
+*** Se non si desidera utilizzare la rete di amministrazione, selezionare DISABILITATO e immettere *0.0.0.0* come IP della rete di amministrazione.  Puoi lasciare vuoti gli altri campi.
+*** Se si seleziona STATICO, immettere *IP rete amministratore*, *Maschera rete amministratore*, *Gateway rete amministratore* e *MTU rete amministratore*.
+*** Se si seleziona STATICO, immettere l'*Elenco subnet esterne della rete amministrativa*.  È necessario configurare anche un gateway.
+*** Se si seleziona DHCP, *IP di rete amministratore*, *Maschera di rete amministratore* e *Gateway di rete amministratore* vengono assegnati automaticamente.
+
+
+.. Nella sezione *Rete client (eth2)*, selezionare STATICO, DHCP o DISABILITATO per la *Configurazione IP della rete client*.
++
+*** Se non si desidera utilizzare la rete client, selezionare DISABILITATO e immettere *0.0.0.0* come IP della rete client.  Puoi lasciare vuoti gli altri campi.
+*** Se si seleziona STATICO, immettere *IP di rete client*, *Maschera di rete client*, *Gateway di rete client* e *MTU di rete client*.
+*** Se si seleziona DHCP, *IP di rete client*, *Maschera di rete client* e *Gateway di rete client* vengono assegnati automaticamente.
+
+
+
+
+. Rivedere la configurazione della macchina virtuale e apportare le modifiche necessarie.
+. Quando sei pronto per completare, seleziona *Fine* per avviare il caricamento della macchina virtuale.
+. [[step_recovery_storage]]Se hai distribuito questo nodo come parte di un'operazione di ripristino e non si tratta di un ripristino del nodo completo, esegui questi passaggi al termine della distribuzione:
++
+.. Fare clic con il pulsante destro del mouse sulla macchina virtuale e selezionare *Modifica impostazioni*.
+.. Selezionare ciascun disco rigido virtuale predefinito designato per l'archiviazione e selezionare *Rimuovi*.
+.. A seconda delle circostanze del ripristino dei dati, aggiungi nuovi dischi virtuali in base ai requisiti di archiviazione, ricollega eventuali dischi rigidi virtuali conservati dal nodo griglia non riuscito rimosso in precedenza, oppure esegui entrambe le operazioni.
++
+Si prega di notare le seguenti importanti linee guida:
+
++
+*** Se si aggiungono nuovi dischi, è necessario utilizzare lo stesso tipo di dispositivo di archiviazione utilizzato prima del ripristino del nodo.
+*** Il file .ovf del nodo di archiviazione definisce diversi VMDK per l'archiviazione.  A meno che questi VMDK non soddisfino i requisiti di archiviazione, è necessario rimuoverli e assegnare VMDK o RDM appropriati per l'archiviazione prima di accendere il nodo.  I VMDK sono più comunemente utilizzati negli ambienti VMware e sono più facili da gestire, mentre gli RDM potrebbero offrire prestazioni migliori per carichi di lavoro che utilizzano dimensioni di oggetti maggiori (ad esempio, superiori a 100 MB).
+
+
+
+
+. [[vmware-remap-ports]]Se è necessario rimappare le porte utilizzate da questo nodo, seguire questi passaggi.
++
+Potrebbe essere necessario rimappare una porta se i criteri di rete aziendali limitano l'accesso a una o più porte utilizzate da StorageGRID.  Vedi illink:../network/index.html["linee guida per il networking"] per le porte utilizzate da StorageGRID.
+
++
+
+NOTE: Non rimappare le porte utilizzate negli endpoint del bilanciatore del carico.
+
++
+.. Selezionare la nuova VM.
+.. Dalla scheda Configura, seleziona *Impostazioni* > *Opzioni vApp*.  La posizione di *vApp Options* dipende dalla versione di vCenter.
+.. Nella tabella *Proprietà*, individuare PORT_REMAP_INBOUND e PORT_REMAP.
+.. Per mappare in modo simmetrico sia le comunicazioni in entrata che quelle in uscita per una porta, selezionare *PORT_REMAP*.
++
+
+NOTE: Se è impostato solo PORT_REMAP, la mappatura specificata si applica sia alle comunicazioni in entrata che a quelle in uscita.  Se viene specificato anche PORT_REMAP_INBOUND, PORT_REMAP si applica solo alle comunicazioni in uscita.
+
++
+... Selezionare *Imposta valore*.
+... Inserisci la mappatura delle porte:
++
+`<network type>/<protocol>/<default port used by grid node>/<new port>`
+
++
+`<network type>`è griglia, amministratore o client e `<protocol>` è tcp o udp.
+
++
+Ad esempio, per rimappare il traffico ssh dalla porta 22 alla porta 3022, immettere:
+
++
+`client/tcp/22/3022`
+
++
+È possibile rimappare più porte utilizzando un elenco separato da virgole.
+
++
+Per esempio:
+
++
+`client/tcp/18082/443, client/tcp/18083/80`
+
+... Selezionare *OK*.
+
+
+.. Per specificare la porta utilizzata per le comunicazioni in entrata al nodo, selezionare *PORT_REMAP_INBOUND*.
++
+
+NOTE: Se si specifica PORT_REMAP_INBOUND e non si specifica un valore per PORT_REMAP, le comunicazioni in uscita per la porta rimangono invariate.
+
++
+... Selezionare *Imposta valore*.
+... Inserisci la mappatura delle porte:
++
+`<network type>/<protocol>/<remapped inbound port>/<default inbound port used by grid node>`
+
++
+`<network type>`è griglia, amministratore o client e `<protocol>` è tcp o udp.
+
++
+Ad esempio, per rimappare il traffico SSH in entrata inviato alla porta 3022 in modo che venga ricevuto sulla porta 22 dal nodo della griglia, immettere quanto segue:
+
++
+`client/tcp/3022/22`
+
++
+È possibile rimappare più porte in ingresso utilizzando un elenco separato da virgole.
+
++
+Per esempio:
+
++
+`grid/tcp/3022/22, admin/tcp/3022/22`
+
+... Seleziona *OK*
+
+
+
+
+. Se si desidera aumentare la CPU o la memoria del nodo rispetto alle impostazioni predefinite:
++
+.. Fare clic con il pulsante destro del mouse sulla macchina virtuale e selezionare *Modifica impostazioni*.
+.. Modificare il numero di CPU o la quantità di memoria in base alle esigenze.
++
+Impostare la *Riserva di memoria* sulla stessa dimensione della *Memoria* assegnata alla macchina virtuale.
+
+.. Selezionare *OK*.
+
+
+. Accendere la macchina virtuale.
+
+
+.Dopo aver finito
+Se hai distribuito questo nodo come parte di una procedura di espansione o ripristino, torna a quelle istruzioni per completare la procedura.

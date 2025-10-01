@@ -1,0 +1,104 @@
+---
+permalink: tenant/signing-in-to-tenant-manager.html 
+sidebar: sidebar 
+keywords: how to sign in to tenant manager 
+summary: 'Per accedere a Tenant Manager, è necessario immettere l"URL del tenant nella barra degli indirizzi di un browser Web supportato.' 
+---
+= Sign in a Tenant Manager
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Si accede al Tenant Manager inserendo l'URL del tenant nella barra degli indirizzi di unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+
+.Prima di iniziare
+* Hai le tue credenziali di accesso.
+* Hai un URL per accedere a Tenant Manager, fornito dall'amministratore della tua griglia.  L'URL sarà simile a uno di questi esempi:
++
+`\https://FQDN_or_Admin_Node_IP/`
+
++
+`\https://FQDN_or_Admin_Node_IP:port/`
+
++
+`\https://FQDN_or_Admin_Node_IP/?accountId=20-digit-account-id`
+
++
+`\https://FQDN_or_Admin_Node_IP:port/?accountId=20-digit-account-id`
+
++
+L'URL include sempre un nome di dominio completo (FQDN), l'indirizzo IP di un nodo di amministrazione o l'indirizzo IP virtuale di un gruppo HA di nodi di amministrazione.  Potrebbe includere anche un numero di porta, l'ID dell'account tenant a 20 cifre o entrambi.
+
+* Se l'URL non include l'ID account di 20 cifre del tenant, si dispone di questo ID account.
+* Stai utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* I cookie sono abilitati nel tuo browser web.
+* Appartieni a un gruppo di utenti che halink:tenant-management-permissions.html["autorizzazioni di accesso specifiche"] .
+
+
+.Passi
+. Lanciare unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+. Nella barra degli indirizzi del browser, inserisci l'URL per accedere a Tenant Manager.
+. Se viene visualizzato un avviso di sicurezza, installare il certificato utilizzando la procedura guidata di installazione del browser.
+. Sign in a Tenant Manager.
++
+La schermata di accesso visualizzata dipende dall'URL immesso e dal fatto che sia stato configurato l'accesso singolo (SSO) per StorageGRID.
+
++
+[role="tabbed-block"]
+====
+.Non si utilizza SSO
+--
+Se StorageGRID non utilizza SSO, viene visualizzata una delle seguenti schermate:
+
+** La pagina di accesso di Grid Manager.  Selezionare il link *Accesso tenant*.
++
+image::../media/tenant_login_link.png[Link di accesso del tenant nella pagina di accesso di Grid Manager]
+
+** La pagina di accesso del Tenant Manager. Il campo *Account* potrebbe essere già compilato, come mostrato di seguito.
++
+image::../media/tenant_user_sign_in.png[Pagina di accesso del gestore degli inquilini]
+
++
+... Se l'ID account di 20 cifre del tenant non viene visualizzato, selezionare il nome dell'account del tenant se appare nell'elenco degli account recenti oppure immettere l'ID account.
+... Inserisci il tuo nome utente e la tua password.
+... Seleziona * Sign in*.
++
+Viene visualizzata la dashboard del Tenant Manager.
+
+... Se hai ricevuto una password iniziale da qualcun altro, seleziona *_username_* > *Cambia password* per proteggere il tuo account.
+
+
+
+
+--
+.Utilizzo di SSO
+--
+Se StorageGRID utilizza SSO, viene visualizzata una delle seguenti schermate:
+
+** La pagina SSO della tua organizzazione. Per esempio:
++
+image::../media/sso_organization_page.gif[esempio di pagina di accesso all'organizzazione per SSO]
+
++
+Inserisci le tue credenziali SSO standard e seleziona * Sign in*.
+
+** Pagina di accesso SSO del Tenant Manager.
++
+image::../media/sign_in_sso.png[Accesso a un account tenant se SSO è abilitato]
+
++
+... Se l'ID account di 20 cifre del tenant non viene visualizzato, selezionare il nome dell'account del tenant se appare nell'elenco degli account recenti oppure immettere l'ID account.
+... Seleziona * Sign in*.
+... Sign in con le tue credenziali SSO standard alla pagina di accesso SSO della tua organizzazione.
++
+Viene visualizzata la dashboard del Tenant Manager.
+
+
+
+
+
+--
+====
+

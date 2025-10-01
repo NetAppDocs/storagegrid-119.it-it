@@ -1,0 +1,38 @@
+= 
+:allow-uri-read: 
+
+
+Gli elenchi seguenti per gli amministratori della griglia e gli utenti tenant contengono le attività di alto livello per l'utilizzo della funzionalità S3 Object Lock.
+
+Amministratore di rete::
++
+--
+* Abilita l'impostazione globale di blocco degli oggetti S3 per l'intero sistema StorageGRID .
+* Garantire che le politiche di gestione del ciclo di vita delle informazioni (ILM) siano _conformi_; ovvero, che soddisfino ilink:../ilm/managing-objects-with-s3-object-lock.html["requisiti dei bucket con S3 Object Lock abilitato"] .
+* Se necessario, consentire a un tenant di utilizzare Conformità come modalità di conservazione.  In caso contrario, è consentita solo la modalità Governance.
+* Se necessario, impostare un periodo massimo di conservazione per un tenant.
+
+
+--
+Utente inquilino::
++
+--
+* Esaminare le considerazioni relative a bucket e oggetti con S3 Object Lock.
+* Se necessario, contattare l'amministratore della griglia per abilitare l'impostazione globale di blocco degli oggetti S3 e impostare le autorizzazioni.
+* Crea bucket con S3 Object Lock abilitato.
+* Facoltativamente, configura le impostazioni di conservazione predefinite per un bucket:
++
+** Modalità di conservazione predefinita: Governance o Conformità, se consentita dall'amministratore della rete.
+** Periodo di conservazione predefinito: deve essere inferiore o uguale al periodo di conservazione massimo impostato dall'amministratore della griglia.
+
+
+* Utilizzare l'applicazione client S3 per aggiungere oggetti e, facoltativamente, impostare la conservazione specifica dell'oggetto:
++
+** Modalità di conservazione.  Governance o conformità, se consentito dall'amministratore della rete.
+** Conserva fino alla data: deve essere inferiore o uguale a quanto consentito dal periodo di conservazione massimo impostato dall'amministratore della griglia.
+
+
+
+
+--
+

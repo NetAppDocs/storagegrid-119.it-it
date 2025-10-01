@@ -1,0 +1,129 @@
+---
+permalink: admin/summary-ip-addresses-and-ports-for-client-connections.html 
+sidebar: sidebar 
+keywords: ip addresses for client, how to connect to storagegrid, ports, vip 
+summary: 'Per archiviare o recuperare oggetti, le applicazioni client S3 si connettono al servizio Load Balancer, incluso in tutti i nodi amministrativi e gateway, oppure al servizio Local Distribution Router (LDR), incluso in tutti i nodi di archiviazione.' 
+---
+= Riepilogo: indirizzi IP e porte per le connessioni client
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Per archiviare o recuperare oggetti, le applicazioni client S3 si connettono al servizio Load Balancer, incluso in tutti i nodi amministrativi e gateway, oppure al servizio Local Distribution Router (LDR), incluso in tutti i nodi di archiviazione.
+
+Le applicazioni client possono connettersi a StorageGRID utilizzando l'indirizzo IP di un nodo della griglia e il numero di porta del servizio su quel nodo.  Facoltativamente, è possibile creare gruppi ad alta disponibilità (HA) di nodi di bilanciamento del carico per fornire connessioni ad alta disponibilità che utilizzano indirizzi IP virtuali (VIP).  Se si desidera connettersi a StorageGRID utilizzando un nome di dominio completo (FQDN) anziché un indirizzo IP o VIP, è possibile configurare le voci DNS.
+
+Questa tabella riepiloga i diversi modi in cui i client possono connettersi a StorageGRID e gli indirizzi IP e le porte utilizzati per ciascun tipo di connessione.  Se hai già creato endpoint del bilanciatore del carico e gruppi ad alta disponibilità (HA), vedi<<Dove trovare gli indirizzi IP>> per individuare questi valori nel Grid Manager.
+
+[cols="1a,1a,1a,1a"]
+|===
+| Dove avviene la connessione | Servizio a cui il client si connette | indirizzo IP | Porta 
+
+
+ a| 
+gruppo HA
+ a| 
+Bilanciatore del carico
+ a| 
+Indirizzo IP virtuale di un gruppo HA
+ a| 
+Porta assegnata all'endpoint del bilanciatore del carico
+
+
+
+ a| 
+Nodo di amministrazione
+ a| 
+Bilanciatore del carico
+ a| 
+Indirizzo IP del nodo di amministrazione
+ a| 
+Porta assegnata all'endpoint del bilanciatore del carico
+
+
+
+ a| 
+Nodo Gateway
+ a| 
+Bilanciatore del carico
+ a| 
+Indirizzo IP del nodo gateway
+ a| 
+Porta assegnata all'endpoint del bilanciatore del carico
+
+
+
+ a| 
+Nodo di archiviazione
+ a| 
+Relazione a distanza
+ a| 
+Indirizzo IP del nodo di archiviazione
+ a| 
+Porte S3 predefinite:
+
+* HTTPS: 18082
+* HTTP: 18084
+
+
+|===
+
+
+== URL di esempio
+
+Per connettere un'applicazione client all'endpoint del Load Balancer di un gruppo HA di nodi gateway, utilizzare un URL strutturato come mostrato di seguito:
+
+`https://_VIP-of-HA-group:LB-endpoint-port_`
+
+Ad esempio, se l'indirizzo IP virtuale del gruppo HA è 192.0.2.5 e il numero di porta dell'endpoint del bilanciatore del carico è 10443, un'applicazione potrebbe utilizzare il seguente URL per connettersi a StorageGRID:
+
+`\https://192.0.2.5:10443`
+
+
+
+== Dove trovare gli indirizzi IP
+
+. Sign in a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+. Per trovare l'indirizzo IP di un nodo della griglia:
++
+.. Selezionare *NODES*.
+.. Selezionare il nodo di amministrazione, il nodo gateway o il nodo di archiviazione a cui si desidera connettersi.
+.. Selezionare la scheda *Panoramica*.
+.. Nella sezione Informazioni sul nodo, annotare gli indirizzi IP del nodo.
+.. Selezionare *Mostra altro* per visualizzare gli indirizzi IPv6 e le mappature delle interfacce.
++
+È possibile stabilire connessioni dalle applicazioni client a uno qualsiasi degli indirizzi IP nell'elenco:
+
++
+*** *eth0:* Rete di griglia
+*** *eth1:* Rete di amministrazione (facoltativo)
+*** *eth2:* Rete client (facoltativo)
++
+
+NOTE: Se si visualizza un nodo di amministrazione o un nodo gateway ed è il nodo attivo in un gruppo ad alta disponibilità, l'indirizzo IP virtuale del gruppo HA viene visualizzato su eth2.
+
+
+
+
+
+. Per trovare l'indirizzo IP virtuale di un gruppo ad alta disponibilità:
++
+.. Selezionare *CONFIGURAZIONE* > *Rete* > *Gruppi ad alta disponibilità*.
+.. Nella tabella, annotare l'indirizzo IP virtuale del gruppo HA.
+
+
+. Per trovare il numero di porta di un endpoint del Load Balancer:
++
+.. Selezionare *CONFIGURAZIONE* > *Rete* > *Endpoint del bilanciatore del carico*.
+.. Annotare il numero di porta dell'endpoint che si desidera utilizzare.
++
+
+NOTE: Se il numero di porta è 80 o 443, l'endpoint viene configurato solo sui nodi gateway, perché tali porte sono riservate sui nodi amministrativi.  Tutte le altre porte sono configurate sia sui nodi gateway che sui nodi amministrativi.
+
+.. Selezionare il nome dell'endpoint dalla tabella.
+.. Verificare che il *Tipo di client* (S3) corrisponda all'applicazione client che utilizzerà l'endpoint.
+
+
+

@@ -1,0 +1,302 @@
+---
+permalink: primer/nodes-and-services.html 
+sidebar: sidebar 
+keywords: services, grid nodes, primary admin, storage, gateway 
+summary: 'L"elemento costitutivo di base di un sistema StorageGRID è il nodo griglia.  I nodi contengono servizi, ovvero moduli software che forniscono un insieme di funzionalità a un nodo della griglia.' 
+---
+= Nodi e servizi della griglia
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+L'elemento costitutivo di base di un sistema StorageGRID è il nodo griglia.  I nodi contengono servizi, ovvero moduli software che forniscono un insieme di funzionalità a un nodo della griglia.
+
+
+
+== Tipi di nodi della griglia
+
+Il sistema StorageGRID utilizza quattro tipi di nodi di griglia:
+
+Nodi amministrativi:: Fornire servizi di gestione quali configurazione del sistema, monitoraggio e registrazione.  Quando accedi a Grid Manager, ti connetti a un nodo di amministrazione.  Ogni griglia deve avere un nodo amministrativo primario e potrebbe avere nodi amministrativi non primari aggiuntivi per ridondanza. È possibile connettersi a qualsiasi nodo di amministrazione e ogni nodo di amministrazione visualizza una vista simile del sistema StorageGRID .  Tuttavia, le procedure di manutenzione devono essere eseguite utilizzando il nodo di amministrazione primario.
++
+--
+I nodi amministrativi possono essere utilizzati anche per bilanciare il carico del traffico client S3.
+
+Vederelink:what-admin-node-is.html["Che cos'è un nodo amministrativo?"]
+
+--
+Nodi di archiviazione:: Gestire e archiviare dati e metadati degli oggetti.  Ogni sito nel sistema StorageGRID deve avere almeno tre nodi di archiviazione.
++
+--
+Vederelink:what-storage-node-is.html["Che cos'è un nodo di archiviazione?"]
+
+--
+Nodi gateway (facoltativo):: Fornire un'interfaccia di bilanciamento del carico che le applicazioni client possono utilizzare per connettersi a StorageGRID.  Un bilanciatore del carico indirizza senza soluzione di continuità i client verso un nodo di archiviazione ottimale, in modo che il guasto dei nodi o persino di un intero sito sia trasparente.
++
+--
+Vederelink:what-gateway-node-is.html["Che cos'è un nodo gateway?"]
+
+--
+
+
+
+
+== Nodi hardware e software
+
+I nodi StorageGRID possono essere distribuiti come nodi di appliance StorageGRID o come nodi basati su software.
+
+
+
+=== Nodi dell'appliance StorageGRID
+
+Gli apparecchi hardware StorageGRID sono progettati specificamente per l'uso in un sistema StorageGRID .  Alcuni dispositivi possono essere utilizzati come nodi di archiviazione.  Altri dispositivi possono essere utilizzati come nodi amministrativi o nodi gateway.  È possibile combinare nodi appliance con nodi basati su software oppure distribuire griglie completamente progettate e composte da tutte le appliance, che non dipendono da hypervisor esterni, storage o hardware di elaborazione.
+
+Per conoscere gli elettrodomestici disponibili, vedere quanto segue:
+
+* https://docs.netapp.com/us-en/storagegrid-appliances/["Documentazione dell'appliance StorageGRID"^]
+* https://hwu.netapp.com["Hardware Universe NetApp"^]
+
+
+
+
+=== Nodi basati su software
+
+I nodi di griglia basati su software possono essere distribuiti come macchine virtuali VMware o all'interno di motori di container su un host Linux.
+
+* Macchina virtuale (VM) in VMware vSphere: vederelink:../vmware/index.html["Installa StorageGRID su VMware"] .
+* All'interno di un motore di container su Red Hat Enterprise Linux: vederelink:../rhel/index.html["Installa StorageGRID su Red Hat Enterprise Linux"] .
+* All'interno di un motore di container su Ubuntu o Debian: vederelink:../ubuntu/index.html["Installa StorageGRID su Ubuntu o Debian"] .
+
+
+Utilizzare il https://imt.netapp.com/matrix/#welcome["Strumento matrice di interoperabilità NetApp (IMT)"^] per determinare le versioni supportate.
+
+Durante l'installazione iniziale di un nuovo nodo di archiviazione basato su software è possibile specificare che venga utilizzato solo perlink:../primer/what-storage-node-is.html#types-of-storage-nodes["memorizzare i metadati"] .
+
+
+
+== Servizi StorageGRID
+
+Di seguito è riportato un elenco completo dei servizi StorageGRID .
+
+[cols="2a,3a,2a"]
+|===
+| Servizio | Descrizione | Posizione 
+
+
+ a| 
+Spedizioniere di servizi di account
+ a| 
+Fornisce un'interfaccia per il servizio Load Balancer per interrogare il servizio account sugli host remoti e fornisce notifiche delle modifiche alla configurazione dell'endpoint Load Balancer al servizio Load Balancer.
+ a| 
+Servizio di bilanciamento del carico sui nodi amministrativi e sui nodi gateway
+
+
+
+ a| 
+ADC (Administrative Domain Controller)
+ a| 
+Gestisce le informazioni sulla topologia, fornisce servizi di autenticazione e risponde alle query dei servizi LDR e CMN.
+ a| 
+Almeno tre nodi di archiviazione contenenti il servizio ADC in ogni sito
+
+
+
+ a| 
+AMS (Sistema di gestione degli audit)
+ a| 
+Monitora e registra tutti gli eventi e le transazioni di sistema controllati in un file di registro di testo.
+ a| 
+Nodi amministrativi
+
+
+
+ a| 
+Cassandra Reaper
+ a| 
+Esegue riparazioni automatiche dei metadati degli oggetti.
+ a| 
+Nodi di archiviazione
+
+
+
+ a| 
+Servizio Chunk
+ a| 
+Gestisce i dati codificati in modo cancellabile e i frammenti di parità.
+ a| 
+Nodi di archiviazione
+
+
+
+ a| 
+CMN (Nodo di gestione della configurazione)
+ a| 
+Gestisce le configurazioni a livello di sistema e le attività della griglia.  Ogni griglia ha un servizio CMN.
+ a| 
+Nodo di amministrazione primario
+
+
+
+ a| 
+DDS (archivio dati distribuito)
+ a| 
+Si interfaccia con il database Cassandra per gestire i metadati degli oggetti.
+ a| 
+Nodi di archiviazione
+
+
+
+ a| 
+DMV (Data Mover)
+ a| 
+Sposta i dati verso gli endpoint cloud.
+ a| 
+Nodi di archiviazione
+
+
+
+ a| 
+IP dinamico (dynip)
+ a| 
+Monitora la griglia per rilevare modifiche IP dinamiche e aggiorna le configurazioni locali.
+ a| 
+Tutti i nodi
+
+
+
+ a| 
+Grafana
+ a| 
+Utilizzato per la visualizzazione delle metriche in Grid Manager.
+ a| 
+Nodi amministrativi
+
+
+
+ a| 
+Alta disponibilità
+ a| 
+Gestisce gli IP virtuali ad alta disponibilità sui nodi configurati nella pagina Gruppi ad alta disponibilità.  Questo servizio è noto anche come servizio keepalived.
+ a| 
+Nodi di amministrazione e gateway
+
+
+
+ a| 
+Identità (idnt)
+ a| 
+Federa le identità utente da LDAP e Active Directory.
+ a| 
+Nodi di archiviazione che utilizzano il servizio ADC
+
+
+
+ a| 
+Arbitro Lambda
+ a| 
+Gestisce le richieste S3 Select SelectObjectContent.
+ a| 
+Tutti i nodi
+
+
+
+ a| 
+Bilanciatore del carico (nginx-gw)
+ a| 
+Fornisce il bilanciamento del carico del traffico S3 dai client ai nodi di archiviazione.  Il servizio Load Balancer può essere configurato tramite la pagina di configurazione degli endpoint del Load Balancer.  Questo servizio è noto anche come servizio nginx-gw.
+ a| 
+Nodi di amministrazione e gateway
+
+
+
+ a| 
+LDR (Router di distribuzione locale)
+ a| 
+Gestisce l'archiviazione e il trasferimento dei contenuti all'interno della griglia.
+ a| 
+Nodi di archiviazione
+
+
+
+ a| 
+MISCd Information Service Control Daemon
+ a| 
+Fornisce un'interfaccia per interrogare e gestire i servizi su altri nodi e per gestire le configurazioni ambientali sul nodo, ad esempio interrogando lo stato dei servizi in esecuzione su altri nodi.
+ a| 
+Tutti i nodi
+
+
+
+ a| 
+nginx
+ a| 
+Funziona come meccanismo di autenticazione e comunicazione sicura per vari servizi di griglia (come Prometheus e Dynamic IP) per poter comunicare con i servizi su altri nodi tramite API HTTPS.
+ a| 
+Tutti i nodi
+
+
+
+ a| 
+nginx-gw
+ a| 
+Alimenta il servizio Load Balancer.
+ a| 
+Nodi di amministrazione e gateway
+
+
+
+ a| 
+NMS (Sistema di gestione della rete)
+ a| 
+Alimenta le opzioni di monitoraggio, reporting e configurazione visualizzate tramite Grid Manager.
+ a| 
+Nodi amministrativi
+
+
+
+ a| 
+Persistenza
+ a| 
+Gestisce i file sul disco radice che devono rimanere memorizzati anche dopo un riavvio.
+ a| 
+Tutti i nodi
+
+
+
+ a| 
+Prometeo
+ a| 
+Raccoglie metriche di serie temporali dai servizi su tutti i nodi.
+ a| 
+Nodi amministrativi
+
+
+
+ a| 
+RSM (macchina a stati replicati)
+ a| 
+Assicura che le richieste di servizio della piattaforma vengano inviate ai rispettivi endpoint.
+ a| 
+Nodi di archiviazione che utilizzano il servizio ADC
+
+
+
+ a| 
+SSM (monitoraggio dello stato del server)
+ a| 
+Monitora le condizioni dell'hardware e invia segnalazioni al servizio NMS.
+ a| 
+Un'istanza è presente su ogni nodo della griglia
+
+
+
+ a| 
+Collettore di tracce
+ a| 
+Esegue la raccolta di tracce per raccogliere informazioni da utilizzare da parte del supporto tecnico.  Il servizio di raccolta delle tracce utilizza il software open source Jaeger.
+ a| 
+Nodi amministrativi
+
+|===

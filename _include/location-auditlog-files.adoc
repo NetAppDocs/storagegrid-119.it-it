@@ -1,0 +1,36 @@
+= 
+:allow-uri-read: 
+
+
+La directory del registro di controllo e i nodi applicabili dipendono dalle impostazioni di destinazione del controllo.
+
+[cols="1a,2a"]
+|===
+| Opzione | Destinazione 
+
+
+ a| 
+Nodi locali (predefiniti)
+ a| 
+`/var/local/log/localaudit.log`
+
+
+
+ a| 
+Nodi amministrativi/nodi locali
+ a| 
+* Nodi amministrativi (primari e non primari): `/var/local/audit/export/audit.log`
+* Tutti i nodi: Il `/var/local/log/localaudit.log` in questa modalità il file è solitamente vuoto o mancante.
+
+
+
+
+ a| 
+Server syslog esterno
+ a| 
+`/var/local/log/localaudit.log`
+
+|===
+A seconda delle impostazioni di destinazione dell'audit, immettere: `cd /var/local/log` O `/var/local/audit/export/`
+
+Per saperne di più, fare riferimento alink:../monitor/configure-audit-messages.html#select-audit-information-destinations["Seleziona le destinazioni delle informazioni di audit"] .

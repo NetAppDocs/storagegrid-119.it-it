@@ -1,0 +1,35 @@
+---
+permalink: monitor/monitoring-object-ingest-and-retrieval-rates.html 
+sidebar: sidebar 
+keywords: object ingest rates, object retrieval rates, monitor s3, client operations 
+summary: È possibile monitorare i tassi di acquisizione e recupero degli oggetti, nonché le metriche per il conteggio degli oggetti, le query e la verifica.  È possibile visualizzare il numero di tentativi riusciti e non riusciti da parte delle applicazioni client di leggere, scrivere e modificare oggetti nel sistema StorageGRID . 
+---
+= Monitorare le operazioni del client S3
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile monitorare i tassi di acquisizione e recupero degli oggetti, nonché le metriche per il conteggio degli oggetti, le query e la verifica.  È possibile visualizzare il numero di tentativi riusciti e non riusciti da parte delle applicazioni client di leggere, scrivere e modificare oggetti nel sistema StorageGRID .
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+
+
+.Passi
+. Dalla dashboard, seleziona la scheda *Prestazioni*.
+. Fare riferimento ai grafici S3, che riepilogano il numero di operazioni client eseguite dai nodi di archiviazione e il numero di richieste API ricevute dai nodi di archiviazione durante l'intervallo di tempo selezionato.
+. Selezionare *NODI* per accedere alla pagina Nodi.
+. Dalla home page dei Nodi (livello griglia), seleziona la scheda *Oggetti*.
++
+Il grafico mostra le velocità di acquisizione e recupero S3 per l'intero sistema StorageGRID in byte al secondo e la quantità di dati acquisiti o recuperati.  È possibile selezionare un intervallo di tempo o applicare un intervallo personalizzato.
+
+. Per visualizzare le informazioni relative a un particolare nodo di archiviazione, seleziona il nodo dall'elenco a sinistra e seleziona la scheda *Oggetti*.
++
+Il grafico mostra le velocità di acquisizione e recupero per il nodo.  La scheda include anche metriche per il conteggio degli oggetti, le query sui metadati e le operazioni di verifica.
+
++
+image::../media/nodes_storage_node_objects_help.png[screenshot di Nodi > _Nodo di archiviazione_ > Oggetti > guida agli attributi]
+
+

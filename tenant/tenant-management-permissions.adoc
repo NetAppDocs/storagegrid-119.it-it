@@ -1,0 +1,106 @@
+---
+permalink: tenant/tenant-management-permissions.html 
+sidebar: sidebar 
+keywords: tenant management permissions 
+summary: Prima di creare un gruppo di tenant, valuta quali autorizzazioni vuoi assegnare a quel gruppo.  Le autorizzazioni di gestione degli inquilini determinano quali attività gli utenti possono eseguire utilizzando Tenant Manager o Tenant Management API.  Un utente può appartenere a uno o più gruppi.  Le autorizzazioni sono cumulative se un utente appartiene a più gruppi. 
+---
+= Autorizzazioni di gestione degli inquilini
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Prima di creare un gruppo di tenant, valuta quali autorizzazioni vuoi assegnare a quel gruppo.  Le autorizzazioni di gestione degli inquilini determinano quali attività gli utenti possono eseguire utilizzando Tenant Manager o Tenant Management API.  Un utente può appartenere a uno o più gruppi.  Le autorizzazioni sono cumulative se un utente appartiene a più gruppi.
+
+Per accedere a Tenant Manager o utilizzare l'API Tenant Management, gli utenti devono appartenere a un gruppo che dispone di almeno un'autorizzazione.  Tutti gli utenti che possono effettuare l'accesso possono eseguire le seguenti attività:
+
+* Visualizza la dashboard
+* Cambiare la propria password (per gli utenti locali)
+
+
+Per tutte le autorizzazioni, l'impostazione Modalità di accesso del gruppo determina se gli utenti possono modificare le impostazioni ed eseguire operazioni oppure se possono solo visualizzare le impostazioni e le funzionalità correlate.
+
+
+NOTE: Se un utente appartiene a più gruppi e uno qualsiasi di essi è impostato su Sola lettura, l'utente avrà accesso in sola lettura a tutte le impostazioni e funzionalità selezionate.
+
+È possibile assegnare le seguenti autorizzazioni a un gruppo. Si noti che i tenant S3 e i tenant Swift hanno autorizzazioni di gruppo diverse.
+
+[cols="1a,3a,3a"]
+|===
+| Permesso | Descrizione | Dettagli 
+
+
+ a| 
+Accesso root
+ a| 
+Fornisce accesso completo al Tenant Manager e all'API Tenant Management.
+ a| 
+Gli utenti Swift devono disporre dell'autorizzazione di accesso Root per accedere all'account tenant.
+
+
+
+ a| 
+Amministratore
+ a| 
+Solo per inquilini Swift.  Fornisce l'accesso completo ai contenitori e agli oggetti Swift per questo account tenant
+ a| 
+Gli utenti Swift devono disporre dell'autorizzazione di amministratore Swift per eseguire qualsiasi operazione con la Swift REST API.
+
+
+
+ a| 
+Gestisci le tue credenziali S3
+ a| 
+Consente agli utenti di creare e rimuovere le proprie chiavi di accesso S3.
+ a| 
+Gli utenti che non dispongono di questa autorizzazione non visualizzano l'opzione di menu *ARCHIVIAZIONE (S3)* > *Le mie chiavi di accesso S3*.
+
+
+
+ a| 
+Visualizza tutti i bucket
+ a| 
+*Tenant S3*: consente agli utenti di visualizzare tutti i bucket e le relative configurazioni.
+
+*Tenant Swift*: consente agli utenti Swift di visualizzare tutti i container e le configurazioni dei container utilizzando l'API di gestione dei tenant.
+ a| 
+Gli utenti che non dispongono dell'autorizzazione Visualizza tutti i bucket o Gestisci tutti i bucket non visualizzano l'opzione di menu *Bucket*.
+
+Questa autorizzazione è sostituita dall'autorizzazione Gestisci tutti i bucket. Non influisce sui criteri di gruppo o sui bucket S3 utilizzati dai client S3 o dalla console S3.
+
+È possibile assegnare questa autorizzazione solo ai gruppi Swift dall'API di gestione tenant.  Non è possibile assegnare questa autorizzazione ai gruppi Swift tramite Tenant Manager.
+
+
+
+ a| 
+Gestisci tutti i bucket
+ a| 
+*Tenant S3*: consente agli utenti di utilizzare Tenant Manager e l'API Tenant Management per creare ed eliminare bucket S3 e gestire le impostazioni per tutti i bucket S3 nell'account tenant, indipendentemente dal bucket S3 o dai criteri di gruppo.
+
+*Tenant Swift*: consente agli utenti Swift di controllare la coerenza dei contenitori Swift utilizzando l'API di gestione dei tenant.
+ a| 
+Gli utenti che non dispongono dell'autorizzazione Visualizza tutti i bucket o Gestisci tutti i bucket non visualizzano l'opzione di menu *Bucket*.
+
+Questa autorizzazione sostituisce l'autorizzazione Visualizza tutti i bucket. Non influisce sui criteri di gruppo o sui bucket S3 utilizzati dai client S3 o dalla console S3.
+
+È possibile assegnare questa autorizzazione solo ai gruppi Swift dall'API di gestione tenant.  Non è possibile assegnare questa autorizzazione ai gruppi Swift tramite Tenant Manager.
+
+
+
+ a| 
+Gestisci gli endpoint
+ a| 
+Consente agli utenti di utilizzare Tenant Manager o l'API Tenant Management per creare o modificare gli endpoint dei servizi della piattaforma, utilizzati come destinazione per i servizi della piattaforma StorageGRID .
+ a| 
+Gli utenti che non dispongono di questa autorizzazione non visualizzano l'opzione di menu *Endpoint dei servizi della piattaforma*.
+
+
+
+ a| 
+Utilizzare la scheda Console S3
+ a| 
+Se combinato con l'autorizzazione Visualizza tutti i bucket o Gestisci tutti i bucket, consente agli utenti di visualizzare e gestire gli oggetti dalla scheda Console S3 nella pagina dei dettagli di un bucket.
+ a| 
+
+|===

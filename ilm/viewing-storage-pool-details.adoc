@@ -1,0 +1,58 @@
+---
+permalink: ilm/viewing-storage-pool-details.html 
+sidebar: sidebar 
+keywords: storage pool, view details 
+summary: È possibile visualizzare i dettagli di un pool di archiviazione per determinare dove viene utilizzato e per vedere quali nodi e livelli di archiviazione sono inclusi. 
+---
+= Visualizza i dettagli del pool di archiviazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile visualizzare i dettagli di un pool di archiviazione per determinare dove viene utilizzato e per vedere quali nodi e livelli di archiviazione sono inclusi.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Hailink:../admin/admin-group-permissions.html["autorizzazioni di accesso specifiche"] .
+
+
+.Passi
+. Selezionare *ILM* > *Pool di archiviazione*.
++
+La tabella Pool di archiviazione include le seguenti informazioni per ogni pool di archiviazione che include nodi di archiviazione:
+
++
+** *Nome*: nome visualizzato univoco del pool di archiviazione.
+** *Conteggio nodi*: numero di nodi nel pool di archiviazione.
+** *Utilizzo dello spazio di archiviazione*: la percentuale dello spazio utilizzabile totale che è stata utilizzata per i dati degli oggetti su questo nodo.  Questo valore non include i metadati dell'oggetto.
+** *Capacità totale*: la dimensione del pool di archiviazione, che equivale alla quantità totale di spazio utilizzabile per i dati degli oggetti per tutti i nodi nel pool di archiviazione.
+** *Utilizzo ILM*: modalità di utilizzo attuale del pool di archiviazione.  Un pool di archiviazione potrebbe non essere utilizzato oppure potrebbe essere utilizzato in una o più regole ILM, profili di codifica di cancellazione o entrambi.
+
+
+. Per visualizzare i dettagli di uno specifico pool di archiviazione, selezionarne il nome.
++
+Viene visualizzata la pagina dei dettagli del pool di archiviazione.
+
+. Visualizza la scheda *Nodi* per informazioni sui nodi di archiviazione inclusi nel pool di archiviazione.
++
+La tabella include le seguenti informazioni per ciascun nodo:
+
++
+** Nome del nodo
+** Nome del sito
+** Grado di conservazione
+** Utilizzo dello spazio di archiviazione: percentuale dello spazio totale utilizzabile per i dati degli oggetti che è stato utilizzato per il nodo di archiviazione.
++
+
+NOTE: Lo stesso valore di utilizzo dello storage (%) viene visualizzato anche nel grafico Storage Used - Object Data per ciascun Storage Node (selezionare *NODES* > *_Storage Node_* > *Storage*).
+
+
+
+. Visualizzare la scheda *Utilizzo ILM* per determinare se il pool di archiviazione è attualmente utilizzato in regole ILM o profili di codifica di cancellazione.
+. Facoltativamente, vai alla *pagina delle regole ILM* per scoprire e gestire tutte le regole che utilizzano il pool di archiviazione.
++
+Vedi illink:working-with-ilm-rules-and-ilm-policies.html["istruzioni per lavorare con le regole ILM"] .
+
+

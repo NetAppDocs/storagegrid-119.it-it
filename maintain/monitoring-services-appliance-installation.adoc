@@ -1,0 +1,82 @@
+---
+permalink: maintain/monitoring-services-appliance-installation.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, appliance 
+summary: 'Il programma di installazione dell"appliance StorageGRID fornisce informazioni sullo stato fino al completamento dell"installazione.  Una volta completata l"installazione del software, l"appliance viene riavviata.' 
+---
+= Installazione di apparecchiature di monitoraggio dei servizi
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Il programma di installazione dell'appliance StorageGRID fornisce informazioni sullo stato fino al completamento dell'installazione.  Una volta completata l'installazione del software, l'appliance viene riavviata.
+
+.Passi
+. Per monitorare l'avanzamento dell'installazione, fare clic su *Monitora installazione* dalla barra dei menu.
++
+La pagina Installazione del monitor mostra lo stato di avanzamento dell'installazione.
+
++
+image::../media/monitor_installation_services_appl.png[Installazione Monitor - Servizi Appl]
+
++
+La barra di stato blu indica quale attività è attualmente in corso.  Le barre di stato verdi indicano le attività completate con successo.
+
++
+
+NOTE: Il programma di installazione garantisce che le attività completate in un'installazione precedente non vengano rieseguite.  Se si sta rieseguendo un'installazione, tutte le attività che non devono essere rieseguite vengono visualizzate con una barra di stato verde e lo stato "Ignorato".
+
+. Esaminare lo stato di avanzamento delle prime due fasi di installazione.
++
+** *1.  Configura l'archiviazione*
++
+Durante questa fase, il programma di installazione cancella qualsiasi configurazione esistente dalle unità e configura le impostazioni dell'host.
+
+** *2.  Installa il sistema operativo*
++
+Durante questa fase, il programma di installazione copia l'immagine del sistema operativo di base per StorageGRID dal nodo di amministrazione primario all'appliance oppure installa il sistema operativo di base dal pacchetto di installazione per il nodo di amministrazione primario.
+
+
+
+. Continuare a monitorare l'avanzamento dell'installazione finché non si verifica una delle seguenti situazioni:
++
+** Per i nodi gateway dell'appliance o i nodi amministrativi dell'appliance non primaria, la fase *Install StorageGRID* si interrompe e sulla console incorporata viene visualizzato un messaggio che richiede di approvare questo nodo sul nodo amministrativo tramite Grid Manager.
++
+image::../media/monitor_installation_install_sgws.gif[L'immagine è descritta dal testo circostante]
+
+** Per i nodi amministrativi primari dell'appliance, viene visualizzata una quinta fase (Caricamento del programma di installazione StorageGRID ).  Se la quinta fase dura più di 10 minuti, aggiornare la pagina manualmente.
++
+image::../media/monitor_reinstallation_primary_admin.png[screenshot della quinta fase per la reinstallazione del nodo di amministrazione primario]
+
+
+
+. Passare al passaggio successivo del processo di ripristino per il tipo di nodo griglia dell'appliance che si sta ripristinando.
++
+[cols="1a,2a"]
+|===
+| Tipo di recupero | Riferimento 
+
+
+ a| 
+Nodo Gateway
+ a| 
+link:selecting-start-recovery-to-configure-gateway-node.html["Selezionare Avvia ripristino per configurare il nodo gateway"]
+
+
+
+ a| 
+Nodo amministratore non primario
+ a| 
+link:selecting-start-recovery-to-configure-non-primary-admin-node.html["Selezionare Avvia ripristino per configurare il nodo di amministrazione non primario"]
+
+
+
+ a| 
+Nodo di amministrazione primario
+ a| 
+link:configuring-replacement-primary-admin-node.html["Configura il nodo di amministrazione primario sostitutivo"]
+
+|===
+

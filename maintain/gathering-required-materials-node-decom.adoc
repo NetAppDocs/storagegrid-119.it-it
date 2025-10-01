@@ -1,0 +1,49 @@
+---
+permalink: maintain/gathering-required-materials-node-decom.html 
+sidebar: sidebar 
+keywords: storagegrid, node decommission, decommission 
+summary: Prima di procedere alla dismissione di un nodo della griglia, è necessario ottenere le seguenti informazioni. 
+---
+= Raccogli i materiali richiesti
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Prima di procedere alla dismissione di un nodo della griglia, è necessario ottenere le seguenti informazioni.
+
+[cols="1a,2a"]
+|===
+| Articolo | Note 
+
+
+ a| 
+Pacchetto di recupero `.zip` file
+ a| 
+Devilink:downloading-recovery-package.html["scarica il pacchetto di ripristino più recente"] `.zip` file(`sgws-recovery-package-_id-revision_.zip` ). È possibile utilizzare il file Recovery Package per ripristinare il sistema in caso di errore.
+
+
+
+ a| 
+`Passwords.txt`file
+ a| 
+Questo file contiene le password necessarie per accedere ai nodi della griglia sulla riga di comando ed è incluso nel pacchetto di ripristino.
+
+
+
+ a| 
+Frase segreta di provisioning
+ a| 
+La passphrase viene creata e documentata quando il sistema StorageGRID viene installato per la prima volta.  La passphrase di provisioning non è presente nel `Passwords.txt` file.
+
+
+
+ a| 
+Descrizione della topologia del sistema StorageGRID prima della dismissione
+ a| 
+Se disponibile, procurarsi la documentazione che descrive la topologia attuale del sistema.
+
+|===
+.Informazioni correlate
+link:../admin/web-browser-requirements.html["Requisiti del browser web"]

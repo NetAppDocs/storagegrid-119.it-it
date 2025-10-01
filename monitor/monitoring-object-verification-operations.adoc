@@ -1,0 +1,70 @@
+---
+permalink: monitor/monitoring-object-verification-operations.html 
+sidebar: sidebar 
+keywords: object, verification 
+summary: 'Il sistema StorageGRID può verificare l"integrità dei dati degli oggetti sui nodi di archiviazione, controllando sia gli oggetti danneggiati che quelli mancanti.' 
+---
+= Monitorare le operazioni di verifica degli oggetti
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Il sistema StorageGRID può verificare l'integrità dei dati degli oggetti sui nodi di archiviazione, controllando sia gli oggetti danneggiati che quelli mancanti.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Tu hai illink:../admin/admin-group-permissions.html["Autorizzazione di accesso alla manutenzione o alla root"] .
+
+
+.Informazioni su questo compito
+Duelink:../troubleshoot/verifying-object-integrity.html["processi di verifica"] collaborare per garantire l'integrità dei dati:
+
+* *La verifica degli sfondi* viene eseguita automaticamente, verificando costantemente la correttezza dei dati dell'oggetto.
++
+La verifica in background controlla automaticamente e costantemente tutti i nodi di archiviazione per determinare se sono presenti copie danneggiate di dati di oggetti replicati e codificati per la cancellazione.  Se vengono rilevati problemi, il sistema StorageGRID tenta automaticamente di sostituire i dati degli oggetti danneggiati dalle copie archiviate altrove nel sistema.  La verifica in background non viene eseguita sugli oggetti in un Cloud Storage Pool.
+
++
+
+NOTE: L'avviso *Oggetto danneggiato non identificato rilevato* viene attivato se il sistema rileva un oggetto danneggiato che non può essere corretto automaticamente.
+
+* *Il controllo dell'esistenza dell'oggetto* può essere attivato da un utente per verificare più rapidamente l'esistenza (anche se non la correttezza) dei dati dell'oggetto.
++
+Il controllo dell'esistenza dell'oggetto verifica se tutte le copie replicate previste degli oggetti e dei frammenti con codice di cancellazione sono presenti su un nodo di archiviazione.  Il controllo dell'esistenza degli oggetti consente di verificare l'integrità dei dispositivi di archiviazione, soprattutto se un recente problema hardware potrebbe aver influito sull'integrità dei dati.
+
+
+
+Dovresti rivedere regolarmente i risultati delle verifiche dei precedenti e dei controlli dell'esistenza degli oggetti.  Indagare immediatamente su eventuali casi di dati di oggetti danneggiati o mancanti per determinarne la causa principale.
+
+.Passi
+. Esaminare i risultati delle verifiche dei precedenti:
++
+.. Selezionare *NODI* > *_Nodo di archiviazione_* > *Oggetti*.
+.. Controlla i risultati della verifica:
++
+*** Per verificare la verifica dei dati degli oggetti replicati, consultare gli attributi nella sezione Verifica.
++
+image::../media/nodes_storage_node_object_verification.png[Nodi > Nodo di archiviazione > Oggetto > Verifica]
+
+*** Per verificare la verifica dei frammenti con codice di cancellazione, selezionare *_Storage Node_* > *ILM* e osservare gli attributi nella sezione Verifica del codice di cancellazione.
++
+image::../media/nodes_storage_node_ilm_ec_verification.png[Nodi > Nodo di archiviazione > ILM > Verifica EC]
+
++
+Seleziona il punto interrogativoimage:../media/icon_nms_question.png["punto interrogativo"] accanto al nome di un attributo per visualizzare il testo della guida.
+
+
+
+
+
+. Esaminare i risultati dei processi di controllo dell'esistenza degli oggetti:
++
+.. Selezionare *MANUTENZIONE* > *Controllo esistenza oggetto* > *Cronologia lavori*.
+.. Esaminare la colonna Copie di oggetti mancanti rilevate. Se durante un processo mancano 100 o più copie di oggetti e viene attivato l'avviso *Oggetti persi*, contattare l'assistenza tecnica.
++
+image::../media/oec_job_history.png[Cronologia del lavoro di controllo dell'esistenza dell'oggetto]
+
+
+
+

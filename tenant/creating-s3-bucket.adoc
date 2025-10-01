@@ -1,0 +1,161 @@
+---
+permalink: tenant/creating-s3-bucket.html 
+sidebar: sidebar 
+keywords: how to create S3 bucket 
+summary: È possibile utilizzare Tenant Manager per creare bucket S3 per i dati degli oggetti. 
+---
+= Crea un bucket S3
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile utilizzare Tenant Manager per creare bucket S3 per i dati degli oggetti.
+
+.Prima di iniziare
+* Hai effettuato l'accesso al Tenant Manager tramite unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Appartieni a un gruppo di utenti che ha accesso Root o Gestisci tutti i bucketlink:tenant-management-permissions.html["permesso"] . Queste autorizzazioni sovrascrivono le impostazioni delle autorizzazioni nei criteri di gruppo o di bucket.
++
+
+NOTE: Le autorizzazioni per impostare o modificare le proprietà di blocco degli oggetti S3 di bucket o oggetti possono essere concesse dalink:../s3/bucket-and-group-access-policies.html["criterio bucket o criterio di gruppo"] .
+
+* Se si prevede di abilitare S3 Object Lock per un bucket, un amministratore della griglia ha abilitato l'impostazione globale S3 Object Lock per il sistema StorageGRID e sono stati esaminati i requisiti per i bucket e gli oggetti S3 Object Lock.
+* Se ogni tenant avrà 5.000 bucket, ogni nodo di archiviazione nella griglia avrà un minimo di 64 GB di RAM.
++
+
+NOTE: Ogni griglia può avere un massimo di 100.000 bucket.
+
+
+
+
+
+== Accedi alla procedura guidata
+
+.Passi
+. Selezionare *Visualizza bucket* dalla dashboard oppure selezionare *ARCHIVIAZIONE (S3)* > *Bucket*.
+. Seleziona *Crea bucket*.
+
+
+
+
+== Inserisci i dettagli
+
+.Passi
+. Inserisci i dettagli per il bucket.
++
+[cols="1a,3a"]
+|===
+| Campo | Descrizione 
+
+
+ a| 
+Nome del bucket
+ a| 
+Un nome per il bucket che rispetti queste regole:
+
+** Deve essere univoco in ogni sistema StorageGRID (non solo univoco all'interno dell'account tenant).
+** Deve essere conforme al DNS.
+** Deve contenere almeno 3 e non più di 63 caratteri.
+** Ogni etichetta deve iniziare e terminare con una lettera minuscola o un numero e può contenere solo lettere minuscole, numeri e trattini.
+** Non devono contenere punti nelle richieste in stile ospitato virtuale.  I punti causeranno problemi con la verifica dei certificati jolly del server.
+
+
+Per maggiori informazioni, vedere il https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html["Documentazione di Amazon Web Services (AWS) sulle regole di denominazione dei bucket"^] .
+
+*Nota*: non è possibile modificare il nome del bucket dopo averlo creato.
+
+
+
+ a| 
+Regione
+ a| 
+La regione del bucket.
+
+L'amministratore StorageGRID gestisce le regioni disponibili. La regione di un bucket può influire sulla politica di protezione dei dati applicata agli oggetti. Per impostazione predefinita, tutti i bucket vengono creati in `us-east-1` regione.
+
+*Nota*: non è possibile modificare la regione dopo aver creato il bucket.
+
+|===
+. Selezionare *Continua*.
+
+
+
+
+== Gestisci le impostazioni
+
+.Passi
+. Facoltativamente, abilitare il controllo delle versioni degli oggetti per il bucket.
++
+Abilita il controllo delle versioni degli oggetti se vuoi archiviare ogni versione di ciascun oggetto in questo bucket.  È quindi possibile recuperare le versioni precedenti di un oggetto, se necessario.  È necessario abilitare il controllo delle versioni degli oggetti se il bucket verrà utilizzato per la replica tra griglie.
+
+. Se l'impostazione globale S3 Object Lock è abilitata, abilitare facoltativamente S3 Object Lock per il bucket per archiviare gli oggetti utilizzando un modello write-once-read-many (WORM).
++
+Abilitare S3 Object Lock per un bucket solo se è necessario conservare gli oggetti per un periodo di tempo fisso, ad esempio per soddisfare determinati requisiti normativi. S3 Object Lock è un'impostazione permanente che consente di impedire che gli oggetti vengano eliminati o sovrascritti per un periodo di tempo fisso o indefinitamente.
+
++
+
+CAUTION: Dopo aver abilitato l'impostazione Blocco oggetto S3 per un bucket, non è più possibile disattivarla. Chiunque disponga delle autorizzazioni corrette può aggiungere a questo bucket oggetti che non possono essere modificati.  Potresti non essere in grado di eliminare questi oggetti o il bucket stesso.
+
++
+Se si abilita S3 Object Lock per un bucket, il controllo delle versioni del bucket viene abilitato automaticamente.
+
+. Se hai selezionato *Abilita blocco oggetto S3*, abilita facoltativamente *Conservazione predefinita* per questo bucket.
++
+
+NOTE: L'amministratore della rete deve darti l'autorizzazione alink:../tenant/using-s3-object-lock.html["utilizzare le funzionalità specifiche di S3 Object Lock"] .
+
++
+Quando è abilitata la *Conservazione predefinita*, i nuovi oggetti aggiunti al bucket saranno automaticamente protetti dall'eliminazione o dalla sovrascrittura. L'impostazione *Conservazione predefinita* non si applica agli oggetti che hanno un proprio periodo di conservazione.
+
++
+.. Se è abilitata la *Conservazione predefinita*, specificare una *Modalità di conservazione predefinita* per il bucket.
++
+[cols="1a,2a"]
+|===
+| Modalità di conservazione predefinita | Descrizione 
+
+
+ a| 
+Governance
+ a| 
+*** Utenti con il `s3:BypassGovernanceRetention` il permesso può utilizzare il `x-amz-bypass-governance-retention: true` intestazione della richiesta per ignorare le impostazioni di conservazione.
+*** Questi utenti possono eliminare una versione di un oggetto prima che venga raggiunta la data di conservazione.
+*** Questi utenti possono aumentare, diminuire o rimuovere la data di conservazione di un oggetto.
+
+
+
+
+ a| 
+Conformità
+ a| 
+*** L'oggetto non può essere eliminato finché non viene raggiunta la data di conservazione.
+*** La data di conservazione dell'oggetto può essere aumentata, ma non diminuita.
+*** La data di conservazione dell'oggetto non può essere rimossa finché non viene raggiunta tale data.
+
+
+*Nota*: l'amministratore della rete deve consentirti di utilizzare la modalità di conformità.
+
+|===
+.. Se è abilitata l'opzione *Conservazione predefinita*, specificare il *Periodo di conservazione predefinito* per il bucket.
++
+Il *Periodo di conservazione predefinito* indica per quanto tempo i nuovi oggetti aggiunti a questo bucket devono essere conservati, a partire dal momento in cui vengono acquisiti. Specificare un valore inferiore o uguale al periodo di conservazione massimo per il tenant, come impostato dall'amministratore della griglia.
+
++
+Un periodo di conservazione _massimo_, che può essere un valore compreso tra 1 giorno e 100 anni, viene impostato quando l'amministratore della griglia crea il tenant.  Quando si imposta un periodo di conservazione _predefinito_, questo non può superare il valore impostato per il periodo di conservazione massimo.  Se necessario, chiedi all'amministratore della rete di aumentare o diminuire il periodo massimo di conservazione.
+
+
+
+. [[capacity-limit]]Facoltativamente, seleziona *Abilita limite di capacità*.
++
+Il limite di capacità è la capacità massima disponibile per gli oggetti di questo bucket. Questo valore rappresenta una quantità logica (dimensione dell'oggetto), non una quantità fisica (dimensione su disco).
+
++
+Se non viene impostato alcun limite, la capacità di questo bucket è illimitata. Fare riferimento a link:../tenant/understanding-tenant-manager-dashboard.html#bucket-capacity-usage["Utilizzo del limite di capacità"] per maggiori informazioni.
+
+. Seleziona *Crea bucket*.
++
+Il bucket viene creato e aggiunto alla tabella nella pagina Bucket.
+
+. Facoltativamente, seleziona *Vai alla pagina dei dettagli del bucket* perlink:viewing-s3-bucket-details.html["visualizza i dettagli del bucket"] ed eseguire configurazioni aggiuntive.
+

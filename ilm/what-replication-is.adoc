@@ -1,0 +1,31 @@
+---
+permalink: ilm/what-replication-is.html 
+sidebar: sidebar 
+keywords: replication, object copies 
+summary: 'La replica è uno dei due metodi utilizzati StorageGRID per archiviare i dati degli oggetti.  Quando gli oggetti corrispondono a una regola ILM che utilizza la replica, il sistema crea copie esatte dei dati dell"oggetto e memorizza le copie sui nodi di archiviazione.' 
+---
+= Che cosa è la replicazione?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+La replica è uno dei due metodi utilizzati da StorageGRID per archiviare i dati degli oggetti (l'altro metodo è la codifica di cancellazione).  Quando gli oggetti corrispondono a una regola ILM che utilizza la replica, il sistema crea copie esatte dei dati dell'oggetto e memorizza le copie sui nodi di archiviazione.
+
+Quando si configura una regola ILM per creare copie replicate, si specifica quante copie devono essere create, dove devono essere posizionate e per quanto tempo devono essere conservate in ogni posizione.
+
+Nell'esempio seguente, la regola ILM specifica che due copie replicate di ciascun oggetto devono essere posizionate in un pool di archiviazione contenente tre nodi di archiviazione.
+
+image::../media/ilm_replication_make_2_copies.png[Regola "Fai 2 copie"]
+
+Quando StorageGRID abbina gli oggetti a questa regola, crea due copie dell'oggetto, posizionando ciascuna copia su un diverso nodo di archiviazione nel pool di archiviazione.  Le due copie possono essere posizionate su due qualsiasi dei tre nodi di archiviazione disponibili.  In questo caso, la regola ha posizionato copie degli oggetti sui nodi di archiviazione 2 e 3.  Poiché sono presenti due copie, l'oggetto può essere recuperato se uno qualsiasi dei nodi nel pool di archiviazione si guasta.
+
+
+NOTE: StorageGRID può archiviare solo una copia replicata di un oggetto su un dato nodo di archiviazione.  Se la griglia include tre nodi di archiviazione e si crea una regola ILM a 4 copie, verranno create solo tre copie: una copia per ciascun nodo di archiviazione.  L'avviso *Posizionamento ILM non realizzabile* viene attivato per indicare che la regola ILM non può essere applicata completamente.
+
+.Informazioni correlate
+* link:what-erasure-coding-is.html["Che cosa è la codifica di cancellazione"]
+* link:what-storage-pool-is.html["Che cos'è un pool di archiviazione"]
+* link:using-multiple-storage-pools-for-cross-site-replication.html["Abilita la protezione contro la perdita del sito utilizzando la codifica di replicazione e cancellazione"]
+

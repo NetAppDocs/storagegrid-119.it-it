@@ -1,0 +1,52 @@
+---
+permalink: upgrade/changes-to-grid-management-api.html 
+sidebar: sidebar 
+keywords: grid management api, api, api version, swagger, rest api, usageCacheDuration 
+summary: StorageGRID 11.9 utilizza la versione 4 della Grid Management API. La versione 4 depreca la versione 3; tuttavia, le versioni 1, 2 e 3 sono ancora supportate. 
+---
+= Modifiche all'API di gestione della griglia
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+StorageGRID 11.9 utilizza la versione 4 della Grid Management API. La versione 4 depreca la versione 3; tuttavia, le versioni 1, 2 e 3 sono ancora supportate.
+
+
+NOTE: È possibile continuare a utilizzare le versioni obsolete dell'API di gestione con StorageGRID 11.9; tuttavia, il supporto per queste versioni dell'API verrà rimosso in una futura versione di StorageGRID. Dopo l'aggiornamento a StorageGRID 11.9, è possibile disattivare le API deprecate utilizzando `PUT /grid/config/management` API.
+
+Per saperne di più, vai alink:../admin/using-grid-management-api.html["Utilizzare l'API di gestione della griglia"] .
+
+
+
+== Rivedere le impostazioni di conformità dopo aver abilitato il blocco globale degli oggetti S3
+
+Dopo aver abilitato l'impostazione globale Blocco oggetti S3, rivedere le impostazioni di conformità dei tenant esistenti.  Quando si abilita questa impostazione, le impostazioni di S3 Object Lock per tenant dipendono dalla versione StorageGRID al momento della creazione del tenant.
+
+
+
+== Richieste mgmt-api legacy rimosse
+
+Queste richieste legacy sono state rimosse:
+
+`/grid/server-types`
+
+`/grid/ntp-roles`
+
+
+
+== Modifiche a `GET /private/storage-usage` API
+
+* Una nuova proprietà, `usageCacheDuration` , è stato aggiunto al corpo della risposta.  Questa proprietà specifica la durata (in secondi) per cui la cache di ricerca dell'utilizzo rimane valida.  Questo valore si applica quando si verifica l'utilizzo rispetto alla quota di archiviazione del tenant e ai limiti di capacità del bucket.
+* IL `GET /api/v4/private/storage-usage` il comportamento è stato corretto per corrispondere all'annidamento dello schema.
+* Queste modifiche si applicano solo all'API privata.
+
+
+
+
+== Modifiche a `GET cross-grid-replication` API
+
+L'API GET */org/containers/:name/cross-grid-replication* non richiede più l'accesso Root(`rootAccess` ) autorizzazione; tuttavia, è necessario appartenere a un gruppo di utenti che dispone dell'autorizzazione Gestisci tutti i bucket(`manageAllContainers` ) o Visualizza tutti i bucket(`viewAllContainers` ) permesso.
+
+L'API PUT */org/containers/:name/cross-grid-replication* non è cambiata e richiede ancora l'accesso Root(`rootAccess` ) permesso.

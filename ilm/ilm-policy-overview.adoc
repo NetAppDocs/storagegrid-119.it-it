@@ -1,0 +1,134 @@
+---
+permalink: ilm/ilm-policy-overview.html 
+sidebar: sidebar 
+keywords: ILM policy, information lifecycle policy considerations 
+summary: 'Una policy di gestione del ciclo di vita delle informazioni \(ILM\) è un insieme ordinato di regole ILM che determinano il modo in cui il sistema StorageGRID gestisce i dati degli oggetti nel tempo.' 
+---
+= Utilizzare le policy ILM
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Una policy di gestione del ciclo di vita delle informazioni (ILM) è un insieme ordinato di regole ILM che determinano il modo in cui il sistema StorageGRID gestisce i dati degli oggetti nel tempo.
+
+
+CAUTION: Una policy ILM configurata in modo errato può comportare una perdita di dati irrecuperabile.  Prima di attivare una policy ILM, esaminare attentamente la policy ILM e le relative regole ILM, quindi simulare la policy ILM.  Verificare sempre che la politica ILM funzioni come previsto.
+
+
+
+== Criterio ILM predefinito
+
+Quando si installa StorageGRID e si aggiungono siti, viene creato automaticamente un criterio ILM predefinito, come segue:
+
+* Se la griglia contiene un sito, il criterio predefinito contiene una regola predefinita che replica due copie di ciascun oggetto in quel sito.
+* Se la griglia contiene più di un sito, la regola predefinita replica una copia di ciascun oggetto in ogni sito.
+
+
+Se la policy predefinita non soddisfa i requisiti di archiviazione, è possibile creare regole e policy personalizzate. Vederelink:what-ilm-rule-is.html["Crea una regola ILM"] Elink:creating-ilm-policy.html["Creare una policy ILM"] .
+
+
+
+== Una o più polizze ILM attive?
+
+È possibile avere una o più polizze ILM attive contemporaneamente.
+
+
+
+=== Una politica
+
+Se la griglia utilizzerà uno schema di protezione dei dati semplice con poche regole specifiche per tenant e bucket, utilizzare un singolo criterio ILM attivo.  Le regole ILM possono contenere filtri per gestire diversi bucket o tenant.
+
+image::../media/ilm-policies-single.png[Diagramma delle singole politiche ILM]
+
+Quando si dispone di una sola policy e i requisiti di un tenant cambiano, è necessario creare una nuova policy ILM o clonare la policy esistente per applicare le modifiche, simulare e quindi attivare la nuova policy ILM.  Le modifiche alla policy ILM potrebbero comportare spostamenti di oggetti che potrebbero richiedere molti giorni e causare latenza del sistema.
+
+
+
+=== Politiche multiple
+
+Per offrire agli inquilini diverse opzioni di qualità del servizio, è possibile avere più di una polizza attiva contemporaneamente.  Ogni policy può gestire tenant, bucket S3 e oggetti specifici.  Quando si applica o si modifica una policy per un set specifico di tenant o oggetti, le policy applicate ad altri tenant e oggetti non vengono modificate.
+
+Tag di policy ILM:: Se si desidera consentire ai tenant di passare facilmente da una policy di protezione dei dati all'altra per ogni bucket, utilizzare più policy ILM con _tag policy ILM_.  Si assegna ogni policy ILM a un tag, quindi i tenant taggano un bucket per applicare la policy a quel bucket.  È possibile impostare i tag dei criteri ILM solo sui bucket S3.
++
+--
+Ad esempio, potresti avere tre tag denominati Oro, Argento e Bronzo.  È possibile assegnare un criterio ILM a ciascun tag, in base alla durata e alla posizione in cui tale criterio archivia gli oggetti.  Gli inquilini possono scegliere quale policy utilizzare etichettando i propri bucket.  Un bucket contrassegnato come Gold è gestito dalla policy Gold e riceve il livello Gold di protezione dei dati e prestazioni.
+
+--
+Tag di policy ILM predefinito:: Un tag di policy ILM predefinito viene creato automaticamente quando si installa StorageGRID.  Ogni griglia deve avere una policy attiva assegnata al tag Default.  Il criterio predefinito si applica a tutti i bucket S3 non taggati.
+
+
+image::../media/ilm-policies-tags-conceptual.png[Diagramma delle politiche ILM multiple]
+
+
+
+== In che modo una policy ILM valuta gli oggetti?
+
+Una policy ILM attiva controlla il posizionamento, la durata e la protezione dei dati degli oggetti.
+
+Quando i client salvano oggetti in StorageGRID, gli oggetti vengono valutati in base al set ordinato di regole ILM nella policy, come segue:
+
+. Se i filtri per la prima regola nel criterio corrispondono a un oggetto, l'oggetto viene acquisito in base al comportamento di acquisizione di quella regola e archiviato in base alle istruzioni di posizionamento di quella regola.
+. Se i filtri per la prima regola non corrispondono all'oggetto, l'oggetto viene valutato rispetto a ogni regola successiva nel criterio finché non viene trovata una corrispondenza.
+. Se nessuna regola corrisponde a un oggetto, vengono applicate le istruzioni di posizionamento e comportamento di acquisizione per la regola predefinita nel criterio.  La regola predefinita è l'ultima regola di una policy.  La regola predefinita deve essere applicata a tutti i tenant, a tutti i bucket S3 e a tutte le versioni degli oggetti e non può utilizzare filtri avanzati.
+
+
+
+
+== Esempio di politica ILM
+
+Ad esempio, una policy ILM potrebbe contenere tre regole ILM che specificano quanto segue:
+
+* *Regola 1: Copie replicate per l'inquilino A*
++
+** Abbina tutti gli oggetti appartenenti all'inquilino A.
+** Conservare questi oggetti in tre copie replicate in tre siti.
+** Gli oggetti appartenenti ad altri tenant non sono soggetti alla Regola 1, pertanto vengono valutati in base alla Regola 2.
+
+
+* *Regola 2: Codifica di cancellazione per oggetti di dimensioni superiori a 1 MB*
++
+** Corrisponde a tutti gli oggetti degli altri tenant, ma solo se sono maggiori di 1 MB.  Questi oggetti di grandi dimensioni vengono memorizzati utilizzando la codifica di cancellazione 6+3 in tre siti.
+** Non corrisponde a oggetti di dimensioni pari o inferiori a 1 MB, pertanto questi oggetti vengono valutati in base alla Regola 3.
+
+
+* *Regola 3: 2 copie 2 data center* (predefinita)
++
+** È l'ultima regola predefinita della policy.  Non utilizza filtri.
+** Eseguire due copie replicate di tutti gli oggetti non corrispondenti alla Regola 1 o alla Regola 2 (oggetti non appartenenti al Tenant A di dimensioni pari o inferiori a 1 MB).
+
+
+
+
+image::../media/ilm_policy_and_rules.png[Politica e regole ILM]
+
+
+
+== Cosa sono le politiche attive e inattive?
+
+Ogni sistema StorageGRID deve avere almeno una policy ILM attiva.  Se si desidera avere più di un criterio ILM attivo, è possibile creare tag di criteri ILM e assegnare un criterio a ciascun tag.  I tenant applicano quindi i tag ai bucket S3.  Il criterio predefinito viene applicato a tutti gli oggetti nei bucket a cui non è assegnato un tag di criterio.
+
+Quando si crea per la prima volta un criterio ILM, si selezionano una o più regole ILM e le si dispone in un ordine specifico.  Dopo aver simulato la policy per confermarne il comportamento, attivarla.
+
+Quando si attiva un criterio ILM, StorageGRID utilizza tale criterio per gestire tutti gli oggetti, compresi quelli esistenti e quelli appena acquisiti.  Gli oggetti esistenti potrebbero essere spostati in nuove posizioni quando verranno implementate le regole ILM nella nuova policy.
+
+Se si attivano più policy ILM contemporaneamente e i tenant applicano tag policy ai bucket S3, gli oggetti in ciascun bucket vengono gestiti in base alla policy assegnata al tag.
+
+Un sistema StorageGRID tiene traccia della cronologia delle policy attivate o disattivate.
+
+
+
+== Considerazioni per la creazione di una politica ILM
+
+* Nei sistemi di test utilizzare solo la policy fornita dal sistema, ovvero la policy delle copie Baseline 2.  Per StorageGRID 11.6 e versioni precedenti, la regola Crea 2 copie in questo criterio utilizza il pool di archiviazione Tutti i nodi di archiviazione, che contiene tutti i siti.  Se il sistema StorageGRID ha più di un sito, è possibile che due copie di un oggetto siano posizionate sullo stesso sito.
++
+
+NOTE: Il pool di archiviazione All Storage Nodes viene creato automaticamente durante l'installazione di StorageGRID 11.6 e versioni precedenti.  Se si esegue l'aggiornamento a una versione successiva di StorageGRID, il pool All Storage Nodes continuerà a esistere.  Se si installa StorageGRID 11.7 o versione successiva come nuova installazione, il pool Tutti i nodi di archiviazione non viene creato.
+
+* Quando si progetta una nuova policy, bisogna considerare tutti i diversi tipi di oggetti che potrebbero essere inseriti nella griglia.  Assicurarsi che la policy includa regole per abbinare e posizionare questi oggetti come richiesto.
+* Mantenere la politica ILM il più semplice possibile.  In questo modo si evitano situazioni potenzialmente pericolose in cui i dati degli oggetti non sono protetti come previsto quando nel tempo vengono apportate modifiche al sistema StorageGRID .
+* Assicuratevi che le regole della policy siano nell'ordine corretto.  Quando la policy viene attivata, gli oggetti nuovi ed esistenti vengono valutati dalle regole nell'ordine elencato, iniziando dall'alto.  Ad esempio, se la prima regola di un criterio corrisponde a un oggetto, tale oggetto non verrà valutato da nessun'altra regola.
+* L'ultima regola in ogni policy ILM è la regola ILM predefinita, che non può utilizzare alcun filtro.  Se un oggetto non è stato abbinato a un'altra regola, la regola predefinita controlla dove viene posizionato l'oggetto e per quanto tempo viene conservato.
+* Prima di attivare una nuova policy, esaminare tutte le modifiche apportate dalla policy al posizionamento degli oggetti esistenti.  La modifica della posizione di un oggetto esistente potrebbe causare problemi temporanei di risorse quando i nuovi posizionamenti vengono valutati e implementati.
+

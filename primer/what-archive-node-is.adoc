@@ -1,0 +1,16 @@
+---
+permalink: primer/what-archive-node-is.html 
+sidebar: sidebar 
+keywords: archive node 
+summary: Il supporto per i nodi di archivio è stato rimosso. 
+---
+= Che cos'è un nodo archivio?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Il supporto per i nodi di archivio è stato rimosso.
+
+Per informazioni sui nodi di archivio, vedere https://docs.netapp.com/us-en/storagegrid-118/primer/what-archive-node-is.html["Che cos'è un nodo di archivio (sito di documentazione StorageGRID 11.8)"^] .

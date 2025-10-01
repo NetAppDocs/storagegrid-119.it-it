@@ -1,0 +1,44 @@
+---
+permalink: maintain/deploying-new-linux-hosts.html 
+sidebar: sidebar 
+keywords: storagegrid, deploy linux host, new host, new linux host 
+summary: Salvo poche eccezioni, i nuovi host vengono preparati come durante il processo di installazione iniziale. 
+---
+= Distribuisci nuovi host Linux
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Salvo poche eccezioni, i nuovi host vengono preparati come durante il processo di installazione iniziale.
+
+Per distribuire host Linux fisici o virtuali nuovi o reinstallati, seguire la procedura di preparazione degli host nelle istruzioni di installazione di StorageGRID per il sistema operativo Linux:
+
+* link:../rhel/installing-linux.html["Installa Linux (Red Hat Enterprise Linux)"]
+* link:../ubuntu/installing-linux.html["Installa Linux (Ubuntu o Debian)"]
+
+
+Questa procedura include i passaggi per realizzare le seguenti attività:
+
+. Installa Linux.
+. Configurare la rete host.
+. Configurare l'archiviazione host.
+. Installare il motore del contenitore.
+. Installare il servizio host StorageGRID .
++
+
+CAUTION: Interrompere l'operazione dopo aver completato l'attività "Installa il servizio host StorageGRID " nelle istruzioni di installazione.  Non avviare l'attività "Distribuzione nodi griglia".
+
+
+
+Mentre esegui questi passaggi, tieni presente le seguenti importanti linee guida:
+
+* Assicurati di utilizzare gli stessi nomi di interfaccia host utilizzati sull'host originale.
+* Se si utilizza l'archiviazione condivisa per supportare i nodi StorageGRID o si sono spostate alcune o tutte le unità o gli SSD dai nodi guasti a quelli sostitutivi, è necessario ristabilire le stesse mappature di archiviazione presenti sull'host originale.  Ad esempio, se hai utilizzato WWID e alias in `/etc/multipath.conf` come consigliato nelle istruzioni di installazione, assicurarsi di utilizzare le stesse coppie alias/WWID in `/etc/multipath.conf` sull'host sostitutivo.
+* Se il nodo StorageGRID utilizza storage assegnato da un sistema NetApp ONTAP , verificare che il volume non abbia un criterio di suddivisione in livelli FabricPool abilitato.  La disattivazione della suddivisione in livelli FabricPool per i volumi utilizzati con i nodi StorageGRID semplifica la risoluzione dei problemi e le operazioni di archiviazione.
++
+
+CAUTION: Non utilizzare mai FabricPool per riportare i dati relativi a StorageGRID a StorageGRID stesso.  Il riordino dei dati StorageGRID su StorageGRID aumenta la complessità operativa e la risoluzione dei problemi.
+
+

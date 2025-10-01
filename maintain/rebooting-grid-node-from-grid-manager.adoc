@@ -1,0 +1,56 @@
+---
+permalink: maintain/rebooting-grid-node-from-grid-manager.html 
+sidebar: sidebar 
+keywords: reboot grid node, tasks tab 
+summary: È possibile riavviare un singolo nodo della griglia dalla scheda Attività nella pagina Nodi. 
+---
+= Riavvia il nodo della griglia dalla scheda Attività
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile riavviare un singolo nodo della griglia dalla scheda Attività nella pagina Nodi.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Tu hai illink:../admin/admin-group-permissions.html["Autorizzazione di accesso alla manutenzione o alla root"] .
+* Hai la passphrase di provisioning.
+* Se si riavvia il nodo di amministrazione primario o un nodo di archiviazione, è necessario tenere presente quanto segue:
++
+** Quando si riavvia il nodo di amministrazione primario, il browser perde temporaneamente l'accesso a Grid Manager.
+** Se si riavviano due o più nodi di archiviazione in un determinato sito, potrebbe non essere possibile accedere a determinati oggetti per tutta la durata del riavvio.  Questo problema può verificarsi se una regola ILM utilizza l'opzione di acquisizione *Dual commit* (o se una regola specifica *Balanced* e non è possibile creare immediatamente tutte le copie richieste).  In questo caso, StorageGRID caricherà gli oggetti appena acquisiti su due nodi di archiviazione sullo stesso sito e valuterà ILM in un secondo momento.
+** Per assicurarti di poter accedere a tutti gli oggetti mentre un nodo di archiviazione è in fase di riavvio, interrompi l'acquisizione di oggetti in un sito per circa un'ora prima di riavviare il nodo.
+
+
+
+
+.Informazioni su questo compito
+Quando StorageGRID riavvia un nodo della griglia, emette il `reboot` comando sul nodo, che provoca l'arresto e il riavvio del nodo.  Tutti i servizi vengono riavviati automaticamente.
+
+* Il riavvio di un nodo VMware riavvia la macchina virtuale.
+* Il riavvio di un nodo Linux riavvia anche il contenitore.
+* Il riavvio di un nodo StorageGRID Appliance riavvia anche il controller di elaborazione.
+
+
+
+TIP: Se è necessario riavviare più di un nodo, è possibile utilizzarelink:../maintain/rolling-reboot-procedure.html["procedura di riavvio progressivo"] .
+
+.Passi
+. Selezionare *NODES*.
+. Selezionare il nodo della griglia che si desidera riavviare.
+. Selezionare la scheda *Attività*.
+. Selezionare *Riavvia*.
++
+Viene visualizzata una finestra di dialogo di conferma.  Se si riavvia il nodo di amministrazione primario, la finestra di dialogo di conferma ricorda che la connessione del browser al Grid Manager verrà interrotta temporaneamente quando i servizi vengono arrestati.
+
+. Immettere la passphrase di provisioning e selezionare *OK*.
+. Attendi il riavvio del nodo.
++
+Potrebbe volerci del tempo prima che i servizi vengano chiusi.
+
++
+Quando il nodo si riavvia, nella pagina Nodi viene visualizzata l'icona grigia (Amministrativamente inattivo) per il nodo.  Una volta riavviati tutti i servizi e il nodo è connesso correttamente alla rete, la pagina Nodi dovrebbe visualizzare lo stato normale (nessuna icona a sinistra del nome del nodo), indicando che non ci sono avvisi attivi e che il nodo è connesso alla rete.
+
+

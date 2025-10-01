@@ -1,0 +1,27 @@
+---
+permalink: ilm/what-storage-pool-is.html 
+sidebar: sidebar 
+keywords: what is a storage pool 
+summary: Un pool di archiviazione è un raggruppamento logico di nodi di archiviazione. 
+---
+= Che cos'è un pool di archiviazione?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Un pool di archiviazione è un raggruppamento logico di nodi di archiviazione.
+
+Quando si installa StorageGRID, viene creato automaticamente un pool di archiviazione per sito.  È possibile configurare pool di archiviazione aggiuntivi in ​​base alle proprie esigenze di archiviazione.
+
+
+NOTE: Durante l'installazione, è possibile configurare i nodi di archiviazione in modo che contengano dati e metadati degli oggetti oppure solo metadati degli oggetti. I nodi di archiviazione solo metadati non possono essere utilizzati nei pool di archiviazione. Per ulteriori informazioni, consultare link:../primer/what-storage-node-is.html#types-of-storage-nodes["Tipi di nodi di archiviazione"] .
+
+I pool di archiviazione hanno due attributi:
+
+* *Livello di archiviazione*: per i nodi di archiviazione, le prestazioni relative dell'archiviazione di supporto.
+* *Sito*: Il centro dati in cui verranno archiviati gli oggetti.
+
+
+I pool di archiviazione vengono utilizzati nelle regole ILM per determinare dove vengono archiviati i dati degli oggetti e il tipo di archiviazione utilizzato.  Quando si configurano le regole ILM per la replica, si selezionano uno o più pool di archiviazione.

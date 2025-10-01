@@ -1,0 +1,27 @@
+---
+permalink: network/client-network-topology.html 
+sidebar: sidebar 
+keywords: client network topology 
+summary: 'Avere una rete di clienti è facoltativo.  L"utilizzo di una rete client consente di separare il traffico di rete client (ad esempio, S3) dal traffico interno alla griglia, rendendo la rete della griglia più sicura.  Quando la rete amministrativa non è configurata, il traffico amministrativo può essere gestito dalla rete client o dalla rete Grid.' 
+---
+= Topologia della rete client
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Avere una rete di clienti è facoltativo.  L'utilizzo di una rete client consente di separare il traffico di rete client (ad esempio, S3) dal traffico interno alla griglia, rendendo così la rete della griglia più sicura.  Quando la rete amministrativa non è configurata, il traffico amministrativo può essere gestito dalla rete client o dalla rete Grid.
+
+Quando si configura la rete client, si stabilisce l'indirizzo IP host, la subnet mask e l'indirizzo IP gateway per l'interfaccia eth2 per il nodo configurato.  La rete client di ciascun nodo può essere indipendente dalla rete client di qualsiasi altro nodo.
+
+Se si configura una rete client per un nodo durante l'installazione, il gateway predefinito del nodo passa dal gateway della rete di griglia al gateway della rete client al termine dell'installazione.  Se in seguito viene aggiunta una rete client, il gateway predefinito del nodo cambia nello stesso modo.
+
+In questo esempio, la rete client viene utilizzata per le richieste client S3 e per le funzioni amministrative, mentre la rete Grid è dedicata alle operazioni di gestione degli oggetti interni.
+
+image::../media/grid_client_networks.png[Reti client Grid]
+
+image::../media/grid_client_networks_ips.png[IP delle reti client Grid]
+
+.Informazioni correlate
+link:../maintain/changing-nodes-network-configuration.html["Modifica la configurazione della rete del nodo"]

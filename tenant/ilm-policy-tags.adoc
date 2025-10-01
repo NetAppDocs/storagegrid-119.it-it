@@ -1,0 +1,59 @@
+---
+permalink: tenant/ilm-policy-tags.html 
+sidebar: sidebar 
+keywords: how to assign ilm policy tag to bucket 
+summary: Scegli un tag di policy ILM da assegnare a un bucket in base ai requisiti di archiviazione degli oggetti. 
+---
+= Applicare un tag di policy ILM a un bucket
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Scegli un tag di policy ILM da applicare a un bucket in base ai requisiti di archiviazione degli oggetti.
+
+La policy ILM controlla dove vengono archiviati i dati dell'oggetto e se vengono eliminati dopo un determinato periodo di tempo.  L'amministratore della griglia crea criteri ILM e li assegna ai tag dei criteri ILM quando si utilizzano più criteri attivi.
+
+
+NOTE: Evitare di riassegnare frequentemente il tag di policy di un bucket.  In caso contrario, potrebbero verificarsi problemi di prestazioni.
+
+.Prima di iniziare
+* Hai effettuato l'accesso al Tenant Manager tramite unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Appartieni a un gruppo di utenti che ha illink:tenant-management-permissions.html["Accesso root, autorizzazione Gestisci tutti i bucket o Visualizza tutti i bucket"] .  Queste autorizzazioni sostituiscono le impostazioni delle autorizzazioni nei criteri di gruppo o di bucket.
+
+
+.Passi
+. Selezionare *Visualizza bucket* dalla dashboard oppure selezionare *ARCHIVIAZIONE (S3)* > *Bucket*.
++
+Viene visualizzata la pagina Bucket.  A seconda delle necessità, è possibile ordinare le informazioni in base a qualsiasi colonna oppure scorrere l'elenco avanti e indietro.
+
+. Selezionare il nome del bucket a cui si desidera assegnare un tag di policy ILM.
++
+È anche possibile modificare l'assegnazione del tag della policy ILM per un bucket a cui è già assegnato un tag.
+
++
+
+NOTE: I valori visualizzati per il conteggio degli oggetti e lo spazio utilizzato sono stime. Tali stime sono influenzate dalla tempistica degli ingest, dalla connettività di rete e dallo stato del nodo.  Se nei bucket è abilitato il controllo delle versioni, le versioni degli oggetti eliminati vengono incluse nel conteggio degli oggetti.
+
+. Nella scheda Opzioni bucket, espandere l'accordion tag policy ILM.  Questa fisarmonica viene visualizzata solo se l'amministratore della griglia ha abilitato l'uso di tag di policy personalizzati.
+. Leggere la descrizione di ciascun tag di policy per determinare quale tag applicare al bucket.
++
+
+CAUTION: La modifica del tag della policy ILM per un bucket attiverà la rivalutazione ILM di tutti gli oggetti nel bucket.  Se la nuova policy conserva gli oggetti per un periodo di tempo limitato, gli oggetti più vecchi verranno eliminati.
+
+. Selezionare il pulsante di opzione per il tag che si desidera assegnare al bucket.
+. Seleziona *Salva modifiche*. Un nuovo tag bucket S3 verrà impostato sul bucket con la chiave `NTAP-SG-ILM-BUCKET-TAG` e il valore del nome del tag della policy ILM.
++
+
+CAUTION: Assicurati che le tue applicazioni S3 non sovrascrivano o eliminino accidentalmente il nuovo tag bucket.  Se questo tag viene omesso quando si applica un nuovo TagSet al bucket, gli oggetti nel bucket torneranno a essere valutati in base al criterio ILM predefinito.
+
++
+
+CAUTION: Imposta e modifica i tag dei criteri ILM utilizzando solo Tenant Manager o Tenant Manager API in cui viene convalidato il tag dei criteri ILM.  Non modificare il `NTAP-SG-ILM-BUCKET-TAG` Tag di policy ILM tramite l'API S3 PutBucketTagging o l'API S3 DeleteBucketTagging.
+
++
+
+NOTE: La modifica del tag di policy assegnato a un bucket ha un impatto temporaneo sulle prestazioni mentre gli oggetti vengono rivalutati utilizzando la nuova policy ILM.
+
+

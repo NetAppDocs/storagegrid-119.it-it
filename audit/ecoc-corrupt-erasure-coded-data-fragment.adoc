@@ -1,0 +1,55 @@
+---
+permalink: audit/ecoc-corrupt-erasure-coded-data-fragment.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, ECOC, Corrupt Erasure-Coded Data Fragment 
+summary: Questo messaggio di controllo indica che il sistema ha rilevato un frammento di dati con codice di cancellazione corrotto. 
+---
+= ECOC: Frammento di dati corrotti con codice di cancellazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Questo messaggio di controllo indica che il sistema ha rilevato un frammento di dati con codice di cancellazione corrotto.
+
+[cols="1a,1a,4a"]
+|===
+| Codice | Campo | Descrizione 
+
+
+ a| 
+VCCO
+ a| 
+ID VCS
+ a| 
+Il nome del VCS che contiene il blocco danneggiato.
+
+
+
+ a| 
+VLID
+ a| 
+ID volume
+ a| 
+Il volume RangeDB che contiene il frammento con codice di cancellazione danneggiato.
+
+
+
+ a| 
+CCID
+ a| 
+ID del blocco
+ a| 
+L'identificatore del frammento corrotto con codice di cancellazione.
+
+
+
+ a| 
+RSLT
+ a| 
+Risultato
+ a| 
+Questo campo ha il valore 'NESSUNO'.  RSLT è un campo del messaggio obbligatorio, ma non è rilevante per questo specifico messaggio.  Viene utilizzato 'NONE' anziché 'SUCS' in modo che il messaggio non venga filtrato.
+
+|===

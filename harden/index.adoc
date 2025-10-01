@@ -1,0 +1,28 @@
+---
+permalink: harden/index.html 
+sidebar: sidebar 
+keywords: Hardening guidelines, system, security 
+summary: Il rafforzamento del sistema è il processo di eliminazione del maggior numero possibile di rischi per la sicurezza da un sistema StorageGRID . 
+---
+= Considerazioni generali per il rafforzamento del sistema
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Il rafforzamento del sistema è il processo di eliminazione del maggior numero possibile di rischi per la sicurezza da un sistema StorageGRID .
+
+Durante l'installazione e la configurazione StorageGRID, utilizzare queste linee guida per soddisfare gli obiettivi di sicurezza prescritti in termini di riservatezza, integrità e disponibilità.
+
+Dovresti già utilizzare le best practice standard del settore per il rafforzamento del sistema. Ad esempio, si utilizzano password complesse per StorageGRID, si utilizza HTTPS anziché HTTP e si abilita l'autenticazione basata su certificato, ove disponibile.
+
+StorageGRID segue il https://security.netapp.com/policy/["Politica di gestione delle vulnerabilità NetApp"^] .  Le vulnerabilità segnalate vengono verificate e affrontate in base al processo di risposta agli incidenti di sicurezza del prodotto.
+
+Quando si rafforza un sistema StorageGRID , tenere presente quanto segue:
+
+* *Quale delle tre reti StorageGRID * hai implementato?  Tutti i sistemi StorageGRID devono utilizzare la rete Grid, ma è possibile utilizzare anche la rete amministrativa, la rete client o entrambe.  Ogni rete ha diverse considerazioni in materia di sicurezza.
+* *Il tipo di piattaforme* utilizzate per i singoli nodi nel sistema StorageGRID .  I nodi StorageGRID possono essere distribuiti su macchine virtuali VMware, all'interno di un motore di container su host Linux o come dispositivi hardware dedicati.  Ogni tipo di piattaforma ha il suo insieme di best practice di rafforzamento.
+* *Quanto sono affidabili gli account degli inquilini*.  Se sei un fornitore di servizi con account tenant non attendibili, avrai problemi di sicurezza diversi rispetto a quando utilizzi solo tenant interni attendibili.
+* *Quali requisiti e convenzioni di sicurezza* segue la tua organizzazione.  Potrebbe essere necessario rispettare specifici requisiti normativi o aziendali.
+

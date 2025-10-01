@@ -1,0 +1,48 @@
+---
+permalink: maintain/monitoring-storagegrid-appliance-installation-sn.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, appliance 
+summary: 'Il programma di installazione dell"appliance StorageGRID fornisce informazioni sullo stato fino al completamento dell"installazione.  Una volta completata l"installazione del software, l"appliance viene riavviata.' 
+---
+= Monitorare l'installazione dell'appliance StorageGRID
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Il programma di installazione dell'appliance StorageGRID fornisce informazioni sullo stato fino al completamento dell'installazione.  Una volta completata l'installazione del software, l'appliance viene riavviata.
+
+.Passi
+. Per monitorare l'avanzamento dell'installazione, fare clic su *Monitora installazione* dalla barra dei menu.
++
+La pagina Installazione del monitor mostra lo stato di avanzamento dell'installazione.
+
++
+image::../media/monitor_installation_configure_storage.gif[Questa immagine è spiegata dal testo circostante.]
+
++
+La barra di stato blu indica quale attività è attualmente in corso.  Le barre di stato verdi indicano le attività completate con successo.
+
++
+
+NOTE: Il programma di installazione garantisce che le attività completate in un'installazione precedente non vengano rieseguite.  Se si sta rieseguendo un'installazione, tutte le attività che non devono essere rieseguite vengono visualizzate con una barra di stato verde e lo stato "Ignorato".
+
+. Esaminare lo stato di avanzamento delle prime due fasi di installazione.
++
+** *1.  Configura l'archiviazione*
++
+Durante questa fase, il programma di installazione si connette al controller di archiviazione, cancella qualsiasi configurazione esistente, comunica con SANtricity OS per configurare i volumi e configura le impostazioni host.
+
+** *2.  Installa il sistema operativo*
++
+Durante questa fase, il programma di installazione copia l'immagine del sistema operativo di base per StorageGRID nell'appliance.
+
+
+
+. Continuare a monitorare l'avanzamento dell'installazione finché la fase *Install StorageGRID* non si interrompe e sulla console incorporata viene visualizzato un messaggio che richiede di approvare questo nodo sul nodo di amministrazione tramite Grid Manager.
++
+image::../media/monitor_installation_install_sgws.gif[Questa immagine è spiegata dal testo circostante.]
+
+. Vai alink:selecting-start-recovery-to-configure-appliance-storage-node.html["Selezionare Avvia ripristino per configurare il nodo di archiviazione dell'appliance"] .
+

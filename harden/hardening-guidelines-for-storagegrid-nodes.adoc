@@ -1,0 +1,129 @@
+---
+permalink: harden/hardening-guidelines-for-storagegrid-nodes.html 
+sidebar: sidebar 
+keywords: hardening guidelines, nodes, security 
+summary: 'I nodi StorageGRID possono essere distribuiti su macchine virtuali VMware, all"interno di un motore di container su host Linux o come dispositivi hardware dedicati.  Ogni tipo di piattaforma e ogni tipo di nodo ha il suo insieme di best practice di rafforzamento.' 
+---
+= Linee guida per il rafforzamento dei nodi StorageGRID
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+I nodi StorageGRID possono essere distribuiti su macchine virtuali VMware, all'interno di un motore di container su host Linux o come dispositivi hardware dedicati.  Ogni tipo di piattaforma e ogni tipo di nodo ha il suo insieme di best practice di rafforzamento.
+
+
+
+== Controllare l'accesso IPMI remoto a BMC
+
+È possibile abilitare o disabilitare l'accesso IPMI remoto per tutti gli apparecchi che contengono un BMC. L'interfaccia IPMI remota consente l'accesso hardware di basso livello ai dispositivi StorageGRID a chiunque disponga di un account e di una password BMC . Se non è necessario l'accesso IPMI remoto al BMC, disabilitare questa opzione.
+
+* Per controllare l'accesso IPMI remoto al BMC in Grid Manager, andare su *CONFIGURAZIONE* > *Sicurezza* > *Impostazioni di sicurezza* > *Appliance*:
++
+** Deselezionare la casella di controllo *Abilita accesso IPMI remoto* per disabilitare l'accesso IPMI al BMC.
+** Selezionare la casella di controllo *Abilita accesso IPMI remoto* per abilitare l'accesso IPMI al BMC.
+
+
+
+
+
+
+== Configurazione del firewall
+
+Come parte del processo di rafforzamento del sistema, è necessario rivedere le configurazioni del firewall esterno e modificarle in modo che il traffico venga accettato solo dagli indirizzi IP e sulle porte da cui è strettamente necessario.
+
+StorageGRID include un firewall interno su ciascun nodo che migliora la sicurezza della griglia consentendo di controllare l'accesso di rete al nodo.  Dovrestilink:../admin/manage-firewall-controls.html["gestire i controlli del firewall interno"] per impedire l'accesso alla rete su tutte le porte, eccetto quelle necessarie per la distribuzione specifica della griglia.  Le modifiche alla configurazione apportate nella pagina di controllo del firewall vengono distribuite a ciascun nodo.
+
+Nello specifico, puoi gestire queste aree:
+
+* *Indirizzi privilegiati*: puoi consentire a determinati indirizzi IP o subnet di accedere alle porte chiuse dalle impostazioni nella scheda Gestisci accesso esterno.
+* *Gestisci accesso esterno*: puoi chiudere le porte aperte per impostazione predefinita o riaprire quelle chiuse in precedenza.
+* *Rete client non attendibile*: è possibile specificare se un nodo si fida del traffico in entrata dalla rete client, nonché delle porte aggiuntive che si desidera aprire quando è configurata la rete client non attendibile.
+
+
+Sebbene questo firewall interno fornisca un ulteriore livello di protezione contro alcune minacce comuni, non elimina la necessità di un firewall esterno.
+
+Per un elenco di tutte le porte interne ed esterne utilizzate da StorageGRID, vederelink:../network/network-port-reference.html["Riferimento porta di rete"] .
+
+
+
+== Disabilitare i servizi non utilizzati
+
+Per tutti i nodi StorageGRID , è necessario disabilitare o bloccare l'accesso ai servizi non utilizzati. Ad esempio, se non si prevede di utilizzare DHCP, utilizzare Grid Manager per chiudere la porta 68. Selezionare *CONFIGURAZIONE* > *Controllo firewall* > *Gestisci accesso esterno*. Quindi modifica l'interruttore di stato per la porta 68 da *Aperto* a *Chiuso*.
+
+
+
+== Virtualizzazione, container e hardware condiviso
+
+Per tutti i nodi StorageGRID , evitare di eseguire StorageGRID sullo stesso hardware fisico di software non attendibile.  Non dare per scontato che le protezioni dell'hypervisor impediscano al malware di accedere ai dati protetti StorageGRID se sia StorageGRID che il malware sono presenti sullo stesso hardware fisico.  Ad esempio, gli attacchi Meltdown e Spectre sfruttano vulnerabilità critiche nei processori moderni e consentono ai programmi di rubare dati nella memoria dello stesso computer.
+
+
+
+== Proteggere i nodi durante l'installazione
+
+Non consentire agli utenti non attendibili di accedere ai nodi StorageGRID tramite la rete durante l'installazione dei nodi.  I nodi non sono completamente sicuri finché non vengono uniti alla griglia.
+
+
+
+== Linee guida per i nodi di amministrazione
+
+I nodi amministrativi forniscono servizi di gestione quali configurazione del sistema, monitoraggio e registrazione. Quando accedi a Grid Manager o a Tenant Manager, ti stai connettendo a un nodo di amministrazione.
+
+Seguire queste linee guida per proteggere i nodi amministrativi nel sistema StorageGRID :
+
+* Proteggere tutti i nodi amministrativi da client non attendibili, come quelli presenti su Internet aperto.  Assicurarsi che nessun client non attendibile possa accedere a nessun nodo di amministrazione sulla rete Grid, sulla rete di amministrazione o sulla rete client.
+* I gruppi StorageGRID controllano l'accesso alle funzionalità Grid Manager e Tenant Manager.  Concedi a ciascun gruppo di utenti le autorizzazioni minime richieste per il loro ruolo e utilizza la modalità di accesso di sola lettura per impedire agli utenti di modificare la configurazione.
+* Quando si utilizzano endpoint del bilanciatore del carico StorageGRID , utilizzare nodi gateway anziché nodi amministrativi per il traffico client non attendibile.
+* Se hai tenant non attendibili, non consentire loro di accedere direttamente a Tenant Manager o all'API Tenant Management.  In alternativa, fai in modo che tutti gli inquilini non attendibili utilizzino un portale per gli inquilini o un sistema di gestione degli inquilini esterno, che interagisca con l'API di gestione degli inquilini.
+* Facoltativamente, utilizzare un proxy di amministrazione per un maggiore controllo sulla comunicazione AutoSupport dai nodi di amministrazione al supporto NetApp . Vedi i passaggi perlink:../admin/configuring-admin-proxy-settings.html["creazione di un proxy amministratore"] .
+* Facoltativamente, utilizzare le porte riservate 8443 e 9443 per separare le comunicazioni tra Grid Manager e Tenant Manager.  Per una maggiore protezione, bloccare la porta condivisa 443 e limitare le richieste dei tenant alla porta 9443.
+* Facoltativamente, utilizzare nodi amministrativi separati per gli amministratori della griglia e gli utenti tenant.
+
+
+Per maggiori informazioni, consultare le istruzioni perlink:../admin/index.html["amministrazione di StorageGRID"] .
+
+
+
+== Linee guida per i nodi di archiviazione
+
+I nodi di archiviazione gestiscono e archiviano dati e metadati degli oggetti.  Seguire queste linee guida per proteggere i nodi di archiviazione nel sistema StorageGRID .
+
+* Non consentire ai client non attendibili di connettersi direttamente ai nodi di archiviazione.  Utilizzare un endpoint di bilanciamento del carico servito da un nodo gateway o da un bilanciatore del carico di terze parti.
+* Non abilitare i servizi in uscita per i tenant non attendibili.  Ad esempio, quando si crea un account per un tenant non attendibile, non consentire al tenant di utilizzare la propria origine identità e non consentire l'utilizzo dei servizi della piattaforma. Vedi i passaggi perlink:../admin/creating-tenant-account.html["creazione di un account inquilino"] .
+* Utilizzare un bilanciatore del carico di terze parti per il traffico client non attendibile.  Il bilanciamento del carico di terze parti offre maggiore controllo e ulteriori livelli di protezione contro gli attacchi.
+* Facoltativamente, utilizzare un proxy di archiviazione per un maggiore controllo sui pool di archiviazione cloud e sulla comunicazione dei servizi della piattaforma dai nodi di archiviazione ai servizi esterni. Vedi i passaggi perlink:../admin/configuring-storage-proxy-settings.html["creazione di un proxy di archiviazione"] .
+* Facoltativamente, è possibile connettersi ai servizi esterni tramite la rete client. Quindi, selezionare *CONFIGURAZIONE* > *Sicurezza* > *Controllo firewall* > *Reti client non attendibili* e indicare che la rete client sul nodo di archiviazione non è attendibile. Il nodo di archiviazione non accetta più traffico in entrata sulla rete client, ma continua a consentire richieste in uscita per i servizi della piattaforma.
+
+
+
+
+== Linee guida per i nodi gateway
+
+I nodi gateway forniscono un'interfaccia di bilanciamento del carico opzionale che le applicazioni client possono utilizzare per connettersi a StorageGRID.  Seguire queste linee guida per proteggere tutti i nodi gateway nel sistema StorageGRID :
+
+* Configurare e utilizzare gli endpoint del bilanciatore del carico. Vedere link:../admin/managing-load-balancing.html["Considerazioni sul bilanciamento del carico"] .
+* Utilizzare un bilanciatore del carico di terze parti tra il client e il nodo gateway o i nodi di archiviazione per il traffico client non attendibile.  Il bilanciamento del carico di terze parti offre maggiore controllo e ulteriori livelli di protezione contro gli attacchi.  Se si utilizza un bilanciatore del carico di terze parti, è comunque possibile configurare il traffico di rete in modo che passi attraverso un endpoint del bilanciatore del carico interno o venga inviato direttamente ai nodi di archiviazione.
+* Se si utilizzano endpoint di bilanciamento del carico, è possibile fare in modo che i client si connettano tramite la rete client. Quindi, selezionare *CONFIGURAZIONE* > *Sicurezza* > *Controllo firewall* > *Reti client non attendibili* e indicare che la rete client sul nodo gateway non è attendibile. Il nodo gateway accetta solo il traffico in entrata sulle porte configurate esplicitamente come endpoint del bilanciatore del carico.
+
+
+
+
+== Linee guida per i nodi degli apparecchi hardware
+
+Gli apparecchi hardware StorageGRID sono progettati specificamente per l'uso in un sistema StorageGRID .  Alcuni dispositivi possono essere utilizzati come nodi di archiviazione.  Altri dispositivi possono essere utilizzati come nodi amministrativi o nodi gateway.  È possibile combinare nodi appliance con nodi basati su software oppure implementare griglie completamente progettate per tutti gli appliance.
+
+Seguire queste linee guida per proteggere tutti i nodi degli apparecchi hardware nel sistema StorageGRID :
+
+* Se l'appliance utilizza SANtricity System Manager per la gestione del controller di archiviazione, impedire ai client non attendibili di accedere a SANtricity System Manager tramite la rete.
+* Se l'appliance è dotata di un controller di gestione della scheda base (BMC), tenere presente che la porta di gestione BMC consente l'accesso hardware di basso livello. Collegare la porta di gestione BMC solo a una rete di gestione interna sicura e affidabile. Se non è disponibile alcuna rete di questo tipo, lasciare la porta di gestione BMC scollegata o bloccata, a meno che il supporto tecnico non richieda una connessione BMC .
+* Se l'appliance supporta la gestione remota dell'hardware del controller tramite Ethernet utilizzando lo standard Intelligent Platform Management Interface (IPMI), bloccare il traffico non attendibile sulla porta 623.
+
+
+
+NOTE: È possibile abilitare o disabilitare l'accesso IPMI remoto per tutti gli apparecchi che contengono un BMC. L'interfaccia IPMI remota consente l'accesso hardware di basso livello ai dispositivi StorageGRID a chiunque disponga di un account e di una password BMC . Se non è necessario l'accesso IPMI remoto al BMC, disabilitare questa opzione utilizzando uno dei seguenti metodi: + In Grid Manager, andare su *CONFIGURAZIONE* > *Sicurezza* > *Impostazioni di sicurezza* > *Appliance* e deselezionare la casella di controllo *Abilita accesso IPMI remoto*. + Nell'API di gestione della griglia, utilizzare l'endpoint privato: `PUT /private/bmc` .
+
+* Per i modelli di appliance contenenti unità SED, FDE o FIPS NL-SAS gestite con SANtricity System Manager, https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/accessing-and-configuring-santricity-system-manager.html["abilitare e configurare SANtricity Drive Security"^] .
+* Per i modelli di appliance contenenti SSD SED o FIPS NVMe gestiti tramite StorageGRID Appliance Installer e Grid Manager, https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/optional-enabling-node-encryption.html["abilitare e configurare la crittografia dell'unità StorageGRID"^] .
+* Per gli apparecchi senza unità SED, FDE o FIPS, abilitare e configurare la crittografia del nodo software StorageGRID https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/optional-enabling-node-encryption.html#enable-node-encryption["utilizzando un server di gestione delle chiavi (KMS)"^] .
+

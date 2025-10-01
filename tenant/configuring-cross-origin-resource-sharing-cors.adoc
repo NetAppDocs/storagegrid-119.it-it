@@ -1,0 +1,87 @@
+---
+permalink: tenant/configuring-cross-origin-resource-sharing-cors.html 
+sidebar: sidebar 
+keywords: how to configure cross-origin resource sharing, cors 
+summary: 'È possibile configurare la condivisione delle risorse multiorigine \(CORS\) per un bucket S3 se si desidera che il bucket e gli oggetti in esso contenuti siano accessibili alle applicazioni Web in altri domini.' 
+---
+= Configurare la condivisione delle risorse tra origini (CORS)
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile configurare la condivisione delle risorse tra origini (CORS) per un bucket S3 se si desidera che il bucket e gli oggetti in esso contenuti siano accessibili alle applicazioni Web in altri domini.
+
+.Prima di iniziare
+* Hai effettuato l'accesso al Tenant Manager tramite unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Per le richieste di configurazione GET CORS, appartieni a un gruppo di utenti che halink:tenant-management-permissions.html["Autorizzazione Gestisci tutti i bucket o Visualizza tutti i bucket"] . Queste autorizzazioni sovrascrivono le impostazioni delle autorizzazioni nei criteri di gruppo o di bucket.
+* Per le richieste di configurazione PUT CORS, appartieni a un gruppo di utenti che halink:tenant-management-permissions.html["Gestisci tutti i permessi dei bucket"] .  Questa autorizzazione sostituisce le impostazioni delle autorizzazioni nei criteri di gruppo o di bucket.
+* ILlink:tenant-management-permissions.html["Permesso di accesso root"] fornisce l'accesso a tutte le richieste di configurazione CORS.
+
+
+.Informazioni su questo compito
+La condivisione delle risorse tra origini (CORS) è un meccanismo di sicurezza che consente alle applicazioni web client in un dominio di accedere alle risorse in un dominio diverso.  Ad esempio, supponiamo di utilizzare un bucket S3 denominato `Images` per memorizzare la grafica.  Configurando CORS per il `Images` bucket, puoi consentire che le immagini in quel bucket vengano visualizzate sul sito web `+http://www.example.com+` .
+
+
+
+== Abilita CORS per un bucket
+
+.Passi
+. Utilizzare un editor di testo per creare il file XML richiesto.  Questo esempio mostra l'XML utilizzato per abilitare CORS per un bucket S3.  Nello specifico:
++
+** Consente a qualsiasi dominio di inviare richieste GET al bucket
+** Permette solo il `+http://www.example.com+` dominio per inviare richieste GET, POST e DELETE
+** Sono consentite tutte le intestazioni di richiesta
++
+[listing]
+----
+<CORSConfiguration
+    xmlns="http://s3.amazonaws.com/doc/2020-10-22/">
+    <CORSRule>
+        <AllowedOrigin>*</AllowedOrigin>
+        <AllowedMethod>GET</AllowedMethod>
+        <AllowedHeader>*</AllowedHeader>
+    </CORSRule>
+    <CORSRule>
+        <AllowedOrigin>http://www.example.com</AllowedOrigin>
+        <AllowedMethod>GET</AllowedMethod>
+        <AllowedMethod>POST</AllowedMethod>
+        <AllowedMethod>DELETE</AllowedMethod>
+        <AllowedHeader>*</AllowedHeader>
+    </CORSRule>
+</CORSConfiguration>
+----
++
+Per ulteriori informazioni sull'XML di configurazione CORS, vedere http://docs.aws.amazon.com/AmazonS3/latest/dev/Welcome.html["Documentazione di Amazon Web Services (AWS): Guida per l'utente di Amazon Simple Storage Service"^] .
+
+
+
+. Selezionare *Visualizza bucket* dalla dashboard oppure selezionare *ARCHIVIAZIONE (S3)* > *Bucket*.
+. Selezionare il nome del bucket dalla tabella.
++
+Viene visualizzata la pagina dei dettagli del bucket.
+
+. Dalla scheda *Accesso bucket*, seleziona l'accordion *Condivisione risorse tra origini (CORS)*.
+. Selezionare la casella di controllo *Abilita CORS*.
+. Incollare il file XML di configurazione CORS nella casella di testo.
+. Seleziona *Salva modifiche*.
+
+
+
+
+== Modificare l'impostazione CORS
+
+.Passi
+. Aggiornare l'XML di configurazione CORS nella casella di testo oppure selezionare *Cancella* per ricominciare.
+. Seleziona *Salva modifiche*.
+
+
+
+
+== Disabilita l'impostazione CORS
+
+.Passi
+. Deseleziona la casella di controllo *Abilita CORS*.
+. Seleziona *Salva modifiche*.
+

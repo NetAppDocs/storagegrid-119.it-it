@@ -1,0 +1,102 @@
+---
+permalink: monitor/updating-snmp-agent.html 
+sidebar: sidebar 
+keywords: how to update the SNMP agent 
+summary: È possibile disattivare le notifiche SNMP, aggiornare le stringhe della community oppure aggiungere o rimuovere indirizzi degli agenti, utenti USM e destinazioni trap. 
+---
+= Aggiorna l'agente SNMP
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile disattivare le notifiche SNMP, aggiornare le stringhe della community oppure aggiungere o rimuovere indirizzi degli agenti, utenti USM e destinazioni trap.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Tu hai illink:../admin/admin-group-permissions.html["Permesso di accesso root"] .
+
+
+.Informazioni su questo compito
+Vederelink:configuring-snmp-agent.html["Configurare l'agente SNMP"] per i dettagli su ciascun campo nella pagina dell'agente SNMP.  Per salvare le modifiche apportate in ogni scheda, è necessario selezionare *Salva* in fondo alla pagina.
+
+.Passi
+. Selezionare *CONFIGURAZIONE* > *Monitoraggio* > *Agente SNMP*.
++
+Viene visualizzata la pagina dell'agente SNMP.
+
+. Per disabilitare l'agente SNMP su tutti i nodi della griglia, deselezionare la casella di controllo *Abilita SNMP* e selezionare *Salva*.
++
+Se si riabilita l'agente SNMP, tutte le impostazioni di configurazione SNMP precedenti verranno mantenute.
+
+. Facoltativamente, aggiorna le informazioni nella sezione Configurazione di base:
++
+.. Se necessario, aggiornare *Contatto di sistema* e *Posizione di sistema*.
+.. Facoltativamente, selezionare o deselezionare la casella di controllo *Abilita notifiche agente SNMP* per controllare se l'agente SNMP StorageGRID invia notifiche trap e inform.
++
+Se questa casella di controllo è deselezionata, l'agente SNMP supporta l'accesso MIB in sola lettura, ma non invia notifiche SNMP.
+
+.. Facoltativamente, selezionare o deselezionare la casella di controllo *Abilita trap di autenticazione* per controllare se l'agente SNMP StorageGRID invia trap di autenticazione quando riceve messaggi di protocollo autenticati in modo non corretto.
+
+
+. Se si utilizza SNMPv1 o SNMPv2c, è possibile aggiornare o aggiungere una *community di sola lettura* nella sezione Stringhe della community.
+. Per aggiornare le destinazioni delle trappole, selezionare la scheda Destinazioni delle trappole nella sezione Altre configurazioni.
++
+Utilizzare questa scheda per definire una o più destinazioni per le notifiche trap o informative StorageGRID .  Quando si abilita l'agente SNMP e si seleziona *Salva*, StorageGRID invia notifiche a ciascuna destinazione definita quando vengono attivati ​​gli avvisi.  Le notifiche standard vengono inviate anche per le entità MIB-II supportate (ad esempio, ifDown e coldStart).
+
++
+Per i dettagli su cosa inserire, vederelink:../monitor/configuring-snmp-agent.html#create-trap-destinations["Creare destinazioni trappola"] .
+
++
+** Facoltativamente, aggiorna o rimuovi la community trap predefinita.
++
+Se si rimuove la community trap predefinita, è necessario innanzitutto assicurarsi che tutte le destinazioni trap esistenti utilizzino una stringa community personalizzata.
+
+** Per aggiungere una destinazione trap, selezionare *Crea*.
+** Per modificare la destinazione di una trappola, selezionare il pulsante di opzione e selezionare *Modifica*.
+** Per rimuovere una destinazione trap, selezionare il pulsante di opzione e scegliere *Rimuovi*.
+** Per salvare le modifiche, seleziona *Salva* in fondo alla pagina.
+
+
+. Per aggiornare gli indirizzi degli agenti, selezionare la scheda Indirizzi degli agenti nella sezione Altre configurazioni.
++
+Utilizzare questa scheda per specificare uno o più "indirizzi di ascolto".  Questi sono gli indirizzi StorageGRID sui quali l'agente SNMP può ricevere query.
+
++
+Per i dettagli su cosa inserire, vederelink:../monitor/configuring-snmp-agent.html#create-agent-addresses["Crea indirizzi di agenti"] .
+
++
+** Per aggiungere l'indirizzo di un agente, seleziona *Crea*.
+** Per modificare l'indirizzo di un agente, seleziona il pulsante di opzione e seleziona *Modifica*.
+** Per rimuovere l'indirizzo di un agente, seleziona il pulsante di opzione e seleziona *Rimuovi*.
+** Per salvare le modifiche, seleziona *Salva* in fondo alla pagina.
+
+
+. Per aggiornare gli utenti USM, selezionare la scheda Utenti USM nella sezione Altre configurazioni.
++
+Utilizzare questa scheda per definire gli utenti USM autorizzati a interrogare il MIB o a ricevere trap e informazioni.
+
++
+Per i dettagli su cosa inserire, vederelink:../monitor/configuring-snmp-agent.html#create-usm-users["Crea utenti USM"] .
+
++
+** Per aggiungere un utente USM, seleziona *Crea*.
+** Per modificare un utente USM, selezionare il pulsante di opzione e scegliere *Modifica*.
++
+Il nome utente di un utente USM esistente non può essere modificato.  Se devi cambiare un nome utente, devi rimuovere l'utente e crearne uno nuovo.
+
++
+
+NOTE: Se aggiungi o rimuovi l'ID motore autorevole di un utente e quell'utente è attualmente selezionato per una destinazione, devi modificare o rimuovere la destinazione.  In caso contrario, si verifica un errore di convalida quando si salva la configurazione dell'agente SNMP.
+
+** Per rimuovere un utente USM, selezionare il pulsante di opzione e scegliere *Rimuovi*.
++
+
+NOTE: Se l'utente rimosso è attualmente selezionato per una destinazione trap, è necessario modificare o rimuovere la destinazione.  In caso contrario, si verifica un errore di convalida quando si salva la configurazione dell'agente SNMP.
+
+** Per salvare le modifiche, seleziona *Salva* in fondo alla pagina.
+
+
+. Dopo aver aggiornato la configurazione dell'agente SNMP, selezionare *Salva*.
+

@@ -1,0 +1,139 @@
+---
+permalink: network/linux-deployments.html 
+sidebar: sidebar 
+keywords: linux network, container engine, red hat enterprise linux rhel network, ubuntu network 
+summary: Per garantire efficienza, affidabilità e sicurezza, il sistema StorageGRID funziona su Linux come una raccolta di motori di container.  In un sistema StorageGRID non è richiesta la configurazione di rete relativa al motore del contenitore. 
+---
+= Distribuzioni Linux
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Per garantire efficienza, affidabilità e sicurezza, il sistema StorageGRID funziona su Linux come una raccolta di motori di container.  In un sistema StorageGRID non è richiesta la configurazione di rete relativa al motore del contenitore.
+
+Utilizzare un dispositivo non vincolato, ad esempio una VLAN o una coppia Ethernet virtuale (veth), per l'interfaccia di rete del contenitore.  Specificare questo dispositivo come interfaccia di rete nel file di configurazione del nodo.
+
+
+CAUTION: Non utilizzare dispositivi bond o bridge direttamente come interfaccia di rete del contenitore.  In questo modo si potrebbe impedire l'avvio del nodo a causa di un problema del kernel con l'uso di macvlan con dispositivi bond e bridge nello spazio dei nomi del contenitore.
+
+Vedere le istruzioni di installazione perlink:../rhel/index.html["Red Hat Enterprise Linux"] Olink:../ubuntu/index.html["Ubuntu o Debian"] distribuzioni.
+
+
+
+== Configurazione della rete host per le distribuzioni del motore del contenitore
+
+Prima di avviare la distribuzione di StorageGRID su una piattaforma di motore di container, determina quali reti (Grid, Admin, Client) utilizzerà ciascun nodo.  È necessario assicurarsi che l'interfaccia di rete di ciascun nodo sia configurata sulla corretta interfaccia host virtuale o fisica e che ciascuna rete disponga di larghezza di banda sufficiente.
+
+
+
+=== Host fisici
+
+Se si utilizzano host fisici per supportare i nodi della griglia:
+
+* Assicurarsi che tutti gli host utilizzino la stessa interfaccia host per ogni interfaccia nodo.  Questa strategia semplifica la configurazione dell'host e consente la futura migrazione dei nodi.
+* Ottenere un indirizzo IP per l'host fisico stesso.
++
+
+NOTE: Un'interfaccia fisica sull'host può essere utilizzata dall'host stesso e da uno o più nodi in esecuzione sull'host.  Tutti gli indirizzi IP assegnati all'host o ai nodi che utilizzano questa interfaccia devono essere univoci.  L'host e il nodo non possono condividere gli indirizzi IP.
+
+* Aprire le porte richieste all'host.
+* Se si intende utilizzare le interfacce VLAN in StorageGRID, l'host deve disporre di una o più interfacce trunk che forniscano l'accesso alle VLAN desiderate.  Queste interfacce possono essere passate al contenitore del nodo come eth0, eth2 o come interfacce aggiuntive.  Per aggiungere interfacce trunk o di accesso, vedere quanto segue:
++
+** *RHEL (prima di installare il nodo)*:link:../rhel/creating-node-configuration-files.html["Creare file di configurazione del nodo"]
+** *Ubuntu o Debian (prima di installare il nodo)*:link:../ubuntu/creating-node-configuration-files.html["Creare file di configurazione del nodo"]
+** *RHEL, Ubuntu o Debian (dopo aver installato il nodo)*:link:../maintain/linux-adding-trunk-or-access-interfaces-to-node.html["Linux: aggiungere interfacce trunk o di accesso a un nodo"]
+
+
+
+
+
+
+=== Raccomandazioni sulla larghezza di banda minima
+
+Nella tabella seguente sono riportate le raccomandazioni minime sulla larghezza di banda LAN per ciascun tipo di nodo StorageGRID e ciascun tipo di rete.  È necessario fornire a ciascun host fisico o virtuale una larghezza di banda di rete sufficiente a soddisfare i requisiti minimi aggregati di larghezza di banda per il numero totale e il tipo di nodi StorageGRID che si prevede di eseguire su tale host.
+
+[cols="1a,1a,1a,1a"]
+|===
+| Tipo di nodo 3+| Tipo di rete 
+
+
+ a| 
+ a| 
+Griglia
+ a| 
+Amministratore
+ a| 
+Cliente
+
+
+
+ a| 
+ a| 
+*Larghezza di banda LAN minima*
+
+
+
+ a| 
+Amministratore
+ a| 
+10 Gbps
+ a| 
+1 Gbps
+ a| 
+1 Gbps
+
+
+
+ a| 
+Portale
+ a| 
+10 Gbps
+ a| 
+1 Gbps
+ a| 
+10 Gbps
+
+
+
+ a| 
+Magazzinaggio
+ a| 
+10 Gbps
+ a| 
+1 Gbps
+ a| 
+10 Gbps
+
+
+
+ a| 
+Archivio
+ a| 
+10 Gbps
+ a| 
+1 Gbps
+ a| 
+10 Gbps
+
+|===
+
+NOTE: Questa tabella non include la larghezza di banda SAN, necessaria per l'accesso allo storage condiviso.  Se si utilizza uno storage condiviso a cui si accede tramite Ethernet (iSCSI o FCoE), è necessario predisporre interfacce fisiche separate su ciascun host per garantire una larghezza di banda SAN sufficiente.  Per evitare di introdurre un collo di bottiglia, la larghezza di banda SAN per un dato host dovrebbe corrispondere approssimativamente alla larghezza di banda di rete aggregata del nodo di archiviazione per tutti i nodi di archiviazione in esecuzione su quell'host.
+
+Utilizzare la tabella per determinare il numero minimo di interfacce di rete da predisporre su ciascun host, in base al numero e al tipo di nodi StorageGRID che si prevede di eseguire su tale host.
+
+Ad esempio, per eseguire un nodo di amministrazione, un nodo gateway e un nodo di archiviazione su un singolo host:
+
+* Collegare la rete e le reti amministrative sul nodo amministrativo (richiede 10 + 1 = 11 Gbps)
+* Collegare la rete e le reti client sul nodo gateway (richiede 10 + 10 = 20 Gbps)
+* Collegare la rete di rete al nodo di archiviazione (richiede 10 Gbps)
+
+
+In questo scenario, dovresti fornire un minimo di 11 + 20 + 10 = 41 Gbps di larghezza di banda di rete, che potrebbe essere soddisfatta da due interfacce da 40 Gbps o cinque interfacce da 10 Gbps, potenzialmente aggregate in trunk e quindi condivise dalle tre o più VLAN che trasportano le subnet Grid, Admin e Client locali al data center fisico contenente l'host.
+
+Per alcuni metodi consigliati per configurare le risorse fisiche e di rete sugli host nel cluster StorageGRID per preparare la distribuzione StorageGRID , vedere quanto segue:
+
+* link:../rhel/configuring-host-network.html["Configurare la rete host (Red Hat Enterprise Linux)"]
+* link:../ubuntu/configuring-host-network.html["Configurare la rete host (Ubuntu o Debian)"]
+

@@ -1,0 +1,6 @@
+= 
+:allow-uri-read: 
+
+
+
+NOTE: Quando un nodo non è connesso alla rete, ad esempio durante un aggiornamento o in uno stato disconnesso, alcune metriche potrebbero non essere disponibili o essere escluse dai totali del sito e della rete.  Dopo che un nodo si è ricollegato alla rete, attendere alcuni minuti affinché i valori si stabilizzino.

@@ -1,0 +1,17 @@
+---
+sidebar: sidebar 
+permalink: storagegrid-hardware.html 
+keywords: storagegrid, software, grid 
+summary: 'Scopri come installare, configurare e utilizzare l"hardware dell"appliance StorageGRID .' 
+---
+= Dispositivi StorageGRID
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Vai a https://docs.netapp.com/us-en/storagegrid-appliances/index.html["Documentazione dell'appliance StorageGRID"^] per imparare come installare, configurare e gestire gli appliance di archiviazione e servizi StorageGRID .

@@ -1,0 +1,62 @@
+---
+permalink: monitor/viewing-overview-tab.html 
+sidebar: sidebar 
+keywords: overview tab 
+summary: La scheda Panoramica fornisce informazioni di base su ciascun nodo.  Mostra anche tutti gli avvisi che interessano attualmente il nodo. 
+---
+= Visualizza la scheda Panoramica
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+La scheda Panoramica fornisce informazioni di base su ciascun nodo.  Mostra anche tutti gli avvisi che interessano attualmente il nodo.
+
+La scheda Panoramica viene visualizzata per tutti i nodi.
+
+
+
+== Informazioni sul nodo
+
+La sezione Informazioni sul nodo della scheda Panoramica elenca le informazioni di base sul nodo.
+
+image::../media/nodes_page_overview_tab.png[Scheda Panoramica della pagina Nodi]
+
+Le informazioni generali per un nodo includono quanto segue:
+
+* *Nome visualizzato* (mostrato solo se il nodo è stato rinominato): il nome visualizzato corrente per il nodo.  Utilizzare illink:../maintain/rename-grid-site-node-overview.html["Rinomina griglia, siti e nodi"] procedura per aggiornare questo valore.
+* *Nome del sistema*: il nome immesso per il nodo durante l'installazione.  I nomi di sistema vengono utilizzati per le operazioni interne StorageGRID e non possono essere modificati.
+* *Tipo*: il tipo di nodo: nodo amministrativo, nodo amministrativo primario, nodo di archiviazione o nodo gateway.
+* *ID*: Identificatore univoco del nodo, noto anche come UUID.
+* *Stato della connessione*: uno dei tre stati.  Viene mostrata l'icona per lo stato più grave.
++
+** *Sconosciuto*image:../media/icon_alarm_blue_unknown.png["icona punto interrogativo blu"] : Per un motivo sconosciuto, il nodo non è connesso alla rete oppure uno o più servizi sono inaspettatamente inattivi.  Ad esempio, la connessione di rete tra i nodi è stata interrotta, l'alimentazione è interrotta o un servizio non è disponibile.  Potrebbe anche essere attivato l'avviso *Impossibile comunicare con il nodo*.  Potrebbero essere attivi anche altri avvisi.  Questa situazione richiede un'attenzione immediata.
++
+
+NOTE: Un nodo potrebbe apparire come Sconosciuto durante le operazioni di arresto gestito.  In questi casi è possibile ignorare lo stato Sconosciuto.
+
+** *Amministrativamente inattivo*image:../media/icon_alarm_gray_administratively_down.png["icona punto interrogativo grigio"] : Il nodo non è connesso alla rete per un motivo prevedibile.  Ad esempio, il nodo o i servizi sul nodo sono stati arrestati correttamente, il nodo si sta riavviando o il software è in fase di aggiornamento.  Potrebbero essere attivi anche uno o più avvisi.
+** *Collegato*image:../media/icon_alert_green_checkmark.png["icona avviso segno di spunta verde"] : Il nodo è connesso alla rete.
+
+
+* *Archiviazione utilizzata*: solo per nodi di archiviazione.
++
+** *Dati oggetto*: percentuale dello spazio totale utilizzabile per i dati oggetto che è stato utilizzato sul nodo di archiviazione.
+** *Metadati oggetto*: percentuale dello spazio totale consentito per i metadati oggetto utilizzato sul nodo di archiviazione.
+
+
+* *Versione software*: la versione di StorageGRID installata sul nodo.
+* *Gruppi HA*: solo per nodi amministrativi e nodi gateway.  Viene mostrato se un'interfaccia di rete sul nodo è inclusa in un gruppo ad alta disponibilità e se tale interfaccia è l'interfaccia primaria.
+* *Indirizzi IP*: gli indirizzi IP del nodo.  Fare clic su *Mostra indirizzi IP aggiuntivi* per visualizzare gli indirizzi IPv4 e IPv6 del nodo e le mappature delle interfacce.
+
+
+
+
+== Avvisi
+
+La sezione Avvisi della scheda Panoramica elenca tutti glilink:monitoring-system-health.html#view-current-and-resolved-alerts["avvisi che attualmente interessano questo nodo e che non sono stati silenziati"] .  Selezionare il nome dell'avviso per visualizzare ulteriori dettagli e azioni consigliate.
+
+image::../media/nodes_page_alerts_table.png[Tabella degli avvisi della pagina dei nodi]
+
+Sono inclusi anche gli avvisi perlink:monitoring-system-health.html#monitor-node-connection-states["stati di connessione del nodo"] .

@@ -1,0 +1,43 @@
+---
+permalink: s3/deprecated-bucket-requests-for-legacy-compliance.html 
+sidebar: sidebar 
+keywords: S3 REST API, S3 operations, deprecated bucket requests 
+summary: 'Potrebbe essere necessario utilizzare l"API REST StorageGRID S3 per gestire i bucket creati utilizzando la funzionalità di conformità legacy.' 
+---
+= Richieste di bucket deprecate per la conformità legacy
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Potrebbe essere necessario utilizzare l'API REST StorageGRID S3 per gestire i bucket creati utilizzando la funzionalità di conformità legacy.
+
+
+
+== Funzionalità di conformità deprecata
+
+La funzionalità StorageGRID Compliance disponibile nelle precedenti versioni StorageGRID è obsoleta ed è stata sostituita da S3 Object Lock.
+
+Se in precedenza è stata abilitata l'impostazione Conformità globale, in StorageGRID 11.6 è abilitata l'impostazione Blocco oggetto S3 globale.  Non è più possibile creare nuovi bucket con la conformità abilitata; tuttavia, se necessario, è possibile utilizzare l'API REST StorageGRID S3 per gestire eventuali bucket conformi legacy esistenti.
+
+* link:use-s3-api-for-s3-object-lock.html["Utilizzare l'API REST S3 per configurare S3 Object Lock"]
+* link:../ilm/index.html["Gestire gli oggetti con ILM"]
+* https://kb.netapp.com/Advice_and_Troubleshooting/Hybrid_Cloud_Infrastructure/StorageGRID/How_to_manage_legacy_Compliant_buckets_in_StorageGRID_11.5["Knowledge Base di NetApp : come gestire i bucket Compliant legacy in StorageGRID 11.5"^]
+
+
+Richieste di conformità deprecate:
+
+* link:../s3/deprecated-put-bucket-request-modifications-for-compliance.html["Obsoleto - Modifiche alla richiesta PUT Bucket per conformità"]
++
+L'elemento XML SGCompliance è obsoleto.  In precedenza, era possibile includere questo elemento personalizzato StorageGRID nel corpo della richiesta XML facoltativo delle richieste PUT Bucket per creare un bucket conforme.
+
+* link:../s3/deprecated-get-bucket-compliance-request.html["Obsoleto - Conformità al bucket GET"]
++
+La richiesta di conformità del bucket GET è obsoleta.  Tuttavia, puoi continuare a utilizzare questa richiesta per determinare le impostazioni di conformità attualmente in vigore per un bucket Conforme legacy esistente.
+
+* link:../s3/deprecated-put-bucket-compliance-request.html["Obsoleto - Conformità al bucket PUT"]
++
+La richiesta di conformità del bucket PUT è obsoleta.  Tuttavia, puoi continuare a utilizzare questa richiesta per modificare le impostazioni di conformità per un bucket Conforme legacy esistente.  Ad esempio, è possibile mettere in attesa per motivi legali un bucket esistente o aumentarne il periodo di conservazione.
+
+

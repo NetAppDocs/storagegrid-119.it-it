@@ -1,0 +1,43 @@
+---
+permalink: ilm/view-cloud-storage-pool-details.html 
+sidebar: sidebar 
+keywords: view cloud storage pool 
+summary: È possibile visualizzare i dettagli di un Cloud Storage Pool per determinare dove viene utilizzato e vedere quali nodi e livelli di archiviazione sono inclusi. 
+---
+= Visualizza i dettagli del Cloud Storage Pool
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile visualizzare i dettagli di un Cloud Storage Pool per determinare dove viene utilizzato e vedere quali nodi e livelli di archiviazione sono inclusi.
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Hailink:../admin/admin-group-permissions.html["autorizzazioni di accesso specifiche"] .
+
+
+.Passi
+. Selezionare *ILM* > *Pool di archiviazione* > *Pool di archiviazione cloud*.
++
+La tabella Cloud Storage Pools include le seguenti informazioni per ogni Cloud Storage Pool che include nodi di archiviazione:
+
++
+** *Nome*: il nome visualizzato univoco del pool.
+** *URI*: Uniform Resource Identifier del Cloud Storage Pool.
+** *Tipo di provider*: quale provider cloud viene utilizzato per questo Cloud Storage Pool.
+** *Contenitore*: il nome del bucket utilizzato per il Cloud Storage Pool.
+** *Utilizzo ILM*: modalità di utilizzo attuale del pool.  Un Cloud Storage Pool potrebbe non essere utilizzato oppure potrebbe essere utilizzato in una o più regole ILM, profili di codifica di cancellazione o entrambi.
+** *Ultimo errore*: l'ultimo errore rilevato durante un controllo dello stato di questo Cloud Storage Pool.
+
+
+. Per visualizzare i dettagli di uno specifico Cloud Storage Pool, selezionarne il nome.
++
+Viene visualizzata la pagina dei dettagli del pool.
+
+. Visualizza la scheda *Autenticazione* per informazioni sul tipo di autenticazione per questo Cloud Storage Pool e per modificare i dettagli di autenticazione.
+. Visualizza la scheda *Verifica del server* per conoscere i dettagli della verifica, modificare la verifica, scaricare un nuovo certificato o copiare il certificato PEM.
+. Visualizzare la scheda *Utilizzo ILM* per determinare se il Cloud Storage Pool è attualmente utilizzato in regole ILM o profili di codifica di cancellazione.
+. Facoltativamente, vai alla *pagina delle regole ILM* perlink:working-with-ilm-rules-and-ilm-policies.html["conoscere e gestire tutte le regole"] che utilizzano il Cloud Storage Pool.
+

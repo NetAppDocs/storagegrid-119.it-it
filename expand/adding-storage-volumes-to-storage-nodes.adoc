@@ -1,0 +1,50 @@
+---
+permalink: expand/adding-storage-volumes-to-storage-nodes.html 
+sidebar: sidebar 
+keywords: storage volumes, expand, expansion, add, storage nodes, adding storage capacity 
+summary: È possibile espandere la capacità di archiviazione dei nodi di archiviazione che sono al di sotto del numero massimo supportato di volumi. Potrebbe essere necessario aggiungere volumi di archiviazione a più di un nodo di archiviazione per soddisfare i requisiti ILM per copie replicate o con codice di cancellazione. 
+---
+= Aggiungere volumi di archiviazione ai nodi di archiviazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile espandere la capacità di archiviazione dei nodi di archiviazione che sono al di sotto del numero massimo supportato di volumi. Potrebbe essere necessario aggiungere volumi di archiviazione a più di un nodo di archiviazione per soddisfare i requisiti ILM per copie replicate o con codice di cancellazione.
+
+.Prima di iniziare
+Prima di aggiungere volumi di archiviazione, rivedere illink:guidelines-for-adding-object-capacity.html["linee guida per l'aggiunta di capacità di oggetti"] per assicurarti di sapere dove aggiungere volumi per soddisfare i requisiti della tua politica ILM.
+
+
+NOTE: Queste istruzioni si applicano solo ai nodi di archiviazione basati su software.  Vedere https://docs.netapp.com/us-en/storagegrid-appliances/sg6000/adding-expansion-shelf-to-deployed-sg6060.html["Aggiungere uno scaffale di espansione al SG6060 distribuito"^] O https://docs.netapp.com/us-en/storagegrid-appliances/sg6100/adding-expansion-shelf-to-deployed-sg6160.html["Aggiungere uno scaffale di espansione al SG6160 distribuito"^] per scoprire come aggiungere volumi di archiviazione al modello SG6060 o SG6160 installando ripiani di espansione.  Gli altri nodi di archiviazione dell'appliance non possono essere espansi.
+
+.Informazioni su questo compito
+Lo storage sottostante di un nodo di storage è suddiviso in volumi di storage.  I volumi di archiviazione sono dispositivi di archiviazione basati su blocchi formattati dal sistema StorageGRID e montati per archiviare oggetti.  Ogni nodo di archiviazione può supportare fino a 48 volumi di archiviazione, denominati _archivi di oggetti_ in Grid Manager.
+
+
+NOTE: I metadati degli oggetti vengono sempre memorizzati nell'archivio oggetti 0.
+
+Ogni archivio di oggetti viene montato su un volume che corrisponde al suo ID.  Ad esempio, l'archivio oggetti con un ID di 0000 corrisponde a `/var/local/rangedb/0` punto di montaggio.
+
+Prima di aggiungere nuovi volumi di archiviazione, utilizzare Grid Manager per visualizzare gli archivi di oggetti correnti per ciascun nodo di archiviazione, nonché i punti di montaggio corrispondenti.  È possibile utilizzare queste informazioni quando si aggiungono volumi di archiviazione.
+
+.Passi
+. Selezionare *NODI* > *_sito_* > *_Nodo di archiviazione_* > *Archiviazione*.
+. Scorrere verso il basso per visualizzare la quantità di spazio di archiviazione disponibile per ciascun volume e archivio oggetti.
++
+Per i nodi di archiviazione dell'appliance, il nome mondiale di ciascun disco corrisponde all'identificatore mondiale del volume (WWID) visualizzato quando si visualizzano le proprietà del volume standard in SANtricity OS (il software di gestione connesso al controller di archiviazione dell'appliance).
+
++
+Per aiutarti a interpretare le statistiche di lettura e scrittura del disco relative ai punti di montaggio del volume, la prima parte del nome mostrato nella colonna *Nome* della tabella Dispositivi disco (ovvero _sdc_, _sdd_, _sde_ e così via) corrisponde al valore mostrato nella colonna *Dispositivo* della tabella Volumi.
+
++
+image::../media/nodes_page_storage_tables_vol_expansion.png[Tabelle di archiviazione delle pagine dei nodi]
+
+. Seguire le istruzioni per la piattaforma in uso per aggiungere nuovi volumi di archiviazione al nodo di archiviazione.
++
+** link:vmware-adding-storage-volumes-to-storage-node.html["VMware: aggiungi volumi di archiviazione al nodo di archiviazione"]
+** link:linux-adding-direct-attached-or-san-volumes-to-storage-node.html["Linux: aggiungi volumi SAN o collegati direttamente al nodo di archiviazione"]
+
+
+

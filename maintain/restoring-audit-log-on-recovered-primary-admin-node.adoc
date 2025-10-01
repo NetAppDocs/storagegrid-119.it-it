@@ -1,0 +1,59 @@
+---
+permalink: maintain/restoring-audit-log-on-recovered-primary-admin-node.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, restore audit log, primary admin node 
+summary: Se sei riuscito a conservare il registro di controllo dal nodo amministrativo primario non riuscito, puoi copiarlo nel nodo amministrativo primario che stai ripristinando. 
+---
+= Ripristina il registro di controllo sul nodo di amministrazione primario recuperato
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se sei riuscito a conservare il registro di controllo dal nodo amministrativo primario non riuscito, puoi copiarlo nel nodo amministrativo primario che stai ripristinando.
+
+.Prima di iniziare
+* Il nodo amministrativo recuperato è installato e funzionante.
+* Hai copiato i registri di controllo in un'altra posizione dopo che il nodo di amministrazione originale ha avuto esito negativo.
+
+
+.Informazioni su questo compito
+Se un nodo di amministrazione non funziona, i registri di controllo salvati su quel nodo di amministrazione potrebbero andare persi.  Potrebbe essere possibile preservare i dati dalla perdita copiando i registri di controllo dal nodo di amministrazione non riuscito e quindi ripristinando tali registri di controllo nel nodo di amministrazione recuperato.  A seconda dell'errore, potrebbe non essere possibile copiare i registri di controllo dal nodo di amministrazione non riuscito.  In tal caso, se la distribuzione ha più di un nodo amministrativo, è possibile recuperare i log di controllo da un altro nodo amministrativo poiché i log di controllo vengono replicati su tutti i nodi amministrativi.
+
+Se è presente un solo nodo di amministrazione e il registro di controllo non può essere copiato dal nodo non riuscito, il nodo di amministrazione ripristinato inizia a registrare gli eventi nel registro di controllo come se l'installazione fosse nuova.
+
+È necessario ripristinare un nodo di amministrazione il prima possibile per ripristinare la funzionalità di registrazione.
+
+[NOTE]
+====
+Per impostazione predefinita, le informazioni di controllo vengono inviate al registro di controllo sui nodi di amministrazione.  È possibile saltare questi passaggi se si verifica una delle seguenti condizioni:
+
+* Hai configurato un server syslog esterno e i log di controllo vengono ora inviati al server syslog anziché ai nodi di amministrazione.
+* Hai specificato esplicitamente che i messaggi di controllo devono essere salvati solo sui nodi locali che li hanno generati.
+
+
+Vederelink:../monitor/configure-audit-messages.html["Configurare i messaggi di controllo e le destinazioni dei registri"] per i dettagli.
+
+====
+.Passi
+. Accedi al nodo di amministrazione recuperato:
++
+.. Immettere il seguente comando: `ssh admin@recovery_Admin_Node_IP`
+.. Inserisci la password elencata nel `Passwords.txt` file.
+.. Immettere il seguente comando per passare alla root: `su -`
+.. Inserisci la password elencata nel `Passwords.txt` file.
+
+
++
+Dopo aver effettuato l'accesso come root, il prompt cambia da `$` A `#` .
+
+. Controlla quali file di controllo sono stati conservati: `cd /var/local/log`
+. Copiare i file di registro di controllo conservati nel nodo di amministrazione recuperato: `scp admin@_grid_node_IP_:/var/local/tmp/saved-audit-logs/YYYY* .`
++
+Quando richiesto, immettere la password per l'amministratore.
+
+. Per motivi di sicurezza, eliminare i registri di controllo dal nodo della griglia non riuscito dopo aver verificato che siano stati copiati correttamente nel nodo di amministrazione ripristinato.
+. Aggiornare le impostazioni utente e gruppo dei file di registro di controllo sul nodo di amministrazione recuperato: `chown ams-user: bycast *`
+. Disconnettersi come root: `exit`
+

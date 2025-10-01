@@ -1,0 +1,101 @@
+---
+permalink: admin/grid-management-api-versioning.html 
+sidebar: sidebar 
+keywords: grid management api, api versioning 
+summary: 'L"API di gestione della griglia utilizza il controllo delle versioni per supportare aggiornamenti senza interruzioni.' 
+---
+= Controllo delle versioni dell'API di gestione della griglia
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+L'API di gestione della griglia utilizza il controllo delle versioni per supportare aggiornamenti senza interruzioni.
+
+Ad esempio, questo URL di richiesta specifica la versione 4 dell'API.
+
+`https://_hostname_or_ip_address_/api/v4/authorize`
+
+La versione principale dell'API viene aggiornata quando vengono apportate modifiche che non sono compatibili con le versioni precedenti.  La versione secondaria dell'API viene aggiornata quando vengono apportate modifiche _compatibili_ con le versioni precedenti.  Le modifiche compatibili includono l'aggiunta di nuovi endpoint o nuove proprietà.
+
+L'esempio seguente illustra come la versione dell'API viene aumentata in base al tipo di modifiche apportate.
+
+[cols="1a,1a,1a"]
+|===
+| Tipo di modifica all'API | Vecchia versione | Nuova versione 
+
+
+ a| 
+Compatibile con le versioni precedenti
+ a| 
+2,1
+ a| 
+2,2
+
+
+
+ a| 
+Non compatibile con le versioni precedenti
+ a| 
+2,1
+ a| 
+3,0
+
+
+
+ a| 
+3,0
+ a| 
+4,0
+
+|===
+Quando si installa il software StorageGRID per la prima volta, viene abilitata solo la versione più recente dell'API.  Tuttavia, quando si esegue l'aggiornamento a una nuova versione delle funzionalità di StorageGRID, si continua ad avere accesso alla versione API precedente per almeno una versione delle funzionalità StorageGRID .
+
+
+NOTE: È possibile configurare le versioni supportate.  Consultare la sezione *config* della documentazione dell'API Swagger perlink:../admin/using-grid-management-api.html["API di gestione della griglia"] per maggiori informazioni.  Dopo aver aggiornato tutti i client API per utilizzare la versione più recente, è necessario disattivare il supporto per la versione precedente.
+
+Le richieste obsolete vengono contrassegnate come obsolete nei seguenti modi:
+
+* L'intestazione della risposta è "Obsoleto: vero"
+* Il corpo della risposta JSON include "deprecated": true
+* Un avviso obsoleto è stato aggiunto a nms.log. Per esempio:
++
+[listing]
+----
+Received call to deprecated v2 API at POST "/api/v2/authorize"
+----
+
+
+
+
+== Determina quali versioni API sono supportate nella versione corrente
+
+Utilizzare il `GET /versions` Richiesta API per restituire un elenco delle principali versioni API supportate.  Questa richiesta si trova nella sezione *config* della documentazione dell'API Swagger.
+
+[listing]
+----
+GET https://{{IP-Address}}/api/versions
+{
+  "responseTime": "2023-06-27T22:13:50.750Z",
+  "status": "success",
+  "apiVersion": "4.0",
+  "data": [
+    2,
+    3,
+    4
+  ]
+}
+----
+
+
+== Specificare una versione API per una richiesta
+
+È possibile specificare la versione API utilizzando un parametro di percorso(`/api/v4` ) o un'intestazione(`Api-Version: 4` ).  Se si specificano entrambi i valori, il valore dell'intestazione sovrascrive il valore del percorso.
+
+[listing]
+----
+curl https://[IP-Address]/api/v4/grid/accounts
+
+curl -H "Api-Version: 4" https://[IP-Address]/api/grid/accounts
+----

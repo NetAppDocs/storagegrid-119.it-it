@@ -1,0 +1,483 @@
+---
+permalink: network/internal-grid-node-communications.html 
+sidebar: sidebar 
+keywords: storagegrid, network port, internal communications, ports, TCP, UDP, grid communications, port 
+summary: 'Il firewall interno StorageGRID consente connessioni in entrata solo a porte specifiche sulla rete Grid, ad eccezione delle porte 22, 80, 123 e 443 (vedere le informazioni sulle comunicazioni esterne).  Le connessioni sono accettate anche sulle porte definite dagli endpoint del bilanciatore del carico.' 
+---
+= Comunicazioni interne al nodo della griglia
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Il firewall interno StorageGRID consente connessioni in entrata a porte specifiche sulla rete Grid.  Le connessioni sono accettate anche sulle porte definite dagli endpoint del bilanciatore del carico.
+
+
+NOTE: NetApp consiglia di abilitare il traffico ICMP (Internet Control Message Protocol) tra i nodi della griglia.  Consentire il traffico ICMP può migliorare le prestazioni di failover quando non è possibile raggiungere un nodo della griglia.
+
+Oltre a ICMP e alle porte elencate nella tabella, StorageGRID utilizza il protocollo VRRP (Virtual Router Redundancy Protocol).  VRRP è un protocollo Internet che utilizza il protocollo IP numero 112.  StorageGRID utilizza VRRP solo in modalità unicast.  VRRP è richiesto solo selink:../admin/managing-high-availability-groups.html["gruppi ad alta disponibilità"] sono configurati.
+
+
+
+== Linee guida per i nodi basati su Linux
+
+Se i criteri di rete aziendale limitano l'accesso a una qualsiasi di queste porte, è possibile rimappare le porte al momento della distribuzione utilizzando un parametro di configurazione della distribuzione. Per ulteriori informazioni sulla rimappatura delle porte e sui parametri di configurazione della distribuzione, vedere:
+
+* link:../rhel/index.html["Installa StorageGRID su Red Hat Enterprise Linux"]
+* link:../ubuntu/index.html["Installa StorageGRID su Ubuntu o Debian"]
+
+
+
+
+== Linee guida per i nodi basati su VMware
+
+Configurare le seguenti porte solo se è necessario definire restrizioni del firewall esterne alla rete VMware.
+
+Se i criteri di rete aziendale limitano l'accesso a una qualsiasi di queste porte, è possibile rimappare le porte quando si distribuiscono i nodi tramite VMware vSphere Web Client oppure utilizzando un'impostazione del file di configurazione durante l'automazione della distribuzione dei nodi della griglia. Per ulteriori informazioni sulla rimappatura delle porte e sui parametri di configurazione della distribuzione, vederelink:../vmware/index.html["Installa StorageGRID su VMware"] .
+
+
+
+== Linee guida per i nodi dell'appliance
+
+Se i criteri di rete aziendale limitano l'accesso a una qualsiasi di queste porte, è possibile rimappare le porte utilizzando StorageGRID Appliance Installer. Vedere https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/optional-remapping-network-ports-for-appliance.html["Facoltativo: rimappare le porte di rete per l'appliance"^] .
+
+
+
+== Porte interne StorageGRID
+
+[cols="1a,1a,1a,1a,4a"]
+|===
+| Porta | TCP o UDP | Da | A | Dettagli 
+
+
+ a| 
+22
+ a| 
+TCP
+ a| 
+Nodo di amministrazione primario
+ a| 
+Tutti i nodi
+ a| 
+Per le procedure di manutenzione, il nodo di amministrazione primario deve essere in grado di comunicare con tutti gli altri nodi tramite SSH sulla porta 22.  Consentire il traffico SSH da altri nodi è facoltativo.
+
+
+
+ a| 
+80
+ a| 
+TCP
+ a| 
+Elettrodomestici
+ a| 
+Nodo di amministrazione primario
+ a| 
+Utilizzato dagli apparecchi StorageGRID per comunicare con il nodo di amministrazione primario per avviare l'installazione.
+
+
+
+ a| 
+123
+ a| 
+UDP
+ a| 
+Tutti i nodi
+ a| 
+Tutti i nodi
+ a| 
+Servizio di protocollo di tempo di rete.  Ogni nodo sincronizza il proprio orario con quello di tutti gli altri nodi tramite NTP.
+
+
+
+ a| 
+443
+ a| 
+TCP
+ a| 
+Tutti i nodi
+ a| 
+Nodo di amministrazione primario
+ a| 
+Utilizzato per comunicare lo stato al nodo di amministrazione primario durante l'installazione e altre procedure di manutenzione.
+
+
+
+ a| 
+1055
+ a| 
+TCP
+ a| 
+Tutti i nodi
+ a| 
+Nodo di amministrazione primario
+ a| 
+Traffico interno per installazione, ampliamento, ripristino e altre procedure di manutenzione.
+
+
+
+ a| 
+1139
+ a| 
+TCP
+ a| 
+Nodi di archiviazione
+ a| 
+Nodi di archiviazione
+ a| 
+Traffico interno tra nodi di archiviazione.
+
+
+
+ a| 
+1501
+ a| 
+TCP
+ a| 
+Tutti i nodi
+ a| 
+Nodi di archiviazione con ADC
+ a| 
+Segnalazione, controllo e configurazione del traffico interno.
+
+
+
+ a| 
+1502
+ a| 
+TCP
+ a| 
+Tutti i nodi
+ a| 
+Nodi di archiviazione
+ a| 
+Traffico interno correlato a S3 e Swift.
+
+
+
+ a| 
+1504
+ a| 
+TCP
+ a| 
+Tutti i nodi
+ a| 
+Nodi amministrativi
+ a| 
+Traffico interno di configurazione e segnalazione del servizio NMS.
+
+
+
+ a| 
+1505
+ a| 
+TCP
+ a| 
+Tutti i nodi
+ a| 
+Nodi amministrativi
+ a| 
+Traffico interno del servizio AMS.
+
+
+
+ a| 
+1506
+ a| 
+TCP
+ a| 
+Tutti i nodi
+ a| 
+Tutti i nodi
+ a| 
+Traffico interno sullo stato del server.
+
+
+
+ a| 
+1507
+ a| 
+TCP
+ a| 
+Tutti i nodi
+ a| 
+Nodi gateway
+ a| 
+Traffico interno del bilanciatore del carico.
+
+
+
+ a| 
+1508
+ a| 
+TCP
+ a| 
+Tutti i nodi
+ a| 
+Nodo di amministrazione primario
+ a| 
+Traffico interno di gestione della configurazione.
+
+
+
+ a| 
+1511
+ a| 
+TCP
+ a| 
+Tutti i nodi
+ a| 
+Nodi di archiviazione
+ a| 
+Traffico interno dei metadati.
+
+
+
+ a| 
+7001
+ a| 
+TCP
+ a| 
+Nodi di archiviazione
+ a| 
+Nodi di archiviazione
+ a| 
+Comunicazione tra cluster TLS Cassandra.
+
+
+
+ a| 
+7443
+ a| 
+TCP
+ a| 
+Tutti i nodi
+ a| 
+Nodo di amministrazione primario
+ a| 
+Traffico interno per installazione, espansione, ripristino, altre procedure di manutenzione e segnalazione di errori.
+
+
+
+ a| 
+8011
+ a| 
+TCP
+ a| 
+Tutti i nodi
+ a| 
+Nodo di amministrazione primario
+ a| 
+Traffico interno per installazione, ampliamento, ripristino e altre procedure di manutenzione.
+
+
+
+ a| 
+8443
+ a| 
+TCP
+ a| 
+Nodo di amministrazione primario
+ a| 
+Nodi dell'appliance
+ a| 
+Traffico interno correlato alla procedura di modalità di manutenzione.
+
+
+
+ a| 
+9042
+ a| 
+TCP
+ a| 
+Nodi di archiviazione
+ a| 
+Nodi di archiviazione
+ a| 
+Porta client Cassandra.
+
+
+
+ a| 
+9999
+ a| 
+TCP
+ a| 
+Tutti i nodi
+ a| 
+Tutti i nodi
+ a| 
+Traffico interno per più servizi.  Include procedure di manutenzione, metriche e aggiornamenti di rete.
+
+
+
+ a| 
+10226
+ a| 
+TCP
+ a| 
+Nodi di archiviazione
+ a| 
+Nodo di amministrazione primario
+ a| 
+Utilizzato dagli apparecchi StorageGRID per inoltrare i pacchetti AutoSupport da E-Series SANtricity System Manager al nodo di amministrazione primario.
+
+
+
+ a| 
+10342
+ a| 
+TCP
+ a| 
+Tutti i nodi
+ a| 
+Nodo di amministrazione primario
+ a| 
+Traffico interno per installazione, ampliamento, ripristino e altre procedure di manutenzione.
+
+
+
+ a| 
+18000
+ a| 
+TCP
+ a| 
+Nodi di amministrazione/archiviazione
+ a| 
+Nodi di archiviazione con ADC
+ a| 
+Traffico interno del servizio di account.
+
+
+
+ a| 
+18001
+ a| 
+TCP
+ a| 
+Nodi di amministrazione/archiviazione
+ a| 
+Nodi di archiviazione con ADC
+ a| 
+Traffico interno della federazione delle identità.
+
+
+
+ a| 
+18002
+ a| 
+TCP
+ a| 
+Nodi di amministrazione/archiviazione
+ a| 
+Nodi di archiviazione
+ a| 
+Traffico API interno correlato ai protocolli degli oggetti.
+
+
+
+ a| 
+18003
+ a| 
+TCP
+ a| 
+Nodi di amministrazione/archiviazione
+ a| 
+Nodi di archiviazione con ADC
+ a| 
+Traffico interno dei servizi della piattaforma.
+
+
+
+ a| 
+18017
+ a| 
+TCP
+ a| 
+Nodi di amministrazione/archiviazione
+ a| 
+Nodi di archiviazione
+ a| 
+Traffico interno del servizio Data Mover per i pool di archiviazione cloud.
+
+
+
+ a| 
+18019
+ a| 
+TCP
+ a| 
+Nodi di archiviazione
+ a| 
+Nodi di archiviazione
+ a| 
+Traffico interno del servizio Chunk per la codifica di cancellazione.
+
+
+
+ a| 
+18082
+ a| 
+TCP
+ a| 
+Nodi di amministrazione/archiviazione
+ a| 
+Nodi di archiviazione
+ a| 
+Traffico interno correlato a S3.
+
+
+
+ a| 
+18083
+ a| 
+TCP
+ a| 
+Tutti i nodi
+ a| 
+Nodi di archiviazione
+ a| 
+Traffico interno correlato a Swift.
+
+
+
+ a| 
+18086
+ a| 
+TCP
+ a| 
+Tutti i nodi della griglia
+ a| 
+Tutti i nodi di archiviazione
+ a| 
+Traffico interno correlato al servizio LDR.
+
+
+
+ a| 
+18200
+ a| 
+TCP
+ a| 
+Nodi di amministrazione/archiviazione
+ a| 
+Nodi di archiviazione
+ a| 
+Statistiche aggiuntive sulle richieste dei clienti.
+
+
+
+ a| 
+19000
+ a| 
+TCP
+ a| 
+Nodi di amministrazione/archiviazione
+ a| 
+Nodi di archiviazione con ADC
+ a| 
+Traffico interno del servizio Keystone .
+
+|===
+.Informazioni correlate
+link:external-communications.html["Comunicazioni esterne"]

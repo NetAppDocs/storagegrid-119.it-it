@@ -1,0 +1,72 @@
+---
+permalink: monitor/collecting-log-files-and-system-data.html 
+sidebar: sidebar 
+keywords: how to collect system data, how to collect logs 
+summary: 'È possibile utilizzare Grid Manager per recuperare file di registro e dati di sistema (inclusi i dati di configurazione) per il sistema StorageGRID .' 
+---
+= Raccogli file di registro e dati di sistema
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile utilizzare Grid Manager per recuperare file di registro e dati di sistema (inclusi i dati di configurazione) per il sistema StorageGRID .
+
+.Prima di iniziare
+* È necessario aver effettuato l'accesso a Grid Manager sul nodo di amministrazione primario utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Hailink:../admin/admin-group-permissions.html["autorizzazioni di accesso specifiche"] .
+* È necessario disporre della passphrase di provisioning.
+
+
+.Informazioni su questo compito
+Puoi usare Grid Manager per raccoglierelink:logs-files-reference.html["file di registro"] , dati di sistema e dati di configurazione da qualsiasi nodo della griglia per il periodo di tempo selezionato.  I dati vengono raccolti e archiviati in un file .tar.gz che puoi poi scaricare sul tuo computer locale.
+
+Facoltativamente, è possibile modificare la destinazione dei log di controllo e inviare le informazioni di controllo a un server syslog esterno. I registri locali dei record di controllo continuano a essere generati e archiviati quando viene configurato un server syslog esterno. Vedere link:../monitor/configure-audit-messages.html["Configurare i messaggi di controllo e le destinazioni dei registri"] .
+
+.Passi
+. Selezionare *SUPPORTO* > *Strumenti* > *Registri*.
++
+image::../media/support_logs_select_nodes.png[screenshot dell'interfaccia utente della raccolta dei log]
+
+. Selezionare i nodi della griglia per i quali si desidera raccogliere i file di registro.
++
+A seconda delle necessità, è possibile raccogliere file di registro per l'intera griglia o per un intero sito di data center.
+
+. Selezionare un'*Ora di inizio* e un'*Ora di fine* per impostare l'intervallo di tempo dei dati da includere nei file di registro.
++
+Se si seleziona un periodo di tempo molto lungo o si raccolgono i log da tutti i nodi in una griglia di grandi dimensioni, l'archivio dei log potrebbe diventare troppo grande per essere archiviato su un nodo o troppo grande per essere raccolto nel nodo di amministrazione primario per il download.  In tal caso, è necessario riavviare la raccolta dei registri con un set di dati più piccolo.
+
+. Seleziona i tipi di log che vuoi raccogliere.
++
+** *Registri delle applicazioni*: registri specifici delle applicazioni che il supporto tecnico utilizza più frequentemente per la risoluzione dei problemi. I log raccolti sono un sottoinsieme dei log delle applicazioni disponibili.
+** *Registri di controllo*: registri contenenti i messaggi di controllo generati durante il normale funzionamento del sistema.
+** *Traccia di rete*: registri utilizzati per il debug di rete.
+** *Database Prometheus*: Metriche delle serie temporali dai servizi su tutti i nodi.
+
+
+. Facoltativamente, inserisci delle note sui file di registro che stai raccogliendo nella casella di testo *Note*.
++
+È possibile utilizzare queste note per fornire al supporto tecnico informazioni sul problema che ha spinto a raccogliere i file di registro.  Le tue note vengono aggiunte a un file denominato `info.txt` , insieme ad altre informazioni sulla raccolta dei file di registro.  IL `info.txt` il file viene salvato nel pacchetto di archivio dei file di registro.
+
+. Immettere la passphrase di provisioning per il sistema StorageGRID nella casella di testo *Passphrase di provisioning*.
+. Seleziona *Raccogli registri*.
++
+Quando si invia una nuova richiesta, la precedente raccolta di file di registro viene eliminata.
+
++
+È possibile utilizzare la pagina Registri per monitorare l'avanzamento della raccolta dei file di registro per ciascun nodo della griglia.
+
++
+Se ricevi un messaggio di errore relativo alle dimensioni del registro, prova a raccogliere i registri per un periodo di tempo più breve o per un numero inferiore di nodi.
+
+. Selezionare *Scarica* una volta completata la raccolta dei file di registro.
++
+Il file _.tar.gz_ contiene tutti i file di registro di tutti i nodi della griglia in cui la raccolta dei registri è riuscita.  All'interno del file _.tar.gz_ combinato, è presente un archivio di file di registro per ciascun nodo della griglia.
+
+
+
+.Dopo aver finito
+Se necessario, puoi scaricare nuovamente il pacchetto di archiviazione del file di registro in un secondo momento.
+
+Facoltativamente, è possibile selezionare *Elimina* per rimuovere il pacchetto di archivio del file di registro e liberare spazio su disco.  Il pacchetto di archivio dei file di registro corrente verrà rimosso automaticamente la prossima volta che si raccolgono i file di registro.

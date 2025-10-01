@@ -1,0 +1,32 @@
+---
+permalink: tenant/deleting-your-own-s3-access-keys.html 
+sidebar: sidebar 
+keywords: how to delete S3 access key 
+summary: 'Se si utilizza un tenant S3 e si dispone delle autorizzazioni appropriate, è possibile eliminare le proprie chiavi di accesso S3.  Dopo aver eliminato una chiave di accesso, non sarà più possibile utilizzarla per accedere agli oggetti e ai bucket nell"account tenant.' 
+---
+= Elimina le tue chiavi di accesso S3
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se si utilizza un tenant S3 e si dispone delle autorizzazioni appropriate, è possibile eliminare le proprie chiavi di accesso S3.  Dopo aver eliminato una chiave di accesso, non sarà più possibile utilizzarla per accedere agli oggetti e ai bucket nell'account tenant.
+
+.Prima di iniziare
+* Hai effettuato l'accesso al Tenant Manager tramite unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Tu hai illink:tenant-management-permissions.html["Gestisci le tue autorizzazioni per le credenziali S3"] .
+
+
+
+CAUTION: È possibile accedere ai bucket e agli oggetti S3 appartenenti al tuo account utilizzando l'ID chiave di accesso e la chiave di accesso segreta visualizzati per il tuo account in Tenant Manager.  Per questo motivo, proteggi le chiavi di accesso come faresti con una password.  Ruota regolarmente le chiavi di accesso, rimuovi dal tuo account quelle non utilizzate e non condividerle mai con altri utenti.
+
+.Passi
+. Selezionare *ARCHIVIAZIONE (S3)* > *Le mie chiavi di accesso*.
+. Nella pagina Le mie chiavi di accesso, seleziona la casella di controllo per ogni chiave di accesso che desideri rimuovere.
+. Selezionare *Elimina tasto*.
+. Nella finestra di dialogo di conferma, seleziona *Elimina chiave*.
++
+Nell'angolo in alto a destra della pagina appare un messaggio di conferma.
+
+

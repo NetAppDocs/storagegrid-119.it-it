@@ -1,0 +1,109 @@
+---
+permalink: tenant/deleting-s3-bucket-objects.html 
+sidebar: sidebar 
+keywords: how to delete bucket objects, empty bucket 
+summary: È possibile utilizzare Tenant Manager per eliminare gli oggetti in uno o più bucket. 
+---
+= Elimina gli oggetti nel bucket
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile utilizzare Tenant Manager per eliminare gli oggetti in uno o più bucket.
+
+.Considerazioni e requisiti
+Prima di eseguire questi passaggi, tenere presente quanto segue:
+
+* Quando si eliminano gli oggetti in un bucket, StorageGRID rimuove definitivamente tutti gli oggetti e tutte le versioni degli oggetti in ciascun bucket selezionato da tutti i nodi e siti nel sistema StorageGRID .  StorageGRID rimuove anche tutti i metadati degli oggetti correlati.  Non sarà possibile recuperare queste informazioni.
+* L'eliminazione di tutti gli oggetti in un bucket potrebbe richiedere minuti, giorni o addirittura settimane, a seconda del numero di oggetti, delle copie degli oggetti e delle operazioni simultanee.
+* Se un secchio halink:using-s3-object-lock.html["Blocco oggetto S3 abilitato"] , potrebbe rimanere nello stato *Eliminazione oggetti: sola lettura* per _anni_.
++
+
+TIP: Un bucket che utilizza S3 Object Lock rimarrà nello stato *Eliminazione oggetti: sola lettura* finché non verrà raggiunta la data di conservazione per tutti gli oggetti e non verranno rimossi eventuali blocchi legali.
+
+* Durante l'eliminazione degli oggetti, lo stato del bucket è *Eliminazione oggetti: sola lettura*.  In questo stato non è possibile aggiungere nuovi oggetti al bucket.
+* Una volta eliminati tutti gli oggetti, il bucket rimane in stato di sola lettura.  Puoi fare una delle seguenti cose:
++
+** Riporta il bucket in modalità scrittura e riutilizzalo per nuovi oggetti
+** Elimina il bucket
+** Mantieni il bucket in modalità di sola lettura per riservarne il nome per un uso futuro
+
+
+* Se in un bucket è abilitato il controllo delle versioni degli oggetti, è possibile rimuovere i marcatori di eliminazione creati in StorageGRID 11.8 o versioni successive utilizzando le operazioni Elimina oggetti nel bucket.
+* Se in un bucket è abilitato il controllo delle versioni degli oggetti, l'operazione di eliminazione degli oggetti non rimuoverà i marcatori di eliminazione creati in StorageGRID 11.7 o versioni precedenti.  Visualizza le informazioni sull'eliminazione degli oggetti in un bucket inlink:../ilm/how-objects-are-deleted.html#delete-s3-versioned-objects["Come vengono eliminati gli oggetti con versione S3"] .
+* Se usilink:grid-federation-manage-cross-grid-replication.html["replicazione cross-grid"] , notare quanto segue:
++
+** Utilizzando questa opzione non si elimina alcun oggetto dal bucket sull'altra griglia.
+** Se selezioni questa opzione per il bucket di origine, verrà attivato l'avviso *Errore di replica tra griglie* se aggiungi oggetti al bucket di destinazione sull'altra griglia.  Se non puoi garantire che nessuno aggiungerà oggetti al contenitore sull'altra griglia,link:../tenant/grid-federation-manage-cross-grid-replication.html["disabilitare la replicazione tra griglie"] per quel bucket prima di eliminare tutti gli oggetti bucket.
+
+
+
+
+.Prima di iniziare
+* Hai effettuato l'accesso al Tenant Manager tramite unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Appartieni a un gruppo di utenti che ha illink:tenant-management-permissions.html["Permesso di accesso root"] .  Questa autorizzazione sostituisce le impostazioni delle autorizzazioni nei criteri di gruppo o di bucket.
+
+
+.Passi
+. Selezionare *Visualizza bucket* dalla dashboard oppure selezionare *ARCHIVIAZIONE (S3)* > *Bucket*.
++
+Viene visualizzata la pagina Bucket, che mostra tutti i bucket S3 esistenti.
+
+. Utilizzare il menu *Azioni* o la pagina dei dettagli per un bucket specifico.
++
+[role="tabbed-block"]
+====
+.Menu Azioni
+--
+.. Seleziona la casella di controllo per ogni bucket da cui desideri eliminare gli oggetti.
+.. Seleziona *Azioni* > *Elimina oggetti nel bucket*.
+
+
+--
+.Pagina dei dettagli
+--
+.. Seleziona il nome di un bucket per visualizzarne i dettagli.
+.. Seleziona *Elimina oggetti nel bucket*.
+
+
+--
+====
+. Quando viene visualizzata la finestra di dialogo di conferma, rivedere i dettagli, immettere *Sì* e selezionare *OK*.
+. Attendi che l'operazione di eliminazione abbia inizio.
++
+Dopo qualche minuto:
+
++
+** Nella pagina dei dettagli del bucket viene visualizzato un banner di stato giallo.  La barra di avanzamento indica la percentuale di oggetti eliminati.
+** *(sola lettura)* appare dopo il nome del bucket nella pagina dei dettagli del bucket.
+** *(Eliminazione oggetti: sola lettura)* appare accanto al nome del bucket nella pagina Bucket.
+
+
++
+image::../media/delete-bucket-objects-in-progress.png[screenshot che mostra gli oggetti bucket eliminati]
+
+. Se necessario, durante l'esecuzione dell'operazione, selezionare *Interrompi eliminazione oggetti* per interrompere il processo.  Quindi, facoltativamente, seleziona *Elimina oggetti nel bucket* per riprendere il processo.
++
+Quando selezioni *Interrompi eliminazione oggetti*, il bucket torna in modalità scrittura; tuttavia, non puoi accedere o ripristinare gli oggetti che sono stati eliminati.
+
+. Attendere il completamento dell'operazione.
++
+Quando il bucket è vuoto, il banner di stato viene aggiornato, ma il bucket rimane di sola lettura.
+
++
+image::../media/delete-bucket-objects-complete.png[screenshot che mostra tutti gli oggetti bucket eliminati]
+
+. Eseguire una delle seguenti operazioni:
++
+** Esci dalla pagina per mantenere il bucket in modalità di sola lettura.  Ad esempio, potresti mantenere un bucket vuoto in modalità di sola lettura per riservare il nome del bucket per un utilizzo futuro.
+** Elimina il bucket.  È possibile selezionare *Elimina bucket* per eliminare un singolo bucket oppure tornare alla pagina Bucket e selezionare *Azioni* > *Elimina* bucket per rimuovere più di un bucket.
++
+
+NOTE: Se non riesci a eliminare un bucket con versione dopo aver eliminato tutti gli oggetti, i marcatori di eliminazione potrebbero rimanere.  Per eliminare il bucket, è necessario rimuovere tutti i marcatori di eliminazione rimanenti.
+
+** Riporta il bucket in modalità scrittura e, facoltativamente, riutilizzalo per nuovi oggetti.  È possibile selezionare *Interrompi eliminazione oggetti* per un singolo bucket oppure tornare alla pagina Bucket e selezionare *Azione* > *Interrompi eliminazione oggetti* per più di un bucket.
+
+
+

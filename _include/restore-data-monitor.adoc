@@ -1,0 +1,78 @@
+= 
+:allow-uri-read: 
+
+
+[role="tabbed-block"]
+====
+.Dati replicati
+--
+* Per ottenere una percentuale stimata di completamento per la riparazione replicata, aggiungere `show-replicated-repair-status` opzione al comando repair-data.
++
+`repair-data show-replicated-repair-status`
+
+* Per determinare se le riparazioni sono state completate:
++
+.. Selezionare *NODI* > *_Nodo di archiviazione in riparazione_* > *ILM*.
+.. Esaminare gli attributi nella sezione Valutazione.  Una volta completate le riparazioni, l'attributo *In attesa - Tutto* indica 0 oggetti.
+
+
+* Per monitorare la riparazione in modo più dettagliato:
++
+.. Selezionare *SUPPORTO* > *Strumenti* > *Topologia griglia*.
+.. Selezionare *_grid_* > *_Nodo di archiviazione in riparazione_* > *LDR* > *Data Store*.
+.. Utilizzare una combinazione dei seguenti attributi per determinare, nel miglior modo possibile, se le riparazioni replicate sono complete.
++
+
+NOTE: Potrebbero essere presenti incongruenze in Cassandra e le riparazioni non riuscite non vengono tracciate.
+
++
+*** *Riparazioni tentate (XRPA)*: utilizzare questo attributo per monitorare l'avanzamento delle riparazioni replicate.  Questo attributo aumenta ogni volta che un nodo di archiviazione tenta di riparare un oggetto ad alto rischio.  Quando questo attributo non aumenta per un periodo più lungo del periodo di scansione corrente (fornito dall'attributo *Periodo di scansione - Stimato*), significa che la scansione ILM non ha trovato oggetti ad alto rischio che necessitano di riparazione su alcun nodo.
++
+
+NOTE: Gli oggetti ad alto rischio sono oggetti che rischiano di andare completamente persi.  Sono esclusi gli oggetti che non soddisfano la loro configurazione ILM.
+
+*** *Periodo di scansione - Stimato (XSCM)*: utilizzare questo attributo per stimare quando una modifica della policy verrà applicata agli oggetti precedentemente acquisiti.  Se l'attributo *Riparazioni tentate* non aumenta per un periodo più lungo del periodo di scansione corrente, è probabile che siano state eseguite riparazioni replicate.  Si noti che il periodo di scansione può variare.  L'attributo *Periodo di scansione - Stimato (XSCM)* si applica all'intera griglia ed è il massimo di tutti i periodi di scansione dei nodi.  È possibile interrogare la cronologia degli attributi *Periodo di scansione - Stima* per la griglia per determinare un intervallo di tempo appropriato.
+
+
+
+
+
+
+--
+.Dati con codice di cancellazione (EC)
+--
+Per monitorare la riparazione dei dati codificati in modo da cancellarli e riprovare eventuali richieste non riuscite:
+
+. Determinare lo stato delle riparazioni dei dati codificati tramite cancellazione:
++
+** Selezionare *SUPPORTO* > *Strumenti* > *Metriche* per visualizzare il tempo stimato per il completamento e la percentuale di completamento per il lavoro corrente. Quindi, seleziona *Panoramica EC* nella sezione Grafana. Consulta i dashboard *Tempo stimato per il completamento del lavoro EC in griglia* e *Percentuale completata del lavoro EC in griglia*.
+** Utilizzare questo comando per visualizzare lo stato di uno specifico `repair-data` operazione:
++
+`repair-data show-ec-repair-status --repair-id repair ID`
+
+** Utilizzare questo comando per elencare tutte le riparazioni:
++
+`repair-data show-ec-repair-status`
+
++
+L'output elenca le informazioni, tra cui `repair ID` , per tutte le riparazioni eseguite in precedenza e attualmente.
+
+
+
+. Se l'output mostra che l'operazione di riparazione non è riuscita, utilizzare `--repair-id` opzione per riprovare la riparazione.
++
+Questo comando riprova una riparazione del nodo non riuscita, utilizzando l'ID di riparazione 6949309319275667690:
+
++
+`repair-data start-ec-node-repair --repair-id 6949309319275667690`
+
++
+Questo comando riprova una riparazione del volume non riuscita, utilizzando l'ID di riparazione 6949309319275667690:
+
++
+`repair-data start-ec-volume-repair --repair-id 6949309319275667690`
+
+
+
+--
+====

@@ -1,0 +1,91 @@
+---
+permalink: tenant/grid-federation-view-connections-tenant.html 
+sidebar: sidebar 
+keywords: grid federation connection, view, clear error, last error 
+summary: 'Se il tuo account tenant dispone dell"autorizzazione Usa connessione federata alla griglia, puoi visualizzare le connessioni consentite.' 
+---
+= Visualizza le connessioni della federazione di griglia
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se il tuo account tenant dispone dell'autorizzazione *Usa connessione federata alla griglia*, puoi visualizzare le connessioni consentite.
+
+.Prima di iniziare
+* L'account tenant ha l'autorizzazione *Usa connessione federata alla griglia*.
+* Hai effettuato l'accesso al Tenant Manager tramite unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Appartieni a un gruppo di utenti che ha illink:tenant-management-permissions.html["Permesso di accesso root"] .
+
+
+.Passi
+. Selezionare *STORAGE (S3)* > *Connessioni federazione di rete*.
++
+Viene visualizzata la pagina di connessione della federazione Grid, che include una tabella che riassume le seguenti informazioni:
+
++
+[cols="1a,2a"]
+|===
+| Colonna | Descrizione 
+
+
+ a| 
+Nome della connessione
+ a| 
+Le connessioni della federazione di rete che questo tenant è autorizzato a utilizzare.
+
+
+
+ a| 
+Bucket con replicazione cross-grid
+ a| 
+Per ogni connessione di federazione di griglia, i bucket tenant che hanno abilitata la replica tra griglie.  Gli oggetti aggiunti a questi bucket verranno replicati nell'altra griglia nella connessione.
+
+
+
+ a| 
+Ultimo errore
+ a| 
+Per ogni connessione di federazione di griglia, l'errore più recente verificatosi, se presente, durante la replica dei dati sull'altra griglia. Vedere <<clear-last-error,Cancella l'ultimo errore>> .
+
+|===
+. Facoltativamente, seleziona un nome bucket perlink:viewing-s3-bucket-details.html["visualizza i dettagli del bucket"] .
+
+
+
+
+== [[clear-last-error]]Cancella l'ultimo errore
+
+Potrebbe apparire un errore nella colonna *Ultimo errore* per uno dei seguenti motivi:
+
+* La versione dell'oggetto sorgente non è stata trovata.
+* Il bucket di origine non è stato trovato.
+* Il bucket di destinazione è stato eliminato.
+* Il bucket di destinazione è stato ricreato da un account diverso.
+* Il controllo delle versioni del bucket di destinazione è sospeso.
+* Il bucket di destinazione è stato ricreato dallo stesso account, ma ora non è più sottoposto a controllo di versione.
+
+
+
+NOTE: Questa colonna mostra solo l'ultimo errore di replicazione tra griglie verificatosi; gli errori precedenti che potrebbero essersi verificati non verranno mostrati.
+
+.Passi
+. Se nella colonna *Ultimo errore* viene visualizzato un messaggio, visualizzarne il testo.
++
+Ad esempio, questo errore indica che il bucket di destinazione per la replica tra griglie era in uno stato non valido, probabilmente perché il controllo delle versioni era sospeso o era abilitato S3 Object Lock.
+
++
+image::../media/grid-federation-cgr-object-example-last-error.png[grid-federation-cgr-object-example-last-error]
+
+. Eseguire tutte le azioni consigliate.  Ad esempio, se il controllo delle versioni è stato sospeso sul bucket di destinazione per la replica tra griglie, riattivare il controllo delle versioni per quel bucket.
+. Selezionare la connessione dalla tabella.
+. Seleziona *Cancella errore*.
+. Selezionare *Sì* per cancellare il messaggio e aggiornare lo stato del sistema.
+. Aspetta 5-6 minuti e poi ingerisci un nuovo oggetto nel secchio.  Verificare che il messaggio di errore non venga più visualizzato.
++
+
+NOTE: Per garantire che il messaggio di errore venga cancellato, attendere almeno 5 minuti dopo il timestamp nel messaggio prima di acquisire un nuovo oggetto.
+
+. Per determinare se la replica di alcuni oggetti non è riuscita a causa dell'errore del bucket, vederelink:../admin/grid-federation-retry-failed-replication.html["Identificare e riprovare le operazioni di replicazione non riuscite"] .
+

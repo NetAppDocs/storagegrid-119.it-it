@@ -1,0 +1,53 @@
+---
+permalink: s3/s3-operations-tracked-in-audit-logs.html 
+sidebar: sidebar 
+keywords: audit log, auditing bucket and object operations, S3 audit messages 
+summary: I messaggi di controllo vengono generati dai servizi StorageGRID e archiviati in file di registro di testo.  È possibile esaminare i messaggi di controllo specifici di S3 nel registro di controllo per ottenere dettagli sulle operazioni di bucket e oggetti. 
+---
+= Operazioni S3 tracciate nei registri di controllo
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+I messaggi di controllo vengono generati dai servizi StorageGRID e archiviati in file di registro di testo.  È possibile esaminare i messaggi di controllo specifici di S3 nel registro di controllo per ottenere dettagli sulle operazioni di bucket e oggetti.
+
+
+
+== Operazioni del bucket monitorate nei log di controllo
+
+* CreaBucket
+* EliminaBucket
+* DeleteBucketTagging
+* EliminaOggetti
+* OttieniBucketTagging
+* HeadBucket
+* ElencoOggetti
+* ListObjectVersions
+* Conformità del bucket PUT
+* PutBucketTagging
+* PutBucketVersioning
+
+
+
+
+== Operazioni sugli oggetti tracciate nei registri di controllo
+
+* Caricamento multiparte completo
+* CopiaOggetto
+* EliminaOggetto
+* OttieniOggetto
+* HeadObject
+* MettiOggetto
+* Ripristina oggetto
+* SelezionaOggetto
+* UploadPart (quando una regola ILM utilizza l'acquisizione bilanciata o rigorosa)
+* UploadPartCopy (quando una regola ILM utilizza l'acquisizione bilanciata o rigorosa)
+
+
+.Informazioni correlate
+* link:../audit/accessing-audit-log-file.html["Accedi al file di registro di controllo"]
+* link:../audit/client-write-audit-messages.html["Il cliente scrive messaggi di audit"]
+* link:../audit/client-read-audit-messages.html["Il cliente ha letto i messaggi di controllo"]
+

@@ -1,0 +1,169 @@
+---
+permalink: fabricpool/creating-load-balancer-endpoint-for-fabricpool.html 
+sidebar: sidebar 
+keywords: fabricPool, load balancer, endpoint, load balancing, create, creating, certificate 
+summary: StorageGRID utilizza un bilanciatore del carico per gestire il carico di lavoro dalle applicazioni client, come FabricPool.  Il bilanciamento del carico massimizza la velocità e la capacità di connessione su più nodi di archiviazione. 
+---
+= Creare un endpoint del bilanciatore del carico per FabricPool
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+StorageGRID utilizza un bilanciatore del carico per gestire il carico di lavoro dalle applicazioni client, come FabricPool.  Il bilanciamento del carico massimizza la velocità e la capacità di connessione su più nodi di archiviazione.
+
+Quando si configura StorageGRID per l'utilizzo con FabricPool, è necessario configurare un endpoint del bilanciatore del carico e caricare o generare un certificato dell'endpoint del bilanciatore del carico, che viene utilizzato per proteggere la connessione tra ONTAP e StorageGRID.
+
+Per utilizzare la procedura guidata di configurazione FabricPool per completare questa attività, andare alink:use-fabricpool-setup-wizard-steps.html["Accedi e completa la procedura guidata di configurazione FabricPool"] .
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Tu hai illink:../admin/admin-group-permissions.html["Permesso di accesso root"] .
+* Hai esaminato il generalelink:../admin/managing-load-balancing.html["considerazioni per il bilanciamento del carico"] così come illink:best-practices-for-load-balancing.html["best practice per il bilanciamento del carico per FabricPool"] .
+
+
+.Passi
+. Selezionare *CONFIGURAZIONE* > *Rete* > *Endpoint del bilanciatore del carico*.
+. Seleziona *Crea*.
+. Per il passaggio *Inserisci i dettagli dell'endpoint*, compila i seguenti campi.
++
+[cols="1a,2a"]
+|===
+| Campo | Descrizione 
+
+
+ a| 
+Nome
+ a| 
+Un nome descrittivo per l'endpoint.
+
+
+
+ a| 
+Porta
+ a| 
+La porta StorageGRID che si desidera utilizzare per il bilanciamento del carico.  Per impostazione predefinita, questo campo è impostato su 10433 per il primo endpoint creato, ma è possibile immettere qualsiasi porta esterna non utilizzata.  Se si immette 80 o 443, l'endpoint viene configurato solo sui nodi gateway.  Queste porte sono riservate sui nodi amministrativi.
+
+*Nota:* non sono consentite le porte utilizzate da altri servizi di rete. Vedi illink:../network/internal-grid-node-communications.html["Riferimento porta di rete"] .
+
+Fornirai questo numero a ONTAP quando collegherai StorageGRID come livello cloud FabricPool .
+
+
+
+ a| 
+Tipo di cliente
+ a| 
+Selezionare *S3*.
+
+
+
+ a| 
+Protocollo di rete
+ a| 
+Selezionare *HTTPS*.
+
+*Nota*: la comunicazione con StorageGRID senza crittografia TLS è supportata ma non consigliata.
+
+|===
+. Per il passaggio *Seleziona modalità di associazione*, specificare la modalità di associazione.  La modalità di associazione controlla il modo in cui si accede all'endpoint utilizzando qualsiasi indirizzo IP o specifici indirizzi IP e interfacce di rete.
++
+[cols="1a,3a"]
+|===
+| Modalità | Descrizione 
+
+
+ a| 
+Globale (predefinito)
+ a| 
+I client possono accedere all'endpoint utilizzando l'indirizzo IP di qualsiasi nodo gateway o nodo amministrativo, l'indirizzo IP virtuale (VIP) di qualsiasi gruppo HA su qualsiasi rete o un FQDN corrispondente.
+
+Utilizzare l'impostazione *Globale* (predefinita) a meno che non sia necessario limitare l'accessibilità di questo endpoint.
+
+
+
+ a| 
+IP virtuali dei gruppi HA
+ a| 
+Per accedere a questo endpoint, i client devono utilizzare un indirizzo IP virtuale (o il corrispondente FQDN) di un gruppo HA.
+
+Gli endpoint con questa modalità di associazione possono utilizzare tutti lo stesso numero di porta, purché i gruppi HA selezionati per gli endpoint non si sovrappongano.
+
+
+
+ a| 
+Interfacce dei nodi
+ a| 
+Per accedere a questo endpoint, i client devono utilizzare gli indirizzi IP (o i corrispondenti FQDN) delle interfacce dei nodi selezionati.
+
+
+
+ a| 
+Tipo di nodo
+ a| 
+In base al tipo di nodo selezionato, i client devono utilizzare l'indirizzo IP (o il corrispondente FQDN) di qualsiasi nodo di amministrazione oppure l'indirizzo IP (o il corrispondente FQDN) di qualsiasi nodo gateway per accedere a questo endpoint.
+
+|===
+. Per il passaggio *Accesso tenant*, seleziona una delle seguenti opzioni:
++
+[cols="1a,2a"]
+|===
+| Campo | Descrizione 
+
+
+ a| 
+Consenti tutti i tenant (predefinito)
+ a| 
+Tutti gli account tenant possono utilizzare questo endpoint per accedere ai propri bucket.
+
+*Consenti tutti i tenant* è quasi sempre l'opzione appropriata per l'endpoint del bilanciatore del carico utilizzato per FabricPool.
+
+È necessario selezionare questa opzione se non è ancora stato creato alcun account tenant.
+
+
+
+ a| 
+Consenti inquilini selezionati
+ a| 
+Solo gli account tenant selezionati possono utilizzare questo endpoint per accedere ai propri bucket.
+
+
+
+ a| 
+Blocca gli inquilini selezionati
+ a| 
+Gli account tenant selezionati non possono utilizzare questo endpoint per accedere ai propri bucket.  Tutti gli altri tenant possono utilizzare questo endpoint.
+
+|===
+. Per il passaggio *Allega certificato*, seleziona una delle seguenti opzioni:
++
+[cols="1a,2a"]
+|===
+| Campo | Descrizione 
+
+
+ a| 
+Carica il certificato (consigliato)
+ a| 
+Utilizzare questa opzione per caricare un certificato server firmato da una CA, una chiave privata del certificato e un bundle CA facoltativo.
+
+
+
+ a| 
+Genera certificato
+ a| 
+Utilizzare questa opzione per generare un certificato autofirmato.  Vederelink:../admin/configuring-load-balancer-endpoints.html["Configurare gli endpoint del bilanciatore del carico"] per i dettagli su cosa inserire.
+
+
+
+ a| 
+Utilizzare il certificato StorageGRID S3
+ a| 
+Questa opzione è disponibile solo se hai già caricato o generato una versione personalizzata del certificato globale StorageGRID . Vederelink:../admin/configuring-custom-server-certificate-for-storage-node.html["Configurare i certificati API S3"] per i dettagli.
+
+|===
+. Seleziona *Crea*.
+
+
+
+NOTE: Le modifiche al certificato di un endpoint possono richiedere fino a 15 minuti per essere applicate a tutti i nodi.

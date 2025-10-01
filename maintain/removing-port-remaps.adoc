@@ -1,0 +1,46 @@
+---
+permalink: maintain/removing-port-remaps.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, remove port remap, removing port remap, port remap 
+summary: 'Se si desidera configurare un endpoint per il servizio Load Balancer e si desidera utilizzare una porta già configurata come porta mappata di una riassegnazione delle porte, è necessario prima rimuovere la riassegnazione delle porte esistente, altrimenti l"endpoint non sarà efficace.  È necessario eseguire uno script su ciascun nodo di amministrazione e nodo gateway che presenta porte rimappate in conflitto per rimuovere tutte le rimappature delle porte del nodo.' 
+---
+= Rimuovi le rimappature delle porte
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se si desidera configurare un endpoint per il servizio Load Balancer e si desidera utilizzare una porta già configurata come porta mappata di una riassegnazione delle porte, è necessario prima rimuovere la riassegnazione delle porte esistente, altrimenti l'endpoint non sarà efficace.  È necessario eseguire uno script su ciascun nodo di amministrazione e nodo gateway che presenta porte rimappate in conflitto per rimuovere tutte le rimappature delle porte del nodo.
+
+.Informazioni su questo compito
+Questa procedura rimuove tutte le rimappature delle porte.  Se hai bisogno di conservare alcune delle rimappature, contatta l'assistenza tecnica.
+
+Per informazioni sulla configurazione degli endpoint del bilanciatore del carico, vederelink:../admin/configuring-load-balancer-endpoints.html["Configurazione degli endpoint del bilanciatore del carico"] .
+
+
+NOTE: Se la rimappatura della porta consente l'accesso al client, riconfigurare il client in modo che utilizzi una porta diversa come endpoint del bilanciatore del carico per evitare la perdita del servizio.  In caso contrario, la rimozione della mappatura delle porte comporterà la perdita dell'accesso del client e dovrà essere pianificata di conseguenza.
+
+
+NOTE: Questa procedura non funziona per un sistema StorageGRID distribuito come contenitore su host bare metal. Vedi le istruzioni perlink:removing-port-remaps-on-bare-metal-hosts.html["rimozione delle rimappature delle porte sugli host bare metal"] .
+
+.Passi
+. Accedi al nodo.
++
+.. Immettere il seguente comando: `ssh -p 8022 admin@node_IP`
++
+La porta 8022 è la porta SSH del sistema operativo di base, mentre la porta 22 è la porta SSH del motore del contenitore che esegue StorageGRID.
+
+.. Inserisci la password elencata nel `Passwords.txt` file.
+.. Immettere il seguente comando per passare alla root: `su -`
+.. Inserisci la password elencata nel `Passwords.txt` file.
++
+Quando si accede come root, il prompt cambia da `$` A `#` .
+
+
+
+. Eseguire il seguente script: `remove-port-remap.sh`
+. Riavviare il nodo: `reboot`
+. Disconnettersi dalla shell dei comandi: `exit`
+. Ripetere questi passaggi su ogni nodo di amministrazione e nodo gateway che presenta porte rimappate in conflitto.
+

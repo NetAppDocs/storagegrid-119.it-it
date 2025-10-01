@@ -1,0 +1,107 @@
+---
+permalink: ilm/requirements-for-s3-object-lock.html 
+sidebar: sidebar 
+keywords: requirements, s3 object lock, compliant ilm rule, compliant ilm policy 
+summary: 'È necessario esaminare i requisiti per abilitare l"impostazione globale S3 Object Lock, i requisiti per creare regole ILM e policy ILM conformi e le restrizioni che StorageGRID impone ai bucket e agli oggetti che utilizzano S3 Object Lock.' 
+---
+= Requisiti per S3 Object Lock
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario esaminare i requisiti per abilitare l'impostazione globale S3 Object Lock, i requisiti per creare regole ILM e policy ILM conformi e le restrizioni che StorageGRID impone ai bucket e agli oggetti che utilizzano S3 Object Lock.
+
+
+
+== Requisiti per l'utilizzo dell'impostazione globale S3 Object Lock
+
+* È necessario abilitare l'impostazione globale S3 Object Lock tramite Grid Manager o Grid Management API prima che un tenant S3 possa creare un bucket con S3 Object Lock abilitato.
+* Abilitando l'impostazione globale S3 Object Lock, tutti gli account tenant S3 potranno creare bucket con S3 Object Lock abilitato.
+* Dopo aver abilitato l'impostazione globale Blocco oggetti S3, non è possibile disabilitarla.
+* Non è possibile abilitare il blocco oggetti S3 globale a meno che la regola predefinita in tutti i criteri ILM attivi non sia _conforme_ (ovvero, la regola predefinita deve essere conforme ai requisiti dei bucket con blocco oggetti S3 abilitato).
+* Quando l'impostazione globale Blocco oggetti S3 è abilitata, non è possibile creare un nuovo criterio ILM o attivarne uno esistente, a meno che la regola predefinita nel criterio non sia conforme.  Dopo aver abilitato l'impostazione globale S3 Object Lock, le pagine Regole ILM e Criteri ILM indicano quali regole ILM sono conformi.
+
+
+
+
+== Requisiti per le regole ILM conformi
+
+Se si desidera abilitare l'impostazione globale S3 Object Lock, è necessario assicurarsi che la regola predefinita in tutti i criteri ILM attivi sia conforme.  Una regola conforme soddisfa i requisiti di entrambi i bucket con S3 Object Lock abilitato e di tutti i bucket esistenti con la conformità legacy abilitata:
+
+* Deve creare almeno due copie replicate dell'oggetto o una copia con codice di cancellazione.
+* Queste copie devono essere presenti sui nodi di archiviazione per l'intera durata di ciascuna riga nelle istruzioni di posizionamento.
+* Le copie degli oggetti non possono essere salvate in un Cloud Storage Pool.
+* Almeno una riga delle istruzioni di posizionamento deve iniziare dal giorno 0, utilizzando *Ingest time* come orario di riferimento.
+* Almeno una riga delle istruzioni di posizionamento deve essere "per sempre".
+
+
+
+
+== Requisiti per le politiche ILM
+
+Quando l'impostazione globale Blocco oggetti S3 è abilitata, i criteri ILM attivi e inattivi possono includere sia regole conformi che non conformi.
+
+* La regola predefinita in una policy ILM attiva o inattiva deve essere conforme.
+* Le regole non conformi si applicano solo agli oggetti nei bucket in cui non è abilitato S3 Object Lock o in cui non è abilitata la funzionalità legacy Compliance.
+* Le regole conformi possono essere applicate agli oggetti in qualsiasi bucket; non è necessario abilitare S3 Object Lock o la conformità legacy per il bucket.
+
+
+link:example-7-compliant-ilm-policy-for-s3-object-lock.html["Esempio di una policy ILM conforme per S3 Object Lock"]
+
+
+
+== Requisiti per i bucket con S3 Object Lock abilitato
+
+* Se l'impostazione globale S3 Object Lock è abilitata per il sistema StorageGRID , è possibile utilizzare Tenant Manager, Tenant Management API o S3 REST API per creare bucket con S3 Object Lock abilitato.
+* Se si prevede di utilizzare S3 Object Lock, è necessario abilitarlo quando si crea il bucket.  Non è possibile abilitare S3 Object Lock per un bucket esistente.
+* Quando S3 Object Lock è abilitato per un bucket, StorageGRID abilita automaticamente il controllo delle versioni per quel bucket.  Non è possibile disattivare S3 Object Lock o sospendere il controllo delle versioni per il bucket.
+* Facoltativamente, è possibile specificare una modalità di conservazione predefinita e un periodo di conservazione per ciascun bucket utilizzando Tenant Manager, Tenant Management API o S3 REST API.  Le impostazioni di conservazione predefinite del bucket si applicano solo ai nuovi oggetti aggiunti al bucket che non dispongono di impostazioni di conservazione proprie.  È possibile ignorare queste impostazioni predefinite specificando una modalità di conservazione e una data di conservazione per ogni versione dell'oggetto quando viene caricata.
+* La configurazione del ciclo di vita del bucket è supportata per i bucket con S3 Object Lock abilitato.
+* La replica CloudMirror non è supportata per i bucket con S3 Object Lock abilitato.
+
+
+
+
+== Requisiti per gli oggetti nei bucket con S3 Object Lock abilitato
+
+* Per proteggere una versione dell'oggetto, è possibile specificare le impostazioni di conservazione predefinite per il bucket oppure specificare le impostazioni di conservazione per ciascuna versione dell'oggetto.  Le impostazioni di conservazione a livello di oggetto possono essere specificate tramite l'applicazione client S3 o l'API REST S3.
+* Le impostazioni di conservazione si applicano alle singole versioni degli oggetti.  Una versione di un oggetto può avere sia un'impostazione di conservazione fino alla data di scadenza che un'impostazione di conservazione legale, una ma non l'altra, oppure nessuna delle due.  Specificando un'impostazione di conservazione fino a data o di conservazione legale per un oggetto, si protegge solo la versione specificata nella richiesta.  È possibile creare nuove versioni dell'oggetto, mentre la versione precedente rimane bloccata.
+
+
+
+
+== Ciclo di vita degli oggetti nei bucket con S3 Object Lock abilitato
+
+Ogni oggetto salvato in un bucket con S3 Object Lock abilitato attraversa queste fasi:
+
+. *Ingestione di oggetti*
++
+Quando una versione di un oggetto viene aggiunta a un bucket in cui è abilitato il blocco degli oggetti S3, le impostazioni di conservazione vengono applicate come segue:
+
++
+** Se per l'oggetto sono specificate impostazioni di conservazione, vengono applicate le impostazioni a livello di oggetto.  Tutte le impostazioni predefinite del bucket vengono ignorate.
+** Se non vengono specificate impostazioni di conservazione per l'oggetto, vengono applicate le impostazioni predefinite del bucket, se presenti.
+** Se non vengono specificate impostazioni di conservazione per l'oggetto o il bucket, l'oggetto non è protetto da S3 Object Lock.
+
+
++
+Se vengono applicate le impostazioni di conservazione, vengono protetti sia l'oggetto sia tutti i metadati S3 definiti dall'utente.
+
+. *Conservazione ed eliminazione degli oggetti*
++
+StorageGRID memorizza più copie di ciascun oggetto protetto per il periodo di conservazione specificato.  Il numero e il tipo esatti di copie degli oggetti e le posizioni di archiviazione sono determinati dalle regole conformi nelle policy ILM attive.  La possibilità di eliminare un oggetto protetto prima che venga raggiunta la data di conservazione dipende dalla sua modalità di conservazione.
+
++
+** Se un oggetto è sottoposto a conservazione legale, nessuno può eliminarlo, indipendentemente dalla sua modalità di conservazione.
+
+
+
+
+.Informazioni correlate
+* link:../tenant/creating-s3-bucket.html["Crea un bucket S3"]
+* link:../tenant/update-default-retention-settings.html["Aggiorna la conservazione predefinita del blocco degli oggetti S3"]
+* link:../s3/use-s3-api-for-s3-object-lock.html["Utilizzare l'API REST S3 per configurare S3 Object Lock"]
+* link:example-7-compliant-ilm-policy-for-s3-object-lock.html["Esempio 7: Politica ILM conforme per S3 Object Lock"]
+

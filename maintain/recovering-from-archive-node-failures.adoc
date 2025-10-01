@@ -1,0 +1,16 @@
+---
+permalink: maintain/recovering-from-archive-node-failures.html 
+sidebar: sidebar 
+keywords: recover, archive node failure, workflow 
+summary: Il supporto per i nodi di archivio è stato rimosso. 
+---
+= Ripristino da errori del nodo di archivio
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Il supporto per i nodi di archivio è stato rimosso.
+
+Per informazioni sul recupero dei nodi di archivio, vedere https://docs.netapp.com/us-en/storagegrid-118/maintain/recovering-from-archive-node-failures.html["Ripristino da errori del nodo di archivio (sito di documentazione di StorageGRID 11.8)"^] .

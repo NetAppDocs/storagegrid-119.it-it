@@ -1,0 +1,22 @@
+---
+permalink: monitor/creating-custom-monitoring-applications.html 
+sidebar: sidebar 
+keywords: custom monitoring, monitoring, dashboard 
+summary: 'È possibile creare applicazioni di monitoraggio e dashboard personalizzate utilizzando le metriche StorageGRID disponibili nell"API Grid Management.' 
+---
+= Crea applicazioni di monitoraggio personalizzate
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile creare applicazioni di monitoraggio e dashboard personalizzate utilizzando le metriche StorageGRID disponibili nell'API Grid Management.
+
+Se si desidera monitorare metriche non visualizzate in una pagina esistente di Grid Manager o se si desidera creare dashboard personalizzate per StorageGRID, è possibile utilizzare l'API Grid Management per interrogare le metriche StorageGRID .
+
+È anche possibile accedere direttamente alle metriche di Prometheus tramite uno strumento di monitoraggio esterno, come Grafana.  Per utilizzare uno strumento esterno è necessario caricare o generare un certificato client amministrativo per consentire a StorageGRID di autenticare lo strumento per motivi di sicurezza. Vedi illink:../admin/index.html["istruzioni per l'amministrazione StorageGRID"] .
+
+Per visualizzare le operazioni API delle metriche, incluso l'elenco completo delle metriche disponibili, vai a Grid Manager.  Nella parte superiore della pagina, seleziona l'icona della guida e seleziona *Documentazione API* > *metriche*.image:../media/help_api_docs_metrics.png["Sezione Metriche della documentazione API di aiuto"]
+
+I dettagli su come implementare un'applicazione di monitoraggio personalizzata esulano dallo scopo di questa documentazione.

@@ -1,0 +1,23 @@
+---
+permalink: maintain/consolidating-storage-nodes.html 
+sidebar: sidebar 
+keywords: storagegrid, storage node, consolidate storage node, consolidating storage node 
+summary: È possibile consolidare i nodi di archiviazione per ridurre il numero di nodi di archiviazione per un sito o una distribuzione, aumentando al contempo la capacità di archiviazione. 
+---
+= Consolidamento dei nodi di archiviazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile consolidare i nodi di archiviazione per ridurre il numero di nodi di archiviazione per un sito o una distribuzione, aumentando al contempo la capacità di archiviazione.
+
+Quando si consolidano i nodi di archiviazione,link:../expand/index.html["espandere il sistema StorageGRID"] aggiungendo nuovi nodi di archiviazione con capacità maggiore e quindi dismettendo i vecchi nodi di archiviazione con capacità inferiore.  Durante la procedura di dismissione, gli oggetti vengono migrati dai vecchi nodi di archiviazione ai nuovi nodi di archiviazione.
+
+
+NOTE: Se stai consolidando elettrodomestici più vecchi e più piccoli con nuovi modelli o elettrodomestici di maggiore capacità, considera https://docs.netapp.com/us-en/storagegrid-appliances/commonhardware/how-appliance-node-cloning-works.html["clonazione del nodo dell'appliance"^] (oppure utilizzare la clonazione del nodo dell'appliance e la procedura di dismissione se non si sta eseguendo una sostituzione uno a uno).
+
+Ad esempio, potresti aggiungere due nuovi nodi di archiviazione con capacità maggiore per sostituire tre nodi di archiviazione più vecchi.  Per prima cosa, dovresti utilizzare la procedura di espansione per aggiungere i due nuovi nodi di archiviazione più grandi, quindi utilizzare la procedura di dismissione per rimuovere i tre vecchi nodi di archiviazione di capacità inferiore.
+
+Aggiungendo nuova capacità prima di rimuovere i nodi di archiviazione esistenti, si garantisce una distribuzione più equilibrata dei dati nel sistema StorageGRID .  Si riduce inoltre la possibilità che un nodo di archiviazione esistente possa essere spinto oltre il livello di filigrana di archiviazione.

@@ -1,0 +1,79 @@
+---
+permalink: ilm/using-multiple-storage-pools-for-cross-site-replication.html 
+sidebar: sidebar 
+keywords: site-loss protection, cross-site replication, storage pools 
+summary: Se la distribuzione StorageGRID include più di un sito, è possibile utilizzare la replicazione e la codifica di cancellazione con pool di archiviazione opportunamente configurati per abilitare la protezione contro la perdita del sito. 
+---
+= Abilita la protezione contro la perdita del sito
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se la distribuzione StorageGRID include più di un sito, è possibile utilizzare la replicazione e la codifica di cancellazione con pool di archiviazione opportunamente configurati per abilitare la protezione contro la perdita del sito.
+
+La replicazione e la codifica di cancellazione richiedono configurazioni di pool di archiviazione diverse:
+
+* Per utilizzare la replica per la protezione contro la perdita del sito, utilizzare i pool di archiviazione specifici del sito creati automaticamente durante l'installazione StorageGRID .  Quindi crea regole ILM conlink:create-ilm-rule-define-placements.html["istruzioni per il posizionamento"] che specificano più pool di archiviazione in modo che una copia di ciascun oggetto venga posizionata in ogni sito.
+* Per utilizzare la codifica di cancellazione per la protezione dalla perdita del sito,link:guidelines-for-creating-storage-pools.html#guidelines-for-storage-pools-used-for-erasure-coded-copies["creare pool di archiviazione costituiti da più siti"] .  Quindi creare regole ILM che utilizzino un pool di archiviazione composto da più siti e qualsiasi schema di codifica di cancellazione disponibile.
+
+
+
+CAUTION: Quando si configura la distribuzione StorageGRID per la protezione dalle perdite del sito, è necessario tenere conto anche degli effetti dilink:data-protection-options-for-ingest.html["opzioni di ingestione"] Elink:../s3/consistency-controls.html["coerenza"] .
+
+
+
+== Esempio di replicazione
+
+Per impostazione predefinita, durante l'installazione StorageGRID viene creato un pool di archiviazione per ogni sito.  Disporre di pool di archiviazione costituiti da un solo sito consente di configurare regole ILM che utilizzano la replica per la protezione dalle perdite del sito. In questo esempio:
+
+* Il pool di archiviazione 1 contiene il sito 1
+* Il pool di archiviazione 2 contiene il sito 2
+* La regola ILM contiene due posizionamenti:
++
+** Memorizza gli oggetti replicandone 1 copia nel Sito 1
+** Memorizza gli oggetti replicandone 1 copia nel sito 2
+
+
+
+
+Posizionamenti delle regole ILM:
+
+image::../media/ilm_replication_at_2_sites.png[Replicazione di 1 copia ciascuno in 2 siti]
+
+image::../media/ilm_replication_make_2_copies_2_pools_2_sites.png[Crea 1 copia in ciascuno dei 2 siti: pool di archiviazione specifico del sito]
+
+Se un sito viene perso, copie degli oggetti sono disponibili nell'altro sito.
+
+
+
+== Esempio di codifica di cancellazione
+
+Disporre di pool di archiviazione composti da più di un sito per pool di archiviazione consente di configurare regole ILM che utilizzano la codifica di cancellazione per la protezione dalla perdita del sito. In questo esempio:
+
+* Il pool di archiviazione 1 contiene i siti da 1 a 3
+* La regola ILM contiene un posizionamento: memorizzare gli oggetti tramite codifica di cancellazione utilizzando uno schema EC 4+2 nel pool di archiviazione 1, che contiene tre siti
+
+
+Posizionamenti delle regole ILM:
+
+image::../media/ilm_erasure_coding_site_loss_protection_4+2.png[EC 1 pool di archiviazione 9 nodi di archiviazione 3 siti]
+
+In questo esempio:
+
+* La regola ILM utilizza uno schema di codifica a cancellazione 4+2.
+* Ogni oggetto viene suddiviso in quattro frammenti di dati uguali e dai dati dell'oggetto vengono calcolati due frammenti di parità.
+* Ciascuno dei sei frammenti viene archiviato su un nodo diverso in tre siti di data center per garantire la protezione dei dati in caso di guasti dei nodi o perdite del sito.
+
+
+
+NOTE: La codifica di cancellazione è consentita nei pool di archiviazione contenenti un numero qualsiasi di siti, _tranne_ due siti.
+
+Regola ILM che utilizza lo schema di codifica a cancellazione 4+2:
+
+image::../media/ec_three_sites_4_plus_2_site_loss_example_template.png[Memorizzare gli oggetti tramite codifica di cancellazione utilizzando uno schema EC 4+2 su 3 siti]
+
+Se un sito viene perso, i dati possono comunque essere recuperati:
+
+image::../media/ec_three_sites_4_plus_2_site_loss_example.png[Schema di codifica di cancellazione 4+2 EC 1 sito perso]

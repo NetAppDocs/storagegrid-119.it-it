@@ -1,0 +1,98 @@
+---
+permalink: ilm/lifecycle-of-cloud-storage-pool-object.html 
+sidebar: sidebar 
+keywords: lifecycle of cloud storage pool object 
+summary: Prima di implementare i Cloud Storage Pool, esaminare il ciclo di vita degli oggetti archiviati in ciascun tipo di Cloud Storage Pool. 
+---
+= Ciclo di vita di un oggetto Cloud Storage Pool
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Prima di implementare i Cloud Storage Pool, esaminare il ciclo di vita degli oggetti archiviati in ciascun tipo di Cloud Storage Pool.
+
+
+
+== S3: Ciclo di vita di un oggetto Cloud Storage Pool
+
+I passaggi descrivono le fasi del ciclo di vita di un oggetto archiviato in un pool di archiviazione cloud S3.
+
+
+NOTE: "Glacier" si riferisce sia alla classe di archiviazione Glacier sia alla classe di archiviazione Glacier Deep Archive, con un'eccezione: la classe di archiviazione Glacier Deep Archive non supporta il livello di ripristino accelerato.  È supportato solo il recupero in blocco o standard.
+
+
+NOTE: Google Cloud Platform (GCP) supporta il recupero di oggetti da archivi a lungo termine senza richiedere un'operazione di ripristino POST.
+
+. *Oggetto memorizzato in StorageGRID*
++
+Per avviare il ciclo di vita, un'applicazione client memorizza un oggetto in StorageGRID.
+
+. *Oggetto spostato nel pool di archiviazione cloud S3*
++
+** Quando l'oggetto corrisponde a una regola ILM che utilizza un pool di archiviazione cloud S3 come posizione di posizionamento, StorageGRID sposta l'oggetto nel bucket S3 esterno specificato dal pool di archiviazione cloud.
+** Quando l'oggetto è stato spostato nel pool di archiviazione cloud S3, l'applicazione client può recuperarlo utilizzando una richiesta S3 GetObject da StorageGRID, a meno che l'oggetto non sia stato trasferito nello storage Glacier.
+
+
+. *Oggetto trasferito a Glacier (stato non recuperabile)*
++
+** Facoltativamente, l'oggetto può essere trasferito nello storage Glacier.  Ad esempio, il bucket S3 esterno potrebbe utilizzare la configurazione del ciclo di vita per trasferire un oggetto allo storage Glacier immediatamente o dopo un certo numero di giorni.
++
+
+NOTE: Se si desidera effettuare la transizione degli oggetti, è necessario creare una configurazione del ciclo di vita per il bucket S3 esterno e utilizzare una soluzione di archiviazione che implementi la classe di archiviazione Glacier e supporti l'API S3 RestoreObject.
+
+** Durante la transizione, l'applicazione client può utilizzare una richiesta S3 HeadObject per monitorare lo stato dell'oggetto.
+
+
+. *Oggetto ripristinato dal deposito Glacier*
++
+Se un oggetto è stato trasferito nello storage Glacier, l'applicazione client può inviare una richiesta S3 RestoreObject per ripristinare una copia recuperabile nello storage pool S3 Cloud.  La richiesta specifica per quanti giorni la copia deve essere disponibile nel Cloud Storage Pool e il livello di accesso ai dati da utilizzare per l'operazione di ripristino (Expedited, Standard o Bulk).  Quando viene raggiunta la data di scadenza della copia recuperabile, la copia torna automaticamente allo stato non recuperabile.
+
++
+
+NOTE: Se una o più copie dell'oggetto sono presenti anche sui nodi di archiviazione all'interno di StorageGRID, non è necessario ripristinare l'oggetto da Glacier inviando una richiesta RestoreObject.  In alternativa, è possibile recuperare direttamente la copia locale, utilizzando una richiesta GetObject.
+
+. *Oggetto recuperato*
++
+Una volta ripristinato un oggetto, l'applicazione client può inviare una richiesta GetObject per recuperare l'oggetto ripristinato.
+
+
+
+
+
+== Azure: ciclo di vita di un oggetto Cloud Storage Pool
+
+I passaggi descrivono le fasi del ciclo di vita di un oggetto archiviato in un pool di Azure Cloud Storage.
+
+. *Oggetto memorizzato in StorageGRID*
++
+Per avviare il ciclo di vita, un'applicazione client memorizza un oggetto in StorageGRID.
+
+. *Oggetto spostato nel pool di archiviazione cloud di Azure*
++
+Quando l'oggetto corrisponde a una regola ILM che utilizza un pool di archiviazione cloud di Azure come posizione di posizionamento, StorageGRID sposta l'oggetto nel contenitore di archiviazione BLOB di Azure esterno specificato dal pool di archiviazione cloud.
+
+. *Oggetto trasferito al livello Archivio (stato non recuperabile)*
++
+Subito dopo aver spostato l'oggetto nel pool di archiviazione cloud di Azure, StorageGRID trasferisce automaticamente l'oggetto al livello di archivio di archiviazione BLOB di Azure.
+
+. *Oggetto ripristinato dal livello Archivio*
++
+Se un oggetto è stato trasferito al livello Archivio, l'applicazione client può inviare una richiesta S3 RestoreObject per ripristinare una copia recuperabile nel pool di archiviazione cloud di Azure.
+
++
+Quando StorageGRID riceve RestoreObject, trasferisce temporaneamente l'oggetto al livello Cool di archiviazione BLOB di Azure.  Non appena viene raggiunta la data di scadenza nella richiesta RestoreObject, StorageGRID riporta l'oggetto al livello Archivio.
+
++
+
+NOTE: Se una o più copie dell'oggetto sono presenti anche sui nodi di archiviazione all'interno di StorageGRID, non è necessario ripristinare l'oggetto dal livello di accesso all'archivio inviando una richiesta RestoreObject.  In alternativa, è possibile recuperare direttamente la copia locale, utilizzando una richiesta GetObject.
+
+. *Oggetto recuperato*
++
+Una volta ripristinato un oggetto nel pool di archiviazione cloud di Azure, l'applicazione client può inviare una richiesta GetObject per recuperare l'oggetto ripristinato.
+
+
+
+.Informazioni correlate
+link:../s3/index.html["Utilizzare l'API REST S3"]

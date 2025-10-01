@@ -1,0 +1,46 @@
+---
+permalink: network/subnet-requirements.html 
+sidebar: sidebar 
+keywords: network subnets 
+summary: Seguire questi requisiti e linee guida per le subnet di rete. 
+---
+= Requisiti della subnet
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Seguire questi requisiti e linee guida per le subnet di rete.
+
+
+NOTE: Ogni rete deve essere connessa alla propria sottorete che non si sovrapponga ad altre reti sul nodo.
+
+Durante la distribuzione, Grid Manager applica le seguenti restrizioni.  Vengono forniti qui per assistere nella pianificazione della rete prima dell'implementazione.
+
+* La subnet mask per qualsiasi indirizzo IP di rete non può essere 255.255.255.254 o 255.255.255.255 (/31 o /32 nella notazione CIDR).
+* La subnet definita da un indirizzo IP di interfaccia di rete e da una subnet mask (CIDR) non può sovrapporsi alla subnet di nessun'altra interfaccia configurata sullo stesso nodo.
+* Non utilizzare subnet che contengono i seguenti indirizzi IPv4 per la rete Grid, la rete amministrativa o la rete client di alcun nodo:
++
+** 192.168.130.101
+** 192.168.131.101
+** 192.168.130.102
+** 192.168.131.102
+** 198.51.100.2
+** 198.51.100.4
+
+
++
+Ad esempio, non utilizzare i seguenti intervalli di subnet per la rete Grid, la rete amministrativa o la rete client di alcun nodo:
+
++
+** 192.168.130.0/24 perché questo intervallo di subnet contiene gli indirizzi IP 192.168.130.101 e 192.168.130.102
+** 192.168.131.0/24 perché questo intervallo di subnet contiene gli indirizzi IP 192.168.131.101 e 192.168.131.102
+** 198.51.100.0/24 perché questo intervallo di subnet contiene gli indirizzi IP 198.51.100.2 e 198.51.100.4
+
+
+* La sottorete della rete Grid per ciascun nodo deve essere inclusa nel GNSL.
+* La subnet della rete amministrativa non può sovrapporsi alla subnet della rete Grid, alla subnet della rete client o a qualsiasi subnet nel GNSL.
+* Le subnet nell'AESL non possono sovrapporsi ad alcuna subnet nel GNSL.
+* La subnet della rete client non può sovrapporsi alla subnet della rete Grid, alla subnet della rete amministrativa, a nessuna subnet nel GNSL o a nessuna subnet nell'AESL.
+

@@ -1,0 +1,124 @@
+---
+permalink: ilm/example-3-ilm-rules-and-policy-for-better-protection-for-image-files.html 
+sidebar: sidebar 
+keywords: example ILM rule, information lifecycle rule examples 
+summary: È possibile utilizzare le seguenti regole e policy di esempio per garantire che le immagini di dimensioni superiori a 1 MB vengano codificate con cancellazione e che vengano realizzate due copie delle immagini più piccole. 
+---
+= Esempio 3: Regole e policy ILM per una migliore protezione dei file immagine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile utilizzare le seguenti regole e policy di esempio per garantire che le immagini di dimensioni superiori a 1 MB vengano codificate con cancellazione e che vengano realizzate due copie delle immagini più piccole.
+
+
+CAUTION: Le seguenti regole e policy ILM sono solo esempi.  Esistono molti modi per configurare le regole ILM.  Prima di attivare una nuova policy, simulala per verificare che funzioni come previsto per proteggere i contenuti dalla perdita.
+
+
+
+== Regola ILM 1 per esempio 3: utilizzare EC per file immagine superiori a 1 MB
+
+Questa regola ILM di esempio utilizza un filtro avanzato per cancellare il codice di tutti i file immagine di dimensioni superiori a 1 MB.
+
+
+NOTE: La codifica di cancellazione è più adatta per oggetti di dimensioni superiori a 1 MB.  Non utilizzare la codifica di cancellazione per oggetti di dimensioni inferiori a 200 KB per evitare il sovraccarico dovuto alla gestione di frammenti molto piccoli con codifica di cancellazione.
+
+[cols="1a,2a"]
+|===
+| Definizione della regola | Valore di esempio 
+
+
+ a| 
+Nome della regola
+ a| 
+File immagine EC > 1 MB
+
+
+
+ a| 
+Tempo di riferimento
+ a| 
+Tempo di ingestione
+
+
+
+ a| 
+Filtro avanzato per la dimensione dell'oggetto
+ a| 
+Dimensione dell'oggetto maggiore di 1 MB
+
+
+
+ a| 
+Filtri avanzati per la chiave
+ a| 
+* Termina con .jpg
+* Termina con .png
+
+
+
+
+ a| 
+Posizionamenti
+ a| 
+Crea una copia con codice di cancellazione 2+1 utilizzando tre siti
+
+|===
+image::../media/policy_3_rule_1_ec_images_adv_filtering.png[Regola ILM 1 per esempio 3: utilizzare EC per file immagine superiori a 1 MB]
+
+Poiché questa regola è configurata come la prima regola del criterio, l'istruzione di posizionamento della codifica di cancellazione si applica solo ai file .jpg e .png di dimensioni superiori a 1 MB.
+
+
+
+== Regola ILM 2 per l'esempio 3: creare 2 copie replicate per tutti i file immagine rimanenti
+
+Questa regola ILM di esempio utilizza un filtro avanzato per specificare che i file immagine più piccoli devono essere replicati.  Poiché la prima regola del criterio ha già trovato corrispondenze con file immagine di dimensioni superiori a 1 MB, questa regola si applica ai file immagine di dimensioni pari o inferiori a 1 MB.
+
+[cols="1a,2a"]
+|===
+| Definizione della regola | Valore di esempio 
+
+
+ a| 
+Nome della regola
+ a| 
+2 copie per i file immagine
+
+
+
+ a| 
+Tempo di riferimento
+ a| 
+Tempo di ingestione
+
+
+
+ a| 
+Filtri avanzati per la chiave
+ a| 
+* Termina con .jpg
+* Termina con .png
+
+
+
+
+ a| 
+Posizionamenti
+ a| 
+Crea 2 copie replicate in due pool di archiviazione
+
+|===
+
+
+== Politica ILM per esempio 3: migliore protezione per i file immagine
+
+Questo esempio di policy ILM include tre regole:
+
+* La prima regola codifica tutti i file immagine di dimensioni superiori a 1 MB.
+* La seconda regola crea due copie di tutti i file immagine rimanenti (ovvero immagini di dimensioni pari o inferiori a 1 MB).
+* La regola predefinita si applica a tutti gli oggetti rimanenti (ovvero tutti i file non immagine).
+
+
+image::../media/policy_3_configured_policy.png[Politica ILM per esempio 3: migliore protezione per i file immagine]

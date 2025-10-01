@@ -1,0 +1,21 @@
+---
+permalink: admin/kms-configuring.html 
+sidebar: sidebar 
+keywords: configure kms, key management server, kmip, Key Management Interoperability Protocol 
+summary: 'Un server di gestione delle chiavi \(KMS\) è un sistema esterno di terze parti che fornisce chiavi di crittografia ai nodi dell"appliance StorageGRID nel sito StorageGRID associato utilizzando il protocollo di interoperabilità della gestione delle chiavi \(KMIP\)' 
+---
+= Che cos'è un server di gestione delle chiavi (KMS)?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Un server di gestione delle chiavi (KMS) è un sistema esterno di terze parti che fornisce chiavi di crittografia ai nodi dell'appliance StorageGRID nel sito StorageGRID associato utilizzando il protocollo KMIP (Key Management Interoperability Protocol).
+
+StorageGRID supporta solo determinati server di gestione delle chiavi.  Per un elenco dei prodotti e delle versioni supportati, utilizzare https://imt.netapp.com/matrix/#welcome["Strumento matrice di interoperabilità NetApp (IMT)"^] .
+
+È possibile utilizzare uno o più server di gestione delle chiavi per gestire le chiavi di crittografia dei nodi per tutti i nodi dell'appliance StorageGRID in cui è abilitata l'impostazione *Crittografia nodi* durante l'installazione.  Utilizzando server di gestione delle chiavi con questi nodi appliance è possibile proteggere i dati anche se un'appliance viene rimossa dal data center.  Dopo aver crittografato i volumi dell'appliance, non sarà possibile accedere ai dati sull'appliance a meno che il nodo non sia in grado di comunicare con il KMS.
+
+
+CAUTION: StorageGRID non crea né gestisce le chiavi esterne utilizzate per crittografare e decrittografare i nodi dell'appliance.  Se si prevede di utilizzare un server di gestione delle chiavi esterno per proteggere i dati StorageGRID , è necessario comprendere come configurare tale server e come gestire le chiavi di crittografia.  L'esecuzione di attività di gestione chiave esula dallo scopo di queste istruzioni.  Se hai bisogno di aiuto, consulta la documentazione del tuo server di gestione delle chiavi o contatta l'assistenza tecnica.

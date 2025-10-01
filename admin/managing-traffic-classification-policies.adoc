@@ -1,0 +1,109 @@
+---
+permalink: admin/managing-traffic-classification-policies.html 
+sidebar: sidebar 
+keywords: QoS, quality of service, traffic classification, best practices, limit traffic, monitor traffic 
+summary: 'Le policy di classificazione del traffico consentono di identificare e monitorare diversi tipi di traffico di rete.  Queste policy possono aiutare a limitare e monitorare il traffico per migliorare le offerte di qualità del servizio (QoS).' 
+---
+= Quali sono le politiche di classificazione del traffico?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Le policy di classificazione del traffico consentono di identificare e monitorare diversi tipi di traffico di rete.  Queste policy possono aiutare a limitare e monitorare il traffico per migliorare le offerte di qualità del servizio (QoS).
+
+I criteri di classificazione del traffico vengono applicati agli endpoint del servizio StorageGRID Load Balancer per i nodi gateway e i nodi amministrativi.  Per creare policy di classificazione del traffico, è necessario aver già creato gli endpoint del bilanciatore del carico.
+
+
+
+== Regole di corrispondenza
+
+Ogni criterio di classificazione del traffico contiene una o più regole di corrispondenza per identificare il traffico di rete correlato a una o più delle seguenti entità:
+
+* Secchi
+* Sottorete
+* Inquilino
+* Endpoint del bilanciatore del carico
+
+
+StorageGRID monitora il traffico che corrisponde a qualsiasi regola all'interno della policy in base agli obiettivi della regola.  Tutto il traffico che corrisponde a una regola di una policy viene gestito da quella policy.  Al contrario, è possibile impostare regole in modo che corrispondano a tutto il traffico, ad eccezione di un'entità specificata.
+
+
+
+== Limitazione del traffico
+
+Facoltativamente, è possibile aggiungere i seguenti tipi di limite a una policy:
+
+* Larghezza di banda aggregata
+* Larghezza di banda per richiesta
+* Richieste simultanee
+* Richiedi tariffa
+
+
+I valori limite vengono applicati in base al bilanciatore del carico.  Se il traffico viene distribuito simultaneamente su più bilanciatori del carico, le tariffe massime totali sono un multiplo dei limiti di tariffa specificati.
+
+
+NOTE: È possibile creare policy per limitare la larghezza di banda aggregata o per limitare la larghezza di banda per richiesta.  Tuttavia, StorageGRID non può limitare entrambi i tipi di larghezza di banda contemporaneamente.  I limiti aggregati di larghezza di banda potrebbero avere un impatto minore aggiuntivo sulle prestazioni del traffico non limitato.
+
+Per i limiti di larghezza di banda aggregati o per richiesta, le richieste vengono trasmesse in entrata o in uscita alla velocità impostata.  StorageGRID può imporre una sola velocità, quindi viene applicata la corrispondenza più specifica della policy, in base al tipo di matcher.  La larghezza di banda consumata dalla richiesta non viene conteggiata in relazione ad altre policy di corrispondenza meno specifiche contenenti policy di limite di larghezza di banda aggregate.  Per tutti gli altri tipi di limite, le richieste dei client vengono ritardate di 250 millisecondi e ricevono una risposta 503 Slow Down per le richieste che superano qualsiasi limite di policy corrispondente.
+
+In Grid Manager puoi visualizzare i grafici del traffico e verificare che le policy applichino i limiti di traffico previsti.
+
+
+
+== Utilizzare criteri di classificazione del traffico con SLA
+
+È possibile utilizzare criteri di classificazione del traffico insieme ai limiti di capacità e alla protezione dei dati per applicare accordi sul livello di servizio (SLA) che forniscono specifiche per capacità, protezione dei dati e prestazioni.
+
+L'esempio seguente mostra tre livelli di un SLA.  È possibile creare criteri di classificazione del traffico per raggiungere gli obiettivi prestazionali di ciascun livello SLA.
+
+[cols="1a,1a,1a,1a,1a"]
+|===
+| Livello di servizio | Capacità | Protezione dei dati | Massima prestazione consentita | Costo 
+
+
+ a| 
+Oro
+ a| 
+1 PB di spazio di archiviazione consentito
+ a| 
+Regola ILM a 3 copie
+ a| 
+25 K richieste/sec
+
+Larghezza di banda 5 GB/sec (40 Gbps)
+ a| 
+$$$ al mese
+
+
+
+ a| 
+Argento
+ a| 
+250 TB di spazio di archiviazione consentito
+ a| 
+Regola ILM a 2 copie
+ a| 
+10 K richieste/sec
+
+Larghezza di banda 1,25 GB/sec (10 Gbps)
+ a| 
+$$ al mese
+
+
+
+ a| 
+Bronzo
+ a| 
+100 TB di spazio di archiviazione consentito
+ a| 
+Regola ILM a 2 copie
+ a| 
+5 K richieste/sec
+
+Larghezza di banda di 1 GB/sec (8 Gbps)
+ a| 
+$ al mese
+
+|===

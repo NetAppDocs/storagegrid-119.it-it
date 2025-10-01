@@ -1,0 +1,85 @@
+---
+permalink: monitor/running-diagnostics.html 
+sidebar: sidebar 
+keywords: how to run diagnostics 
+summary: Durante la risoluzione di un problema, puoi collaborare con il supporto tecnico per eseguire la diagnostica sul tuo sistema StorageGRID e analizzare i risultati. 
+---
+= Eseguire la diagnostica
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Durante la risoluzione di un problema, puoi collaborare con il supporto tecnico per eseguire la diagnostica sul tuo sistema StorageGRID e analizzare i risultati.
+
+* link:reviewing-support-metrics.html["Esaminare le metriche di supporto"]
+* link:commonly-used-prometheus-metrics.html["Metriche di Prometheus comunemente utilizzate"]
+
+
+.Prima di iniziare
+* Hai effettuato l'accesso a Grid Manager utilizzando unlink:../admin/web-browser-requirements.html["browser web supportato"] .
+* Hailink:../admin/admin-group-permissions.html["autorizzazioni di accesso specifiche"] .
+
+
+.Informazioni su questo compito
+La pagina Diagnostica esegue una serie di controlli diagnostici sullo stato attuale della griglia.  Ogni controllo diagnostico può avere uno dei tre stati:
+
+* image:../media/icon_alert_green_checkmark.png["Icona Avviso Segno di spunta verde"]*Normale*: Tutti i valori rientrano nell'intervallo normale.
+* image:../media/icon_alert_yellow_minor.png["Icona di allerta gialla minore"]*Attenzione*: uno o più valori sono al di fuori dell'intervallo normale.
+* image:../media/icon_alert_red_critical.png["Icona di avviso rossa critica"]*Attenzione*: uno o più valori sono significativamente al di fuori dell'intervallo normale.
+
+
+Gli stati diagnostici sono indipendenti dagli avvisi correnti e potrebbero non indicare problemi operativi con la rete.  Ad esempio, un controllo diagnostico potrebbe mostrare lo stato Attenzione anche se non è stato attivato alcun avviso.
+
+.Passi
+. Selezionare *SUPPORTO* > *Strumenti* > *Diagnostica*.
++
+Viene visualizzata la pagina Diagnostica, in cui sono elencati i risultati di ciascun controllo diagnostico.  I risultati sono ordinati in base alla gravità (Attenzione, Attenzione e Normale).  All'interno di ogni gravità, i risultati sono ordinati alfabeticamente.
+
++
+In questo esempio, tutte le diagnosi hanno uno stato Normale.
+
++
+image::../media/support_diagnostics_page.png[Pagina di diagnostica del supporto]
+
+. Per saperne di più su una diagnosi specifica, fare clic in un punto qualsiasi della riga.
++
+Vengono visualizzati i dettagli sulla diagnosi e i suoi risultati attuali.  Sono elencati i seguenti dettagli:
+
++
+** *Stato*: lo stato attuale di questa diagnosi: Normale, Attenzione o Attenzione.
+** *Query Prometheus*: se utilizzata per la diagnostica, l'espressione Prometheus utilizzata per generare i valori di stato.  (L'espressione di Prometheus non viene utilizzata per tutte le diagnosi.)
+** *Soglie*: se disponibili per la diagnosi, le soglie definite dal sistema per ogni stato diagnostico anomalo.  (I valori soglia non vengono utilizzati per tutte le diagnosi.)
++
+
+NOTE: Non è possibile modificare queste soglie.
+
+** *Valori di stato*: una tabella che mostra lo stato e il valore della diagnostica nell'intero sistema StorageGRID . In questo esempio viene mostrato l'utilizzo attuale della CPU per ogni nodo in un sistema StorageGRID . Tutti i valori dei nodi sono al di sotto delle soglie di Attenzione e Attenzione, quindi lo stato generale della diagnosi è Normale.
+
+
++
+image::../media/support_diagnostics_cpu_utilization.png[Supporto Diagnostica Utilizzo CPU]
+
+. *Facoltativo*: Per visualizzare i grafici Grafana correlati a questa diagnosi, fare clic sul collegamento *Dashboard Grafana*.
++
+Questo collegamento non viene visualizzato per tutte le diagnosi.
+
++
+Viene visualizzata la dashboard Grafana correlata. In questo esempio, viene visualizzata la dashboard del nodo che mostra l'utilizzo della CPU nel tempo per questo nodo, nonché altri grafici Grafana per il nodo.
+
++
+
+NOTE: È anche possibile accedere alle dashboard Grafana predefinite dalla sezione Grafana della pagina *SUPPORTO* > *Strumenti* > *Metriche*.
+
++
+image::../media/grafana_dashboard_nodes.png[Nodi della dashboard di Grafana]
+
+. *Facoltativo*: Per visualizzare un grafico dell'espressione di Prometheus nel tempo, fare clic su *Visualizza in Prometheus*.
++
+Appare un grafico di Prometeo dell'espressione utilizzata nella diagnosi.
+
++
+image::../media/support_diagnostics_prometheus_png.png[Pagina di supporto Diagnostica Prometheus]
+
+

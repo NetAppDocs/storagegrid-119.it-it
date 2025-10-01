@@ -1,0 +1,65 @@
+---
+permalink: maintain/reviewing-ilm-policy-and-storage-configuration.html 
+sidebar: sidebar 
+keywords: storagegrid, restore, ilm policy, storage configuration 
+summary: Se si prevede di dismettere un nodo di archiviazione, è necessario rivedere la policy ILM del sistema StorageGRID prima di avviare il processo di dismissione. 
+---
+= Esaminare la politica ILM e la configurazione dell'archiviazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se si prevede di dismettere un nodo di archiviazione, è necessario rivedere la policy ILM del sistema StorageGRID prima di avviare il processo di dismissione.
+
+Durante la dismissione, tutti i dati degli oggetti vengono migrati dal nodo di archiviazione dismesso ad altri nodi di archiviazione.
+
+
+NOTE: La politica ILM in vigore _durante_ la dismissione sarà quella utilizzata _dopo_ la dismissione.  È necessario assicurarsi che questa policy soddisfi i requisiti dei dati sia prima di iniziare la dismissione sia dopo il suo completamento.
+
+Dovresti rivedere le regole in ognilink:../ilm/creating-ilm-policy.html["politica ILM attiva"] per garantire che il sistema StorageGRID continui ad avere una capacità sufficiente del tipo corretto e nelle posizioni corrette per gestire la dismissione di un nodo di archiviazione.
+
+Considera quanto segue:
+
+* Sarà possibile per i servizi di valutazione ILM copiare i dati degli oggetti in modo che le regole ILM siano soddisfatte?
+* Cosa succede se un sito diventa temporaneamente non disponibile mentre è in corso la dismissione?  È possibile effettuare copie aggiuntive in un luogo alternativo?
+* In che modo il processo di dismissione influirà sulla distribuzione finale dei contenuti?  Come descritto inlink:consolidating-storage-nodes.html["Consolidamento dei nodi di archiviazione"] , dovrestilink:../expand/index.html["aggiungere nuovi nodi di archiviazione"] prima di smantellare quelli vecchi.  Se si aggiunge un nodo di archiviazione sostitutivo più grande dopo aver dismesso un nodo di archiviazione più piccolo, i vecchi nodi di archiviazione potrebbero essere prossimi alla capacità massima e il nuovo nodo di archiviazione potrebbe non avere quasi alcun contenuto.  La maggior parte delle operazioni di scrittura per i nuovi dati oggetto verrebbero quindi indirizzate al nuovo nodo di archiviazione, riducendo l'efficienza complessiva delle operazioni di sistema.
+* Il sistema includerà sempre un numero sufficiente di nodi di archiviazione per soddisfare le policy ILM attive?
++
+
+NOTE: Una policy ILM che non può essere soddisfatta causerà arretrati e avvisi e potrebbe interrompere il funzionamento del sistema StorageGRID .
+
+
+
+Verificare che la topologia proposta che risulterà dal processo di dismissione soddisfi la politica ILM valutando le aree elencate nella tabella.
+
+[cols="1a,2a"]
+|===
+| Area da valutare | Cosa considerare 
+
+
+ a| 
+Capacità disponibile
+ a| 
+Ci sarà sufficiente capacità di archiviazione per contenere tutti i dati degli oggetti archiviati nel sistema StorageGRID , comprese le copie permanenti dei dati degli oggetti attualmente archiviati sul nodo di archiviazione da dismettere?
+
+Ci sarà capacità sufficiente per gestire la crescita prevista dei dati degli oggetti archiviati per un intervallo di tempo ragionevole dopo il completamento della dismissione?
+
+
+
+ a| 
+Luogo di stoccaggio
+ a| 
+Se nel sistema StorageGRID nel suo complesso rimane una capacità sufficiente, la capacità è nelle posizioni giuste per soddisfare le regole aziendali del sistema StorageGRID ?
+
+
+
+ a| 
+Tipo di archiviazione
+ a| 
+Una volta completata la dismissione, ci sarà abbastanza spazio di stoccaggio del tipo appropriato?
+
+Ad esempio, le regole ILM potrebbero spostare i contenuti da un tipo di archiviazione a un altro man mano che i contenuti invecchiano.  In questo caso, è necessario assicurarsi che nella configurazione finale del sistema StorageGRID sia disponibile spazio di archiviazione sufficiente del tipo appropriato.
+
+|===

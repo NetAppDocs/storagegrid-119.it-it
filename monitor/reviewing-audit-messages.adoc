@@ -1,0 +1,36 @@
+---
+permalink: monitor/reviewing-audit-messages.html 
+sidebar: sidebar 
+keywords: how to review audit messages, how to view audit messages 
+summary: I messaggi di controllo possono aiutarti a comprendere meglio le operazioni dettagliate del tuo sistema StorageGRID .  È possibile utilizzare i registri di controllo per risolvere i problemi e valutare le prestazioni. 
+---
+= Rivedi i messaggi di audit
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+I messaggi di controllo possono aiutarti a comprendere meglio le operazioni dettagliate del tuo sistema StorageGRID .  È possibile utilizzare i registri di controllo per risolvere i problemi e valutare le prestazioni.
+
+Durante il normale funzionamento del sistema, tutti i servizi StorageGRID generano messaggi di controllo, come segue:
+
+* I messaggi di controllo del sistema sono correlati al sistema di controllo stesso, agli stati dei nodi della griglia, all'attività delle attività a livello di sistema e alle operazioni di backup del servizio.
+* I messaggi di controllo dell'archiviazione degli oggetti sono correlati all'archiviazione e alla gestione degli oggetti all'interno StorageGRID, inclusi l'archiviazione e il recupero degli oggetti, i trasferimenti da un nodo della griglia all'altro e le verifiche.
+* I messaggi di controllo di lettura e scrittura del client vengono registrati quando un'applicazione client S3 effettua una richiesta per creare, modificare o recuperare un oggetto.
+* I messaggi di controllo di gestione registrano le richieste degli utenti nell'API di gestione.
+
+
+Ogni nodo amministrativo memorizza i messaggi di audit in file di testo.  La condivisione di controllo contiene il file attivo (audit.log) e i registri di controllo compressi dei giorni precedenti.  Ogni nodo della griglia memorizza anche una copia delle informazioni di audit generate sul nodo.
+
+È possibile accedere ai file di registro di controllo direttamente dalla riga di comando del nodo di amministrazione.
+
+StorageGRID può inviare informazioni di audit per impostazione predefinita, ma è possibile modificare la destinazione:
+
+* StorageGRID utilizza per impostazione predefinita le destinazioni di controllo dei nodi locali.
+* Le voci del registro di controllo di Grid Manager e Tenant Manager potrebbero essere inviate a un nodo di archiviazione.
+* Facoltativamente, è possibile modificare la destinazione dei log di controllo e inviare le informazioni di controllo a un server syslog esterno. I registri locali dei record di controllo continuano a essere generati e archiviati quando viene configurato un server syslog esterno.
+* link:../monitor/configure-audit-messages.html["Scopri come configurare i messaggi di controllo e le destinazioni dei log"] .
+
+
+Per i dettagli sul file di registro di controllo, il formato dei messaggi di controllo, i tipi di messaggi di controllo e gli strumenti disponibili per analizzare i messaggi di controllo, vederelink:../audit/index.html["Esaminare i registri di controllo"] .

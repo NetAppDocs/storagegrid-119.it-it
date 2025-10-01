@@ -1,0 +1,61 @@
+---
+permalink: audit/data-types.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, data, types, UI32, UI64, FC32, IPAD, CSTR, IPAD 
+summary: Per memorizzare le informazioni nei messaggi di controllo vengono utilizzati diversi tipi di dati. 
+---
+= Tipi di dati
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Per memorizzare le informazioni nei messaggi di controllo vengono utilizzati diversi tipi di dati.
+
+[cols="1a,4a"]
+|===
+| Tipo | Descrizione 
+
+
+ a| 
+UI32
+ a| 
+Intero lungo senza segno (32 bit); può memorizzare i numeri da 0 a 4.294.967.295.
+
+
+
+ a| 
+UI64
+ a| 
+Numero intero doppio lungo senza segno (64 bit); può memorizzare i numeri da 0 a 18.446.744.073.709.551.615.
+
+
+
+ a| 
+FC32
+ a| 
+Costante di quattro caratteri; un valore intero senza segno a 32 bit rappresentato da quattro caratteri ASCII, ad esempio "ABCD".
+
+
+
+ a| 
+iPad
+ a| 
+Utilizzato per gli indirizzi IP.
+
+
+
+ a| 
+CSTR
+ a| 
+Un array di lunghezza variabile di caratteri UTF-8.  I caratteri possono essere sottoposti a escape con le seguenti convenzioni:
+
+* La barra rovesciata è \\.
+* Il ritorno a capo è \r.
+* Le virgolette doppie sono \ʺ.
+* L'avanzamento di riga (nuova riga) è \n.
+* I caratteri possono essere sostituiti dai loro equivalenti esadecimali (nel formato \xHH, dove HH è il valore esadecimale che rappresenta il carattere).
+
+
+|===
