@@ -39,10 +39,16 @@ La tabella seguente descrive come StorageGRID implementa le operazioni degli ogg
  a| 
 EliminaOggetto
  a| 
-Autenticazione a più fattori (MFA) e intestazione di risposta `x-amz-mfa` non sono supportati.
-
 Durante l'elaborazione di una richiesta DeleteObject, StorageGRID tenta di rimuovere immediatamente tutte le copie dell'oggetto da tutte le posizioni archiviate.  In caso di esito positivo, StorageGRID restituisce immediatamente una risposta al client.  Se non è possibile rimuovere tutte le copie entro 30 secondi (ad esempio perché una posizione è temporaneamente non disponibile), StorageGRID mette in coda le copie per la rimozione e quindi segnala l'esito positivo al client.
 
+Restrizioni::
++
+--
+* Autenticazione a più fattori (MFA) e intestazione di risposta `x-amz-mfa` non sono supportati.
+* Le  `If-None` e  `If-None-Match` intestazioni sono accettate ma non funzionanti.
+
+
+--
 Controllo delle versioni:: Per rimuovere una versione specifica, il richiedente deve essere il proprietario del bucket e utilizzare `versionId` sottorisorsa.  L'utilizzo di questa sottorisorsa elimina definitivamente la versione.  Se il `versionId` corrisponde a un marcatore di eliminazione, l'intestazione della risposta `x-amz-delete-marker` viene restituito impostato su `true` .
 +
 --

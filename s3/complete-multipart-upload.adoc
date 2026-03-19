@@ -59,6 +59,14 @@ NOTE: IL `ETag` il valore restituito non è una somma MD5 dei dati, ma segue l'i
 
 Le seguenti intestazioni di richiesta non sono supportate:
 
+* `If-Match`
++
+The `If-Match header` è accettato ma non funzionale.
+
+* `If-None-Match`
++
+The `If-None-Match header` è accettato ma non funzionale.
+
 * `x-amz-sdk-checksum-algorithm`
 * `x-amz-trailer`
 
