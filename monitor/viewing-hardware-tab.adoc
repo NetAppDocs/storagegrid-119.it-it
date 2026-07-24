@@ -30,6 +30,7 @@ Se il nodo è un nodo appliance, questa scheda include anche una sezione con mag
 
 
 
+[[view-information-about-appliance-storage-nodes]]
 == Visualizza informazioni sui nodi di archiviazione dell'appliance
 
 Nella pagina Nodi sono elencate le informazioni sullo stato del servizio e su tutte le risorse di calcolo, dei dispositivi disco e di rete per ciascun nodo di archiviazione dell'appliance.  È inoltre possibile visualizzare la memoria, l'hardware di archiviazione, la versione del firmware del controller, le risorse di rete, le interfacce di rete, gli indirizzi di rete e la ricezione e la trasmissione dei dati.
@@ -496,6 +497,7 @@ image::../media/nodes_page_storage_tables.png[Tabelle di archiviazione delle pag
 
 
 
+[[view-information-about-appliance-admin-nodes-and-gateway-nodes]]
 == Visualizza informazioni sui nodi di amministrazione dell'appliance e sui nodi gateway
 
 La pagina Nodi elenca le informazioni sullo stato del servizio e su tutte le risorse di calcolo, dei dispositivi disco e di rete per ogni appliance di servizi utilizzata come nodo di amministrazione o nodo gateway.  È inoltre possibile visualizzare la memoria, l'hardware di archiviazione, le risorse di rete, le interfacce di rete, gli indirizzi di rete e la ricezione e la trasmissione di dati.

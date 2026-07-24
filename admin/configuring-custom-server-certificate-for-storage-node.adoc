@@ -30,6 +30,7 @@ NOTE: Per garantire che le operazioni non vengano interrotte da un certificato s
 
 
 
+[[add-a-custom-s3-api-certificate]]
 == Aggiungi un certificato API S3 personalizzato
 
 .Passi
@@ -159,6 +160,7 @@ NOTE: Dopo aver caricato o generato un nuovo certificato, attendere fino a un gi
 
 
 
+[[restore-the-default-s3-api-certificate]]
 == Ripristina il certificato API S3 predefinito
 
 È possibile tornare a utilizzare il certificato API S3 predefinito per le connessioni client S3 ai nodi di archiviazione.  Tuttavia, non è possibile utilizzare il certificato API S3 predefinito per un endpoint del bilanciatore del carico.
@@ -179,6 +181,7 @@ Se si dispone dell'autorizzazione di accesso Root e per le connessioni degli end
 
 
 
+[[download-or-copy-the-s3-api-certificate]]
 == Scarica o copia il certificato API S3
 
 È possibile salvare o copiare il contenuto del certificato API S3 per utilizzarlo altrove.

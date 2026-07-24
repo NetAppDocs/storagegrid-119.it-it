@@ -23,6 +23,7 @@ Quando un client si connette al server tramite HTTPS, il server risponde con il 
 
 StorageGRID funge da server per alcune connessioni (ad esempio l'endpoint del bilanciatore del carico) o da client per altre connessioni (ad esempio il servizio di replica CloudMirror).
 
+[[gridca_details]]
 *Certificato CA predefinito della griglia*
 
 StorageGRID include un'autorità di certificazione (CA) integrata che genera un certificato CA Grid interno durante l'installazione del sistema. Per impostazione predefinita, il certificato Grid CA viene utilizzato per proteggere il traffico StorageGRID interno. Un'autorità di certificazione (CA) esterna può rilasciare certificati personalizzati pienamente conformi alle policy di sicurezza delle informazioni della tua organizzazione.  Sebbene sia possibile utilizzare il certificato Grid CA per un ambiente non di produzione, la procedura consigliata per un ambiente di produzione è quella di utilizzare certificati personalizzati firmati da un'autorità di certificazione esterna.  Sono supportate anche le connessioni non protette senza certificato, ma non sono consigliate.
@@ -39,6 +40,7 @@ Le varianti dei tipi di certificato server e client vengono implementate in dive
 
 
 
+[[access-security-certificates]]
 == Certificati di sicurezza di accesso
 
 È possibile accedere alle informazioni su tutti i certificati StorageGRID in un'unica posizione, insieme ai collegamenti al flusso di lavoro di configurazione per ciascun certificato.
@@ -193,12 +195,15 @@ Puoi:
 
 
 
+[[security-certificate-details]]
 == Dettagli del certificato di sicurezza
 
 Di seguito viene descritto ciascun tipo di certificato di sicurezza, con link alle istruzioni di implementazione.
 
 
 
+[[management-interface-certificate]]
+[[adminclientcert_details]]
 === Certificato di interfaccia di gestione
 
 [cols="1a,1a,1a,1a"]
@@ -222,6 +227,7 @@ link:configuring-custom-server-certificate-for-grid-manager-tenant-manager.html[
 |===
 
 
+[[s3-api-certificate]]
 === Certificato API S3
 
 [cols="1a,1a,1a,1a"]
@@ -241,12 +247,14 @@ link:configuring-custom-server-certificate-for-storage-node.html["Configurare i 
 |===
 
 
+[[grid-ca-certificate]]
 === Certificato CA di Grid
 
 Vedi il<<gridca_details,Descrizione del certificato CA Grid predefinito>> .
 
 
 
+[[administrator-client-certificate]]
 === Certificato client amministratore
 
 [cols="1a,1a,1a,1a"]
@@ -270,6 +278,7 @@ link:configuring-administrator-client-certificates.html["Configurare i certifica
 |===
 
 
+[[load-balancer-endpoint-certificate]]
 === Certificato dell'endpoint del bilanciatore del carico
 
 [cols="1a,1a,1a,1a"]
@@ -295,6 +304,7 @@ Puoi anche utilizzare una versione personalizzata del globale<<Certificato API S
 |===
 
 
+[[cloud-storage-pool-endpoint-certificate]]
 === Certificato endpoint del pool di archiviazione cloud
 
 [cols="1a,1a,1a,1a"]
@@ -314,6 +324,7 @@ link:../ilm/creating-cloud-storage-pool.html["Creare un pool di archiviazione cl
 |===
 
 
+[[email-alert-notification-certificate]]
 === Certificato di notifica di avviso via e-mail
 
 [cols="1a,1a,1a,1a"]
@@ -337,6 +348,7 @@ link:../monitor/email-alert-notifications.html["Imposta notifiche e-mail per gli
 |===
 
 
+[[external-syslog-server-certificate]]
 === Certificato del server syslog esterno
 
 [cols="1a,1a,1a,1a"]
@@ -358,6 +370,7 @@ link:../monitor/configure-audit-messages.html#use-external-syslog-server["Utiliz
 |===
 
 
+[[grid-federation-certificategrid-federation-connection-certificate]]
 === [[grid-federation-certificate]]Certificato di connessione alla federazione di rete
 
 [cols="1a,1a,1a,1a"]
@@ -379,6 +392,7 @@ Autenticare e crittografare le informazioni inviate tra l'attuale sistema Storag
 |===
 
 
+[[identity-federation-certificate]]
 === Certificato di federazione dell'identità
 
 [cols="1a,1a,1a,1a"]
@@ -398,6 +412,7 @@ link:using-identity-federation.html["Utilizzare la federazione delle identità"]
 |===
 
 
+[[key-management-server-kms-certificate]]
 === Certificato del server di gestione delle chiavi (KMS)
 
 [cols="1a,1a,1a,1a"]
@@ -417,6 +432,7 @@ link:kms-adding.html["Aggiungi server di gestione delle chiavi (KMS)"]
 |===
 
 
+[[platform-services-endpoint-certificate]]
 === Certificato endpoint dei servizi di piattaforma
 
 [cols="1a,1a,1a,1a"]
@@ -438,6 +454,7 @@ link:../tenant/editing-platform-services-endpoint.html["Modifica endpoint dei se
 |===
 
 
+[[single-sign-on-sso-certificate]]
 === Certificato Single Sign-On (SSO)
 
 [cols="1a,1a,1a,1a"]
@@ -457,10 +474,12 @@ link:configuring-sso.html["Configurare l'accesso singolo"]
 |===
 
 
+[[certificate-examples]]
 == Esempi di certificati
 
 
 
+[[example-1-load-balancer-service]]
 === Esempio 1: servizio Load Balancer
 
 In questo esempio, StorageGRID funge da server.
@@ -475,6 +494,7 @@ In questo esempio, StorageGRID funge da server.
 
 
 
+[[example-2-external-key-management-server-kms]]
 === Esempio 2: Server di gestione delle chiavi esterno (KMS)
 
 In questo esempio, StorageGRID funge da client.

@@ -161,6 +161,7 @@ Le impostazioni e-mail vengono salvate.
 
 
 
+[[information-included-in-alert-email-notifications]]
 == Informazioni incluse nelle notifiche e-mail di avviso
 
 Dopo aver configurato il server di posta elettronica SMTP, le notifiche e-mail vengono inviate ai destinatari designati quando viene attivato un avviso, a meno che la regola di avviso non venga soppressa da un silenzio. Vedere link:silencing-alert-notifications.html["Disattiva le notifiche di avviso"] .
@@ -210,6 +211,7 @@ Il nome host del nodo di amministrazione che ha inviato la notifica.
 |===
 
 
+[[how-alerts-are-grouped]]
 == Come vengono raggruppati gli avvisi
 
 Per evitare che venga inviato un numero eccessivo di notifiche e-mail quando vengono attivati ​​gli avvisi, StorageGRID tenta di raggruppare più avvisi nella stessa notifica.
@@ -278,6 +280,7 @@ StorageGRID continua a inviare notifiche e-mail una volta ogni 7 giorni finché 
 |===
 
 
+[[troubleshoot-alert-email-notifications]]
 == Risoluzione dei problemi relativi alle notifiche e-mail di avviso
 
 Se viene attivato l'avviso *Errore di notifica e-mail* o non riesci a ricevere la notifica e-mail di avviso di prova, segui questi passaggi per risolvere il problema.

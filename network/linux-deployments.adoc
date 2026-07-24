@@ -22,12 +22,14 @@ Vedere le istruzioni di installazione perlink:../rhel/index.html["Red Hat Enterp
 
 
 
+[[host-network-configuration-for-container-engine-deployments]]
 == Configurazione della rete host per le distribuzioni del motore del contenitore
 
 Prima di avviare la distribuzione di StorageGRID su una piattaforma di motore di container, determina quali reti (Grid, Admin, Client) utilizzerà ciascun nodo.  È necessario assicurarsi che l'interfaccia di rete di ciascun nodo sia configurata sulla corretta interfaccia host virtuale o fisica e che ciascuna rete disponga di larghezza di banda sufficiente.
 
 
 
+[[physical-hosts]]
 === Host fisici
 
 Se si utilizzano host fisici per supportare i nodi della griglia:
@@ -50,6 +52,7 @@ NOTE: Un'interfaccia fisica sull'host può essere utilizzata dall'host stesso e 
 
 
 
+[[minimum-bandwidth-recommendations]]
 === Raccomandazioni sulla larghezza di banda minima
 
 Nella tabella seguente sono riportate le raccomandazioni minime sulla larghezza di banda LAN per ciascun tipo di nodo StorageGRID e ciascun tipo di rete.  È necessario fornire a ciascun host fisico o virtuale una larghezza di banda di rete sufficiente a soddisfare i requisiti minimi aggregati di larghezza di banda per il numero totale e il tipo di nodi StorageGRID che si prevede di eseguire su tale host.

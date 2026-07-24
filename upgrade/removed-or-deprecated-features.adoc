@@ -15,6 +15,7 @@ Alcune funzionalità e capacità sono state rimosse o deprecate in questa versio
 
 
 
+[[definitions]]
 == Definizioni
 
 Obsoleto:: La funzionalità *non dovrebbe* essere utilizzata nei nuovi ambienti di produzione.  Gli ambienti di produzione esistenti possono continuare a utilizzare la funzionalità.
@@ -24,6 +25,7 @@ RIMOSSO:: Prima versione che *non* supporta la funzionalità.
 
 
 
+[[storagegrid-end-of-feature-support]]
 == Supporto per la fine delle funzionalità StorageGRID
 
 Le funzionalità deprecate verranno rimosse nelle versioni principali N+2.  Ad esempio, se una funzionalità è obsoleta nella versione N (ad esempio, 6.3), l'ultima versione in cui la funzionalità sarà presente sarà N+1 (ad esempio, 6.4).  La versione N+2 (ad esempio, 6.5) è la prima versione quando la funzionalità non è presente nel prodotto.

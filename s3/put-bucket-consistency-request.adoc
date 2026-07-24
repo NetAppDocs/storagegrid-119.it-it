@@ -20,6 +20,7 @@ Per completare questa operazione è necessario disporre dell'autorizzazione s3:P
 
 
 
+[[request]]
 == Richiesta
 
 IL `x-ntap-sg-consistency` il parametro deve contenere uno dei seguenti valori:
@@ -67,6 +68,7 @@ Fornisce coerenza finale sia per i nuovi oggetti che per gli aggiornamenti degli
 
 
 
+[[request-example]]
 == Richiedi esempio
 
 [listing, subs="specialcharacters,quotes"]

@@ -15,6 +15,7 @@ L'utilizzo della federazione delle identità velocizza la configurazione di grup
 
 
 
+[[configure-identity-federation-for-grid-manager]]
 == Configurare la federazione delle identità per Grid Manager
 
 È possibile configurare la federazione delle identità in Grid Manager se si desidera che i gruppi di amministratori e gli utenti vengano gestiti in un altro sistema, ad esempio Active Directory, Azure Active Directory (Azure AD), OpenLDAP o Oracle Directory Server.
@@ -41,6 +42,7 @@ NOTE: Se si desidera utilizzare un servizio LDAP v3 non presente nell'elenco, co
 
 
 
+[[enter-the-configuration]]
 === Inserisci la configurazione
 
 .Passi
@@ -142,6 +144,7 @@ Se selezioni questa impostazione, copia e incolla il certificato di sicurezza pe
 
 
 
+[[test-the-connection-and-save-the-configuration]]
 === Testare la connessione e salvare la configurazione
 
 Dopo aver immesso tutti i valori, è necessario testare la connessione prima di poter salvare la configurazione.  StorageGRID verifica le impostazioni di connessione per il server LDAP e il formato del nome utente associato, se ne è stato fornito uno.
@@ -170,6 +173,7 @@ image::../media/identity_federation_test_connection.png[Richiesta di federazione
 
 
 
+[[force-synchronization-with-the-identity-source]]
 == Forza la sincronizzazione con la fonte dell'identità
 
 Il sistema StorageGRID sincronizza periodicamente i gruppi federati e gli utenti dalla fonte di identità.  È possibile forzare l'avvio della sincronizzazione se si desidera abilitare o limitare le autorizzazioni utente il più rapidamente possibile.
@@ -188,6 +192,7 @@ NOTE: L'avviso *Errore di sincronizzazione della federazione delle identità* vi
 
 
 
+[[disable-identity-federation]]
 == Disabilitare la federazione delle identità
 
 È possibile disattivare temporaneamente o permanentemente la federazione delle identità per gruppi e utenti. Quando la federazione delle identità è disabilitata, non c'è comunicazione tra StorageGRID e l'origine dell'identità. Tuttavia, tutte le impostazioni configurate vengono mantenute, consentendoti di riattivare facilmente la federazione delle identità in futuro.
@@ -208,6 +213,7 @@ Prima di disattivare la federazione delle identità, è necessario tenere presen
 
 
 
+[[guidelines-for-configuring-an-openldap-server]]
 == Linee guida per la configurazione di un server OpenLDAP
 
 Se si desidera utilizzare un server OpenLDAP per la federazione delle identità, è necessario configurare impostazioni specifiche sul server OpenLDAP.
@@ -217,12 +223,14 @@ CAUTION: Per le origini identità diverse da ActiveDirectory o Azure, StorageGRI
 
 
 
+[[memberof-and-refint-overlays]]
 === Sovrapposizioni di membri e raffinazione
 
 Le sovrapposizioni memberof e refint dovrebbero essere abilitate.  Per ulteriori informazioni, consultare le istruzioni per la manutenzione inversa dell'appartenenza al gruppo inhttp://www.openldap.org/doc/admin24/index.html["Documentazione OpenLDAP: Guida dell'amministratore versione 2.4"^] .
 
 
 
+[[indexing]]
 === Indicizzazione
 
 È necessario configurare i seguenti attributi OpenLDAP con le parole chiave di indice specificate:

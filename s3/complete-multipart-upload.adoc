@@ -18,12 +18,14 @@ NOTE: StorageGRID supporta valori non consecutivi in ​​ordine crescente per 
 
 
 
+[[resolve-conflicts]]
 == Risolvere i conflitti
 
 Le richieste dei client in conflitto, ad esempio due client che scrivono sulla stessa chiave, vengono risolte in base al principio "latest-wins".  La tempistica per la valutazione "latest-wins" si basa sul momento in cui il sistema StorageGRID completa una determinata richiesta e non su quando i client S3 iniziano un'operazione.
 
 
 
+[[supported-request-headers]]
 == Intestazioni di richiesta supportate
 
 Sono supportate le seguenti intestazioni di richiesta:
@@ -55,6 +57,7 @@ NOTE: IL `ETag` il valore restituito non è una somma MD5 dei dati, ma segue l'i
 
 
 
+[[unsupported-request-headers]]
 == Intestazioni di richiesta non supportate
 
 Le seguenti intestazioni di richiesta non sono supportate:
@@ -73,6 +76,7 @@ The `If-None-Match header` è accettato ma non funzionale.
 
 
 
+[[versioning]]
 == Controllo delle versioni
 
 Questa operazione completa un caricamento in più parti.  Se per un bucket è abilitato il controllo delle versioni, la versione dell'oggetto viene creata dopo il completamento del caricamento multiparte.
@@ -86,6 +90,7 @@ NOTE: Quando il controllo delle versioni è abilitato per un bucket, il completa
 
 
 
+[[failed-replication-notification-or-metadata-notification]]
 == Replicazione, notifica o notifica dei metadati non riuscita
 
 Se il bucket in cui avviene il caricamento multiparte è configurato per un servizio di piattaforma, il caricamento multiparte riesce anche se l'azione di replica o notifica associata fallisce.

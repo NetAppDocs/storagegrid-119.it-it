@@ -24,6 +24,7 @@ I nodi StorageGRID richiedono tre categorie logiche di archiviazione:
 
 
 
+[[performance-requirements]]
 == Requisiti di prestazione
 
 Le prestazioni dei volumi utilizzati per il pool di contenitori, i dati di sistema e i metadati degli oggetti influiscono in modo significativo sulle prestazioni complessive del sistema.  Per questi volumi è consigliabile utilizzare un archivio di livello prestazionale (SAS o SSD da 10K) per garantire prestazioni del disco adeguate in termini di latenza, operazioni di input/output al secondo (IOPS) e throughput.  È possibile utilizzare l'archiviazione a livelli di capacità (NL-SAS/SATA) per l'archiviazione persistente dei dati degli oggetti.
@@ -32,6 +33,7 @@ I volumi utilizzati per il pool di contenitori, i dati di sistema e i dati degli
 
 
 
+[[requirements-for-hosts-that-use-netapp-ontap-storage]]
 == Requisiti per gli host che utilizzano l'archiviazione NetApp ONTAP
 
 Se il nodo StorageGRID utilizza storage assegnato da un sistema NetApp ONTAP , verificare che il volume non abbia un criterio di suddivisione in livelli FabricPool abilitato.  La disattivazione della suddivisione in livelli FabricPool per i volumi utilizzati con i nodi StorageGRID semplifica la risoluzione dei problemi e le operazioni di archiviazione.
@@ -41,6 +43,7 @@ NOTE: Non utilizzare mai FabricPool per riportare i dati relativi a StorageGRID 
 
 
 
+[[number-of-hosts-required]]
 == Numero di host richiesti
 
 Ogni sito StorageGRID richiede un minimo di tre nodi di archiviazione.
@@ -52,6 +55,7 @@ Altri tipi di nodi, come i nodi amministrativi o i nodi gateway, possono essere 
 
 
 
+[[number-of-storage-volumes-for-each-host]]
 == Numero di volumi di archiviazione per ciascun host
 
 Nella tabella seguente viene mostrato il numero di volumi di archiviazione (LUN) richiesti per ciascun host e la dimensione minima richiesta per ogni LUN, in base ai nodi che verranno distribuiti su tale host.
@@ -140,6 +144,7 @@ NOTE: A seconda del livello di controllo configurato, delle dimensioni degli inp
 
 
 
+[[minimum-storage-space-for-a-host]]
 == Spazio di archiviazione minimo per un host
 
 La tabella seguente mostra lo spazio di archiviazione minimo richiesto per ciascun tipo di nodo.  È possibile utilizzare questa tabella per determinare la quantità minima di spazio di archiviazione da fornire all'host in ciascuna categoria di archiviazione, in base ai nodi che verranno distribuiti su tale host.
@@ -186,6 +191,7 @@ _non applicabile_
 |===
 
 
+[[example-calculating-the-storage-requirements-for-a-host]]
 == Esempio: calcolo dei requisiti di archiviazione per un host
 
 Supponiamo di voler distribuire tre nodi sullo stesso host: un nodo di archiviazione, un nodo di amministrazione e un nodo gateway. È necessario fornire all'host almeno nove volumi di archiviazione. Saranno necessari almeno 300 GB di storage di livello prestazioni per i contenitori dei nodi, 670 GB di storage di livello prestazioni per i dati di sistema e i registri delle transazioni e 12 TB di storage di livello capacità per i dati degli oggetti.
@@ -287,6 +293,8 @@ Nodo Gateway
 |===
 
 
+[[storage-requirements-for-storage-nodes]]
+[[storage_req_SN]]
 == Requisiti di archiviazione per i nodi di archiviazione
 
 Un nodo di archiviazione basato su software può avere da 1 a 48 volumi di archiviazione; si consigliano 3 o più volumi di archiviazione. Ogni volume di archiviazione deve essere pari o superiore a 4 TB.

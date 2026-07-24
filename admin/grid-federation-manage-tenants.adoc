@@ -23,6 +23,7 @@ summary: 'È possibile consentire agli account tenant S3 di utilizzare una conne
 
 
 
+[[create-a-permitted-tenant]]
 == Creare un inquilino autorizzato
 
 Se si desidera consentire a un account tenant nuovo o esistente di utilizzare una connessione di federazione di griglia per la clonazione dell'account e la replica tra griglie, seguire le istruzioni generali perlink:creating-tenant-account.html["creare un nuovo tenant S3"] Olink:editing-tenant-account.html["modificare un account inquilino"] e notare quanto segue:
@@ -47,6 +48,7 @@ TIP: Prima che un utente root locale possa accedere al tenant replicato sulla gr
 
 
 
+[[view-a-permitted-tenant]]
 == Visualizza un inquilino autorizzato
 
 È possibile visualizzare i dettagli di un tenant autorizzato a utilizzare una connessione di federazione di rete.
@@ -65,6 +67,7 @@ image::../media/grid-federation-tenant-detail.png[Scheda Federazione di griglia 
 
 
 
+[[edit-a-permitted-tenant]]
 == Modifica un inquilino autorizzato
 
 Se è necessario modificare un tenant che dispone dell'autorizzazione *Usa connessione federazione griglia*, seguire le istruzioni generali perlink:editing-tenant-account.html["modifica di un account inquilino"] e notare quanto segue:
@@ -76,6 +79,7 @@ Se è necessario modificare un tenant che dispone dell'autorizzazione *Usa conne
 
 
 
+[[delete-a-permitted-tenant]]
 == Elimina un inquilino autorizzato
 
 Se è necessario rimuovere un tenant che dispone dell'autorizzazione *Usa connessione federazione griglia*, seguire le istruzioni generali perlink:deleting-tenant-account.html["eliminazione di un account tenant"] e notare quanto segue:
@@ -92,6 +96,7 @@ Per evitare questi errori, rimuovere l'autorizzazione del tenant a utilizzare la
 
 
 
+[[remove-grid-federation-connection-permissionremove-use-grid-federation-connection-permission]]
 == [[remove-grid-federation-connection-permission]]Rimuovi Usa autorizzazione di connessione alla federazione della griglia
 
 Per impedire a un tenant di utilizzare una connessione federata alla griglia, è necessario rimuovere l'autorizzazione *Usa connessione federata alla griglia*.
@@ -115,6 +120,7 @@ NOTE: Riattivando l'autorizzazione *Usa connessione federazione griglia*, la gri
 
 
 
+[[disable-replication-for-tenant-buckets]]
 === Disabilita la replica per i bucket tenant
 
 Come primo passaggio, disabilitare la replica tra griglie per tutti i bucket tenant.
@@ -133,6 +139,7 @@ TIP: Non è possibile rimuovere l'autorizzazione *Usa connessione federazione gr
 
 
 
+[[remove-permission-for-tenant]]
 === Rimuovi l'autorizzazione per l'inquilino
 
 Dopo aver disabilitato la replica tra griglie per i bucket tenant, è possibile rimuovere l'autorizzazione del tenant a utilizzare la connessione federata della griglia.
@@ -184,6 +191,7 @@ Puoi procedere in uno dei seguenti modi:
 
 
 
+[[forceremovepermissionremove-the-permission-by-force]]
 == [[force_remove_permission]]Rimuovi il permesso con la forza
 
 Se necessario, è possibile forzare la rimozione dell'autorizzazione di un tenant a utilizzare una connessione di federazione di griglia anche se nei bucket del tenant è abilitata la replica tra griglie.

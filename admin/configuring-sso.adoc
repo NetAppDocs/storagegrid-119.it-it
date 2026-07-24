@@ -15,6 +15,7 @@ Quando è abilitato l'accesso Single Sign-On (SSO), gli utenti possono accedere 
 
 
 
+[[how-single-sign-on-works]]
 == Come funziona l'accesso singolo
 
 Il sistema StorageGRID supporta l'accesso Single Sign-On (SSO) utilizzando lo standard Security Assertion Markup Language 2.0 (SAML 2.0).
@@ -23,6 +24,7 @@ Prima di abilitare l'accesso Single Sign-On (SSO), esaminare in che modo i proce
 
 
 
+[[sign-in-when-sso-is-enabled]]
 === Sign in quando SSO è abilitato
 
 Quando l'SSO è abilitato e accedi a StorageGRID, verrai reindirizzato alla pagina SSO della tua organizzazione per convalidare le tue credenziali.
@@ -82,6 +84,7 @@ Non è necessario reinserire le credenziali SSO.
 
 
 
+[[sign-out-when-sso-is-enabled]]
 === Disconnettersi quando SSO è abilitato
 
 Quando SSO è abilitato per StorageGRID, ciò che accade quando ci si disconnette dipende dall'account a cui si è effettuato l'accesso e da dove ci si disconnette.

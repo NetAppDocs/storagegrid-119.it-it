@@ -15,6 +15,7 @@ Potrebbe essere necessario risolvere avvisi ed errori relativi alle connessioni 
 
 
 
+[[grid-federation-errorsgrid-federation-connection-alerts-and-errors]]
 == [[grid-federation-errors]]Avvisi ed errori di connessione della federazione di rete
 
 Potresti ricevere avvisi o riscontrare errori con le connessioni della federazione di rete.
@@ -23,6 +24,7 @@ Dopo aver apportato modifiche per risolvere un problema di connessione, testare 
 
 
 
+[[grid-federation-connection-failure-alert]]
 === Avviso di errore di connessione alla federazione di rete
 
 .Problema
@@ -40,6 +42,7 @@ Questo avviso indica che la connessione di federazione di rete tra le reti non f
 
 
 
+[[expiration-of-grid-federation-certificate-alert]]
 === Avviso di scadenza del certificato di federazione della griglia
 
 .Problema
@@ -53,6 +56,7 @@ Vedere le istruzioni per la rotazione dei certificati di connessione inlink:grid
 
 
 
+[[error-editing-a-grid-federation-connection]]
 === Errore durante la modifica di una connessione di federazione di griglia
 
 .Problema
@@ -69,10 +73,12 @@ Quando si modifica una connessione di federazione della griglia, StorageGRID ten
 
 
 
+[[account-clone-errors]]
 == Errori di clonazione dell'account
 
 
 
+[[cant-sign-in-to-a-cloned-tenant-account]]
 === Impossibile accedere a un account tenant clonato
 
 .Problema
@@ -88,6 +94,7 @@ Prima che un utente locale clonato possa accedere alla griglia di destinazione d
 
 
 
+[[tenant-created-without-a-clone]]
 === Tenant creato senza un clone
 
 .Problema
@@ -113,10 +120,12 @@ Se l'errore è stato risolto, l'account tenant verrà ora clonato nell'altra gri
 
 
 
+[[cross-grid-replication-alerts-and-errors]]
 == Avvisi ed errori di replicazione tra griglie
 
 
 
+[[last-error-shown-for-connection-or-tenant]]
 === Ultimo errore visualizzato per la connessione o il tenant
 
 .Problema
@@ -157,6 +166,7 @@ TIP: Dopo aver eliminato l'errore, potrebbe apparire un nuovo *Ultimo errore* se
 
 
 
+[[cross-grid-replication-permanent-failure-alert]]
 === Avviso di errore permanente della replicazione tra griglie
 
 .Problema
@@ -206,6 +216,7 @@ NOTE: Potrebbe volerci fino a un giorno prima che l'avviso venga cancellato una 
 
 
 
+[[cross-grid-replication-resource-unavailable-alert]]
 === Avviso di risorsa di replicazione tra griglie non disponibile
 
 .Problema

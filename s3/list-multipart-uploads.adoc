@@ -27,6 +27,7 @@ Sono supportati i seguenti parametri di richiesta:
 
 
 
+[[versioning]]
 == Controllo delle versioni
 
 Il caricamento multiparte consiste in operazioni separate per avviare il caricamento, elencare i caricamenti, caricare le parti, assemblare le parti caricate e completare il caricamento.  Gli oggetti vengono creati (e sottoposti a controllo di versione, se applicabile) quando viene eseguita l'operazione CompleteMultipartUpload.

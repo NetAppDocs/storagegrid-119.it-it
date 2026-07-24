@@ -20,6 +20,7 @@ NOTE: Negli esempi, la destinazione Client Network è stata configurata come bes
 
 
 
+[[example-for-primary-admin-node]]
 == Esempio per il nodo di amministrazione primario
 
 *Nome file di esempio*: `/etc/storagegrid/nodes/dc1-adm1.conf`
@@ -51,6 +52,7 @@ ADMIN_NETWORK_ESL = 192.168.100.0/21,172.16.0.0/21,172.17.0.0/21
 ----
 
 
+[[example-for-storage-node]]
 == Esempio per nodo di archiviazione
 
 *Nome file di esempio:* `/etc/storagegrid/nodes/dc1-sn1.conf`
@@ -76,6 +78,7 @@ GRID_NETWORK_GATEWAY = 10.1.0.1
 ----
 
 
+[[example-for-gateway-node]]
 == Esempio per il nodo gateway
 
 *Nome file di esempio:* `/etc/storagegrid/nodes/dc1-gw1.conf`
@@ -96,6 +99,7 @@ GRID_NETWORK_GATEWAY = 10.1.0.1
 ----
 
 
+[[example-for-a-non-primary-admin-node]]
 == Esempio per un nodo di amministrazione non primario
 
 *Nome file di esempio:* `/etc/storagegrid/nodes/dc1-adm2.conf`

@@ -17,6 +17,7 @@ L'avviso *Errore permanente nella replica tra griglie* indica che gli oggetti te
 
 
 
+[[determine-if-any-objects-failed-to-be-replicated]]
 == Determina se qualche oggetto non è stato replicato
 
 Per determinare se oggetti o marcatori di eliminazione non sono stati replicati nell'altra griglia, è possibile cercare nel registro di controllolink:../audit/cgrr-cross-grid-replication-request.html["CGRR (richiesta di replica tra griglie)"] messaggi.  Questo messaggio viene aggiunto al registro quando StorageGRID non riesce a replicare un oggetto, un oggetto multiparte o a eliminare un marcatore nel bucket di destinazione.
@@ -116,6 +117,7 @@ Il tipo di errore.  Se la replica tra griglie non riesce, l'errore è "Errore ge
 
 
 
+[[retry-failed-replications]]
 == Riprova le repliche non riuscite
 
 Dopo aver generato un elenco di oggetti ed eliminato i marcatori che non sono stati replicati nel bucket di destinazione e aver risolto i problemi sottostanti, è possibile riprovare la replica in uno dei due modi seguenti:
@@ -150,6 +152,7 @@ NOTE: In sospeso significa che la richiesta di replicazione tra griglie è stata
 
 
 
+[[monitor-replication-retries]]
 == Monitorare i tentativi di replicazione
 
 È necessario monitorare le operazioni di ripetizione della replica per assicurarsi che vengano completate.

@@ -20,6 +20,7 @@ summary: È possibile rimuovere un Cloud Storage Pool se non è utilizzato in un
 
 
 
+[[if-needed-use-ilm-to-move-object-data]]
 == Se necessario, utilizzare ILM per spostare i dati dell'oggetto
 
 Se il Cloud Storage Pool che si desidera rimuovere contiene dati di oggetti, è necessario utilizzare ILM per spostare i dati in una posizione diversa.  Ad esempio, puoi spostare i dati sui nodi di archiviazione nella tua griglia o su un pool di archiviazione cloud diverso.
@@ -47,6 +48,7 @@ Per il passaggio 2 della procedura guidata Crea regola ILM, selezionare la nuova
 
 
 
+[[delete-cloud-storage-pool]]
 == Elimina pool di archiviazione cloud
 
 Quando il Cloud Storage Pool è vuoto e non viene utilizzato in alcuna regola ILM, è possibile eliminarlo.

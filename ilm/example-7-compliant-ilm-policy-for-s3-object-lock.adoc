@@ -26,6 +26,7 @@ CAUTION: Le seguenti regole e policy ILM sono solo esempi.  Esistono molti modi 
 
 
 
+[[bucket-and-objects-for-s3-object-lock-example]]
 == Esempio di bucket e oggetti per S3 Object Lock
 
 In questo esempio, un account tenant S3 denominato Bank of ABC ha utilizzato Tenant Manager per creare un bucket con S3 Object Lock abilitato per archiviare i record bancari critici.
@@ -81,6 +82,7 @@ Ogni versione dell'oggetto ha la sua `retain-until-date` collocamento.  Questa i
 |===
 
 
+[[ilm-rule-1-for-s3-object-lock-example-erasure-coding-profile-with-bucket-matching]]
 == Regola ILM 1 per esempio di blocco oggetto S3: profilo di codifica di cancellazione con corrispondenza bucket
 
 Questa regola ILM di esempio si applica solo al conto tenant S3 denominato Bank of ABC.  Corrisponde a qualsiasi oggetto nel `bank-records` bucket e quindi utilizza la codifica di cancellazione per archiviare l'oggetto sui nodi di archiviazione in tre siti di data center utilizzando un profilo di codifica di cancellazione 6+3.  Questa regola soddisfa i requisiti dei bucket con S3 Object Lock abilitato: una copia viene conservata sui nodi di archiviazione dal giorno 0 all'infinito, utilizzando l'ora di ingestione come ora di riferimento.
@@ -148,6 +150,7 @@ Profilo di codifica di cancellazione
 |===
 
 
+[[ilm-rule-2-for-s3-object-lock-example-non-compliant-rule]]
 == Esempio di regola ILM 2 per blocco oggetto S3: regola non conforme
 
 Questa regola ILM di esempio memorizza inizialmente due copie replicate dell'oggetto sui nodi di archiviazione.  Dopo un anno, ne memorizza una copia per sempre su un Cloud Storage Pool.  Poiché questa regola utilizza un Cloud Storage Pool, non è conforme e non verrà applicata agli oggetti nei bucket con S3 Object Lock abilitato.
@@ -206,6 +209,7 @@ Posizionamenti
 |===
 
 
+[[ilm-rule-3-for-s3-object-lock-example-default-rule]]
 == Regola ILM 3 per esempio di blocco oggetto S3: regola predefinita
 
 Questa regola ILM di esempio copia i dati degli oggetti nei pool di archiviazione in due data center.  Questa regola conforme è concepita per essere la regola predefinita nella policy ILM.  Non include alcun filtro, non utilizza il tempo di riferimento non corrente e soddisfa i requisiti dei bucket con S3 Object Lock abilitato: due copie dell'oggetto vengono conservate sui nodi di archiviazione dal giorno 0 all'infinito, utilizzando Ingest come tempo di riferimento.
@@ -262,12 +266,14 @@ Dal giorno 0 all'infinito, conserva due copie replicate: una sui nodi di archivi
 |===
 
 
+[[compliant-ilm-policy-for-s3-object-lock-example]]
 == Esempio di policy ILM conforme per S3 Object Lock
 
 Per creare una policy ILM che protegga efficacemente tutti gli oggetti nel sistema, compresi quelli nei bucket con S3 Object Lock abilitato, è necessario selezionare le regole ILM che soddisfano i requisiti di archiviazione per tutti gli oggetti.  Quindi, è necessario simulare e attivare la policy.
 
 
 
+[[add-rules-to-the-policy]]
 === Aggiungere regole alla policy
 
 In questo esempio, la policy ILM include tre regole ILM, nel seguente ordine:
@@ -279,6 +285,7 @@ In questo esempio, la policy ILM include tre regole ILM, nel seguente ordine:
 
 
 
+[[simulate-the-policy]]
 === Simulare la politica
 
 Dopo aver aggiunto regole alla policy, scelto una regola conforme predefinita e organizzato le altre regole, dovresti simulare la policy testando gli oggetti dal bucket con S3 Object Lock abilitato e da altri bucket.  Ad esempio, quando si simula la policy di esempio, ci si aspetterebbe che gli oggetti di prova vengano valutati come segue:
@@ -295,6 +302,7 @@ Dopo aver aggiunto regole alla policy, scelto una regola conforme predefinita e 
 
 
 
+[[activate-the-policy]]
 === Attiva la politica
 
 Quando sei completamente soddisfatto che la nuova policy protegga i dati degli oggetti come previsto, puoi attivarla.

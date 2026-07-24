@@ -15,6 +15,7 @@ I nodi StorageGRID possono essere distribuiti su macchine virtuali VMware, all'i
 
 
 
+[[control-remote-ipmi-access-to-bmc]]
 == Controllare l'accesso IPMI remoto a BMC
 
 È possibile abilitare o disabilitare l'accesso IPMI remoto per tutti gli apparecchi che contengono un BMC. L'interfaccia IPMI remota consente l'accesso hardware di basso livello ai dispositivi StorageGRID a chiunque disponga di un account e di una password BMC . Se non è necessario l'accesso IPMI remoto al BMC, disabilitare questa opzione.
@@ -29,6 +30,7 @@ I nodi StorageGRID possono essere distribuiti su macchine virtuali VMware, all'i
 
 
 
+[[firewall-configuration]]
 == Configurazione del firewall
 
 Come parte del processo di rafforzamento del sistema, è necessario rivedere le configurazioni del firewall esterno e modificarle in modo che il traffico venga accettato solo dagli indirizzi IP e sulle porte da cui è strettamente necessario.
@@ -48,24 +50,28 @@ Per un elenco di tutte le porte interne ed esterne utilizzate da StorageGRID, ve
 
 
 
+[[disable-unused-services]]
 == Disabilitare i servizi non utilizzati
 
 Per tutti i nodi StorageGRID , è necessario disabilitare o bloccare l'accesso ai servizi non utilizzati. Ad esempio, se non si prevede di utilizzare DHCP, utilizzare Grid Manager per chiudere la porta 68. Selezionare *CONFIGURAZIONE* > *Controllo firewall* > *Gestisci accesso esterno*. Quindi modifica l'interruttore di stato per la porta 68 da *Aperto* a *Chiuso*.
 
 
 
+[[virtualization-containers-and-shared-hardware]]
 == Virtualizzazione, container e hardware condiviso
 
 Per tutti i nodi StorageGRID , evitare di eseguire StorageGRID sullo stesso hardware fisico di software non attendibile.  Non dare per scontato che le protezioni dell'hypervisor impediscano al malware di accedere ai dati protetti StorageGRID se sia StorageGRID che il malware sono presenti sullo stesso hardware fisico.  Ad esempio, gli attacchi Meltdown e Spectre sfruttano vulnerabilità critiche nei processori moderni e consentono ai programmi di rubare dati nella memoria dello stesso computer.
 
 
 
+[[protect-nodes-during-installation]]
 == Proteggere i nodi durante l'installazione
 
 Non consentire agli utenti non attendibili di accedere ai nodi StorageGRID tramite la rete durante l'installazione dei nodi.  I nodi non sono completamente sicuri finché non vengono uniti alla griglia.
 
 
 
+[[guidelines-for-admin-nodes]]
 == Linee guida per i nodi di amministrazione
 
 I nodi amministrativi forniscono servizi di gestione quali configurazione del sistema, monitoraggio e registrazione. Quando accedi a Grid Manager o a Tenant Manager, ti stai connettendo a un nodo di amministrazione.
@@ -85,6 +91,7 @@ Per maggiori informazioni, consultare le istruzioni perlink:../admin/index.html[
 
 
 
+[[guidelines-for-storage-nodes]]
 == Linee guida per i nodi di archiviazione
 
 I nodi di archiviazione gestiscono e archiviano dati e metadati degli oggetti.  Seguire queste linee guida per proteggere i nodi di archiviazione nel sistema StorageGRID .
@@ -98,6 +105,7 @@ I nodi di archiviazione gestiscono e archiviano dati e metadati degli oggetti.  
 
 
 
+[[guidelines-for-gateway-nodes]]
 == Linee guida per i nodi gateway
 
 I nodi gateway forniscono un'interfaccia di bilanciamento del carico opzionale che le applicazioni client possono utilizzare per connettersi a StorageGRID.  Seguire queste linee guida per proteggere tutti i nodi gateway nel sistema StorageGRID :
@@ -109,6 +117,7 @@ I nodi gateway forniscono un'interfaccia di bilanciamento del carico opzionale c
 
 
 
+[[guidelines-for-hardware-appliance-nodes]]
 == Linee guida per i nodi degli apparecchi hardware
 
 Gli apparecchi hardware StorageGRID sono progettati specificamente per l'uso in un sistema StorageGRID .  Alcuni dispositivi possono essere utilizzati come nodi di archiviazione.  Altri dispositivi possono essere utilizzati come nodi amministrativi o nodi gateway.  È possibile combinare nodi appliance con nodi basati su software oppure implementare griglie completamente progettate per tutti gli appliance.

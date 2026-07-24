@@ -24,6 +24,7 @@ Ogni gruppo HA fornisce l'accesso ai servizi condivisi sui nodi selezionati.
 
 
 
+[[how-do-you-create-an-ha-group]]
 == Come si crea un gruppo HA?
 
 . Selezionare un'interfaccia di rete per uno o più nodi amministrativi o nodi gateway.  È possibile utilizzare un'interfaccia Grid Network (eth0), un'interfaccia Client Network (eth2), un'interfaccia VLAN o un'interfaccia di accesso aggiunta al nodo.
@@ -40,6 +41,7 @@ Per le istruzioni, vederelink:configure-high-availability-group.html["Configurar
 
 
 
+[[what-is-the-active-interface]]
 == Qual è l'interfaccia attiva?
 
 Durante il normale funzionamento, tutti gli indirizzi VIP per il gruppo HA vengono aggiunti all'interfaccia primaria, che è la prima interfaccia in ordine di priorità.  Finché l'interfaccia primaria rimane disponibile, viene utilizzata quando i client si connettono a qualsiasi indirizzo VIP del gruppo.  Ciò significa che durante il normale funzionamento, l'interfaccia primaria è l'interfaccia "attiva" per il gruppo.
@@ -48,6 +50,7 @@ Allo stesso modo, durante il normale funzionamento, tutte le interfacce con prio
 
 
 
+[[view-the-current-ha-group-status-of-a-node]]
 == Visualizza lo stato attuale del gruppo HA di un nodo
 
 Per verificare se un nodo è assegnato a un gruppo HA e determinarne lo stato attuale, selezionare *NODI* > *_nodo_*.
@@ -72,6 +75,7 @@ image::../media/ha_group_primary_interface.png[Interfaccia primaria del gruppo H
 
 
 
+[[what-happens-when-the-active-interface-fails]]
 == Cosa succede quando l'interfaccia attiva fallisce?
 
 L'interfaccia che attualmente ospita gli indirizzi VIP è l'interfaccia attiva.  Se il gruppo HA include più di un'interfaccia e l'interfaccia attiva non funziona, gli indirizzi VIP vengono spostati sulla prima interfaccia di backup disponibile in ordine di priorità.  Se tale interfaccia non funziona, gli indirizzi VIP vengono spostati alla successiva interfaccia di backup disponibile e così via.

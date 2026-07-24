@@ -21,6 +21,7 @@ Se necessario, è possibile raggruppare le interfacce di rete di più nodi gatew
 
 
 
+[[primary-services-for-gateway-nodes]]
 == Servizi primari per i nodi gateway
 
 Nella tabella seguente sono riportati i servizi principali per i nodi gateway; tuttavia, questa tabella non elenca tutti i servizi del nodo.

@@ -27,6 +27,7 @@ Prima di eseguire la migrazione o la manutenzione dell'hypervisor, arrestare i n
 
 
 
+[[vmware-live-migration-not-supported]]
 == VMware Live Migration non supportato
 
 Quando si esegue un'installazione bare-metal su VM VMware, OpenStack Live Migration e VMware Live vMotion causano un salto temporale nella macchina virtuale e non sono supportati per nodi di griglia di alcun tipo.  Anche se raramente, orari errati possono causare la perdita di dati o di aggiornamenti della configurazione.
@@ -35,6 +36,7 @@ Quando si esegue un'installazione bare-metal su VM VMware, OpenStack Live Migrat
 
 
 
+[[consistent-network-interface-names]]
 == Nomi di interfaccia di rete coerenti
 
 Per spostare un nodo da un host a un altro, il servizio host StorageGRID deve avere una certa sicurezza che la connettività di rete esterna del nodo nella sua posizione attuale possa essere duplicata nella nuova posizione.  Questa sicurezza viene ottenuta tramite l'uso di nomi di interfaccia di rete coerenti negli host.
@@ -51,6 +53,7 @@ Esistono molti modi per ottenere una denominazione coerente dell'interfaccia di 
 
 
 
+[[shared-storage]]
 == Archiviazione condivisa
 
 Per ottenere migrazioni dei nodi rapide e con un overhead ridotto, la funzionalità di migrazione dei nodi StorageGRID non sposta fisicamente i dati dei nodi.  Invece, la migrazione dei nodi viene eseguita come una coppia di operazioni di esportazione e importazione, come segue:

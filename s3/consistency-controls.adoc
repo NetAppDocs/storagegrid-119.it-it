@@ -33,6 +33,7 @@ NOTE: Una modifica alla coerenza a livello di griglia si applica solo ai bucket 
 
 
 
+[[consistency-values]]
 == Valori di coerenza
 
 La coerenza influisce sul modo in cui i metadati utilizzati da StorageGRID per tracciare gli oggetti vengono distribuiti tra i nodi e, di conseguenza, sulla disponibilità degli oggetti per le richieste dei client.
@@ -48,6 +49,7 @@ La coerenza influisce sul modo in cui i metadati utilizzati da StorageGRID per t
 
 
 
+[[use-read-after-new-write-and-available-consistency]]
 == Utilizzare la coerenza "Lettura dopo nuova scrittura" e "Disponibile"
 
 Quando un'operazione HEAD o GET utilizza la coerenza "Read-after-new-write", StorageGRID esegue la ricerca in più passaggi, come segue:
@@ -62,6 +64,7 @@ A meno che non siano necessarie garanzie di coerenza simili ad Amazon S3, è pos
 
 
 
+[[api-operation-consistency-controlspecify-consistency-for-api-operation]]
 == [[api-operation-consistency-control]]Specifica la coerenza per l'operazione API
 
 Per impostare la coerenza per una singola operazione API, i valori di coerenza devono essere supportati per l'operazione ed è necessario specificare la coerenza nell'intestazione della richiesta.  In questo esempio la coerenza viene impostata su "Strong-site" per un'operazione GetObject.
@@ -79,6 +82,7 @@ NOTE: È necessario utilizzare la stessa coerenza per entrambe le operazioni Put
 
 
 
+[[bucket-consistency-controlspecify-consistency-for-bucket]]
 == [[bucket-consistency-control]]Specifica la coerenza per il bucket
 
 Per impostare la coerenza per il bucket, puoi utilizzare StorageGRIDlink:put-bucket-consistency-request.html["PUT Consistenza del secchio"] richiesta.  Oppure puoilink:../tenant/manage-bucket-consistency.html#change-bucket-consistency["modificare la consistenza di un bucket"] dal gestore dell'affitto.
@@ -92,6 +96,7 @@ Quando si imposta la consistenza di un bucket, tenere presente quanto segue:
 
 
 
+[[how-consistency-controls-and-ilm-rules-interacthow-consistency-and-ilm-rules-interact-to-affect-data-protection]]
 == [[come-interagiscono-i-controlli-di-coerenza-e-le-regole-ILM]]Come interagiscono la coerenza e le regole ILM per influenzare la protezione dei dati
 
 Sia la scelta della coerenza sia la regola ILM influiscono sul modo in cui gli oggetti vengono protetti.  Queste impostazioni possono interagire.
@@ -107,6 +112,7 @@ Equilibrato:: StorageGRID tenta di effettuare tutte le copie specificate nella r
 
 
 
+[[example-of-how-the-consistency-and-ilm-rule-can-interact]]
 == Esempio di come la coerenza e la regola ILM possono interagire
 
 Supponiamo di avere una griglia a due siti con la seguente regola ILM e la seguente coerenza:

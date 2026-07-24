@@ -15,6 +15,7 @@ summary: 'È necessario comprendere i requisiti di archiviazione e prestazioni p
 
 
 
+[[performance-requirements]]
 == Requisiti di prestazione
 
 Le prestazioni del volume del sistema operativo e del primo volume di archiviazione influiscono in modo significativo sulle prestazioni complessive del sistema.  Assicurarsi che forniscano prestazioni del disco adeguate in termini di latenza, operazioni di input/output al secondo (IOPS) e throughput.
@@ -23,6 +24,7 @@ Tutti i nodi StorageGRID richiedono che l'unità del sistema operativo e tutti i
 
 
 
+[[requirements-for-virtual-machines-that-use-netapp-ontap-storage]]
 == Requisiti per le macchine virtuali che utilizzano lo storage NetApp ONTAP
 
 Se si distribuisce un nodo StorageGRID come macchina virtuale con storage assegnato da un sistema NetApp ONTAP , è stato verificato che il volume non ha un criterio di suddivisione in livelli FabricPool abilitato.  Ad esempio, se un nodo StorageGRID è in esecuzione come macchina virtuale su un host VMware, assicurarsi che il volume che supporta il datastore per il nodo non abbia un criterio di suddivisione in livelli FabricPool abilitato.  La disattivazione della suddivisione in livelli FabricPool per i volumi utilizzati con i nodi StorageGRID semplifica la risoluzione dei problemi e le operazioni di archiviazione.
@@ -32,12 +34,14 @@ NOTE: Non utilizzare mai FabricPool per riportare i dati relativi a StorageGRID 
 
 
 
+[[number-of-virtual-machines-required]]
 == Numero di macchine virtuali richieste
 
 Ogni sito StorageGRID richiede un minimo di tre nodi di archiviazione.
 
 
 
+[[storage-requirements-by-node-type]]
 == Requisiti di archiviazione per tipo di nodo
 
 In un ambiente di produzione, le macchine virtuali per i nodi StorageGRID devono soddisfare requisiti diversi, a seconda dei tipi di nodi.
@@ -102,6 +106,7 @@ NOTE: A seconda del livello di controllo configurato, delle dimensioni degli inp
 
 
 
+[[storage-requirements-for-storage-nodes]]
 == Requisiti di archiviazione per i nodi di archiviazione
 
 Un nodo di archiviazione basato su software può avere da 1 a 16 volumi di archiviazione; si consigliano 3 o più volumi di archiviazione. Ogni volume di archiviazione deve essere pari o superiore a 4 TB.

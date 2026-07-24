@@ -15,6 +15,7 @@ summary: 'È necessario verificare che l"infrastruttura e la configurazione di r
 
 
 
+[[general-networking-requirements]]
 == Requisiti generali di rete
 
 Tutte le distribuzioni StorageGRID devono essere in grado di supportare le seguenti connessioni.
@@ -45,6 +46,7 @@ Sono supportate solo le connessioni client S3 e le connessioni amministrative SS
 
 
 
+[[wide-area-networks-wans-for-multiple-sites]]
 == Reti WAN (Wide Area Network) per più siti
 
 Quando si configura un sistema StorageGRID con più siti, la connessione WAN tra i siti deve avere una larghezza di banda minima di 25 Mbit/secondo in ciascuna direzione prima di tenere conto del traffico client.  La replicazione dei dati o la codifica di cancellazione tra siti, l'espansione dei nodi o dei siti, il ripristino dei nodi e altre operazioni o configurazioni richiederanno larghezza di banda aggiuntiva.
@@ -53,6 +55,7 @@ I requisiti minimi effettivi di larghezza di banda WAN dipendono dall'attività 
 
 
 
+[[connections-for-admin-nodes-and-gateway-nodes]]
 == Connessioni per nodi amministrativi e nodi gateway
 
 I nodi amministrativi devono essere sempre protetti da client non attendibili, come quelli presenti su Internet aperto.  È necessario assicurarsi che nessun client non attendibile possa accedere ad alcun nodo di amministrazione sulla rete Grid, sulla rete di amministrazione o sulla rete client.
@@ -61,6 +64,7 @@ I nodi amministrativi e i nodi gateway che si intende aggiungere ai gruppi ad al
 
 
 
+[[using-network-address-translation-nat]]
 == Utilizzo della traduzione degli indirizzi di rete (NAT)
 
 Non utilizzare la traduzione degli indirizzi di rete (NAT) sulla rete Grid tra nodi della griglia o tra siti StorageGRID .  Quando si utilizzano indirizzi IPv4 privati ​​per la rete Grid, tali indirizzi devono essere direttamente instradabili da ogni nodo della griglia in ogni sito.  Tuttavia, se necessario, è possibile utilizzare NAT tra client esterni e nodi della griglia, ad esempio per fornire un indirizzo IP pubblico per un nodo gateway.  L'utilizzo di NAT per collegare un segmento di rete pubblica è supportato solo quando si utilizza un'applicazione di tunneling trasparente per tutti i nodi della griglia, ovvero quando i nodi della griglia non richiedono la conoscenza degli indirizzi IP pubblici.

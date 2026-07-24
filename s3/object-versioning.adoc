@@ -24,6 +24,7 @@ NOTE: Il controllo delle versioni può essere abilitato solo sui bucket creati c
 
 
 
+[[ilm-and-versioning]]
 == ILM e controllo delle versioni
 
 Le policy ILM vengono applicate a ciascuna versione di un oggetto.  Un processo di scansione ILM analizza continuamente tutti gli oggetti e li rivaluta in base alla politica ILM corrente.  Tutte le modifiche apportate ai criteri ILM vengono applicate a tutti gli oggetti precedentemente acquisiti.  Sono incluse le versioni precedentemente acquisite se è abilitato il controllo delle versioni.  La scansione ILM applica le nuove modifiche ILM agli oggetti precedentemente acquisiti.

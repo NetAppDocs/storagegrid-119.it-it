@@ -17,6 +17,7 @@ Vedere link:../admin/managing-load-balancing.html["Considerazioni sul bilanciame
 
 
 
+[[dns-entries-for-storagegrid-server-name]]
 == Voci DNS per il nome del server StorageGRID
 
 Aggiungere voci DNS per associare il nome del server StorageGRID (nome di dominio completo) a ciascun indirizzo IP StorageGRID che verrà utilizzato.  Gli indirizzi IP immessi nel DNS dipendono dall'utilizzo o meno di un gruppo HA di nodi di bilanciamento del carico:
@@ -28,6 +29,7 @@ Aggiungere voci DNS per associare il nome del server StorageGRID (nome di domini
 
 
 
+[[dns-entries-for-virtual-hosted-style-requests]]
 == Voci DNS per richieste in stile ospitato virtuale
 
 Se hai definitolink:../admin/configuring-s3-api-endpoint-domain-names.html["Nomi di dominio endpoint S3"] e utilizzerai richieste in stile virtual hosted, aggiungerai voci DNS per tutti i nomi di dominio degli endpoint S3 richiesti, inclusi eventuali nomi jolly.

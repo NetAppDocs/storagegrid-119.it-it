@@ -55,6 +55,7 @@ La modalità sandbox semplifica l'esecuzione di questa configurazione avanti e i
 
 
 
+[[access-sandbox-mode]]
 == Accedi alla modalità sandbox
 
 .Passi
@@ -77,6 +78,7 @@ Viene visualizzata la sezione Provider di identità.
 
 
 
+[[enter-identity-provider-details]]
 == Inserisci i dettagli del provider di identità
 
 .Passi
@@ -223,6 +225,7 @@ image::../media/save_button_green_checkmark.gif[Pulsante Salva con un segno di s
 
 
 
+[[configure-relying-party-trusts-enterprise-applications-or-sp-connections]]
 == Configurare trust di relying party, applicazioni aziendali o connessioni SP
 
 Una volta salvata la configurazione, viene visualizzato l'avviso di conferma della modalità Sandbox.  Questa nota conferma che la modalità sandbox è ora abilitata e fornisce istruzioni generali.
@@ -285,6 +288,7 @@ Per le istruzioni, vai alink:../admin/creating-relying-party-trusts-in-ad-fs.htm
 ====
 
 
+[[test-sso-connections]]
 == Test delle connessioni SSO
 
 Prima di imporre l'uso dell'accesso singolo per l'intero sistema StorageGRID , è necessario verificare che l'accesso singolo e la disconnessione singola siano configurati correttamente per ciascun nodo di amministrazione.
@@ -366,6 +370,7 @@ Se vedi un messaggio di pagina scaduta, seleziona il pulsante *Indietro* nel tuo
 ====
 
 
+[[enable-single-sign-on]]
 == Abilita l'accesso singolo
 
 Dopo aver confermato di poter utilizzare SSO per accedere a ciascun nodo di amministrazione, puoi abilitare SSO per l'intero sistema StorageGRID .

@@ -17,6 +17,7 @@ Esistono due processi di verifica: la verifica in background e il controllo dell
 
 
 
+[[what-is-background-verification]]
 == Che cosa è la verifica dei precedenti?
 
 Il processo di verifica in background controlla automaticamente e costantemente i nodi di archiviazione per individuare copie danneggiate dei dati degli oggetti e tenta automaticamente di riparare eventuali problemi rilevati.
@@ -39,6 +40,7 @@ La verifica degli sfondi avviene a una velocità continua, studiata per non inte
 
 
 
+[[alerts-related-to-background-verification]]
 === Avvisi relativi alla verifica dei precedenti
 
 Se il sistema rileva un oggetto danneggiato che non è in grado di correggere automaticamente (perché il danneggiamento impedisce l'identificazione dell'oggetto), viene attivato l'avviso *Oggetto danneggiato non identificato rilevato*.
@@ -47,6 +49,7 @@ Se la verifica in background non riesce a sostituire un oggetto danneggiato perc
 
 
 
+[[change-the-background-verification-rate]]
 === Modificare il tasso di verifica in background
 
 È possibile modificare la frequenza con cui la verifica in background controlla i dati degli oggetti replicati su un nodo di archiviazione se si hanno dubbi sull'integrità dei dati.
@@ -124,6 +127,7 @@ NOTE: Se è stato attivato l'avviso *Oggetti persi*, il supporto tecnico potrebb
 
 
 
+[[what-is-object-existence-check]]
 == Che cos'è il controllo dell'esistenza di un oggetto?
 
 Il controllo dell'esistenza dell'oggetto verifica se tutte le copie replicate previste degli oggetti e dei frammenti con codice di cancellazione sono presenti su un nodo di archiviazione.  Il controllo dell'esistenza dell'oggetto non verifica i dati dell'oggetto stesso (lo fa la verifica in background); fornisce invece un modo per verificare l'integrità dei dispositivi di archiviazione, soprattutto se un recente problema hardware potrebbe aver influito sull'integrità dei dati.
@@ -138,6 +142,7 @@ Il controllo dell'esistenza degli oggetti legge i metadati di ogni oggetto archi
 
 
 
+[[run-object-existence-check]]
 === Esegui il controllo dell'esistenza dell'oggetto
 
 È possibile creare ed eseguire un processo di controllo dell'esistenza di un oggetto alla volta.  Quando si crea un processo, si selezionano i nodi di archiviazione e i volumi che si desidera verificare.  Seleziona anche la coerenza del lavoro.

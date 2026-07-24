@@ -15,6 +15,7 @@ I messaggi di controllo vengono generati dai servizi StorageGRID e archiviati in
 
 
 
+[[bucket-operations-tracked-in-the-audit-logs]]
 == Operazioni del bucket monitorate nei log di controllo
 
 * CreaBucket
@@ -32,6 +33,7 @@ I messaggi di controllo vengono generati dai servizi StorageGRID e archiviati in
 
 
 
+[[object-operations-tracked-in-the-audit-logs]]
 == Operazioni sugli oggetti tracciate nei registri di controllo
 
 * Caricamento multiparte completo

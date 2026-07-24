@@ -26,6 +26,7 @@ Facoltativamente, è possibile configurare un server syslog esterno per salvare 
 
 
 
+[[change-audit-message-levels]]
 == Modifica i livelli dei messaggi di controllo
 
 È possibile impostare un livello di controllo diverso per ciascuna delle seguenti categorie di messaggi nel registro di controllo:
@@ -154,6 +155,7 @@ Un banner verde indica che la configurazione è stata salvata.
 
 
 
+[[define-http-request-headers]]
 == Definisci le intestazioni delle richieste HTTP
 
 Facoltativamente, è possibile definire qualsiasi intestazione di richiesta HTTP che si desidera includere nei messaggi di controllo di lettura e scrittura del client. Queste intestazioni di protocollo si applicano solo alle richieste S3.
@@ -179,6 +181,7 @@ Un banner verde indica che la configurazione è stata salvata.
 
 
 
+[[use-external-syslog-serveruse-an-external-syslog-server]]
 == [[use-external-syslog-server]]Utilizza un server syslog esterno
 
 Facoltativamente, è possibile configurare un server syslog esterno per salvare i log di controllo, i log delle applicazioni e i log degli eventi di sicurezza in una posizione esterna alla griglia.
@@ -191,6 +194,7 @@ TIP: Se le opzioni di configurazione disponibili in questa procedura non sono su
 
 
 
+[[enter-syslog-information]]
 === Inserisci le informazioni syslog
 
 Accedere alla procedura guidata Configura server syslog esterno e fornire le informazioni necessarie a StorageGRID per accedere al server syslog esterno.
@@ -229,6 +233,7 @@ Accanto al nome del certificato o del file chiave viene visualizzato un segno di
 
 
 
+[[manage-syslog-content]]
 === Gestisci il contenuto syslog
 
 È possibile selezionare quali informazioni inviare al server syslog esterno.
@@ -542,6 +547,7 @@ local7
 
 
 
+[[send-test-messages]]
 === Invia messaggi di prova
 
 Prima di iniziare a utilizzare un server syslog esterno, è necessario richiedere a tutti i nodi della griglia di inviare messaggi di prova al server syslog esterno.  Dovresti utilizzare questi messaggi di prova per convalidare l'intera infrastruttura di raccolta dei log prima di impegnarti a inviare dati al server syslog esterno.
@@ -580,6 +586,7 @@ NOTE: Le informazioni di controllo StorageGRID non vengono inviate al server sys
 
 
 
+[[select-audit-information-destinations]]
 == Seleziona le destinazioni delle informazioni di audit
 
 È possibile specificare dove salvare i registri di controllo, i registri degli eventi di sicurezza elink:../monitor/storagegrid-software-logs.html["Registri del software StorageGRID"] vengono inviati.

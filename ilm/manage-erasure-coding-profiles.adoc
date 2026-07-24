@@ -20,6 +20,7 @@ summary: È possibile visualizzare i dettagli di un profilo di codifica di cance
 
 
 
+[[view-erasure-coding-profile-details]]
 == Visualizza i dettagli del profilo di codifica di cancellazione
 
 È possibile visualizzare i dettagli di un profilo di codifica di cancellazione per determinarne lo stato, lo schema di codifica di cancellazione utilizzato e altre informazioni.
@@ -33,6 +34,7 @@ summary: È possibile visualizzare i dettagli di un profilo di codifica di cance
 
 
 
+[[rename-an-erasure-coding-profile]]
 == Rinominare un profilo di codifica di cancellazione
 
 Potresti voler rinominare un profilo di codifica di cancellazione per rendere più evidente la sua funzione.
@@ -54,6 +56,7 @@ NOTE: I nomi dei profili di codifica di cancellazione devono essere univoci.  Si
 
 
 
+[[deactivate-an-erasure-coding-profile]]
 == Disattivare un profilo di codifica di cancellazione
 
 È possibile disattivare un profilo di codifica di cancellazione se non si prevede più di utilizzarlo e se il profilo non è attualmente utilizzato in alcuna regola ILM.

@@ -20,6 +20,7 @@ NOTE: Le filigrane del volume di archiviazione si applicano solo allo spazio uti
 
 
 
+[[what-is-the-soft-read-only-watermark]]
 == Cos'è la filigrana di sola lettura?
 
 La *filigrana di sola lettura software del volume di archiviazione* è la prima filigrana a indicare che lo spazio utilizzabile di un nodo di archiviazione per i dati degli oggetti si sta esaurendo.
@@ -30,6 +31,7 @@ Ad esempio, supponiamo che ogni volume in un nodo di archiviazione abbia una fil
 
 
 
+[[what-is-the-hard-read-only-watermark]]
 == Cos'è la filigrana di sola lettura?
 
 La *filigrana di sola lettura fissa del volume di archiviazione* è la filigrana successiva che indica che lo spazio utilizzabile di un nodo per i dati degli oggetti si sta riempiendo.
@@ -42,6 +44,7 @@ La filigrana di sola lettura fissa è sempre inferiore alla filigrana di sola le
 
 
 
+[[what-is-the-read-write-watermark]]
 == Cos'è la filigrana di lettura-scrittura?
 
 La *filigrana di lettura-scrittura del volume di archiviazione* si applica solo ai nodi di archiviazione che sono passati alla modalità di sola lettura.  Determina quando il nodo può tornare ad essere di lettura-scrittura.  Quando lo spazio libero su un volume di archiviazione in un nodo di archiviazione è maggiore del limite di lettura-scrittura del volume, il nodo torna automaticamente allo stato di lettura-scrittura.
@@ -52,6 +55,7 @@ La filigrana di lettura-scrittura è sempre più grande sia della filigrana di s
 
 
 
+[[view-storage-volume-watermarks]]
 == Visualizza le filigrane del volume di archiviazione
 
 È possibile visualizzare le impostazioni correnti della filigrana e i valori ottimizzati dal sistema.  Se non vengono utilizzate filigrane ottimizzate, puoi valutare se puoi o dovresti modificare le impostazioni.
@@ -64,6 +68,7 @@ La filigrana di lettura-scrittura è sempre più grande sia della filigrana di s
 
 
 
+[[view-current-watermark-settings]]
 === Visualizza le impostazioni correnti della filigrana
 
 È possibile visualizzare le impostazioni correnti della filigrana di archiviazione in Grid Manager.
@@ -86,6 +91,7 @@ Quando si specificano impostazioni di filigrana personalizzate, è necessario im
 
 
 
+[[view-optimized-storage-watermarksview-optimized-storage-watermarks]]
 === [[view-optimized-storage-watermarks]]Visualizza le filigrane di archiviazione ottimizzate
 
 StorageGRID utilizza due metriche Prometheus per mostrare i valori ottimizzati calcolati per la filigrana di sola lettura software del volume di archiviazione.  È possibile visualizzare i valori ottimizzati minimi e massimi per ciascun nodo di archiviazione nella griglia.

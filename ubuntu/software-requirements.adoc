@@ -24,6 +24,7 @@ NOTE: Il supporto per Docker come motore di container per distribuzioni esclusiv
 
 
 
+[[python-versions-tested]]
 == Versioni di Python testate
 
 * 3.5.2-2
@@ -41,6 +42,7 @@ NOTE: Il supporto per Docker come motore di container per distribuzioni esclusiv
 
 
 
+[[podman-versions-tested]]
 == Versioni di Podman testate
 
 * 3.2.3-0
@@ -54,6 +56,7 @@ NOTE: Il supporto per Docker come motore di container per distribuzioni esclusiv
 
 
 
+[[docker-versions-tested]]
 == Versioni Docker testate
 
 

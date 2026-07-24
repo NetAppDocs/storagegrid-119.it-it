@@ -15,6 +15,7 @@ La replicazione cross-grid è la replicazione automatica di oggetti tra bucket S
 
 
 
+[[workflow-for-cross-grid-replication]]
 == Flusso di lavoro per la replicazione tra griglie
 
 Il diagramma del flusso di lavoro riassume i passaggi per configurare la replica tra griglie tra bucket su due griglie.
@@ -23,6 +24,7 @@ image::../media/grid-federation-cgr-workflow.png[Flusso di lavoro di replicazion
 
 
 
+[[requirements-for-cross-grid-replication]]
 == Requisiti per la replicazione cross-grid
 
 Se un account tenant ha l'autorizzazione *Usa connessione federazione griglia* per utilizzare una o piùlink:grid-federation-overview.html["connessioni della federazione di rete"] , un utente tenant con autorizzazione di accesso Root può creare bucket identici negli account tenant corrispondenti su ciascuna griglia. Questi secchi:
@@ -40,12 +42,14 @@ link:../tenant/grid-federation-manage-cross-grid-replication.html["Gestire la re
 
 
 
+[[how-cross-grid-replication-works]]
 == Come funziona la replicazione cross-grid
 
 La replicazione tra griglie può essere configurata in modo che avvenga in una direzione o in entrambe le direzioni.
 
 
 
+[[replication-in-one-direction]]
 === Replicazione in una direzione
 
 Se si abilita la replica tra griglie per un bucket su una sola griglia, gli oggetti aggiunti a quel bucket (il bucket di origine) vengono replicati nel bucket corrispondente sull'altra griglia (il bucket di destinazione). Tuttavia, gli oggetti aggiunti al bucket di destinazione non vengono replicati nell'origine. Nella figura, la replicazione cross-grid è abilitata per `my-bucket` dalla Griglia 1 alla Griglia 2, ma non è abilitato nella direzione opposta.
@@ -54,6 +58,7 @@ image::../media/grid-federation-cross-grid-replication-one-direction.png[immagin
 
 
 
+[[replication-in-both-directions]]
 === Replicazione in entrambe le direzioni
 
 Se si abilita la replica tra griglie per lo stesso bucket su entrambe le griglie, gli oggetti aggiunti a uno dei due bucket vengono replicati sull'altra griglia.  Nella figura, la replicazione cross-grid è abilitata per `my-bucket` in entrambe le direzioni.
@@ -62,6 +67,7 @@ image::../media/grid-federation-cross-grid-replication.png[immagine che mostra l
 
 
 
+[[what-happens-when-objects-are-ingested]]
 === Cosa succede quando gli oggetti vengono ingeriti?
 
 Quando un client S3 aggiunge un oggetto a un bucket in cui è abilitata la replica tra griglie, si verifica quanto segue:
@@ -101,6 +107,7 @@ NOTE: StorageGRID non supporta il `x-amz-replication-status` intestazione.
 
 
 
+[[what-happens-when-objects-are-deleted]]
 === Cosa succede quando gli oggetti vengono eliminati?
 
 Come descritto inlink:../primer/delete-data-flow.html["Elimina flusso di dati"] StorageGRID può eliminare un oggetto per uno qualsiasi di questi motivi:
@@ -144,6 +151,7 @@ NOTE: Se si desidera mantenere sincronizzate le eliminazioni degli oggetti tra l
 
 
 
+[[how-encrypted-objects-are-replicated]]
 === Come vengono replicati gli oggetti crittografati
 
 Quando si utilizza la replica tra griglie per replicare oggetti tra griglie, è possibile crittografare singoli oggetti, utilizzare la crittografia predefinita dei bucket o configurare la crittografia a livello di griglia.  È possibile aggiungere, modificare o rimuovere le impostazioni di crittografia predefinite per bucket o griglia prima o dopo aver abilitato la replica tra griglie per un bucket.
@@ -178,6 +186,7 @@ Quando si determina come crittografare gli oggetti replicati, StorageGRID applic
 
 
 
+[[putobjecttagging-and-deleteobjecttagging-arent-supported]]
 === PutObjectTagging e DeleteObjectTagging non sono supportati
 
 Le richieste PutObjectTagging e DeleteObjectTagging non sono supportate per gli oggetti nei bucket in cui è abilitata la replica tra griglie.
@@ -186,6 +195,7 @@ Se un client S3 emette una richiesta PutObjectTagging o DeleteObjectTagging, `50
 
 
 
+[[how-segmented-objects-are-replicated]]
 === Come vengono replicati gli oggetti segmentati
 
 La dimensione massima del segmento della griglia di origine si applica agli oggetti replicati nella griglia di destinazione. Quando gli oggetti vengono replicati su un'altra griglia, l'impostazione *Dimensione massima segmento* (*CONFIGURAZIONE* > *Sistema* > *Opzioni di archiviazione*) della griglia di origine verrà utilizzata su entrambe le griglie. Ad esempio, supponiamo che la dimensione massima del segmento per la griglia di origine sia 1 GB, mentre la dimensione massima del segmento per la griglia di destinazione sia 50 MB. Se si acquisisce un oggetto da 2 GB nella griglia di origine, tale oggetto viene salvato come due segmenti da 1 GB.  Verrà inoltre replicato nella griglia di destinazione come due segmenti da 1 GB, anche se la dimensione massima del segmento di quella griglia è di 50 MB.

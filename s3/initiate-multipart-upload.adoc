@@ -49,6 +49,7 @@ NOTE: Se si sta inserendo un oggetto in un bucket con S3 Object Lock abilitato, 
 
 
 
+[[supported-request-headers]]
 == Intestazioni di richiesta supportate
 
 Sono supportate le seguenti intestazioni di richiesta:
@@ -114,6 +115,7 @@ NOTE: Per informazioni su come StorageGRID gestisce i caratteri UTF-8, vederelin
 
 
 
+[[request-headers-for-server-side-encryption]]
 == Intestazioni di richiesta per la crittografia lato server
 
 È possibile utilizzare le seguenti intestazioni di richiesta per crittografare un oggetto multiparte con la crittografia lato server.  Le opzioni SSE e SSE-C si escludono a vicenda.
@@ -137,6 +139,7 @@ CAUTION: Le chiavi di crittografia fornite non vengono mai memorizzate.  Se si p
 
 
 
+[[unsupported-request-headers]]
 == Intestazioni di richiesta non supportate
 
 La seguente intestazione di richiesta non è supportata:
@@ -149,6 +152,7 @@ IL `x-amz-website-redirect-location` intestazione ritorna `XNotImplemented` .
 
 
 
+[[versioning]]
 == Controllo delle versioni
 
 Il caricamento multiparte consiste in operazioni separate per avviare il caricamento, elencare i caricamenti, caricare le parti, assemblare le parti caricate e completare il caricamento.  Gli oggetti vengono creati (e sottoposti a controllo di versione, se applicabile) quando viene eseguita l'operazione CompleteMultipartUpload.

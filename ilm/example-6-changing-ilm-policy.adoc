@@ -22,6 +22,7 @@ CAUTION: Le seguenti regole e policy ILM sono solo esempi.  Esistono molti modi 
 
 
 
+[[how-changing-an-ilm-policy-affects-performance]]
 == Come la modifica di una policy ILM influisce sulle prestazioni
 
 Quando si attiva una nuova policy ILM, le prestazioni del sistema StorageGRID potrebbero essere temporaneamente compromesse, soprattutto se le istruzioni di posizionamento nella nuova policy richiedono lo spostamento di molti oggetti esistenti in nuove posizioni.
@@ -43,6 +44,7 @@ NOTE: StorageGRID considera ogni profilo di codifica di cancellazione come univo
 
 
 
+[[active-ilm-policy-for-example-6-data-protection-at-two-sites]]
 == Criterio ILM attivo per esempio 6: Protezione dei dati in due siti
 
 In questo esempio, la policy ILM attiva è stata inizialmente progettata per un sistema StorageGRID a due siti e utilizza due regole ILM.
@@ -53,6 +55,7 @@ In questa policy ILM, gli oggetti appartenenti al tenant A sono protetti tramite
 
 
 
+[[rule-1-one-site-erasure-coding-for-tenant-a]]
 === Regola 1: Codifica di cancellazione in un unico sito per l'inquilino A
 
 [cols="1a,2a"]
@@ -89,6 +92,7 @@ Codifica di cancellazione 2+1 nel sito 1 dal giorno 0 all'infinito
 |===
 
 
+[[rule-2-two-site-replication-for-other-tenants]]
 === Regola 2: Replicazione a due siti per altri tenant
 
 [cols="1a,2a"]
@@ -125,6 +129,7 @@ Due copie replicate dal giorno 0 all'infinito: una copia nel Sito 1 e una copia 
 |===
 
 
+[[ilm-policy-for-example-6-data-protection-at-three-sites]]
 == Politica ILM per esempio 6: Protezione dei dati in tre siti
 
 In questo esempio, la policy ILM viene sostituita con una nuova policy per un sistema StorageGRID a tre siti.
@@ -135,6 +140,7 @@ Quando questa nuova policy ILM verrà attivata, gli oggetti appartenenti al Tena
 
 
 
+[[rule-1-three-site-erasure-coding-for-tenant-a]]
 === Regola 1: Codifica di cancellazione a tre siti per l'inquilino A
 
 [cols="1a,2a"]
@@ -171,6 +177,7 @@ Codifica di cancellazione 2+1 in tutti e 3 i siti dal giorno 0 all'infinito
 |===
 
 
+[[rule-2-three-site-replication-for-other-tenants]]
 === Regola 2: Replicazione a tre siti per altri tenant
 
 [cols="1a,2a"]
@@ -207,6 +214,7 @@ Tre copie replicate dal giorno 0 all'infinito: una copia nel Sito 1, una copia n
 |===
 
 
+[[activating-the-ilm-policy-for-example-6]]
 == Attivazione della politica ILM ad esempio 6
 
 Quando si attiva una nuova policy ILM, gli oggetti esistenti potrebbero essere spostati in nuove posizioni oppure potrebbero essere create nuove copie degli oggetti esistenti, in base alle istruzioni di posizionamento contenute in eventuali regole nuove o aggiornate.
@@ -219,6 +227,7 @@ CAUTION: Quando si attiva una nuova policy ILM, StorageGRID la utilizza per gest
 
 
 
+[[what-happens-when-erasure-coding-instructions-change]]
 === Cosa succede quando cambiano le istruzioni di codifica di cancellazione
 
 Nella policy ILM attualmente attiva per questo esempio, gli oggetti appartenenti al Tenant A sono protetti mediante la codifica di cancellazione 2+1 nel Sito 1.  Nella nuova politica ILM, gli oggetti appartenenti al Tenant A saranno protetti mediante la codifica di cancellazione 2+1 nei siti 1, 2 e 3.
@@ -235,6 +244,7 @@ NOTE: I frammenti 2+1 esistenti nel Sito 1 non vengono riutilizzati.  StorageGRI
 
 
 
+[[what-happens-when-replication-instructions-change]]
 === Cosa succede quando cambiano le istruzioni di replicazione
 
 Nella policy ILM attualmente attiva per questo esempio, gli oggetti appartenenti ad altri tenant vengono protetti mediante due copie replicate nei pool di archiviazione nei siti 1 e 2.  Nella nuova policy ILM, gli oggetti appartenenti ad altri tenant saranno protetti mediante tre copie replicate in pool di archiviazione nei siti 1, 2 e 3.
@@ -247,6 +257,7 @@ Quando viene attivata la nuova policy ILM, si verificano le seguenti operazioni 
 
 
 
+[[performance-impact-of-activating-this-policy]]
 === Impatto sulle prestazioni dell'attivazione di questa policy
 
 Quando viene attivata la policy ILM in questo esempio, le prestazioni complessive del sistema StorageGRID saranno temporaneamente compromesse.  Saranno necessari livelli di risorse di rete superiori al normale per creare nuovi frammenti con codice di cancellazione per gli oggetti esistenti del Tenant A e nuove copie replicate nel Sito 3 per gli oggetti esistenti degli altri tenant.

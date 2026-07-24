@@ -15,6 +15,7 @@ I file di configurazione dei nodi sono piccoli file di testo che forniscono le i
 
 
 
+[[location-for-node-configuration-files]]
 == Posizione per i file di configurazione del nodo
 
 Posizionare il file di configurazione per ciascun nodo StorageGRID nel `/etc/storagegrid/nodes` directory sull'host in cui verrà eseguito il nodo.  Ad esempio, se si prevede di eseguire un nodo di amministrazione, un nodo gateway e un nodo di archiviazione su HostA, è necessario posizionare tre file di configurazione del nodo in `/etc/storagegrid/nodes` su HostA.
@@ -23,6 +24,7 @@ Posizionare il file di configurazione per ciascun nodo StorageGRID nel `/etc/sto
 
 
 
+[[naming-of-node-configuration-files]]
 == Denominazione dei file di configurazione dei nodi
 
 I nomi dei file di configurazione sono significativi.  Il formato è `node-name.conf` , Dove `node-name` è un nome che assegni al nodo.  Questo nome appare nel programma di installazione StorageGRID e viene utilizzato per le operazioni di manutenzione dei nodi, come la migrazione dei nodi.
@@ -47,6 +49,7 @@ Ad esempio, potresti usare `dc1-adm1.conf` per il primo nodo amministrativo nel 
 
 
 
+[[contents-of-a-node-configuration-file]]
 == Contenuto di un file di configurazione del nodo
 
 Un file di configurazione contiene coppie chiave/valore, con una chiave e un valore per riga.  Per ogni coppia chiave/valore, seguire queste regole:
@@ -66,6 +69,7 @@ La tabella seguente definisce i valori per tutte le chiavi supportate.  Ogni tas
 
 
 
+[[admin-network-keys]]
 === Chiavi di rete amministrative
 
 
@@ -318,6 +322,7 @@ Altrimenti facoltativo.
 |===
 
 
+[[block-device-keys]]
 === Blocca le chiavi del dispositivo
 
 
@@ -454,6 +459,7 @@ Necessario
 |===
 
 
+[[client-network-keys]]
 === Chiavi di rete del cliente
 
 
@@ -661,6 +667,7 @@ Le migliori pratiche
 |===
 
 
+[[grid-network-keys]]
 === Chiavi di rete della griglia
 
 
@@ -856,6 +863,7 @@ Le migliori pratiche
 |===
 
 
+[[installation-password-key-temporary]]
 === Chiave password di installazione (temporanea)
 
 
@@ -885,6 +893,7 @@ Le migliori pratiche
 |===
 
 
+[[interfaces-key]]
 === Chiave delle interfacce
 
 
@@ -912,6 +921,7 @@ Opzionale
 |===
 
 
+[[maximum-ram-key]]
 === Chiave RAM massima
 
 
@@ -943,6 +953,7 @@ Opzionale
 |===
 
 
+[[node-type-keys]]
 === Chiavi di tipo nodo
 
 
@@ -990,6 +1001,7 @@ Opzionale
 |===
 
 
+[[port-remap-keys]]
 === Tasti di rimappatura delle porte
 
 

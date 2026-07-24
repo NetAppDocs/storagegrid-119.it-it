@@ -15,6 +15,7 @@ Dopo aver completato l'installazione, eseguire le attività di integrazione e co
 
 
 
+[[required-tasks]]
 == Compiti richiesti
 
 * Configurare VMware vSphere Hypervisor per il riavvio automatico.
@@ -42,6 +43,7 @@ Vedere https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/config
 
 
 
+[[optional-tasks]]
 == Attività facoltative
 
 * link:../maintain/changing-ip-addresses-and-mtu-values-for-all-nodes-in-grid.html["Aggiorna gli indirizzi IP dei nodi della griglia"]se sono cambiati da quando hai pianificato la distribuzione e generato il pacchetto di ripristino.

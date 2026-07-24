@@ -36,6 +36,7 @@ Altri tipi di nodi, come i nodi amministrativi o i nodi gateway, possono essere 
 ====
 
 
+[[export-node-from-source-host]]
 == Esporta nodo dall'host di origine
 
 Come primo passo, arresta il nodo della griglia ed esportalo dall'host Linux di origine.
@@ -96,6 +97,7 @@ Nel passaggio successivo, eseguiremo questo comando sull'host di destinazione.
 
 
 
+[[import-node-on-target-host]]
 == Importa nodo sull'host di destinazione
 
 Dopo aver esportato il nodo dall'host di origine, è necessario importare e convalidare il nodo sull'host di destinazione.  La convalida conferma che il nodo ha accesso agli stessi dispositivi di archiviazione a blocchi e di interfaccia di rete che aveva sull'host di origine.
@@ -143,6 +145,7 @@ Per informazioni sulla risoluzione dei problemi, consultare le istruzioni di ins
 
 
 
+[[start-migrated-node]]
 == Avvia il nodo migrato
 
 Dopo aver convalidato il nodo migrato, è possibile avviarlo eseguendo un comando sull'host di destinazione.

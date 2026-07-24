@@ -32,6 +32,7 @@ Seguire sempre la procedura di ripristino per il tipo specifico di nodo della gr
 
 
 
+[[preconditions-for-recovering-grid-nodes]]
 == Prerequisiti per il recupero dei nodi della griglia
 
 Durante il recupero dei nodi della griglia si presuppongono tutte le seguenti condizioni:
@@ -44,12 +45,14 @@ Durante il recupero dei nodi della griglia si presuppongono tutte le seguenti co
 
 
 
+[[order-of-node-recovery-if-a-server-hosting-more-than-one-grid-node-fails]]
 == Ordine di ripristino del nodo se un server che ospita più di un nodo della griglia fallisce
 
 Se un server che ospita più di un nodo della griglia si guasta, è possibile ripristinare i nodi in qualsiasi ordine. Tuttavia, se il server in errore ospita il nodo di amministrazione primario, è necessario prima ripristinare tale nodo. Ripristinando prima il nodo amministrativo primario si evita che altri ripristini dei nodi si interrompano mentre attendono di contattare il nodo amministrativo primario.
 
 
 
+[[ip-addresses-for-recovered-nodes]]
 == Indirizzi IP per i nodi recuperati
 
 Non tentare di recuperare un nodo utilizzando un indirizzo IP attualmente assegnato a un altro nodo.  Quando si distribuisce il nuovo nodo, utilizzare l'indirizzo IP corrente del nodo non riuscito o un indirizzo IP non utilizzato.

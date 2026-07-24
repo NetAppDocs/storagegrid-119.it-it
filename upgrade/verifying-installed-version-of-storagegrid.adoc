@@ -42,6 +42,7 @@ Vedi illink:../maintain/storagegrid-hotfix-procedure.html["Procedura di hotfix d
 
 
 
+[[example-upgrade-pathexample-upgrade-to-storagegrid-11-9-from-version-11-6]]
 == [[example-upgrade-path]]Esempio: aggiornamento a StorageGRID 11.9 dalla versione 11.6
 
 L'esempio seguente mostra i passaggi per eseguire l'aggiornamento dalla versione 11.6 StorageGRID alla versione 11.8 in preparazione per un aggiornamento a StorageGRID 11.9.

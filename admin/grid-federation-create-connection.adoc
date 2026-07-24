@@ -26,6 +26,7 @@ image::../media/grid-federation-create-connection.png[panoramica grafica dei pas
 
 
 
+[[add-connection]]
 == Aggiungi connessione
 
 Eseguire questi passaggi su uno dei due sistemi StorageGRID .
@@ -113,6 +114,7 @@ CAUTION: Questo file contiene segreti (mascherati come `***` ) e altri dati sens
 
 
 
+[[complete-connection]]
 == Connessione completa
 
 Eseguire questi passaggi sul sistema StorageGRID a cui ci si sta connettendo (l'altra griglia).

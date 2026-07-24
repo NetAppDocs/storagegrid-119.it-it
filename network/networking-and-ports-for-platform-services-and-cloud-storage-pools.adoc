@@ -15,6 +15,7 @@ Se si prevede di utilizzare i servizi della piattaforma StorageGRID o i pool di 
 
 
 
+[[networking-for-platform-services]]
 == Networking per servizi di piattaforma
 
 Come descritto inlink:../admin/manage-platform-services-for-tenants.html["Gestire i servizi della piattaforma per gli inquilini"] Elink:../tenant/considerations-for-platform-services.html["Gestire i servizi della piattaforma"] , i servizi della piattaforma includono servizi esterni che forniscono integrazione di ricerca, notifica di eventi e replica CloudMirror.
@@ -27,12 +28,14 @@ I servizi della piattaforma richiedono l'accesso dai nodi di archiviazione che o
 
 
 
+[[networking-for-cloud-storage-pools]]
 == Networking per pool di archiviazione cloud
 
 I pool di archiviazione cloud richiedono inoltre l'accesso dai nodi di archiviazione agli endpoint forniti dal servizio esterno utilizzato, ad esempio Amazon S3 Glacier o Microsoft Azure Blob Storage. Per informazioni, vederelink:../ilm/what-cloud-storage-pool-is.html["Che cos'è un Cloud Storage Pool"] .
 
 
 
+[[ports-for-platform-services-and-cloud-storage-pools]]
 == Porte per servizi di piattaforma e pool di archiviazione cloud
 
 Per impostazione predefinita, i servizi della piattaforma e le comunicazioni del Cloud Storage Pool utilizzano le seguenti porte:
@@ -47,6 +50,7 @@ Se si utilizza un server proxy non trasparente, è necessario anchelink:../admin
 
 
 
+[[vlans-and-platform-services-and-cloud-storage-pools]]
 == VLAN e servizi di piattaforma e pool di archiviazione cloud
 
 Non è possibile utilizzare reti VLAN per servizi di piattaforma o pool di archiviazione cloud.  Gli endpoint di destinazione devono essere raggiungibili tramite la rete Grid, Admin o Client.

@@ -18,6 +18,7 @@ Hai esaminato tutte le considerazioni e completato tutti i passaggi di pianifica
 
 
 
+[[access-storagegrid-upgrade-page]]
 == Accedi alla pagina di aggiornamento di StorageGRID
 
 Come primo passo, accedi alla pagina StorageGRID Upgrade in Grid Manager.
@@ -30,6 +31,7 @@ Come primo passo, accedi alla pagina StorageGRID Upgrade in Grid Manager.
 
 
 
+[[select-files]]
 == Seleziona i file
 
 Il percorso di aggiornamento nella pagina Aggiornamento StorageGRID indica quali versioni principali (ad esempio, 11.9.0) e hotfix (ad esempio, 11.9.0.1) è necessario installare per ottenere la versione più recente StorageGRID . Dovresti installare le versioni e gli hotfix consigliati nell'ordine indicato.
@@ -57,6 +59,7 @@ Una volta completato il processo di caricamento e convalida, accanto al nome del
 
 
 
+[[run-prechecks]]
 == Eseguire controlli preliminari
 
 L'esecuzione di controlli preliminari consente di rilevare e risolvere eventuali problemi di aggiornamento prima di iniziare ad aggiornare la griglia.
@@ -90,6 +93,7 @@ Se tutti gli errori sono stati risolti, verrà richiesto di avviare l'aggiorname
 
 
 
+[[start-upgrade-and-upgrade-primary-admin-node]]
 == Avvia l'aggiornamento e aggiorna il nodo di amministrazione primario
 
 Quando si avvia l'aggiornamento, vengono eseguiti nuovamente i controlli preliminari e il nodo di amministrazione primario viene aggiornato automaticamente.  Questa parte dell'aggiornamento può richiedere fino a 30 minuti.
@@ -116,6 +120,7 @@ Se la griglia ha un altro nodo di amministrazione online e pronto, è possibile 
 
 
 
+[[upgrade-other-nodes]]
 == Aggiorna altri nodi
 
 È necessario aggiornare tutti i nodi della griglia, ma è possibile eseguire più sessioni di aggiornamento e personalizzare la sequenza di aggiornamento.  Ad esempio, potresti preferire aggiornare i nodi nel sito A in una sessione e poi aggiornare i nodi nel sito B in una sessione successiva.  Se si sceglie di eseguire l'aggiornamento in più sessioni, tenere presente che non sarà possibile iniziare a utilizzare le nuove funzionalità finché tutti i nodi non saranno stati aggiornati.
@@ -234,6 +239,7 @@ NOTE: Alcuni modelli di appliance potrebbero riavviarsi più volte per aggiornar
 
 
 
+[[complete-upgrade]]
 == Aggiornamento completo
 
 Quando tutti i nodi della griglia hanno completato le fasi di aggiornamento, l'attività *Aggiorna altri nodi della griglia* viene visualizzata come Completata.  Le restanti attività di aggiornamento vengono eseguite automaticamente in background.

@@ -15,36 +15,42 @@ Se durante l'aggiornamento si verifica un problema, potresti riuscire a risolver
 
 
 
+[[upgrade-does-not-complete]]
 == L'aggiornamento non viene completato
 
 Nelle sezioni seguenti viene descritto come ripristinare situazioni in cui l'aggiornamento è parzialmente fallito.
 
 
 
+[[upgrade-precheck-errors]]
 === Errori di pre-controllo dell'aggiornamento
 
 Per rilevare e risolvere i problemi, è possibile eseguire manualmente i controlli preliminari all'aggiornamento prima di avviare l'aggiornamento vero e proprio.  La maggior parte degli errori di pre-controllo fornisce informazioni su come risolvere il problema.
 
 
 
+[[provisioning-failures]]
 === Errori di provisioning
 
 Se il processo di provisioning automatico non riesce, contattare l'assistenza tecnica.
 
 
 
+[[grid-node-crashes-or-fails-to-start]]
 === Il nodo della griglia si blocca o non riesce ad avviarsi
 
 Se un nodo della griglia si blocca durante il processo di aggiornamento o non si avvia correttamente al termine dell'aggiornamento, contattare l'assistenza tecnica per indagare e correggere eventuali problemi sottostanti.
 
 
 
+[[ingest-or-data-retrieval-is-interrupted]]
 === L'acquisizione o il recupero dei dati è interrotto
 
 Se l'acquisizione o il recupero dei dati viene interrotto inaspettatamente quando non si sta aggiornando un nodo della griglia, contattare l'assistenza tecnica.
 
 
 
+[[database-upgrade-errors]]
 === Errori di aggiornamento del database
 
 Se l'aggiornamento del database fallisce e si verifica un errore, riprovare.  Se il problema persiste, contattare l'assistenza tecnica.
@@ -54,12 +60,14 @@ link:checking-systems-condition-before-upgrading-software.html["Controllo delle 
 
 
 
+[[user-interface-issues]]
 == Problemi dell'interfaccia utente
 
 Durante o dopo l'aggiornamento potrebbero verificarsi problemi con Grid Manager o Tenant Manager.
 
 
 
+[[grid-manager-displays-multiple-error-messages-during-upgrade]]
 === Grid Manager visualizza più messaggi di errore durante l'aggiornamento
 
 Se aggiorni il browser o passi a un'altra pagina di Grid Manager mentre è in corso l'aggiornamento del nodo di amministrazione principale, potresti visualizzare più messaggi "503: Servizio non disponibile" e "Problema di connessione al server".  Puoi tranquillamente ignorare questi messaggi: non appariranno più non appena il nodo sarà aggiornato.
@@ -68,6 +76,7 @@ Se questi messaggi vengono visualizzati per più di un'ora dopo l'avvio dell'agg
 
 
 
+[[web-interface-does-not-respond-as-expected]]
 === L'interfaccia web non risponde come previsto
 
 Dopo l'aggiornamento del software StorageGRID , Grid Manager o Tenant Manager potrebbero non rispondere come previsto.
@@ -87,6 +96,7 @@ La cancellazione della cache rimuove le risorse obsolete utilizzate dalla versio
 
 
 
+[[docker-image-availability-check-error-messages]]
 == Messaggi di errore "Controllo della disponibilità dell'immagine Docker"
 
 Quando si tenta di avviare il processo di aggiornamento, è possibile che venga visualizzato un messaggio di errore che indica "I seguenti problemi sono stati identificati dalla suite di convalida del controllo della disponibilità delle immagini Docker".  Prima di poter completare l'aggiornamento, è necessario risolvere tutti i problemi.

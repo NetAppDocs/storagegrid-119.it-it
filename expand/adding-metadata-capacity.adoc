@@ -27,6 +27,7 @@ Per ulteriori informazioni, vedere quanto segue:
 
 
 
+[[guidelines-for-increasing-metadata-capacity]]
 == Linee guida per aumentare la capacità dei metadati
 
 Prima di aggiungere nodi di archiviazione per aumentare la capacità dei metadati, rivedere le seguenti linee guida e limitazioni:
@@ -62,6 +63,7 @@ Vedi illink:../admin/managing-object-metadata-storage.html["descrizione di cosa 
 
 
 
+[[how-metadata-is-redistributed-when-you-add-storage-nodes]]
 == Come vengono ridistribuiti i metadati quando si aggiungono nodi di archiviazione
 
 Quando si aggiungono nodi di archiviazione in un'espansione, StorageGRID ridistribuisce i metadati degli oggetti esistenti ai nuovi nodi in ogni sito, aumentando così la capacità complessiva dei metadati della griglia.  Non è richiesta alcuna azione da parte dell'utente.

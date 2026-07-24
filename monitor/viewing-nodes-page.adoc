@@ -28,6 +28,8 @@ image::../media/nodes_table.png[Menu Nodi]
 
 
 
+[[connection-state-icons]]
+[[connection-state]]
 == Icone dello stato della connessione
 
 Se un nodo è disconnesso dalla rete, accanto al nome del nodo viene visualizzata una delle seguenti icone.
@@ -74,6 +76,7 @@ Se un nodo è disconnesso dalla rete, potrebbe essere visualizzato un avviso sot
 
 
 
+[[alert-icons]]
 == Icone di avviso
 
 Se è presente un avviso attivo per un nodo, accanto al nome del nodo viene visualizzata una delle seguenti icone:
@@ -86,6 +89,7 @@ image:../media/icon_alert_yellow_minor.png["Icona di allerta gialla minore"]*Min
 
 
 
+[[view-details-for-a-system-site-or-node]]
 == Visualizza i dettagli di un sistema, sito o nodo
 
 Per filtrare le informazioni mostrate nella tabella Nodi, immettere una stringa di ricerca nel campo *Cerca*.  È possibile effettuare la ricerca per nome del sistema, nome visualizzato o tipo (ad esempio, immettere *gat* per individuare rapidamente tutti i nodi gateway).

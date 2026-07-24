@@ -15,6 +15,7 @@ summary: È possibile utilizzare la procedura di dismissione dei nodi per rimuov
 
 
 
+[[when-to-decommission-a-node]]
 == Quando dismettere un nodo
 
 Utilizzare la procedura di dismissione del nodo quando si verifica una delle seguenti condizioni:
@@ -33,6 +34,7 @@ TIP: Se vuoi sostituire un elettrodomestico vecchio con uno più nuovo, consider
 
 
 
+[[how-to-decommission-a-node]]
 == Come dismettere un nodo
 
 È possibile disattivare i nodi della rete connessi o disconnessi.
@@ -53,6 +55,7 @@ Per le istruzioni, vederelink:decommissioning-disconnected-grid-nodes.html["Disa
 
 
 
+[[what-to-consider-before-decommissioning-a-node]]
 == Cosa considerare prima di dismettere un nodo
 
 Prima di eseguire una delle due procedure, rivedere le considerazioni per ciascun tipo di nodo:

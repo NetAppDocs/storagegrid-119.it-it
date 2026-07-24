@@ -17,6 +17,7 @@ Per informazioni dettagliate sulle reti StorageGRID , vederelink:../network/stor
 
 
 
+[[guidelines-for-grid-network]]
 == Linee guida per la rete Grid
 
 È necessario configurare una rete Grid per tutto il traffico StorageGRID interno.  Tutti i nodi della griglia sono sulla rete Grid e devono essere in grado di comunicare con tutti gli altri nodi.
@@ -31,6 +32,7 @@ Durante la configurazione della rete Grid, seguire queste linee guida:
 
 
 
+[[guidelines-for-admin-network]]
 == Linee guida per la rete di amministrazione
 
 La rete di amministrazione viene in genere utilizzata per attività amministrative (dipendenti fidati che utilizzano Grid Manager o SSH) e per comunicare con altri servizi fidati quali LDAP, DNS, NTP o KMS (o server KMIP).  Tuttavia, StorageGRID non impone questo utilizzo internamente.
@@ -43,6 +45,7 @@ Se si utilizza Admin Network, seguire queste linee guida:
 
 
 
+[[guidelines-for-client-network]]
 == Linee guida per la rete clienti
 
 La rete client viene in genere utilizzata per i tenant e per comunicare con servizi esterni, come il servizio di replica CloudMirror o un altro servizio della piattaforma.  Tuttavia, StorageGRID non impone questo utilizzo internamente.

@@ -15,6 +15,7 @@ In qualità di amministratore della griglia, puoi abilitare S3 Object Lock per i
 
 
 
+[[what-is-s3-object-lock]]
 == Che cos'è S3 Object Lock?
 
 La funzionalità StorageGRID S3 Object Lock è una soluzione di protezione degli oggetti equivalente a S3 Object Lock in Amazon Simple Storage Service (Amazon S3).
@@ -31,6 +32,7 @@ Di fatto, tutti gli oggetti appena acquisiti hanno impostazioni di conservazione
 
 
 
+[[retention-modes]]
 === Modalità di conservazione
 
 La funzionalità StorageGRID S3 Object Lock supporta due modalità di conservazione per applicare diversi livelli di protezione agli oggetti.  Queste modalità sono equivalenti alle modalità di conservazione di Amazon S3.
@@ -53,6 +55,7 @@ La funzionalità StorageGRID S3 Object Lock supporta due modalità di conservazi
 
 
 
+[[retention-settings-for-object-versions]]
 === Impostazioni di conservazione per le versioni degli oggetti
 
 Se viene creato un bucket con S3 Object Lock abilitato, gli utenti possono utilizzare l'applicazione client S3 per specificare facoltativamente le seguenti impostazioni di conservazione per ciascun oggetto aggiunto al bucket:
@@ -71,6 +74,7 @@ Per i dettagli sulle impostazioni dell'oggetto, vederelink:../s3/use-s3-api-for-
 
 
 
+[[default-retention-setting-for-buckets]]
 === Impostazione di conservazione predefinita per i bucket
 
 Se viene creato un bucket con S3 Object Lock abilitato, gli utenti possono facoltativamente specificare le seguenti impostazioni predefinite per il bucket:
@@ -85,6 +89,7 @@ Vederelink:../tenant/creating-s3-bucket.html["Crea un bucket S3"] Elink:../tenan
 
 
 
+[[comparing-s3-object-lock-to-legacy-compliance]]
 == Confronto tra S3 Object Lock e la conformità legacy
 
 S3 Object Lock sostituisce la funzionalità Compliance disponibile nelle versioni precedenti StorageGRID .  Poiché la funzionalità S3 Object Lock è conforme ai requisiti di Amazon S3, essa rende obsoleta la funzionalità proprietaria StorageGRID Compliance, ora denominata "legacy Compliance".

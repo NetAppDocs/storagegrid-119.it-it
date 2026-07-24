@@ -17,6 +17,7 @@ Quando si crea o si modifica una regola ILM, si seleziona uno schema di codifica
 
 
 
+[[data-protection]]
 == Protezione dei dati
 
 Il sistema StorageGRID utilizza l'algoritmo di codifica della cancellazione Reed-Solomon.  L'algoritmo divide un oggetto in `k` frammenti di dati e calcoli `m` frammenti di parità.
@@ -31,6 +32,7 @@ La migliore protezione dei dati è fornita dallo schema di codifica di cancellaz
 
 
 
+[[storage-overhead]]
 == Spese di archiviazione generali
 
 Il sovraccarico di archiviazione di uno schema di codifica di cancellazione viene calcolato dividendo il numero di frammenti di parità(`m` ) dal numero di frammenti di dati(`k` ).  È possibile utilizzare il sovraccarico di archiviazione per calcolare la quantità di spazio su disco richiesta da ciascun oggetto con codice di cancellazione:
@@ -48,6 +50,7 @@ Selezionare lo schema di codifica di cancellazione con il valore totale più bas
 
 
 
+[[guidelines-for-storage-pools]]
 == Linee guida per i pool di stoccaggio
 
 Quando si seleziona il pool di archiviazione da utilizzare per una regola che creerà una copia con codice di cancellazione, attenersi alle seguenti linee guida per i pool di archiviazione:
@@ -75,6 +78,7 @@ Il numero minimo di nodi di archiviazione richiesti è `k+m` .  Tuttavia, avere 
 
 
 
+[[erasure-coding-schemes-for-storage-pools-containing-three-or-more-sites]]
 == Schemi di codifica di cancellazione per pool di archiviazione contenenti tre o più siti
 
 Nella tabella seguente vengono descritti gli schemi di codifica di cancellazione attualmente supportati da StorageGRID per i pool di archiviazione che includono tre o più siti.  Tutti questi schemi garantiscono una protezione contro le perdite del sito.  Anche se un sito può andare perso, l'oggetto sarà comunque accessibile.
@@ -238,6 +242,7 @@ NOTE: Se non sei sicuro di quale schema utilizzare, seleziona 4+2 o 6+3 oppure c
 
 
 
+[[erasure-coding-schemes-for-one-site-storage-pools]]
 == Schemi di codifica di cancellazione per pool di archiviazione monosito
 
 Un pool di archiviazione con un solo sito supporta tutti gli schemi di codifica di cancellazione definiti per tre o più siti, a condizione che il sito disponga di un numero sufficiente di nodi di archiviazione.

@@ -17,6 +17,7 @@ Vederelink:configuring-client-connections.html["Configurare le connessioni clien
 
 
 
+[[default-storagegrid-networks]]
 == Reti StorageGRID predefinite
 
 Per impostazione predefinita, StorageGRID supporta tre interfacce di rete per nodo della griglia, consentendo di configurare la rete per ogni singolo nodo della griglia in base ai requisiti di sicurezza e accesso.
@@ -25,24 +26,28 @@ Per ulteriori informazioni sulla topologia di rete, vederelink:../network/index.
 
 
 
+[[grid-network]]
 === Rete a griglia
 
 Necessario.  La rete Grid viene utilizzata per tutto il traffico StorageGRID interno.  Fornisce connettività tra tutti i nodi della griglia, in tutti i siti e le sottoreti.
 
 
 
+[[admin-network]]
 === Rete di amministrazione
 
 Opzionale.  La rete di amministrazione viene solitamente utilizzata per l'amministrazione e la manutenzione del sistema.  Può essere utilizzato anche per l'accesso al protocollo client.  La rete di amministrazione è in genere una rete privata e non deve essere instradabile tra i siti.
 
 
 
+[[client-network]]
 === Rete clienti
 
 Opzionale.  La rete client è una rete aperta solitamente utilizzata per fornire accesso alle applicazioni client S3, in modo che la rete Grid possa essere isolata e protetta.  La rete client può comunicare con qualsiasi subnet raggiungibile tramite il gateway locale.
 
 
 
+[[guidelines]]
 == Linee guida
 
 * Ogni nodo StorageGRID richiede un'interfaccia di rete dedicata, un indirizzo IP, una subnet mask e un gateway per ogni rete a cui è assegnato.
@@ -83,6 +88,7 @@ eth2
 
 
 
+[[optional-interfaces]]
 == Interfacce opzionali
 
 Facoltativamente, è possibile aggiungere interfacce extra a un nodo.  Ad esempio, potresti voler aggiungere un'interfaccia trunk a un nodo di amministrazione o gateway, in modo da poter utilizzarelink:../admin/configure-vlan-interfaces.html["Interfacce VLAN"] per separare il traffico appartenente a diverse applicazioni o tenant.  Oppure, potresti voler aggiungere un'interfaccia di accesso da utilizzare in unlink:../admin/configure-high-availability-group.html["gruppo ad alta disponibilità (HA)"] .

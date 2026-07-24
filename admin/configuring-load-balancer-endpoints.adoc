@@ -39,12 +39,15 @@ NOTE: Le modifiche al certificato di un endpoint possono richiedere fino a 15 mi
 
 
 
+[[create-a-load-balancer-endpoint]]
+[[create-lb-endpoint]]
 == Creare un endpoint del bilanciatore del carico
 
 Ogni endpoint del bilanciatore del carico del client S3 specifica una porta, un tipo di client (S3) e un protocollo di rete (HTTP o HTTPS). Gli endpoint del bilanciatore del carico dell'interfaccia di gestione specificano una porta, un tipo di interfaccia e una rete client non attendibile.
 
 
 
+[[access-the-wizard]]
 === Accedi alla procedura guidata
 
 .Passi
@@ -56,6 +59,7 @@ Ogni endpoint del bilanciatore del carico del client S3 specifica una porta, un 
 
 
 
+[[enter-endpoint-details]]
 === Inserisci i dettagli dell'endpoint
 
 .Passi
@@ -157,6 +161,7 @@ Se selezioni *Sì*, la porta è aperta su tutte le reti client non attendibili.
 
 
 
+[[select-a-binding-mode]]
 === Seleziona una modalità di rilegatura
 
 .Passi
@@ -224,6 +229,7 @@ Se si creano endpoint dell'interfaccia di gestione, selezionare i VIP associati 
 
 
 
+[[control-tenant-access]]
 === Controlla l'accesso degli inquilini
 
 
@@ -264,6 +270,7 @@ Gli account tenant selezionati non possono utilizzare questo endpoint per accede
 
 
 
+[[attach-certificate]]
 === Allega il certificato
 
 .Passi
@@ -390,6 +397,7 @@ L'endpoint del bilanciatore del carico è stato creato.  Il certificato personal
 
 
 
+[[after-you-finish]]
 === Dopo aver finito
 
 .Passi
@@ -416,6 +424,7 @@ L'indirizzo IP immesso nel record DNS varia a seconda che si utilizzi un gruppo 
 
 
 
+[[view-and-edit-load-balancer-endpoints]]
 == Visualizza e modifica gli endpoint del bilanciatore del carico
 
 È possibile visualizzare i dettagli degli endpoint del bilanciatore del carico esistenti, inclusi i metadati del certificato per un endpoint protetto.  È possibile modificare determinate impostazioni per un endpoint.
@@ -526,6 +535,7 @@ Modifica l'accesso dell'inquilino
 
 
 
+[[remove-load-balancer-endpoints]]
 == Rimuovere gli endpoint del bilanciatore del carico
 
 È possibile rimuovere uno o più endpoint utilizzando il menu *Azioni* oppure è possibile rimuovere un singolo endpoint dalla pagina dei dettagli.

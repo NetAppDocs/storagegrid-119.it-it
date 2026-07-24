@@ -17,6 +17,7 @@ Quando si disattivano tutti i nodi in un sito o in una griglia, non sarà possib
 
 
 
+[[stop-services-and-shut-down-grid-nodes]]
 == Arrestare i servizi e spegnere i nodi della griglia
 
 Prima di poter spegnere un sistema StorageGRID , è necessario arrestare tutti i servizi in esecuzione su ciascun nodo della griglia, quindi arrestare tutte le macchine virtuali VMware, i motori dei container e le appliance StorageGRID .
@@ -145,6 +146,7 @@ La rete StorageGRID è stata ora disattivata.
 
 
 
+[[start-up-grid-nodes]]
 == Avviare i nodi della griglia
 
 

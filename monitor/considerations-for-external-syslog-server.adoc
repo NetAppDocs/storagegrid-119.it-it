@@ -22,6 +22,7 @@ I tipi di informazioni di controllo che è possibile inviare al server syslog es
 
 
 
+[[when-to-use-an-external-syslog-server]]
 == Quando utilizzare un server syslog esterno
 
 Un server syslog esterno è particolarmente utile se si dispone di una griglia di grandi dimensioni, si utilizzano più tipi di applicazioni S3 o si desidera conservare tutti i dati di audit. L'invio di informazioni di audit a un server syslog esterno consente di:
@@ -40,6 +41,7 @@ NOTE: Per massimizzare le opzioni di recupero completo dei dati in caso di guast
 
 
 
+[[how-to-configure-an-external-syslog-server]]
 == Come configurare un server syslog esterno
 
 Per informazioni su come configurare un server syslog esterno, vederelink:../monitor/configure-audit-messages.html["Configurare i messaggi di controllo e il server syslog esterno"] .
@@ -57,6 +59,7 @@ NOTE: Se si utilizza un certificato client, è necessario utilizzare anche una c
 
 
 
+[[how-to-estimate-the-size-of-the-external-syslog-server]]
 == Come stimare la dimensione del server syslog esterno
 
 Normalmente, la griglia viene dimensionata per raggiungere la produttività richiesta, definita in termini di operazioni S3 al secondo o byte al secondo.  Ad esempio, potresti avere il requisito che la tua griglia gestisca 1.000 operazioni S3 al secondo, o 2.000 MB al secondo, di inserimenti e recuperi di oggetti.  Dovresti dimensionare il tuo server syslog esterno in base ai requisiti di dati della tua griglia.
@@ -65,6 +68,7 @@ Questa sezione fornisce alcune formule euristiche che aiutano a stimare la veloc
 
 
 
+[[use-s3-operations-per-second-in-estimation-formulas]]
 === Utilizzare S3 operazioni al secondo nelle formule di stima
 
 Se la griglia è stata dimensionata per una velocità espressa in byte al secondo, è necessario convertire questa dimensione in operazioni S3 al secondo per utilizzare le formule di stima.  Per convertire la velocità effettiva della griglia, è necessario innanzitutto determinare la dimensione media dell'oggetto, operazione che è possibile effettuare utilizzando le informazioni presenti nei registri di controllo e nelle metriche esistenti (se presenti) oppure sfruttando la conoscenza delle applicazioni che utilizzeranno StorageGRID.  Ad esempio, se la griglia è stata dimensionata per raggiungere una velocità di elaborazione di 2.000 MB/secondo e la dimensione media degli oggetti è di 2 MB, la griglia è stata dimensionata per poter gestire 1.000 operazioni S3 al secondo (2.000 MB / 2 MB).
@@ -74,6 +78,7 @@ NOTE: Le formule per il dimensionamento del server syslog esterno nelle sezioni 
 
 
 
+[[estimation-formulas-for-audit-logs]]
 === Formule di stima per i registri di controllo
 
 Se non si hanno informazioni sul carico di lavoro S3, a parte il numero di operazioni S3 al secondo che la griglia dovrebbe supportare, è possibile stimare il volume di log di controllo che il server syslog esterno dovrà gestire utilizzando le seguenti formule, partendo dal presupposto che i Livelli di controllo vengano lasciati impostati sui valori predefiniti (tutte le categorie impostate su Normale, eccetto Archiviazione, che è impostata su Errore):
@@ -142,6 +147,7 @@ Ad esempio, se la griglia è dimensionata per 1.000 operazioni S3 al secondo, il
 
 
 
+[[estimation-formulas-for-non-default-audit-levels]]
 === Formule di stima per livelli di audit non predefiniti
 
 Le formule fornite per i registri di controllo presuppongono l'utilizzo delle impostazioni predefinite del livello di controllo (tutte le categorie impostate su Normale, tranne Archiviazione, che è impostata su Errore).  Non sono disponibili formule dettagliate per stimare la frequenza e la dimensione media dei messaggi di controllo per impostazioni di livello di controllo non predefinite.  Tuttavia, la tabella seguente può essere utilizzata per effettuare una stima approssimativa della frequenza; è possibile utilizzare la formula per la dimensione media fornita per i registri di controllo, ma è importante tenere presente che è probabile che si ottenga una sovrastima perché i messaggi di controllo "extra" sono, in media, più piccoli dei messaggi di controllo predefiniti.
@@ -166,12 +172,14 @@ Utilizzare la stessa formula delle impostazioni predefinite
 |===
 
 
+[[estimation-formulas-for-security-events]]
 === Formule di stima per eventi di sicurezza
 
 Gli eventi di sicurezza non sono correlati alle operazioni S3 e in genere producono un volume trascurabile di registri e dati.  Per questi motivi non vengono fornite formule di stima.
 
 
 
+[[estimation-formulas-for-application-logs]]
 === Formule di stima per i registri delle applicazioni
 
 Se non si hanno informazioni sul carico di lavoro S3, a parte il numero di operazioni S3 al secondo che la griglia dovrebbe supportare, è possibile stimare il volume dei registri delle applicazioni che il server syslog esterno dovrà gestire utilizzando le seguenti formule:
@@ -227,6 +235,7 @@ Nome della chiave S3, escluso il nome del bucket.  Le operazioni sui bucket non 
 |===
 
 
+[[example-sizing-estimations]]
 == Esempi di stime dimensionali
 
 In questa sezione vengono illustrati alcuni casi esemplificativi su come utilizzare le formule di stima per le griglie con i seguenti metodi di protezione dei dati:
@@ -237,6 +246,7 @@ In questa sezione vengono illustrati alcuni casi esemplificativi su come utilizz
 
 
 
+[[if-you-use-replication-for-data-protection]]
 === Se si utilizza la replica per la protezione dei dati
 
 Sia P la percentuale di operazioni S3 che sono PUT, dove 0 ≤ P ≤ 1 (quindi per un carico di lavoro PUT del 100%, P = 1 e per un carico di lavoro GET del 100%, P = 0).
@@ -254,6 +264,7 @@ Quindi, ad esempio, se la griglia è dimensionata per 1.000 operazioni S3 al sec
 
 
 
+[[if-you-use-erasure-coding-for-data-protection]]
 === Se si utilizza la codifica di cancellazione per la protezione dei dati
 
 Sia P la percentuale di operazioni S3 che sono PUT, dove 0 ≤ P ≤ 1 (quindi per un carico di lavoro PUT del 100%, P = 1 e per un carico di lavoro GET del 100%, P = 0).

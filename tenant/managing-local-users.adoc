@@ -24,6 +24,7 @@ NOTE: Se per il sistema StorageGRID è abilitato l'accesso Single Sign-On (SSO),
 
 
 
+[[create-usercreate-a-local-user]]
 == [[create-user]]Crea un utente locale
 
 È possibile creare un utente locale e assegnarlo a uno o più gruppi locali per controllarne le autorizzazioni di accesso.
@@ -34,6 +35,7 @@ Gli utenti Swift che non appartengono ad alcun gruppo non hanno autorizzazioni d
 
 
 
+[[access-the-create-user-wizard]]
 === Accedi alla procedura guidata Crea utente
 
 .Passi
@@ -49,6 +51,7 @@ image::../media/grid-federation-tenant-user-banner.png[immagine del banner blu s
 
 
 
+[[enter-credentials]]
 === Inserisci le credenziali
 
 .Passi
@@ -95,6 +98,7 @@ Ad esempio, seleziona *Sì* per sospendere temporaneamente la possibilità di un
 
 
 
+[[assign-to-groups]]
 === Assegna ai gruppi
 
 .Passi
@@ -114,6 +118,7 @@ Se il tuo account tenant dispone dell'autorizzazione *Usa connessione federazion
 
 
 
+[[view-or-edit-local-user]]
 == Visualizza o modifica l'utente locale
 
 .Passi
@@ -174,6 +179,7 @@ Non è possibile modificare il nome utente.
 
 
 
+[[duplicate-local-user]]
 == Utente locale duplicato
 
 È possibile duplicare un utente locale per creare più rapidamente un nuovo utente.
@@ -191,6 +197,7 @@ NOTE: Se l'account del tenant dispone dell'autorizzazione *Usa connessione feder
 
 
 
+[[clone-usersretry-user-clone]]
 == [[clone-users]]Riprova la clonazione dell'utente
 
 Per riprovare una clonazione non riuscita:
@@ -204,6 +211,7 @@ Per ulteriori informazioni, vederelink:grid-federation-account-clone.html["Clona
 
 
 
+[[delete-one-or-more-local-users]]
 == Elimina uno o più utenti locali
 
 È possibile eliminare definitivamente uno o più utenti locali che non hanno più bisogno di accedere all'account tenant StorageGRID .

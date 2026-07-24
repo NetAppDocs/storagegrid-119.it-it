@@ -25,6 +25,7 @@ NOTE: Alcuni servizi StorageGRID non sono stati aggiornati per utilizzare le cif
 
 
 
+[[select-a-security-policy]]
 == Seleziona una politica di sicurezza
 
 .Passi
@@ -87,6 +88,7 @@ Accanto a *Criterio attuale* nel riquadro del criterio appare un segno di spunta
 
 
 
+[[create-a-custom-security-policy]]
 == Crea una policy di sicurezza personalizzata
 
 È possibile creare una policy personalizzata se è necessario applicare cifrari personalizzati.
@@ -108,6 +110,8 @@ Accanto a *Criterio attuale* nel riquadro Criterio personalizzato appare un segn
 
 
 
+[[temporarily-revert-to-the-default-security-policy]]
+[[temporarily-revert-to-default-security-policy]]
 == Ripristina temporaneamente la politica di sicurezza predefinita
 
 Se hai configurato un criterio di sicurezza personalizzato, potresti non essere in grado di accedere a Grid Manager se il criterio TLS configurato non è compatibile conlink:global-certificate-types.html["certificato del server configurato"] .

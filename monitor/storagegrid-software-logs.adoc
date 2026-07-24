@@ -18,6 +18,7 @@ NOTE: Se si desidera inviare i log a un server syslog esterno o modificare la de
 
 
 
+[[general-storagegrid-logs]]
 == Registri generali di StorageGRID
 
 [cols="3a,3a,2a"]
@@ -49,6 +50,7 @@ Tutti i nodi
 |===
 
 
+[[cipher-related-logs]]
 == Registri relativi alla cifratura
 
 [cols="3a,3a,2a"]
@@ -85,6 +87,7 @@ Tutti i nodi
 |===
 
 
+[[grid-federation-logs]]
 == Registri della federazione della griglia
 
 [cols="3a,3a,2a"]
@@ -100,6 +103,7 @@ Tutti i nodi
 |===
 
 
+[[nms-logs]]
 == Registri NMS
 
 [cols="3a,3a,2a"]
@@ -136,6 +140,7 @@ Nodi amministrativi
 |===
 
 
+[[server-manager-logs]]
 == Registri di Server Manager
 
 [cols="3a,3a,2a"]
@@ -165,6 +170,7 @@ Tutti i nodi
 |===
 
 
+[[storagegrid-services-logs]]
 == Registri dei servizi StorageGRID
 
 [cols="3a,3a,2a"]

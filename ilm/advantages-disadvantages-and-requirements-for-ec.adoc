@@ -15,6 +15,7 @@ Prima di decidere se utilizzare la codifica di replicazione o di cancellazione p
 
 
 
+[[advantages-of-erasure-coding]]
 == Vantaggi della codifica di cancellazione
 
 Rispetto alla replicazione, la codifica di cancellazione offre maggiore affidabilità, disponibilità ed efficienza di archiviazione.
@@ -30,6 +31,7 @@ NOTE: Lo spazio su disco per gli oggetti con codice di cancellazione viene calco
 
 
 
+[[disadvantages-of-erasure-coding]]
 == Svantaggi della codifica di cancellazione
 
 Rispetto alla replicazione, la codifica a cancellazione presenta i seguenti svantaggi:
@@ -44,6 +46,7 @@ Rispetto alla replicazione, la codifica a cancellazione presenta i seguenti svan
 
 
 
+[[when-to-use-erasure-coding]]
 == Quando utilizzare la codifica di cancellazione
 
 La codifica di cancellazione è più adatta ai seguenti requisiti:

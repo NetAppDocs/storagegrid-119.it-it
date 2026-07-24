@@ -9,12 +9,14 @@ CAUTION: Per le origini identità diverse da ActiveDirectory o Azure, StorageGRI
 
 
 
+[[memberof-and-refint-overlays]]
 === Sovrapposizioni di membri e raffinazione
 
 Le sovrapposizioni memberof e refint dovrebbero essere abilitate.  Per ulteriori informazioni, consultare le istruzioni per la manutenzione inversa dell'appartenenza al gruppo inhttp://www.openldap.org/doc/admin24/index.html["Documentazione OpenLDAP: Guida dell'amministratore versione 2.4"^] .
 
 
 
+[[indexing]]
 === Indicizzazione
 
 È necessario configurare i seguenti attributi OpenLDAP con le parole chiave di indice specificate:

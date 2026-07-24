@@ -20,12 +20,14 @@ I valori di coerenza possono essere utilizzati per specificare la disponibilità
 
 
 
+[[bucket-consistency-guidelines]]
 == Linee guida sulla coerenza del bucket
 
 La coerenza del bucket viene utilizzata per determinare la coerenza delle applicazioni client che interessano gli oggetti all'interno di quel bucket S3.  In generale, dovresti usare la coerenza *Lettura dopo nuova scrittura* per i tuoi bucket.
 
 
 
+[[change-bucket-consistencychange-bucket-consistency]]
 == [[change-bucket-consistency]]Modifica la coerenza del bucket
 
 Se la coerenza *Read-after-new-write* non soddisfa i requisiti dell'applicazione client, è possibile modificarla impostando la coerenza del bucket o utilizzando `Consistency-Control` intestazione.  IL `Consistency-Control` l'intestazione sovrascrive la coerenza del bucket.
@@ -54,6 +56,7 @@ Viene visualizzata la pagina dei dettagli del bucket.
 
 
 
+[[what-happens-when-you-change-bucket-settings]]
 == Cosa succede quando si modificano le impostazioni del bucket
 
 I bucket hanno più impostazioni che influenzano il comportamento dei bucket stessi e degli oggetti al loro interno.

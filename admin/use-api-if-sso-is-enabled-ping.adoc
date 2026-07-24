@@ -15,6 +15,7 @@ Se hailink:../admin/configuring-sso.html["configurato e abilitato l'accesso sing
 
 
 
+[[sign-in-to-the-api-if-single-sign-on-is-enabled]]
 == Sign in all'API se è abilitato l'accesso singolo
 
 Queste istruzioni si applicano se si utilizza PingFederate come provider di identità SSO
@@ -204,6 +205,7 @@ Ora puoi usare `MYTOKEN` per altre richieste, in modo simile a come utilizzerest
 
 
 
+[[sign-out-of-the-api-if-single-sign-on-is-enabled]]
 == Disconnettersi dall'API se è abilitato l'accesso singolo
 
 Se è stato abilitato l'accesso singolo (SSO), è necessario inviare una serie di richieste API per disconnettersi dall'API di gestione della griglia o dall'API di gestione dei tenant.  Queste istruzioni si applicano se si utilizza PingFederate come provider di identità SSO

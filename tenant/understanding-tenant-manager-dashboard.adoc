@@ -22,6 +22,7 @@ image::../media/tenant_dashboard_with_buckets.png[Dashboard - Lista dei desideri
 
 
 
+[[tenant-account-information]]
 == Informazioni sull'account dell'inquilino
 
 Nella parte superiore della dashboard viene visualizzato il numero di bucket o contenitori, gruppi e utenti configurati.  Visualizza anche il numero di endpoint dei servizi della piattaforma, se ne sono stati configurati.  Selezionare i link per visualizzare i dettagli.
@@ -30,6 +31,7 @@ A seconda dellink:tenant-management-permissions.html["permessi di gestione degli
 
 
 
+[[storage-and-quota-usage]]
 == Utilizzo di spazio di archiviazione e quote
 
 Il pannello Utilizzo dello spazio di archiviazione contiene le seguenti informazioni:
@@ -64,6 +66,7 @@ NOTE: Per modificare le unità per i valori di archiviazione visualizzati in Ten
 
 
 
+[[quota-usage-alerts]]
 == Avvisi sull'utilizzo delle quote
 
 Se in Grid Manager sono stati abilitati gli avvisi sull'utilizzo delle quote, questi avvisi verranno visualizzati in Tenant Manager quando la quota è bassa o superata, come segue:
@@ -77,6 +80,7 @@ Si consiglia di chiedere all'amministratore della rete di aumentare la quota.
 
 
 
+[[bucket-capacity-usagecapacity-limit-usage]]
 == [[bucket-capacity-usage]]Limite di utilizzo della capacità
 
 Se hai impostato un limite di capacità per i tuoi bucket, la dashboard di Tenant Manager visualizza un elenco dei bucket principali in base all'utilizzo del limite di capacità.
@@ -85,6 +89,7 @@ Se non viene impostato alcun limite per un bucket, la sua capacità è illimitat
 
 
 
+[[endpoint-errors]]
 == Errori di endpoint
 
 Se hai utilizzato Grid Manager per configurare uno o più endpoint da utilizzare con i servizi della piattaforma, la dashboard di Tenant Manager visualizza un avviso se si sono verificati errori degli endpoint negli ultimi sette giorni.

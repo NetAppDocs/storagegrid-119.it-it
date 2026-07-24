@@ -34,6 +34,7 @@ Per ulteriori informazioni, consultare link:../tenant/index.html["Utilizzare un 
 
 
 
+[[how-do-i-create-a-tenant-account]]
 == Come posso creare un account tenant?
 
 Utilizzare Grid Manager per creare un account tenant.  Quando si crea un account tenant, si specificano le seguenti informazioni:
@@ -47,6 +48,7 @@ Inoltre, è possibile abilitare l'impostazione S3 Object Lock per il sistema Sto
 
 
 
+[[what-is-tenant-manager-used-for]]
 == A cosa serve Tenant Manager?
 
 Dopo aver creato l'account tenant, gli utenti tenant possono accedere a Tenant Manager per eseguire attività come le seguenti:

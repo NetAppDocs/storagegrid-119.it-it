@@ -47,12 +47,14 @@ Quando si riavvia il nodo di amministrazione primario, il browser perde temporan
 
 
 
+[[perform-a-rolling-reboot]]
 == Eseguire un riavvio progressivo
 
 Seleziona i nodi che vuoi riavviare, rivedi le tue selezioni, avvia la procedura di riavvio e monitora l'avanzamento.
 
 
 
+[[select-nodes]]
 === Seleziona nodi
 
 Come primo passo, accedi alla pagina Riavvio progressivo e seleziona i nodi che desideri riavviare.
@@ -79,6 +81,7 @@ TIP: Per visualizzare tutti gli avvisi correnti per un nodo, puoi anche selezion
 
 
 
+[[review-selection]]
 === Selezione della revisione
 
 In questo passaggio puoi determinare quanto tempo potrebbe richiedere la procedura di riavvio totale e confermare di aver selezionato i nodi corretti.
@@ -96,6 +99,7 @@ NOTE: Il nodo di amministrazione primario sarà l'ultimo nodo a riavviarsi.  Dur
 
 
 
+[[monitor-a-rolling-reboot]]
 === Monitorare un riavvio progressivo
 
 Mentre è in esecuzione la procedura di riavvio progressivo, è possibile monitorarla dal nodo di amministrazione primario.
@@ -124,6 +128,7 @@ Le tabelle forniscono una barra di avanzamento dell'operazione su ciascun nodo e
 
 
 
+[[stop-the-rolling-reboot-procedure]]
 == Interrompere la procedura di riavvio progressivo
 
 È possibile interrompere la procedura di riavvio progressivo dal nodo di amministrazione primario.  Quando si interrompe la procedura, tutti i nodi con stato "Arresto servizi in corso", "Riavvio del sistema" o "Avvio servizi in corso" completeranno l'operazione di riavvio.  Tuttavia, questi nodi non saranno più monitorati come parte della procedura.

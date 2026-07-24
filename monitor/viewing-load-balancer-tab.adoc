@@ -21,6 +21,7 @@ image::../media/nodes_page_load_balancer_tab.png[Scheda Bilanciatore del carico 
 
 
 
+[[request-traffic]]
 == Richiedi traffico
 
 Questo grafico fornisce una media mobile di 3 minuti della velocità di trasmissione dei dati tra gli endpoint del bilanciatore del carico e i client che effettuano le richieste, in bit al secondo.
@@ -30,18 +31,21 @@ NOTE: Questo valore viene aggiornato al completamento di ogni richiesta.  Di con
 
 
 
+[[incoming-request-rate]]
 == Tasso di richiesta in arrivo
 
 Questo grafico fornisce una media mobile di 3 minuti del numero di nuove richieste al secondo, suddivise per tipo di richiesta (GET, PUT, HEAD e DELETE).  Questo valore viene aggiornato quando le intestazioni di una nuova richiesta sono state convalidate.
 
 
 
+[[average-request-duration-non-error]]
 == Durata media della richiesta (senza errori)
 
 Questo grafico fornisce una media mobile di 3 minuti delle durate delle richieste, suddivise per tipo di richiesta (GET, PUT, HEAD e DELETE).  La durata di ogni richiesta inizia quando un'intestazione della richiesta viene analizzata dal servizio Load Balancer e termina quando il corpo completo della risposta viene restituito al client.
 
 
 
+[[error-response-rate]]
 == Tasso di risposta agli errori
 
 Questo grafico fornisce una media mobile di 3 minuti del numero di risposte di errore restituite ai client al secondo, suddivise in base al codice di risposta di errore.

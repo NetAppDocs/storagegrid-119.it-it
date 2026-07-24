@@ -15,6 +15,7 @@ Prima di dismettere un nodo di archiviazione, valuta se è possibile clonarlo.  
 
 
 
+[[when-to-clone-a-node-instead-of-decommissioning-it]]
 == Quando clonare un nodo invece di dismetterlo
 
 Se si desidera sostituire un vecchio nodo di archiviazione con un dispositivo più nuovo o più grande, si consiglia di clonare il nodo del dispositivo anziché aggiungere un nuovo dispositivo in un'espansione e quindi dismettere il vecchio dispositivo.
@@ -33,6 +34,7 @@ Vedere https://docs.netapp.com/us-en/storagegrid-appliances/commonhardware/how-a
 
 
 
+[[considerations-for-connected-storage-nodes]]
 == Considerazioni sui nodi di archiviazione connessi
 
 Esaminare le considerazioni per la dismissione di un nodo di archiviazione connesso.
@@ -57,6 +59,8 @@ NOTE: Il pulsante *Pausa* è abilitato solo quando vengono raggiunte le fasi di 
 
 
 
+[[considerations-for-disconnected-storage-nodes]]
+[[considerations-disconnected-storage-nodes]]
 == Considerazioni sui nodi di archiviazione disconnessi
 
 Esaminare le considerazioni per la dismissione di un nodo di archiviazione disconnesso.

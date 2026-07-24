@@ -27,6 +27,7 @@ NOTE: Quando si clonano le chiavi di accesso S3 per un utente federato, sia l'ut
 
 
 
+[[clone-your-own-access-keys]]
 == Clona le tue chiavi di accesso
 
 Puoi clonare le tue chiavi di accesso se hai bisogno di accedere agli stessi bucket su entrambe le griglie.
@@ -56,6 +57,7 @@ image::../media/grid-federation-clone-access-key.png[API Tenant Manager che imme
 
 
 
+[[clone-another-users-access-keys]]
 == Clona le chiavi di accesso di un altro utente
 
 È possibile clonare le chiavi di accesso di un altro utente se quest'ultimo ha bisogno di accedere agli stessi bucket su entrambe le griglie.

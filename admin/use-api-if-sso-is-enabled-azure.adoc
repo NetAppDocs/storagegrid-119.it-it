@@ -15,6 +15,7 @@ Se hailink:../admin/configuring-sso.html["configurato e abilitato l'accesso sing
 
 
 
+[[sign-in-to-the-api-if-azure-single-sign-on-is-enabled]]
 == Sign in all'API se è abilitato l'accesso Single Sign-On di Azure
 
 Queste istruzioni si applicano se si utilizza Azure come provider di identità SSO

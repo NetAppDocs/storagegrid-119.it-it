@@ -15,6 +15,7 @@ I costi di collegamento consentono di stabilire la priorità del sito del data c
 
 
 
+[[what-are-link-costs]]
 == Quali sono i costi dei link?
 
 * I costi di collegamento vengono utilizzati per stabilire la priorità della copia dell'oggetto da utilizzare per completare i recuperi dell'oggetto.
@@ -62,6 +63,7 @@ Data center logici nello stesso edificio fisico o campus collegati tramite una L
 |===
 
 
+[[update-link-costs]]
 == Aggiorna i costi dei link
 
 È possibile aggiornare i costi di collegamento tra i siti dei data center per riflettere la latenza tra i siti.

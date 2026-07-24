@@ -15,6 +15,7 @@ L'integrità e la larghezza di banda della rete tra nodi e siti, nonché l'utili
 
 
 
+[[monitor-network-connections-and-performance]]
 == Monitorare le connessioni e le prestazioni di rete
 
 La connettività di rete e la larghezza di banda sono particolarmente importanti se la policy di gestione del ciclo di vita delle informazioni (ILM) copia oggetti replicati tra siti o archivia oggetti con codice di cancellazione utilizzando uno schema che fornisce protezione contro la perdita del sito.  Se la rete tra i siti non è disponibile, la latenza di rete è troppo elevata o la larghezza di banda di rete è insufficiente, alcune regole ILM potrebbero non essere in grado di posizionare gli oggetti dove previsto.  Ciò può causare errori di acquisizione (quando è selezionata l'opzione di acquisizione rigorosa per le regole ILM) o scarse prestazioni di acquisizione e arretrati ILM.
@@ -77,6 +78,7 @@ Se una policy di classificazione del traffico è progettata per limitare il traf
 
 
 
+[[monitor-node-level-resources]]
 == Monitorare le risorse a livello di nodo
 
 Monitorare i singoli nodi della griglia per verificare i livelli di utilizzo delle risorse.  Se i nodi sono costantemente sovraccarichi, potrebbero essere necessari più nodi per operazioni efficienti.

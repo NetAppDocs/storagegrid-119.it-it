@@ -17,6 +17,7 @@ Gli hotfix StorageGRID contengono modifiche software rese disponibili al di fuor
 
 
 
+[[considerations-for-applying-a-hotfix]]
 == Considerazioni per l'applicazione di un hotfix
 
 Non è possibile applicare un hotfix StorageGRID quando è in esecuzione un'altra procedura di manutenzione.  Ad esempio, non è possibile applicare un hotfix mentre è in esecuzione una procedura di dismissione, espansione o ripristino.
@@ -32,6 +33,7 @@ Sebbene i nodi della griglia vengano aggiornati con la nuova versione dell'hotfi
 
 
 
+[[how-hotfixes-are-applied-for-recovery-and-expansion]]
 == Come vengono applicati gli hotfix per il ripristino e l'espansione
 
 Dopo che un hotfix è stato applicato alla griglia, il nodo di amministrazione primario installa automaticamente la stessa versione dell'hotfix su tutti i nodi ripristinati tramite operazioni di ripristino o aggiunti in un'espansione.

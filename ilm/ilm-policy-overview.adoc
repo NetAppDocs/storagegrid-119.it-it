@@ -18,6 +18,7 @@ CAUTION: Una policy ILM configurata in modo errato può comportare una perdita d
 
 
 
+[[default-ilm-policy]]
 == Criterio ILM predefinito
 
 Quando si installa StorageGRID e si aggiungono siti, viene creato automaticamente un criterio ILM predefinito, come segue:
@@ -30,12 +31,14 @@ Se la policy predefinita non soddisfa i requisiti di archiviazione, è possibile
 
 
 
+[[one-or-many-active-ilm-policies]]
 == Una o più polizze ILM attive?
 
 È possibile avere una o più polizze ILM attive contemporaneamente.
 
 
 
+[[one-policy]]
 === Una politica
 
 Se la griglia utilizzerà uno schema di protezione dei dati semplice con poche regole specifiche per tenant e bucket, utilizzare un singolo criterio ILM attivo.  Le regole ILM possono contenere filtri per gestire diversi bucket o tenant.
@@ -46,6 +49,7 @@ Quando si dispone di una sola policy e i requisiti di un tenant cambiano, è nec
 
 
 
+[[multiple-policies]]
 === Politiche multiple
 
 Per offrire agli inquilini diverse opzioni di qualità del servizio, è possibile avere più di una polizza attiva contemporaneamente.  Ogni policy può gestire tenant, bucket S3 e oggetti specifici.  Quando si applica o si modifica una policy per un set specifico di tenant o oggetti, le policy applicate ad altri tenant e oggetti non vengono modificate.
@@ -63,6 +67,7 @@ image::../media/ilm-policies-tags-conceptual.png[Diagramma delle politiche ILM m
 
 
 
+[[how-does-an-ilm-policy-evaluate-objects]]
 == In che modo una policy ILM valuta gli oggetti?
 
 Una policy ILM attiva controlla il posizionamento, la durata e la protezione dei dati degli oggetti.
@@ -76,6 +81,7 @@ Quando i client salvano oggetti in StorageGRID, gli oggetti vengono valutati in 
 
 
 
+[[example-ilm-policy]]
 == Esempio di politica ILM
 
 Ad esempio, una policy ILM potrebbe contenere tre regole ILM che specificano quanto segue:
@@ -105,6 +111,7 @@ image::../media/ilm_policy_and_rules.png[Politica e regole ILM]
 
 
 
+[[what-are-active-and-inactive-policies]]
 == Cosa sono le politiche attive e inattive?
 
 Ogni sistema StorageGRID deve avere almeno una policy ILM attiva.  Se si desidera avere più di un criterio ILM attivo, è possibile creare tag di criteri ILM e assegnare un criterio a ciascun tag.  I tenant applicano quindi i tag ai bucket S3.  Il criterio predefinito viene applicato a tutti gli oggetti nei bucket a cui non è assegnato un tag di criterio.
@@ -119,6 +126,7 @@ Un sistema StorageGRID tiene traccia della cronologia delle policy attivate o di
 
 
 
+[[considerations-for-creating-an-ilm-policy]]
 == Considerazioni per la creazione di una politica ILM
 
 * Nei sistemi di test utilizzare solo la policy fornita dal sistema, ovvero la policy delle copie Baseline 2.  Per StorageGRID 11.6 e versioni precedenti, la regola Crea 2 copie in questo criterio utilizza il pool di archiviazione Tutti i nodi di archiviazione, che contiene tutti i siti.  Se il sistema StorageGRID ha più di un sito, è possibile che due copie di un oggetto siano posizionate sullo stesso sito.

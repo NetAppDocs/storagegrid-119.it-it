@@ -19,12 +19,14 @@ Per ulteriori informazioni sulla topologia di rete StorageGRID , sui requisiti e
 
 
 
+[[deployment-topologies]]
 == Topologie di distribuzione
 
 Il sistema StorageGRID può essere distribuito in un singolo sito di data center o in più siti di data center.
 
 
 
+[[single-site]]
 === Sito singolo
 
 In una distribuzione con un singolo sito, l'infrastruttura e le operazioni del sistema StorageGRID sono centralizzate.
@@ -33,6 +35,7 @@ image::../media/data_center_site_single.png[Sito di un singolo data center]
 
 
 
+[[multiple-sites]]
 === Siti multipli
 
 In una distribuzione con più siti, è possibile installare in ciascun sito diversi tipi e numeri di risorse StorageGRID .  Ad esempio, potrebbe essere necessario più spazio di archiviazione in un data center rispetto a un altro.
@@ -45,12 +48,14 @@ All'interno di un singolo data center possono esistere anche più siti logici pe
 
 
 
+[[grid-node-redundancy]]
 === Ridondanza dei nodi della griglia
 
 In una distribuzione a sito singolo o multi-sito, è possibile includere facoltativamente più di un nodo di amministrazione o nodo gateway per ridondanza.  Ad esempio, è possibile installare più di un nodo di amministrazione in un singolo sito o in più siti.  Tuttavia, ogni sistema StorageGRID può avere un solo nodo amministrativo primario.
 
 
 
+[[system-architecture]]
 == Architettura del sistema
 
 Questo diagramma mostra come sono disposti i nodi della griglia all'interno di un sistema StorageGRID .

@@ -15,6 +15,7 @@ I messaggi di controllo vengono generati quando un client S3 aggiorna i metadati
 
 
 
+[[s3-metadata-update-audit-messages]]
 == Messaggi di controllo dell'aggiornamento dei metadati S3
 
 [cols="1a,1a,2a,1a,2a"]
@@ -36,12 +37,14 @@ link:supd-s3-metadata-updated.html["SUPD: Metadati S3 aggiornati"]
 |===
 
 
+[[example-s3-metadata-update]]
 == Esempio: aggiornamento dei metadati S3
 
 L'esempio mostra una transazione riuscita per aggiornare i metadati di un oggetto S3 esistente.
 
 
 
+[[supd-s3-metadata-update]]
 === SUPD: Aggiornamento metadati S3
 
 Il client S3 effettua una richiesta (SUPD) per aggiornare i metadati specificati(`x-amz-meta-\*` ) per l'oggetto S3 (S3KY). In questo esempio, le intestazioni delle richieste sono incluse nel campo HTRH perché è stato configurato come intestazione del protocollo di controllo (**CONFIGURAZIONE** > **Monitoraggio** > **Server di controllo e syslog**). Vedere link:../monitor/configure-audit-messages.html["Configurare i messaggi di controllo e le destinazioni dei registri"] .

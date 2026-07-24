@@ -19,6 +19,7 @@ Controllare questo file per messaggi di errore relativi a guasti.  Se necessario
 
 
 
+[[service-with-an-error-state]]
 == Servizio con stato di errore
 
 Se rilevi che un servizio è entrato in uno stato di errore, prova a riavviarlo.

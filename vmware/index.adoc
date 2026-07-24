@@ -38,6 +38,7 @@ Quando tutti i nodi sono stati distribuiti, utilizzare Grid Manager perlink:navi
 
 
 
+[[automate-the-installation]]
 == Automatizzare l'installazione
 
 Per risparmiare tempo e garantire coerenza, è possibile automatizzare la distribuzione e la configurazione dei nodi della griglia e la configurazione del sistema StorageGRID .

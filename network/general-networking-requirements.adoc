@@ -37,6 +37,7 @@ Se non si è pronti a configurare le reti client e di amministrazione facoltativ
 
 
 
+[[connections-for-admin-nodes-and-gateway-nodes]]
 == Connessioni per nodi amministrativi e nodi gateway
 
 I nodi amministrativi devono essere sempre protetti da client non attendibili, come quelli presenti su Internet aperto.  È necessario assicurarsi che nessun client non attendibile possa accedere ad alcun nodo di amministrazione sulla rete Grid, sulla rete di amministrazione o sulla rete client.
@@ -45,6 +46,7 @@ I nodi amministrativi e i nodi gateway che si intende aggiungere ai gruppi ad al
 
 
 
+[[using-network-address-translation-nat]]
 == Utilizzo della traduzione degli indirizzi di rete (NAT)
 
 Non utilizzare la traduzione degli indirizzi di rete (NAT) sulla rete Grid tra nodi della griglia o tra siti StorageGRID .  Quando si utilizzano indirizzi IPv4 privati ​​per la rete Grid, tali indirizzi devono essere direttamente instradabili da ogni nodo della griglia in ogni sito.  Tuttavia, se necessario, è possibile utilizzare NAT tra client esterni e nodi della griglia, ad esempio per fornire un indirizzo IP pubblico per un nodo gateway.  L'utilizzo di NAT per collegare un segmento di rete pubblica è supportato solo quando si utilizza un'applicazione di tunneling trasparente per tutti i nodi della griglia, ovvero quando i nodi della griglia non richiedono la conoscenza degli indirizzi IP pubblici.

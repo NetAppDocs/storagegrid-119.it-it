@@ -20,6 +20,7 @@ Tutte le attività del client S3 sono associate agli account tenant StorageGRID 
 
 
 
+[[view-all-tenants]]
 == Visualizza tutti gli inquilini
 
 La pagina Inquilini mostra le informazioni di base per tutti gli account degli inquilini attuali.
@@ -60,6 +61,7 @@ Non è possibile rimuovere un account tenant se l'account include bucket o conte
 
 
 
+[[view-a-specific-tenant]]
 == Visualizza un inquilino specifico
 
 È possibile visualizzare i dettagli di un inquilino specifico.
@@ -124,6 +126,7 @@ Vederelink:../admin/grid-federation-overview.html["Che cos'è la federazione di 
 
 
 
+[[view-network-traffic]]
 == Visualizza il traffico di rete
 
 Se per un tenant sono in atto criteri di classificazione del traffico, esaminare il traffico di rete per quel tenant.
@@ -142,6 +145,7 @@ Vedere link:../admin/managing-traffic-classification-policies.html["Gestire le p
 
 
 
+[[use-the-audit-log]]
 == Utilizzare il registro di controllo
 
 Facoltativamente, è possibile utilizzare il registro di controllo per un monitoraggio più dettagliato delle attività di un tenant.
@@ -160,6 +164,7 @@ Vedere link:../audit/index.html["Esaminare i registri di controllo"] per maggior
 
 
 
+[[use-prometheus-metrics]]
 == Utilizzare le metriche di Prometheus
 
 Facoltativamente, utilizzare le metriche di Prometheus per generare report sull'attività dei tenant.

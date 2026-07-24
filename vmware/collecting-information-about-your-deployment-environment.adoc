@@ -18,6 +18,7 @@ NOTE: È più efficiente eseguire un'unica installazione di tutti i nodi, piutto
 
 
 
+[[vmware-information]]
 == Informazioni VMware
 
 È necessario accedere all'ambiente di distribuzione e raccogliere informazioni sull'ambiente VMware, sulle reti create per Grid, Admin e Client Network e sui tipi di volumi di archiviazione che si intende utilizzare per i nodi di archiviazione.
@@ -33,6 +34,7 @@ NOTE: VMware Live vMotion provoca un salto temporale nella macchina virtuale e n
 
 
 
+[[grid-network-information]]
 == Informazioni sulla rete Grid
 
 È necessario raccogliere informazioni sulla rete VMware creata per StorageGRID Grid Network (obbligatorio), tra cui:
@@ -48,6 +50,7 @@ NOTE: VMware Live vMotion provoca un salto temporale nella macchina virtuale e n
 
 
 
+[[admin-network-information]]
 == Informazioni sulla rete di amministrazione
 
 Per i nodi che saranno connessi alla rete di amministrazione StorageGRID opzionale, è necessario raccogliere informazioni sulla rete VMware creata per questa rete, tra cui:
@@ -64,6 +67,7 @@ Per i nodi che saranno connessi alla rete di amministrazione StorageGRID opziona
 
 
 
+[[client-network-information]]
 == Informazioni sulla rete del cliente
 
 Per i nodi che saranno connessi alla rete client StorageGRID opzionale, è necessario raccogliere informazioni sulla rete VMware creata per questa rete, tra cui:
@@ -75,6 +79,7 @@ Per i nodi che saranno connessi alla rete client StorageGRID opzionale, è neces
 
 
 
+[[information-about-additional-interfaces]]
 == Informazioni sulle interfacce aggiuntive
 
 Dopo aver installato il nodo, è possibile aggiungere facoltativamente interfacce trunk o di accesso alla VM in vCenter.  Ad esempio, potresti voler aggiungere un'interfaccia trunk a un nodo di amministrazione o gateway, in modo da poter utilizzare le interfacce VLAN per separare il traffico appartenente a diverse applicazioni o tenant.  In alternativa, potresti voler aggiungere un'interfaccia di accesso da utilizzare in un gruppo ad alta disponibilità (HA).
@@ -87,6 +92,7 @@ Le interfacce aggiunte vengono visualizzate nella pagina Interfacce VLAN e nella
 
 
 
+[[storage-volumes-for-virtual-storage-nodes]]
 == Volumi di archiviazione per nodi di archiviazione virtuali
 
 È necessario raccogliere le seguenti informazioni per i nodi di archiviazione basati su macchine virtuali:
@@ -96,6 +102,7 @@ Le interfacce aggiunte vengono visualizzate nella pagina Interfacce VLAN e nella
 
 
 
+[[grid-configuration-information]]
 == Informazioni sulla configurazione della griglia
 
 È necessario raccogliere informazioni per configurare la griglia:

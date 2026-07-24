@@ -20,6 +20,7 @@ Gestisci i tuoi gruppi di tenant in base alle tue esigenze per visualizzare, mod
 
 
 
+[[view-or-edit-group]]
 == Visualizza o modifica il gruppo
 
 È possibile visualizzare e modificare le informazioni di base e i dettagli per ciascun gruppo.
@@ -106,6 +107,7 @@ In alto a destra appare un messaggio di conferma.
 
 
 
+[[duplicate-group]]
 == Gruppo duplicato
 
 È possibile duplicare un gruppo esistente per creare nuovi gruppi più rapidamente.
@@ -123,6 +125,7 @@ NOTE: Se l'account del tenant dispone dell'autorizzazione *Usa connessione feder
 
 
 
+[[clone-groupsretry-group-clone]]
 == [[clone-groups]]Riprova a clonare il gruppo
 
 Per riprovare una clonazione non riuscita:
@@ -136,6 +139,7 @@ Per ulteriori informazioni, vederelink:grid-federation-account-clone.html["Clona
 
 
 
+[[delete-one-or-more-groups]]
 == Elimina uno o più gruppi
 
 È possibile eliminare uno o più gruppi.  Gli utenti che appartengono solo a un gruppo eliminato non potranno più accedere a Tenant Manager o utilizzare l'account tenant.

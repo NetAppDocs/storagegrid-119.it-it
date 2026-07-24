@@ -45,6 +45,7 @@ Ad esempio, non utilizzare i seguenti intervalli di subnet per la rete Grid, la 
 ====
 
 
+[[add-a-subnet]]
 == Aggiungi una subnet
 
 .Passi
@@ -70,6 +71,7 @@ Le subnet specificate vengono configurate automaticamente per il sistema Storage
 
 
 
+[[edit-a-subnet]]
 == Modifica una subnet
 
 .Passi
@@ -87,6 +89,7 @@ Le subnet specificate vengono configurate automaticamente per il sistema Storage
 
 
 
+[[delete-a-subnet]]
 == Elimina una subnet
 
 .Passi

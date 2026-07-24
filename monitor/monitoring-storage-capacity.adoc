@@ -19,6 +19,7 @@ Puoilink:viewing-storage-tab.html["visualizza le informazioni sulla capacità di
 
 
 
+[[monitor-storage-capacity-for-the-entire-grid]]
 == Monitorare la capacità di archiviazione per l'intera rete
 
 Monitora la capacità di archiviazione complessiva della tua griglia per assicurarti che rimanga spazio libero adeguato per i dati degli oggetti e i metadati degli oggetti.  Comprendere come la capacità di archiviazione cambia nel tempo può aiutarti a pianificare l'aggiunta di nodi di archiviazione o volumi di archiviazione prima che la capacità di archiviazione utilizzabile della griglia venga esaurita.
@@ -72,6 +73,7 @@ Per ulteriori informazioni sulla pianificazione di un'espansione dello storage, 
 
 
 
+[[monitor-storage-capacity-for-each-storage-node]]
 == Monitorare la capacità di archiviazione per ogni nodo di archiviazione
 
 Monitorare lo spazio totale utilizzabile per ciascun nodo di archiviazione per garantire che il nodo disponga di spazio sufficiente per i nuovi dati degli oggetti.
@@ -128,6 +130,7 @@ ILlink:../troubleshoot/troubleshooting-low-object-data-storage-alert.html["Bassa
 
 
 
+[[monitor-object-metadata-capacity-for-each-storage-node]]
 == Monitorare la capacità dei metadati degli oggetti per ogni nodo di archiviazione
 
 Monitorare l'utilizzo dei metadati per ciascun nodo di archiviazione per garantire che rimanga disponibile spazio adeguato per le operazioni essenziali del database.  È necessario aggiungere nuovi nodi di archiviazione in ogni sito prima che i metadati degli oggetti superino il 100% dello spazio metadati consentito.
@@ -188,6 +191,7 @@ Quando si aggiungono nuovi nodi, il sistema ribilancia automaticamente i metadat
 
 
 
+[[monitor-space-usage-forecasts]]
 == Monitorare le previsioni di utilizzo dello spazio
 
 Monitorare le previsioni di utilizzo dello spazio per i dati utente e i metadati per stimare quando sarà necessariolink:../expand/index.html["espandere una griglia"] .

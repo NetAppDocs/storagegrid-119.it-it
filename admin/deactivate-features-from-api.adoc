@@ -36,6 +36,7 @@ Una volta completata la richiesta, la funzionalità Modifica password root del t
 
 
 
+[[reactivate-deactivated-features]]
 == Riattiva le funzionalità disattivate
 
 Per impostazione predefinita, è possibile utilizzare l'API Grid Management per riattivare una funzionalità che è stata disattivata.  Tuttavia, se si desidera impedire che le funzionalità disattivate vengano riattivate, è possibile disattivare la funzionalità *activateFeatures* stessa.

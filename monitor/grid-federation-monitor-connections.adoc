@@ -20,6 +20,7 @@ summary: È possibile monitorare informazioni di base su tutte le connessioni de
 
 
 
+[[view-all-connections]]
 == Visualizza tutte le connessioni
 
 La pagina Federazione di griglia mostra informazioni di base su tutte le connessioni di federazione di griglia e su tutti gli account tenant autorizzati a utilizzare le connessioni di federazione di griglia.
@@ -59,6 +60,7 @@ image::../media/grid-federation-permitted-tenants-tab.png[Scheda Inquilini autor
 
 
 
+[[view-specific-connectionview-a-specific-connection]]
 == [[view-specific-connection]]Visualizza una connessione specifica
 
 È possibile visualizzare i dettagli di una specifica connessione di federazione di rete.
@@ -102,6 +104,7 @@ image::../media/grid-federation-certificates-tab.png[scheda-certificati-federazi
 
 
 
+[[review-cross-grid-replication-metrics]]
 == Esaminare le metriche di replicazione tra griglie
 
 È possibile utilizzare la dashboard Cross-Grid Replication in Grafana per visualizzare le metriche di Prometheus sulle operazioni di replica cross-grid sulla propria griglia.

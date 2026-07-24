@@ -15,6 +15,7 @@ Un account tenant consente di utilizzare l'API REST Simple Storage Service (S3) 
 
 
 
+[[what-is-a-tenant-account]]
 == Che cos'è un conto inquilino?
 
 Ogni account tenant ha i propri gruppi federati o locali, utenti, bucket S3 o contenitori Swift e oggetti.
@@ -31,6 +32,7 @@ NOTE: Se si utilizza il protocollo client S3, è possibile utilizzare anche i bu
 
 
 
+[[how-to-create-a-tenant-account]]
 == Come creare un account tenant
 
 Gli account degli inquilini vengono creati da unlink:../admin/managing-tenants.html["Amministratore della griglia StorageGRID che utilizza Grid Manager"] .  Quando si crea un account tenant, l'amministratore della griglia specifica quanto segue:
@@ -44,6 +46,7 @@ Inoltre, gli amministratori della griglia possono abilitare l'impostazione S3 Ob
 
 
 
+[[configure-s3-tenants]]
 === Configurare i tenant S3
 
 Dopo unlink:../admin/creating-tenant-account.html["L'account tenant S3 è stato creato"] , puoi accedere al Tenant Manager per eseguire attività come le seguenti:

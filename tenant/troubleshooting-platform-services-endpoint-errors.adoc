@@ -15,6 +15,7 @@ Se si verifica un errore quando StorageGRID tenta di comunicare con un endpoint 
 
 
 
+[[determine-if-error-has-occurred]]
 == Determina se si è verificato un errore
 
 Se negli ultimi 7 giorni si sono verificati errori degli endpoint dei servizi della piattaforma, la dashboard di Tenant Manager visualizza un messaggio di avviso.  Per maggiori dettagli sull'errore, puoi andare alla pagina Endpoint dei servizi della piattaforma.
@@ -30,6 +31,7 @@ Lo stesso errore che appare nella dashboard appare anche nella parte superiore d
 
 
 
+[[check-if-error-is-still-current]]
 == Controlla se l'errore è ancora attuale
 
 Alcuni errori potrebbero continuare a essere visualizzati nella colonna *Ultimo errore* anche dopo essere stati risolti.  Per verificare se un errore è attuale o per forzare la rimozione di un errore risolto dalla tabella:
@@ -46,6 +48,7 @@ Selezionando *Test connessione*, StorageGRID convalida che l'endpoint dei serviz
 
 
 
+[[resolve-endpoint-errors]]
 == Risolvi gli errori dell'endpoint
 
 È possibile utilizzare il messaggio *Ultimo errore* nella pagina dei dettagli dell'endpoint per determinare la causa dell'errore.  Alcuni errori potrebbero richiedere la modifica dell'endpoint per risolvere il problema.  Ad esempio, può verificarsi un errore CloudMirroring se StorageGRID non è in grado di accedere al bucket S3 di destinazione perché non dispone delle autorizzazioni di accesso corrette o la chiave di accesso è scaduta.  Il messaggio è "È necessario aggiornare le credenziali dell'endpoint o l'accesso alla destinazione" e i dettagli sono "AccessDenied" o "InvalidAccessKeyId".
@@ -61,6 +64,7 @@ Se è necessario modificare l'endpoint per risolvere un errore, selezionando *Te
 
 
 
+[[endpoint-credentials-with-insufficient-permissions]]
 == Credenziali dell'endpoint con autorizzazioni insufficienti
 
 Quando StorageGRID convalida un endpoint dei servizi della piattaforma, conferma che le credenziali dell'endpoint possono essere utilizzate per contattare la risorsa di destinazione ed esegue un controllo di base delle autorizzazioni.  Tuttavia, StorageGRID non convalida tutte le autorizzazioni richieste per determinate operazioni dei servizi della piattaforma.  Per questo motivo, se si riceve un errore quando si tenta di utilizzare un servizio della piattaforma (ad esempio "403 Forbidden"), verificare le autorizzazioni associate alle credenziali dell'endpoint.

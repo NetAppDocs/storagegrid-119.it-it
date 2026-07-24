@@ -28,6 +28,7 @@ NOTE: È necessario creare un'applicazione aziendale per ciascun nodo amministra
 
 
 
+[[access-azure-ad]]
 == Accedi ad Azure AD
 
 .Passi
@@ -38,6 +39,7 @@ NOTE: È necessario creare un'applicazione aziendale per ciascun nodo amministra
 
 
 
+[[create-enterprise-applications-and-save-storagegrid-sso-configuration]]
 == Crea applicazioni aziendali e salva la configurazione StorageGRID SSO
 
 Per salvare la configurazione SSO per Azure in StorageGRID, è necessario utilizzare Azure per creare un'applicazione aziendale per ciascun nodo di amministrazione.  Copiare gli URL dei metadati della federazione da Azure e incollarli nei campi *URL metadati della federazione* corrispondenti nella pagina Single Sign-on di StorageGRID .
@@ -61,6 +63,7 @@ Per salvare la configurazione SSO per Azure in StorageGRID, è necessario utiliz
 
 
 
+[[download-saml-metadata-for-every-admin-node]]
 == Scarica i metadati SAML per ogni nodo amministrativo
 
 Dopo aver salvato la configurazione SSO, puoi scaricare un file di metadati SAML per ogni nodo amministrativo nel tuo sistema StorageGRID .
@@ -78,6 +81,7 @@ Dopo aver salvato la configurazione SSO, puoi scaricare un file di metadati SAML
 
 
 
+[[upload-saml-metadata-to-each-enterprise-application]]
 == Carica i metadati SAML in ogni applicazione aziendale
 
 Dopo aver scaricato un file di metadati SAML per ogni nodo di amministrazione StorageGRID , eseguire i seguenti passaggi in Azure AD:

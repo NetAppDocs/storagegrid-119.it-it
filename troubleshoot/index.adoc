@@ -17,6 +17,7 @@ Spesso è possibile risolvere i problemi autonomamente; tuttavia, potrebbe esser
 
 
 
+[[defineproblemdefine-the-problem]]
 == [[define_problem]]Definisci il problema
 
 Il primo passo per risolvere un problema è definirlo chiaramente.
@@ -78,6 +79,7 @@ Hai già riscontrato questo problema?  Con quale frequenza hai avuto questo prob
 |===
 
 
+[[assess-the-risk-and-impact-on-the-system]]
 == Valutare il rischio e l'impatto sul sistema
 
 Dopo aver definito il problema, valutarne il rischio e l'impatto sul sistema StorageGRID .  Ad esempio, la presenza di avvisi critici non significa necessariamente che il sistema non stia erogando servizi essenziali.
@@ -118,6 +120,7 @@ Sì, perché le applicazioni client non possono archiviare oggetti nel sistema S
 |===
 
 
+[[collect-data]]
 == Raccogliere dati
 
 Dopo aver definito il problema e valutato il rischio e l'impatto, raccogliere i dati per l'analisi.  Il tipo di dati più utile da raccogliere dipende dalla natura del problema.
@@ -227,6 +230,7 @@ L'assistenza tecnica potrebbe chiederti di raccogliere dati o di esaminare infor
 |===
 
 
+[[createtimelinecreate-a-timeline-of-recent-changes]]
 === [[create_timeline]]Crea una cronologia delle modifiche recenti
 
 Quando si verifica un problema, è opportuno considerare cosa è cambiato di recente e quando si sono verificati tali cambiamenti.
@@ -295,6 +299,7 @@ Ecco alcuni esempi di cambiamenti potenzialmente significativi:
 
 
 
+[[establish-baselines]]
 === Stabilire le linee di base
 
 È possibile stabilire i valori di base per il sistema registrando i livelli normali di vari valori operativi.  In futuro, sarà possibile confrontare i valori attuali con questi valori di base per individuare e risolvere i valori anomali.
@@ -397,6 +402,7 @@ Selezionare *NODI* > *_Nodo di archiviazione_* > *Oggetti*. Nella tabella Query,
 |===
 
 
+[[analyze-data]]
 == Analizzare i dati
 
 Utilizza le informazioni raccolte per determinare la causa del problema e le possibili soluzioni.
@@ -410,6 +416,7 @@ L'analisi dipende dal problema, ma in generale:
 
 
 
+[[escalation-information-checklist]]
 == Lista di controllo delle informazioni di escalation
 
 Se non riesci a risolvere il problema da solo, contatta l'assistenza tecnica.  Prima di contattare l'assistenza tecnica, raccogliere le informazioni elencate nella tabella seguente per facilitare la risoluzione dei problemi.

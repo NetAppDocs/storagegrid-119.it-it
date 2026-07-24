@@ -15,6 +15,7 @@ Gli esempi di simulazioni di policy ILM forniscono linee guida per strutturare e
 
 
 
+[[example-1-verify-rules-when-simulating-an-ilm-policy]]
 == Esempio 1: verificare le regole durante la simulazione di una policy ILM
 
 Questo esempio descrive come verificare le regole durante la simulazione di una policy.
@@ -39,6 +40,7 @@ In questo esempio:
 
 
 
+[[example-2-reorder-rules-when-simulating-an-ilm-policy]]
 == Esempio 2: riordinare le regole durante la simulazione di una policy ILM
 
 Questo esempio mostra come è possibile riordinare le regole per modificare i risultati durante la simulazione di una policy.
@@ -81,6 +83,7 @@ image::../media/simulate_reorder_rules_correct_result.png[Esempio 2: Regole di r
 
 
 
+[[example-3-correct-a-rule-when-simulating-an-ilm-policy]]
 == Esempio 3: correggere una regola durante la simulazione di una policy ILM
 
 Questo esempio mostra come simulare una policy, correggere una regola nella policy e continuare la simulazione.

@@ -25,6 +25,7 @@ CAUTION: Le seguenti regole e policy ILM sono solo esempi.  Esistono molti modi 
 
 
 
+[[ilm-rule-1-for-example-5-strict-ingest-to-guarantee-paris-data-center]]
 == Regola ILM 1 per esempio 5: Ingestione rigorosa per garantire il data center di Parigi
 
 Questa regola ILM di esempio utilizza il comportamento di ingestione Strict per garantire che gli oggetti salvati da un tenant con sede a Parigi nei bucket S3 con la regione impostata su eu-west-3 (Parigi) non vengano mai archiviati nel data center statunitense.
@@ -88,6 +89,7 @@ image::../media/ilm_rule_1_example_5_strict_ingest.png[Esempio 5 della regola 1 
 
 
 
+[[ilm-rule-2-for-example-5-balanced-ingest-for-other-objects]]
 == Regola ILM 2 per esempio 5: Ingestione bilanciata per altri oggetti
 
 Questa regola ILM di esempio utilizza il comportamento di acquisizione bilanciato per garantire un'efficienza ILM ottimale per tutti gli oggetti non corrispondenti alla prima regola.  Verranno conservate due copie di tutti gli oggetti che soddisfano questa regola: una nel centro dati degli Stati Uniti e una nel centro dati di Parigi.  Se la regola non può essere soddisfatta immediatamente, vengono conservate copie provvisorie in qualsiasi posizione disponibile.
@@ -149,6 +151,7 @@ Equilibrato.  Se possibile, gli oggetti che corrispondono a questa regola vengon
 |===
 
 
+[[ilm-policy-for-example-5-combining-ingest-behaviors]]
 == Politica ILM per l'esempio 5: combinazione di comportamenti di acquisizione
 
 L'esempio di policy ILM include due regole con comportamenti di acquisizione diversi.

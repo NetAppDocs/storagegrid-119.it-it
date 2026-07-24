@@ -15,6 +15,7 @@ Dopo aver ripristinato un volume di archiviazione su un nodo di archiviazione in
 
 
 
+[[which-procedure-should-i-use]]
 == Quale procedura dovrei usare?
 
 Se possibile, ripristinare i dati dell'oggetto utilizzando la pagina *Ripristino volume* in Grid Manager.
@@ -31,6 +32,7 @@ NOTE: Lo script repair-data è obsoleto e verrà rimosso in una versione futura.
 
 
 
+[[use-the-repair-data-script-to-restore-object-data]]
 == Utilizzare il `repair-data` script per ripristinare i dati dell'oggetto
 
 .Prima di iniziare
@@ -48,6 +50,7 @@ Notare quanto segue:
 
 
 
+[[about-the-repair-data-script]]
 == Informazioni su `repair-data` sceneggiatura
 
 Per ripristinare i dati dell'oggetto, eseguire il comando `repair-data` sceneggiatura.  Questo script avvia il processo di ripristino dei dati dell'oggetto e funziona con la scansione ILM per garantire che le regole ILM vengano rispettate.
@@ -97,6 +100,7 @@ NOTE: Il lavoro di riparazione EC riserva temporaneamente una grande quantità d
 ====
 
 
+[[find-hostname-for-storage-node]]
 == Trova il nome host per il nodo di archiviazione
 
 . Accedi al nodo di amministrazione principale:
@@ -115,6 +119,7 @@ Quando si accede come root, il prompt cambia da `$` A `#` .
 
 
 
+[[repair-data-if-all-volumes-have-failed]]
 == Ripara i dati se tutti i volumi sono falliti
 
 Se tutti i volumi di archiviazione sono guasti, riparare l'intero nodo.  Seguire le istruzioni per i *dati replicati*, i *dati con codice di cancellazione (EC)* o entrambi, a seconda che si utilizzino dati replicati, dati con codice di cancellazione (EC) o entrambi.
@@ -154,6 +159,7 @@ Le riparazioni dei dati codificati in modo da essere cancellati possono iniziare
 ====
 
 
+[[repair-data-if-only-some-volumes-have-failed]]
 == Riparare i dati se solo alcuni volumi sono falliti
 
 Se solo alcuni volumi sono guasti, riparare i volumi interessati.  Seguire le istruzioni per i *dati replicati*, i *dati con codice di cancellazione (EC)* o entrambi, a seconda che si utilizzino dati replicati, dati con codice di cancellazione (EC) o entrambi.
@@ -211,6 +217,7 @@ NOTE: Le riparazioni dei dati codificati in modo da essere cancellati possono in
 ====
 
 
+[[monitor-repairs]]
 == Riparazioni del monitor
 
 Monitorare lo stato dei lavori di riparazione, a seconda che si utilizzino *dati replicati*, *dati con codice di cancellazione (EC)* o entrambi.

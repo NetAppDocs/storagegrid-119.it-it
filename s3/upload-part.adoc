@@ -15,6 +15,7 @@ L'operazione UploadPart carica una parte in un caricamento multiparte per un ogg
 
 
 
+[[supported-request-headers]]
 == Intestazioni di richiesta supportate
 
 Sono supportate le seguenti intestazioni di richiesta:
@@ -26,6 +27,7 @@ Sono supportate le seguenti intestazioni di richiesta:
 
 
 
+[[request-headers-for-server-side-encryption]]
 == Intestazioni di richiesta per la crittografia lato server
 
 Se hai specificato la crittografia SSE-C per la richiesta CreateMultipartUpload, devi includere anche le seguenti intestazioni di richiesta in ogni richiesta UploadPart:
@@ -45,6 +47,7 @@ Se hai specificato un checksum SHA-256 durante la richiesta CreateMultipartUploa
 
 
 
+[[unsupported-request-headers]]
 == Intestazioni di richiesta non supportate
 
 Le seguenti intestazioni di richiesta non sono supportate:
@@ -55,6 +58,7 @@ Le seguenti intestazioni di richiesta non sono supportate:
 
 
 
+[[versioning]]
 == Controllo delle versioni
 
 Il caricamento multiparte consiste in operazioni separate per avviare il caricamento, elencare i caricamenti, caricare le parti, assemblare le parti caricate e completare il caricamento.  Gli oggetti vengono creati (e sottoposti a controllo di versione, se applicabile) quando viene eseguita l'operazione CompleteMultipartUpload.

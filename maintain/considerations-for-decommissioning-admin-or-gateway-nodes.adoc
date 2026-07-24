@@ -15,6 +15,7 @@ Esaminare le considerazioni per la dismissione di un nodo amministrativo o di un
 
 
 
+[[considerations-for-admin-node]]
 == Considerazioni per il nodo di amministrazione
 
 * Non è possibile disattivare il nodo di amministrazione primario.
@@ -27,6 +28,7 @@ Esaminare le considerazioni per la dismissione di un nodo amministrativo o di un
 
 
 
+[[considerations-for-gateway-node]]
 == Considerazioni per il nodo gateway
 
 * Non è possibile dismettere un Gateway Node se una delle sue interfacce di rete fa parte di un gruppo ad alta disponibilità (HA).  Per prima cosa è necessario rimuovere le interfacce di rete dal gruppo HA. Vedi le istruzioni perlink:../admin/managing-high-availability-groups.html["gestione dei gruppi HA"] .

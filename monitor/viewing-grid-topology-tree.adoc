@@ -21,6 +21,7 @@ Per espandere o comprimere l'albero della topologia della griglia, fare clic sui
 
 
 
+[[storagegrid-attributes]]
 == Attributi StorageGRID
 
 Gli attributi riportano valori e stati per molte delle funzioni del sistema StorageGRID .  I valori degli attributi sono disponibili per ciascun nodo della griglia, ciascun sito e l'intera griglia.
@@ -34,6 +35,7 @@ Gli attributi StorageGRID vengono utilizzati in diversi punti di Grid Manager:
 
 
 
+[[attribute-values]]
 === Valori degli attributi
 
 Gli attributi vengono riportati con la massima cura e sono approssimativamente corretti.  In alcune circostanze, gli aggiornamenti degli attributi possono andare persi, ad esempio in caso di crash di un servizio o di errore e ricostruzione di un nodo della griglia.

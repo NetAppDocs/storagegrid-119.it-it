@@ -17,6 +17,7 @@ Ogni sito nel sistema StorageGRID deve avere almeno tre nodi di archiviazione.
 
 
 
+[[types-of-storage-nodes]]
 == Tipi di nodi di archiviazione
 
 Durante l'installazione, è possibile selezionare il tipo di nodo di archiviazione che si desidera installare.  Questi tipi sono disponibili per i nodi di archiviazione basati su software e per i nodi di archiviazione basati su appliance che supportano la funzionalità:
@@ -78,6 +79,7 @@ Quando si installano nodi solo dati, la griglia deve contenere quanto segue:
 
 
 
+[[primary-services-for-storage-nodes]]
 == Servizi primari per i nodi di archiviazione
 
 Nella tabella seguente sono riportati i servizi principali per i nodi di archiviazione; tuttavia, questa tabella non elenca tutti i servizi dei nodi.

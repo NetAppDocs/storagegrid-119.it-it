@@ -121,6 +121,7 @@ Di norma, l'aggiornamento dei nodi appliance richiede più tempo rispetto ai nod
 
 
 
+[[example-estimated-time-to-upgrade-to-storagegrid-11-9]]
 == Esempio: tempo stimato per l'aggiornamento a StorageGRID 11.9
 
 Supponiamo che il tuo sistema abbia 14 nodi di griglia, di cui 8 sono nodi Linux.

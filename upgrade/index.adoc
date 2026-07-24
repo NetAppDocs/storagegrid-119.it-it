@@ -17,6 +17,7 @@ Quando esegui l'aggiornamento, tutti i nodi del tuo sistema StorageGRID vengono 
 
 
 
+[[before-you-begin]]
 == Prima di iniziare
 
 Esamina questi argomenti per scoprire le nuove funzionalità e i miglioramenti di StorageGRID 11.9, determinare se alcune funzionalità sono state deprecate o rimosse e scoprire le modifiche apportate alle API StorageGRID .

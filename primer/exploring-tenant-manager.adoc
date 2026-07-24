@@ -20,6 +20,7 @@ Quando gli utenti tenant accedono a Tenant Manager, si connettono a un nodo di a
 
 
 
+[[tenant-manager-dashboard]]
 == Dashboard del gestore degli inquilini
 
 Dopo che un amministratore di rete crea un account tenant utilizzando Grid Manager o Grid Management API, gli utenti tenant possono accedere a Tenant Manager.
@@ -32,12 +33,14 @@ image::../media/tenant_dashboard_with_buckets.png[Dashboard del gestore degli in
 
 
 
+[[storage-menu-s3]]
 == Menù di archiviazione (S3)
 
 Il menu Archiviazione è disponibile solo per gli account tenant S3.  Questo menu consente agli utenti S3 di gestire le chiavi di accesso, creare, gestire ed eliminare bucket, gestire gli endpoint dei servizi della piattaforma e visualizzare tutte le connessioni di federazione della griglia che sono autorizzati a utilizzare.
 
 
 
+[[my-access-keys]]
 === Le mie chiavi di accesso
 
 Gli utenti del tenant S3 possono gestire le chiavi di accesso come segue:
@@ -52,6 +55,7 @@ NOTE: La gestione delle chiavi di accesso per altri utenti avviene dal menu Gest
 
 
 
+[[buckets]]
 === Secchi
 
 Gli utenti tenant S3 con le autorizzazioni appropriate possono eseguire le seguenti attività per i propri bucket:
@@ -77,18 +81,21 @@ Se un amministratore di rete ha abilitato l'utilizzo dei servizi della piattafor
 
 
 
+[[platform-services-endpoints]]
 === Endpoint dei servizi della piattaforma
 
 Se un amministratore della griglia ha abilitato l'utilizzo dei servizi della piattaforma per l'account tenant, un utente tenant S3 con l'autorizzazione Gestisci endpoint può configurare un endpoint di destinazione per ciascun servizio della piattaforma.
 
 
 
+[[grid-federation-connections]]
 === Connessioni di federazione della rete
 
 Se un amministratore di griglia ha abilitato l'uso di una connessione di federazione di griglia per l'account tenant, un utente tenant S3 con autorizzazione di accesso Root può visualizzare il nome della connessione, accedere alla pagina dei dettagli del bucket per ciascun bucket con replica tra griglie abilitata e visualizzare l'errore più recente verificatosi durante la replica dei dati del bucket sull'altra griglia nella connessione. Vedere link:../tenant/grid-federation-view-connections-tenant.html["Visualizza le connessioni della federazione di griglia"] .
 
 
 
+[[access-management-menu]]
 == Menu Gestione accessi
 
 Il menu Gestione accessi consente ai tenant StorageGRID di importare gruppi di utenti da un'origine di identità federata e di assegnare autorizzazioni di gestione.  I tenant possono anche gestire gruppi di tenant e utenti locali, a meno che non sia attivo l'accesso singolo (SSO) per l'intero sistema StorageGRID .

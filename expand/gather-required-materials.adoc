@@ -79,6 +79,7 @@ Per le versioni supportate, vedere https://imt.netapp.com/matrix/#welcome["Strum
 |===
 
 
+[[download-and-extract-the-storagegrid-installation-files]]
 == Scarica ed estrai i file di installazione StorageGRID
 
 .[[scarica-ed-estrai-i-file-di-installazione]]
@@ -413,6 +414,7 @@ NOTE: Per l'installazione dell'appliance, questi file sono necessari solo se si 
 
 
 
+[[verify-hardware-and-networking]]
 == Verificare l'hardware e la rete
 
 Prima di iniziare l'espansione del sistema StorageGRID , accertarsi di quanto segue:

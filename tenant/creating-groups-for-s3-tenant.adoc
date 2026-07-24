@@ -22,6 +22,7 @@ summary: È possibile gestire le autorizzazioni per i gruppi di utenti S3 import
 
 
 
+[[access-the-create-group-wizard]]
 == Accedi alla procedura guidata Crea gruppo
 
 Come primo passo, accedi alla procedura guidata Crea gruppo.
@@ -37,6 +38,7 @@ image::../media/grid-federation-tenant-group-banner.png[immagine del banner blu 
 
 
 
+[[choose-a-group-type]]
 == Scegli un tipo di gruppo
 
 È possibile creare un gruppo locale o importare un gruppo federato.
@@ -61,6 +63,7 @@ NOTE: Se l'account tenant dispone dell'autorizzazione *Usa connessione federazio
 
 
 
+[[manage-group-permissions]]
 == Gestisci i permessi del gruppo
 
 Le autorizzazioni di gruppo controllano quali attività gli utenti possono eseguire in Tenant Manager e nell'API Tenant Management.
@@ -85,6 +88,7 @@ Vedere link:../tenant/tenant-management-permissions.html["Autorizzazioni di gest
 
 
 
+[[set-s3-group-policy]]
 == Imposta i criteri di gruppo S3
 
 I criteri di gruppo determinano quali autorizzazioni di accesso S3 avranno gli utenti.
@@ -142,6 +146,7 @@ Per informazioni dettagliate sui criteri di gruppo, inclusa la sintassi del ling
 
 
 
+[[add-users-local-groups-only]]
 == Aggiungi utenti (solo gruppi locali)
 
 È possibile salvare il gruppo senza aggiungere utenti oppure aggiungere facoltativamente eventuali utenti locali già esistenti.

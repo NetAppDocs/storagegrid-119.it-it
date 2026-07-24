@@ -15,6 +15,7 @@ summary: È possibile utilizzare VMware OVF Tool per automatizzare la distribuzi
 
 
 
+[[automate-grid-node-deployment]]
 == Automatizza la distribuzione dei nodi della griglia
 
 Utilizzare lo strumento VMware OVF per automatizzare la distribuzione dei nodi della griglia.
@@ -81,6 +82,7 @@ Il file di configurazione di esempio da utilizzare con `deploy-vsphere-ovftool.s
 |===
 
 
+[[define-the-configuration-file-for-your-deployment]]
 === Definisci il file di configurazione per la tua distribuzione
 
 È possibile specificare le informazioni necessarie per distribuire i nodi della griglia virtuale per StorageGRID in un file di configurazione, utilizzato da `deploy-vsphere-ovftool.sh` Script Bash.  È possibile modificare un file di configurazione di esempio, in modo da non dover creare il file da zero.
@@ -97,6 +99,7 @@ Vedere<<configuration-file-settings,Impostazioni del file di configurazione>> pe
 
 
 
+[[configuration-file-settings]]
 === Impostazioni del file di configurazione
 
 IL `deploy-vsphere-ovftool.ini` Il file di configurazione contiene le impostazioni necessarie per distribuire i nodi della griglia virtuale.
@@ -514,6 +517,7 @@ NOTE: Per i nodi di amministrazione, ISTANZA deve sempre essere uguale a 2.
 
 
 
+[[run-the-bash-script]]
 == Esegui lo script Bash
 
 Puoi usare il `deploy-vsphere-ovftool.sh` Script Bash e file di configurazione deploy-vsphere-ovftool.ini modificati per automatizzare la distribuzione dei nodi StorageGRID in VMware vSphere.
@@ -581,6 +585,7 @@ Deployment Summary
 ----
 
 
+[[automate-the-configuration-of-storagegrid]]
 == Automatizza la configurazione di StorageGRID
 
 Dopo aver distribuito i nodi della griglia, è possibile automatizzare la configurazione del sistema StorageGRID .

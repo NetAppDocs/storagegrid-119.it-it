@@ -15,6 +15,7 @@ Prima di abilitare l'accesso Single Sign-On (SSO) per un sistema StorageGRID , e
 
 
 
+[[identity-provider-requirements]]
 == Requisiti del fornitore di identità
 
 StorageGRID supporta i seguenti provider di identità SSO (IdP):
@@ -49,6 +50,7 @@ Azzurro
 |===
 
 
+[[ad-fs-requirements]]
 === Requisiti AD FS
 
 È possibile utilizzare una qualsiasi delle seguenti versioni di AD FS:
@@ -63,6 +65,7 @@ NOTE: Windows Server 2016 dovrebbe utilizzare https://support.microsoft.com/en-u
 
 
 
+[[additional-requirements]]
 === Requisiti aggiuntivi
 
 * Sicurezza del livello di trasporto (TLS) 1.2 o 1.3
@@ -71,12 +74,14 @@ NOTE: Windows Server 2016 dovrebbe utilizzare https://support.microsoft.com/en-u
 
 
 
+[[considerations-for-azure]]
 === Considerazioni per Azure
 
 Se si utilizza Azure come tipo di SSO e gli utenti hanno nomi di entità utente che non utilizzano sAMAccountName come prefisso, potrebbero verificarsi problemi di accesso se StorageGRID perde la connessione con il server LDAP. Per consentire agli utenti di accedere, è necessario ripristinare la connessione al server LDAP.
 
 
 
+[[server-certificate-requirements]]
 == Requisiti del certificato del server
 
 Per impostazione predefinita, StorageGRID utilizza un certificato di interfaccia di gestione su ciascun nodo di amministrazione per proteggere l'accesso a Grid Manager, Tenant Manager, Grid Management API e Tenant Management API. Quando si configurano trust di relying party (AD FS), applicazioni aziendali (Azure) o connessioni del provider di servizi (PingFederate) per StorageGRID, si utilizza il certificato del server come certificato di firma per le richieste StorageGRID .
@@ -90,6 +95,7 @@ NOTE: Non è consigliabile utilizzare il certificato server predefinito di un no
 
 
 
+[[port-requirements]]
 == Requisiti portuali
 
 L'accesso Single Sign-On (SSO) non è disponibile sulle porte riservate di Grid Manager o Tenant Manager.  Se si desidera che gli utenti eseguano l'autenticazione tramite Single Sign-On, è necessario utilizzare la porta HTTPS predefinita (443). Vedere link:controlling-access-through-firewalls.html["Controllare l'accesso al firewall esterno"] .

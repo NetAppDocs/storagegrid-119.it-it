@@ -15,6 +15,7 @@ Se si prevede di utilizzare un Cloud Storage Pool per spostare oggetti fuori dal
 
 
 
+[[general-considerations]]
 == Considerazioni generali
 
 * In generale, l'archiviazione cloud, come Amazon S3 Glacier o Azure Blob Storage, è un modo economico per archiviare dati di oggetti.  Tuttavia, i costi per recuperare i dati dall'archiviazione cloud sono relativamente elevati.  Per ottenere il costo complessivo più basso, è necessario considerare quando e con quale frequenza si accederà agli oggetti nel Cloud Storage Pool.  Si consiglia di utilizzare un pool di archiviazione cloud solo per i contenuti a cui si prevede di accedere raramente.
@@ -32,6 +33,7 @@ Se si prevede di utilizzare un Cloud Storage Pool per spostare oggetti fuori dal
 
 
 
+[[considerations-for-the-ports-used-for-cloud-storage-pools]]
 == Considerazioni sulle porte utilizzate per i pool di archiviazione cloud
 
 Per garantire che le regole ILM possano spostare oggetti da e verso il Cloud Storage Pool specificato, è necessario configurare la rete o le reti che contengono i nodi di archiviazione del sistema.  È necessario assicurarsi che le seguenti porte possano comunicare con il Cloud Storage Pool.
@@ -48,6 +50,7 @@ Se si utilizza un server proxy non trasparente, è necessario anchelink:../admin
 
 
 
+[[considerations-for-costs]]
 == Considerazioni sui costi
 
 Per accedere allo storage nel cloud tramite un Cloud Storage Pool è necessaria la connettività di rete al cloud.  È necessario considerare il costo dell'infrastruttura di rete che verrà utilizzata per accedere al cloud e predisporla in modo appropriato, in base alla quantità di dati che si prevede di spostare tra StorageGRID e il cloud utilizzando il Cloud Storage Pool.
@@ -65,6 +68,7 @@ NOTE: Quando gli oggetti vengono spostati nuovamente su StorageGRID da un Cloud 
 
 
 
+[[s3-permissions-required-for-the-cloud-storage-pool-bucket]]
 == S3: Autorizzazioni richieste per il bucket Cloud Storage Pool
 
 I criteri per il bucket S3 esterno utilizzato per un Cloud Storage Pool devono concedere a StorageGRID l'autorizzazione per spostare un oggetto nel bucket, ottenere lo stato di un oggetto, ripristinare un oggetto dallo storage Glacier quando necessario e altro ancora.  Idealmente, StorageGRID dovrebbe avere accesso completo al bucket(`s3:*` ); tuttavia, se ciò non è possibile, la policy del bucket deve concedere le seguenti autorizzazioni S3 a StorageGRID:
@@ -81,6 +85,7 @@ I criteri per il bucket S3 esterno utilizzato per un Cloud Storage Pool devono c
 
 
 
+[[s3-considerations-for-the-external-buckets-lifecycle]]
 == S3: Considerazioni sul ciclo di vita del bucket esterno
 
 Lo spostamento degli oggetti tra StorageGRID e il bucket S3 esterno specificato nel Cloud Storage Pool è controllato dalle regole ILM e dai criteri ILM attivi in ​​StorageGRID.  Al contrario, la transizione degli oggetti dal bucket S3 esterno specificato nel Cloud Storage Pool ad Amazon S3 Glacier o S3 Glacier Deep Archive (o a una soluzione di archiviazione che implementa la classe di archiviazione Glacier) è controllata dalla configurazione del ciclo di vita di quel bucket.
@@ -114,12 +119,14 @@ Se si desidera trasferire gli oggetti nel Cloud Storage Pool a S3 Glacier Deep A
 
 
 
+[[azure-considerations-for-access-tier]]
 == Azure: considerazioni sul livello di accesso
 
 Quando si configura un account di archiviazione di Azure, è possibile impostare il livello di accesso predefinito su Accesso frequente o Accesso sporadico.  Quando si crea un account di archiviazione da utilizzare con un Cloud Storage Pool, è consigliabile utilizzare il livello Hot come livello predefinito.  Anche se StorageGRID imposta immediatamente il livello su Archivio quando sposta gli oggetti nel Cloud Storage Pool, l'utilizzo di un'impostazione predefinita su Caldo garantisce che non verrà addebitata alcuna commissione per l'eliminazione anticipata degli oggetti rimossi dal livello Freddo prima del minimo di 30 giorni.
 
 
 
+[[azure-lifecycle-management-not-supported]]
 == Azure: gestione del ciclo di vita non supportata
 
 Non utilizzare la gestione del ciclo di vita dell'archiviazione BLOB di Azure per il contenitore utilizzato con un pool di archiviazione cloud.  Le operazioni del ciclo di vita potrebbero interferire con le operazioni del Cloud Storage Pool.

@@ -17,6 +17,7 @@ La scheda Panoramica viene visualizzata per tutti i nodi.
 
 
 
+[[node-information]]
 == Informazioni sul nodo
 
 La sezione Informazioni sul nodo della scheda Panoramica elenca le informazioni di base sul nodo.
@@ -53,6 +54,7 @@ NOTE: Un nodo potrebbe apparire come Sconosciuto durante le operazioni di arrest
 
 
 
+[[alerts]]
 == Avvisi
 
 La sezione Avvisi della scheda Panoramica elenca tutti glilink:monitoring-system-health.html#view-current-and-resolved-alerts["avvisi che attualmente interessano questo nodo e che non sono stati silenziati"] .  Selezionare il nome dell'avviso per visualizzare ulteriori dettagli e azioni consigliate.

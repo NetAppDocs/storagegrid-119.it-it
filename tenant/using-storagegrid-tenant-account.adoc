@@ -30,6 +30,7 @@ NOTE: Se si utilizza il protocollo client S3, è possibile utilizzare anche i bu
 
 
 
+[[create-tenant-accounts]]
 == Creare account inquilino
 
 Gli account tenant vengono creati da un amministratore di griglia StorageGRID tramite Grid Manager.  Quando si crea un account tenant, l'amministratore della griglia specifica le seguenti informazioni:
@@ -46,6 +47,7 @@ Inoltre, gli amministratori della griglia possono abilitare l'impostazione S3 Ob
 
 
 
+[[configure-s3-tenants]]
 == Configurare i tenant S3
 
 Dopo aver creato un account tenant S3, è possibile accedere a Tenant Manager per eseguire attività come le seguenti:

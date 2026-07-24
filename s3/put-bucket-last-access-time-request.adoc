@@ -28,6 +28,7 @@ Se gli aggiornamenti dell'ora dell'ultimo accesso sono disabilitati per un bucke
 
 
 
+[[request-examples]]
 == Esempi di richiesta
 
 Questo esempio abilita l'orario dell'ultimo accesso per un bucket.

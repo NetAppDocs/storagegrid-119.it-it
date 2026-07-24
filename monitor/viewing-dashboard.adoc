@@ -22,6 +22,7 @@ image::../media/grid_manager_dashboard.png[Dashboard di Grid Manager]
 
 
 
+[[view-the-dashboard]]
 == Visualizza la dashboard
 
 La dashboard è composta da schede che contengono informazioni specifiche sul sistema StorageGRID .  Ogni scheda contiene categorie di informazioni visualizzate sulle schede.
@@ -73,6 +74,7 @@ Alcune schede possono essere ingrandite per una visualizzazione più semplice.  
 
 
 
+[[manage-dashboards]]
 == Gestire i dashboard
 
 Se hai accesso Root (vedilink:../admin/admin-group-permissions.html["Autorizzazioni del gruppo amministratore"] ), è possibile eseguire le seguenti attività di gestione per i dashboard:
@@ -95,6 +97,7 @@ image::../media/dashboard_manage.png[Gestire i dashboard]
 
 
 
+[[configure-dashboards]]
 == Configurare i dashboard
 
 Per creare una nuova dashboard clonando la dashboard attiva, seleziona *Azioni* > *Clona dashboard attiva*.

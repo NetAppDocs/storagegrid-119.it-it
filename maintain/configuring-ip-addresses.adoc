@@ -26,6 +26,7 @@ TIP: Se si desidera modificare l'indirizzo IP della rete Grid per tutti i nodi n
 
 
 
+[[ethernet-interfaces]]
 == Interfacce Ethernet
 
 L'indirizzo IP assegnato a eth0 è sempre l'indirizzo IP della rete Grid del nodo della griglia.  L'indirizzo IP assegnato a eth1 è sempre l'indirizzo IP della rete di amministrazione del nodo della griglia.  L'indirizzo IP assegnato a eth2 è sempre l'indirizzo IP della rete client del nodo della griglia.
@@ -34,12 +35,14 @@ Si noti che su alcune piattaforme, come gli appliance StorageGRID , eth0, eth1 e
 
 
 
+[[dhcp]]
 == DHCP
 
 È possibile configurare DHCP solo durante la fase di distribuzione.  Non è possibile impostare DHCP durante la configurazione.  Se si desidera modificare gli indirizzi IP, le maschere di sottorete e i gateway predefiniti per un nodo della griglia, è necessario utilizzare le procedure di modifica dell'indirizzo IP.  Utilizzando lo strumento Modifica IP, gli indirizzi DHCP diventeranno statici.
 
 
 
+[[high-availability-ha-groups]]
 == Gruppi ad alta disponibilità (HA)
 
 * Se un'interfaccia di rete client è contenuta in un gruppo HA, non è possibile modificare l'indirizzo IP di rete client per tale interfaccia in un indirizzo esterno alla subnet configurata per il gruppo HA.

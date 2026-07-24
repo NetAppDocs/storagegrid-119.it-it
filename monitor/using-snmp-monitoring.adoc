@@ -19,6 +19,7 @@ Se si desidera monitorare StorageGRID tramite il protocollo SNMP (Simple Network
 
 
 
+[[capabilities]]
 == Capacità
 
 Ogni nodo StorageGRID esegue un agente SNMP, o demone, che fornisce un MIB.  StorageGRID MIB contiene definizioni di tabelle e notifiche per gli avvisi.  Il MIB contiene anche informazioni descrittive del sistema, come la piattaforma e il numero di modello per ciascun nodo.  Ogni nodo StorageGRID supporta anche un sottoinsieme di oggetti MIB-II.
@@ -54,6 +55,7 @@ Ogni avviso viene mappato su uno dei tre tipi di trap in base al livello di grav
 
 
 
+[[snmp-version-support]]
 == Supporto della versione SNMP
 
 La tabella fornisce un riepilogo di alto livello di ciò che è supportato per ciascuna versione SNMP.
@@ -112,6 +114,7 @@ Utente USM per ogni destinazione trap
 |===
 
 
+[[limitations]]
 == Limitazioni
 
 * StorageGRID supporta l'accesso MIB in sola lettura.  L'accesso in lettura/scrittura non è supportato.

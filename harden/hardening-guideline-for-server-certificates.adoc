@@ -15,6 +15,7 @@ summary: 'È necessario sostituire i certificati predefiniti creati durante l"in
 
 
 
+[[hardening-guidelines-for-certificates]]
 == Linee guida per il rafforzamento dei certificati
 
 Dovresti sostituire i certificati predefiniti creati durante l'installazione con i tuoi certificati personalizzati.
@@ -44,6 +45,7 @@ Inoltre, i client devono utilizzare un controllo rigoroso del nome host quando c
 
 
 
+[[hardening-guidelines-for-tls-and-ssh-policy]]
 == Linee guida per il rafforzamento della politica TLS e SSH
 
 È possibile selezionare una policy di sicurezza per determinare quali protocolli e cifrari vengono utilizzati per stabilire connessioni TLS sicure con le applicazioni client e connessioni SSH sicure con i servizi StorageGRID interni.

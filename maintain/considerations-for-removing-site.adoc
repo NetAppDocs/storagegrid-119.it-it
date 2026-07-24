@@ -15,6 +15,7 @@ Prima di utilizzare la procedura di dismissione del sito per rimuovere un sito, 
 
 
 
+[[what-happens-when-you-decommission-a-site]]
 == Cosa succede quando si dismette un sito
 
 Quando si dismette un sito, StorageGRID rimuove definitivamente tutti i nodi del sito e il sito stesso dal sistema StorageGRID .
@@ -27,6 +28,7 @@ Una volta completata la procedura di dismissione del sito:
 
 
 
+[[differences-between-connected-site-and-disconnected-site-decommission-procedures]]
 == Differenze tra le procedure di dismissione dei siti connessi e dei siti disconnessi
 
 È possibile utilizzare la procedura di dismissione del sito per rimuovere un sito in cui tutti i nodi sono connessi a StorageGRID (definita dismissione del sito connesso) oppure per rimuovere un sito in cui tutti i nodi sono disconnessi da StorageGRID (definita dismissione del sito disconnesso).  Prima di iniziare, è necessario comprendere le differenze tra queste procedure.
@@ -48,6 +50,7 @@ CAUTION: Prima di eseguire una procedura di dismissione di un sito disconnesso, 
 
 
 
+[[general-requirements-for-removing-a-connected-or-a-disconnected-site]]
 == Requisiti generali per la rimozione di un sito connesso o disconnesso
 
 Prima di rimuovere un sito connesso o disconnesso, è necessario essere a conoscenza dei seguenti requisiti:
@@ -74,6 +77,7 @@ NOTE: Se è necessario eseguire un'altra procedura di manutenzione durante la di
 
 
 
+[[requirements-for-information-lifecycle-management-ilm]]
 == Requisiti per la gestione del ciclo di vita delle informazioni (ILM)
 
 Per rimuovere un sito, è necessario aggiornare la configurazione ILM.  La procedura guidata Decommission Site ti guida attraverso una serie di passaggi preliminari per garantire quanto segue:
@@ -89,6 +93,7 @@ CAUTION: Prima di poter rimuovere un sito, potrebbe essere necessario creare nuo
 
 
 
+[[considerations-for-the-object-data-at-a-connected-site]]
 == Considerazioni sui dati degli oggetti in un sito connesso
 
 Se si sta eseguendo la dismissione di un sito connesso, è necessario decidere cosa fare con i dati degli oggetti esistenti nel sito quando si creano nuove regole ILM e un nuovo criterio ILM.  Puoi fare una o entrambe le cose seguenti:
@@ -113,6 +118,7 @@ CAUTION: Non creare mai una regola ILM a copia singola per gestire la rimozione 
 
 
 
+[[additional-requirements-for-a-connected-site-decommission]]
 == Requisiti aggiuntivi per la dismissione di un sito connesso
 
 Prima che StorageGRID possa rimuovere un sito connesso, è necessario verificare quanto segue:
@@ -136,6 +142,7 @@ NOTE: Lo spostamento o l'eliminazione dei dati degli oggetti da un sito potrebbe
 
 
 
+[[additional-requirements-for-a-disconnected-site-decommission]]
 == Requisiti aggiuntivi per la dismissione di un sito disconnesso
 
 Prima che StorageGRID possa rimuovere un sito disconnesso, è necessario verificare quanto segue:
@@ -162,6 +169,7 @@ NOTE: Se le regole e i criteri ILM sono stati concepiti per proteggere dalla per
 
 
 
+[[considerations-for-consistency-when-you-remove-a-site]]
 == Considerazioni sulla coerenza quando si rimuove un sito
 
 La coerenza di un bucket S3 determina se StorageGRID replica completamente i metadati degli oggetti su tutti i nodi e siti prima di comunicare al client che l'acquisizione dell'oggetto è avvenuta correttamente.  La coerenza fornisce un equilibrio tra la disponibilità degli oggetti e la coerenza di tali oggetti tra diversi nodi di archiviazione e siti.

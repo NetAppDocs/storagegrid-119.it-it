@@ -15,6 +15,7 @@ I report di testo mostrano una rappresentazione testuale dei valori dei dati deg
 
 
 
+[[raw-text-reports]]
 == Rapporti di testo grezzo
 
 Un report di testo grezzo visualizza i dettagli sull'attributo selezionato:
@@ -28,6 +29,7 @@ image::../media/raw_text_report.gif[screenshot che mostra il report di testo non
 
 
 
+[[aggregate-text-reports]]
 == Rapporti di testo aggregati
 
 Un report di testo aggregato visualizza i dati per un periodo di tempo più lungo (solitamente una settimana) rispetto a un report di testo grezzo.  Ogni voce è il risultato della sintesi di più valori di attributi (un aggregato di valori di attributi) da parte del servizio NMS nel tempo in un'unica voce con valori medi, massimi e minimi derivati dall'aggregazione.
@@ -44,6 +46,7 @@ image::../media/aggregate_text_report.gif[screenshot che mostra il report di tes
 
 
 
+[[generate-text-reports]]
 == Genera report di testo
 
 I report di testo mostrano una rappresentazione testuale dei valori dei dati degli attributi elaborati dal servizio NMS.  È possibile creare report su un sito di data center, un nodo di griglia, un componente o un servizio.
@@ -85,6 +88,7 @@ Dopo qualche istante viene generato un report di testo.  Per la tabulazione di i
 
 
 
+[[export-text-reports]]
 == Esporta report di testo
 
 I report di testo esportati aprono una nuova scheda del browser, che consente di selezionare e copiare i dati.

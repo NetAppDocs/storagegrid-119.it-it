@@ -30,6 +30,7 @@ NOTE: Ogni griglia può avere un massimo di 100.000 bucket.
 
 
 
+[[access-the-wizard]]
 == Accedi alla procedura guidata
 
 .Passi
@@ -39,6 +40,7 @@ NOTE: Ogni griglia può avere un massimo di 100.000 bucket.
 
 
 
+[[enter-details]]
 == Inserisci i dettagli
 
 .Passi
@@ -82,6 +84,7 @@ L'amministratore StorageGRID gestisce le regioni disponibili. La regione di un b
 
 
 
+[[manage-settings]]
 == Gestisci le impostazioni
 
 .Passi

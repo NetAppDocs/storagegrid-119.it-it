@@ -34,6 +34,7 @@ Se si accede a Grid Manager o Tenant Manager utilizzando un nome di dominio anzi
 ====
 
 
+[[add-a-custom-management-interface-certificate]]
 == Aggiungi un certificato di interfaccia di gestione personalizzato
 
 Per aggiungere un certificato di interfaccia di gestione personalizzato, puoi fornire il tuo certificato o generarne uno utilizzando Grid Manager.
@@ -161,6 +162,7 @@ NOTE: Dopo aver caricato o generato un nuovo certificato, attendere fino a un gi
 
 
 
+[[restore-the-default-management-interface-certificate]]
 == Ripristina il certificato dell'interfaccia di gestione predefinita
 
 È possibile tornare a utilizzare il certificato dell'interfaccia di gestione predefinito per le connessioni Grid Manager e Tenant Manager.
@@ -177,6 +179,7 @@ Quando si ripristina il certificato dell'interfaccia di gestione predefinita, i 
 
 
 
+[[use-a-script-to-generate-a-new-self-signed-management-interface-certificate]]
 == Utilizzare uno script per generare un nuovo certificato di interfaccia di gestione autofirmato
 
 Se è richiesta una convalida rigorosa del nome host, è possibile utilizzare uno script per generare il certificato dell'interfaccia di gestione.
@@ -238,6 +241,7 @@ Includi i tag BEGIN e END nella tua selezione.
 
 
 
+[[download-or-copy-the-management-interface-certificate]]
 == Scarica o copia il certificato dell'interfaccia di gestione
 
 È possibile salvare o copiare il contenuto del certificato dell'interfaccia di gestione per utilizzarlo altrove.

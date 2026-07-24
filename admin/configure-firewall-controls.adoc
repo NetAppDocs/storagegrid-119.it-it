@@ -35,6 +35,8 @@ Per ulteriori informazioni sui firewall esterni e sulla sicurezza di rete, veder
 
 
 
+[[access-firewall-controls]]
+[[Access-firewall-controls]]
 == Controlli del firewall di accesso
 
 .Passi
@@ -50,6 +52,7 @@ Le tre schede in questa pagina sono descritte inlink:../admin/manage-firewall-co
 
 
 
+[[privileged-address-list]]
 == Elenco indirizzi privilegiati
 
 Utilizzare la scheda Elenco indirizzi privilegiati per concedere agli host l'accesso alle porte chiuse per impostazione predefinita o chiuse dalle impostazioni nella scheda Gestisci accesso esterno.
@@ -76,6 +79,7 @@ TIP: Questa opzione rimuove alcune protezioni per i servizi interni.  Se possibi
 
 
 
+[[manage-external-access]]
 == Gestisci l'accesso esterno
 
 Quando una porta viene chiusa nella scheda Gestisci accesso esterno, non è possibile accedervi da nessun indirizzo IP non in rete, a meno che non si aggiunga l'indirizzo IP all'elenco degli indirizzi privilegiati.  Puoi chiudere solo le porte che sono aperte per impostazione predefinita e puoi aprire solo le porte che hai chiuso.
@@ -105,6 +109,7 @@ NOTE: Utilizzare la barra di scorrimento sul lato destro della tabella per assic
 
 
 
+[[untrusted-client-network]]
 == Rete client non attendibile
 
 Se la rete client di un nodo non è attendibile, il nodo accetta solo il traffico in entrata sulle porte configurate come endpoint del bilanciatore del carico e, facoltativamente, sulle porte aggiuntive selezionate in questa scheda.  È possibile utilizzare questa scheda anche per specificare l'impostazione predefinita per i nuovi nodi aggiunti in un'espansione.

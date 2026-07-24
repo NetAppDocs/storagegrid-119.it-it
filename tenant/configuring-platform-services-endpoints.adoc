@@ -17,6 +17,7 @@ L'accesso ai servizi della piattaforma è abilitato per ogni tenant da un ammini
 
 
 
+[[what-is-a-platform-services-endpoint]]
 == Che cos'è un endpoint dei servizi di piattaforma?
 
 Un endpoint dei servizi di piattaforma specifica le informazioni di cui StorageGRID ha bisogno per accedere alla destinazione esterna.
@@ -29,12 +30,14 @@ Ogni tipo di servizio di piattaforma richiede il proprio endpoint, quindi è nec
 
 
 
+[[endpoints-for-cloudmirror-replication]]
 == Endpoint per la replica CloudMirror
 
 StorageGRID supporta endpoint di replica che rappresentano bucket S3.  Questi bucket potrebbero essere ospitati su Amazon Web Services, sullo stesso o su una distribuzione StorageGRID remota, oppure su un altro servizio.
 
 
 
+[[endpoints-for-notifications]]
 == Endpoint per le notifiche
 
 StorageGRID supporta gli endpoint Amazon SNS e Kafka. Gli endpoint Simple Queue Service (SQS) o AWS Lambda non sono supportati.
@@ -43,6 +46,7 @@ Per gli endpoint Kafka, Mutual TLS non è supportato. Di conseguenza, se hai `ss
 
 
 
+[[endpoints-for-the-search-integration-service]]
 == Endpoint per il servizio di integrazione della ricerca
 
 StorageGRID supporta endpoint di integrazione della ricerca che rappresentano cluster Elasticsearch.  Questi cluster Elasticsearch possono trovarsi in un data center locale oppure essere ospitati in un cloud AWS o altrove.

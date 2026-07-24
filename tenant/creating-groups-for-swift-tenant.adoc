@@ -24,6 +24,7 @@ NOTE: Il supporto per le applicazioni client Swift è stato deprecato e verrà r
 
 
 
+[[access-the-create-group-wizard]]
 == Accedi alla procedura guidata Crea gruppo
 
 .Passi
@@ -35,6 +36,7 @@ Come primo passo, accedi alla procedura guidata Crea gruppo.
 
 
 
+[[choose-a-group-type]]
 == Scegli un tipo di gruppo
 
 È possibile creare un gruppo locale o importare un gruppo federato.
@@ -55,6 +57,7 @@ Se per il sistema StorageGRID è abilitato l'accesso Single Sign-On (SSO), gli u
 
 
 
+[[manage-group-permissions]]
 == Gestisci i permessi del gruppo
 
 Le autorizzazioni di gruppo controllano quali attività gli utenti possono eseguire in Tenant Manager e nell'API Tenant Management.
@@ -76,6 +79,7 @@ NOTE: Se un utente appartiene a più gruppi e uno qualsiasi di essi è impostato
 
 
 
+[[set-swift-group-policy]]
 == Imposta i criteri di gruppo Swift
 
 Gli utenti Swift necessitano dell'autorizzazione di amministratore per autenticarsi nella Swift REST API per creare contenitori e acquisire oggetti.
@@ -86,6 +90,7 @@ Gli utenti Swift necessitano dell'autorizzazione di amministratore per autentica
 
 
 
+[[add-users-local-groups-only]]
 == Aggiungi utenti (solo gruppi locali)
 
 È possibile salvare il gruppo senza aggiungere utenti oppure aggiungere facoltativamente eventuali utenti locali già esistenti.

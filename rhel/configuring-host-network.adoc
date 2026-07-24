@@ -39,6 +39,7 @@ link:creating-node-configuration-files.html["Creazione di file di configurazione
 
 
 
+[[considerations-and-recommendations-for-mac-address-cloning]]
 == Considerazioni e raccomandazioni per la clonazione degli indirizzi MAC
 
 .[[mac_address_cloning_rhel]]
@@ -46,6 +47,7 @@ La clonazione dell'indirizzo MAC fa sì che il contenitore utilizzi l'indirizzo 
 
 
 
+[[enabling-mac-cloning]]
 === Abilitazione della clonazione MAC
 
 In determinati ambienti, la sicurezza può essere migliorata tramite la clonazione dell'indirizzo MAC, poiché consente di utilizzare una NIC virtuale dedicata per la rete amministrativa, la rete Grid e la rete client.  Facendo in modo che il contenitore utilizzi l'indirizzo MAC della NIC dedicata sull'host, è possibile evitare di utilizzare configurazioni di rete in modalità promiscua.
@@ -72,6 +74,7 @@ NOTE: L'abilitazione della clonazione MAC su un host virtuale senza abilitare an
 
 
 
+[[mac-cloning-use-cases]]
 === Casi d'uso della clonazione MAC
 
 Ci sono due casi d'uso da considerare con la clonazione MAC:
@@ -87,6 +90,7 @@ Per abilitare la clonazione MAC, vederelink:creating-node-configuration-files.ht
 
 
 
+[[mac-cloning-example]]
 === Esempio di clonazione MAC
 
 Esempio di clonazione MAC abilitata con un host con indirizzo MAC 11:22:33:44:55:66 per l'interfaccia ens256 e le seguenti chiavi nel file di configurazione del nodo:
@@ -100,6 +104,7 @@ Esempio di clonazione MAC abilitata con un host con indirizzo MAC 11:22:33:44:55
 
 
 
+[[example-1-1-to-1-mapping-to-physical-or-virtual-nics]]
 == Esempio 1: mappatura 1 a 1 su NIC fisiche o virtuali
 
 L'esempio 1 descrive una semplice mappatura dell'interfaccia fisica che richiede una configurazione lato host minima o nulla.
@@ -114,6 +119,7 @@ Se lo Switch 1 è uno switch fisico, è necessario configurare le porte collegat
 
 
 
+[[example-2-lacp-bond-carrying-vlans]]
 == Esempio 2: VLAN che trasportano legami LACP
 
 .Informazioni su questo compito

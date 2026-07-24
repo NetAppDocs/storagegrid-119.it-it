@@ -15,6 +15,7 @@ summary: 'È possibile espandere la capacità di archiviazione degli oggetti del
 
 
 
+[[guidelines-for-adding-storage-volumes]]
 == Linee guida per l'aggiunta di volumi di archiviazione
 
 Prima di aggiungere volumi di archiviazione ai nodi di archiviazione esistenti, rivedere le seguenti linee guida e limitazioni:
@@ -38,6 +39,7 @@ Dopo aver deciso di aggiungere volumi di archiviazione e aver determinato quali 
 
 
 
+[[guidelines-for-adding-storage-nodes]]
 == Linee guida per l'aggiunta di nodi di archiviazione
 
 Prima di aggiungere nodi di archiviazione ai siti esistenti, rivedere le seguenti linee guida e limitazioni:
@@ -52,6 +54,7 @@ Prima di aggiungere nodi di archiviazione ai siti esistenti, rivedere le seguent
 
 
 
+[[guidelines-for-adc-service-on-storage-nodes]]
 == Linee guida per il servizio ADC sui nodi di archiviazione
 
 Durante la configurazione dell'espansione, è necessario scegliere se includere il servizio Administrative Domain Controller (ADC) su ogni nuovo nodo di archiviazione. Il servizio ADC tiene traccia della posizione e della disponibilità dei servizi di rete.

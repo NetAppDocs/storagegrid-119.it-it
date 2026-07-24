@@ -56,6 +56,7 @@ Si è verificato un problema con la licenza software per questo sistema StorageG
 |===
 
 
+[[monitor-node-connection-states]]
 == Monitorare gli stati di connessione dei nodi
 
 Se uno o più nodi vengono disconnessi dalla rete, le operazioni critiche StorageGRID potrebbero essere compromesse.  Monitorare gli stati di connessione dei nodi e risolvere tempestivamente eventuali problemi.
@@ -111,6 +112,7 @@ Nessuna azione richiesta.
 |===
 
 
+[[view-current-and-resolved-alerts]]
 == Visualizza gli avvisi correnti e risolti
 
 *Avvisi attuali*: quando viene attivato un avviso, sulla dashboard viene visualizzata un'icona di avviso.  Nella pagina Nodi viene visualizzata anche un'icona di avviso per il nodo.  Selink:email-alert-notifications.html["le notifiche e-mail di avviso sono configurate"] , verrà inviata anche una notifica via e-mail, a meno che l'avviso non sia stato disattivato.

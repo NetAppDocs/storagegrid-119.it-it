@@ -22,6 +22,7 @@ Quando accedi a Grid Manager, ti connetti a un nodo di amministrazione.  Ogni si
 
 
 
+[[grid-manager-dashboard]]
 == Dashboard di Grid Manager
 
 Quando accedi per la prima volta a Grid Manager, puoi utilizzare la dashboard perlink:../monitor/viewing-dashboard.html["monitorare le attività del sistema"] a colpo d'occhio.
@@ -34,6 +35,7 @@ Per una spiegazione delle informazioni mostrate su ogni scheda, seleziona l'icon
 
 
 
+[[search-field]]
 == Campo di ricerca
 
 Il campo *Cerca* nella barra dell'intestazione consente di navigare rapidamente verso una pagina specifica all'interno di Grid Manager.  Ad esempio, puoi immettere *km* per accedere alla pagina del server di gestione delle chiavi (KMS).
@@ -42,6 +44,7 @@ Il campo *Cerca* nella barra dell'intestazione consente di navigare rapidamente 
 
 
 
+[[help-menu]]
 == Menu di aiuto
 
 Il menu di aiutoimage:../media/icon-help-menu-bar.png["icona di aiuto sulla barra dei menu"] fornisce accesso a:
@@ -54,6 +57,7 @@ Il menu di aiutoimage:../media/icon-help-menu-bar.png["icona di aiuto sulla barr
 
 
 
+[[alerts-menu]]
 == Menu avvisi
 
 Il menu Avvisi fornisce un'interfaccia di facile utilizzo per rilevare, valutare e risolvere i problemi che potrebbero verificarsi durante il funzionamento StorageGRID .
@@ -69,6 +73,7 @@ Dal menu Avvisi, puoi fare quanto segue perlink:../monitor/managing-alerts.html[
 
 
 
+[[nodes-page]]
 == Pagina dei nodi
 
 ILlink:../monitor/viewing-nodes-page.html["Pagina dei nodi"] visualizza informazioni sull'intera griglia, su ciascun sito nella griglia e su ciascun nodo in un sito.
@@ -79,6 +84,7 @@ image::../media/nodes_page.png[nodi pagina principale]
 
 
 
+[[tenants-page]]
 == Pagina degli inquilini
 
 ILlink:../admin/managing-tenants.html["Pagina degli inquilini"] ti permette dilink:../tenant/index.html["creare e monitorare gli account dei tenant di storage"] per il tuo sistema StorageGRID .  È necessario creare almeno un account tenant per specificare chi può archiviare e recuperare oggetti e quali funzionalità sono a sua disposizione.
@@ -89,6 +95,7 @@ image::../media/tenants_page.png[Menu e pagina degli inquilini]
 
 
 
+[[ilm-menu]]
 == Menù ILM
 
 ILlink:using-information-lifecycle-management.html["Menù ILM"] ti permette dilink:../ilm/index.html["configurare le regole e le policy di gestione del ciclo di vita delle informazioni (ILM)"] che regolano la durabilità e la disponibilità dei dati.  È anche possibile immettere un identificatore di oggetto per visualizzare i metadati di tale oggetto.
@@ -106,12 +113,14 @@ Dal menu ILM è possibile visualizzare e gestire ILM:
 
 
 
+[[configuration-menu]]
 == Menu di configurazione
 
 Il menu Configurazione consente di specificare le impostazioni di rete, le impostazioni di sicurezza, le impostazioni di sistema, le opzioni di monitoraggio e le opzioni di controllo degli accessi.
 
 
 
+[[network-tasks]]
 === Attività di rete
 
 Le attività di rete includono:
@@ -125,6 +134,7 @@ Le attività di rete includono:
 
 
 
+[[security-tasks]]
 === Compiti di sicurezza
 
 I compiti di sicurezza includono:
@@ -138,6 +148,7 @@ I compiti di sicurezza includono:
 
 
 
+[[system-tasks]]
 === Attività di sistema
 
 Le attività di sistema includono:
@@ -151,6 +162,7 @@ Le attività di sistema includono:
 
 
 
+[[monitoring-tasks]]
 === Attività di monitoraggio
 
 Le attività di monitoraggio includono:
@@ -161,6 +173,7 @@ Le attività di monitoraggio includono:
 
 
 
+[[access-control-tasks]]
 === Attività di controllo degli accessi
 
 Le attività di controllo degli accessi includono:
@@ -174,12 +187,14 @@ Le attività di controllo degli accessi includono:
 
 
 
+[[maintenance-menu]]
 == Menu di manutenzione
 
 Il menu Manutenzione consente di eseguire attività di manutenzione, manutenzione del sistema e manutenzione della rete.
 
 
 
+[[tasks]]
 === Compiti
 
 Le attività di manutenzione includono:
@@ -195,6 +210,7 @@ Le attività di manutenzione includono:
 
 
 
+[[system]]
 === Sistema
 
 Le attività di manutenzione del sistema che puoi eseguire includono:
@@ -213,6 +229,7 @@ Le attività di manutenzione del sistema che puoi eseguire includono:
 
 
 
+[[network]]
 === Rete
 
 Le attività di manutenzione della rete che puoi eseguire includono:
@@ -224,12 +241,14 @@ Le attività di manutenzione della rete che puoi eseguire includono:
 
 
 
+[[support-menu]]
 == Menu di supporto
 
 Il menu Supporto fornisce opzioni che aiutano il supporto tecnico ad analizzare e risolvere i problemi del sistema.
 
 
 
+[[tools]]
 === Utensili
 
 Dalla sezione Strumenti del menu Supporto, puoi:
@@ -247,12 +266,14 @@ NOTE: Gli strumenti disponibili nell'opzione *Metriche* sono destinati all'uso d
 
 
 
+[[alarms-legacy]]
 === Allarmi (legacy)
 
 Le informazioni sugli allarmi legacy sono state rimosse da questa versione della documentazione. Fare riferimento a https://docs.netapp.com/us-en/storagegrid-118/monitor/managing-alerts-and-alarms.html["Gestire avvisi e allarmi (documentazione StorageGRID 11.8)"^] .
 
 
 
+[[other]]
 === Altro
 
 Dalla sezione Altro del menu Supporto, puoi:

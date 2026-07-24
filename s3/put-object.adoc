@@ -15,12 +15,14 @@ summary: È possibile utilizzare la richiesta S3 PutObject per aggiungere un ogg
 
 
 
+[[resolve-conflicts]]
 == Risolvere i conflitti
 
 Le richieste dei client in conflitto, ad esempio due client che scrivono sulla stessa chiave, vengono risolte in base al principio "latest-wins".  La tempistica per la valutazione "latest-wins" si basa sul momento in cui il sistema StorageGRID completa una determinata richiesta e non su quando i client S3 iniziano un'operazione.
 
 
 
+[[object-size]]
 == Dimensione dell'oggetto
 
 La dimensione massima _consigliata_ per una singola operazione PutObject è 5 GiB (5.368.709.120 byte).  Se hai oggetti più grandi di 5 GiB, usalink:operations-for-multipart-uploads.html["caricamento multiparte"] Invece.
@@ -32,12 +34,14 @@ NOTE: Se hai eseguito l'aggiornamento da StorageGRID 11.6 o da una versione prec
 
 
 
+[[user-metadata-size]]
 == Dimensione dei metadati utente
 
 Amazon S3 limita la dimensione dei metadati definiti dall'utente all'interno di ogni intestazione di richiesta PUT a 2 KB.  StorageGRID limita i metadati utente a 24 KiB.  La dimensione dei metadati definiti dall'utente viene misurata sommando il numero di byte nella codifica UTF-8 di ciascuna chiave e valore.
 
 
 
+[[utf-8-characters-in-user-metadata]]
 == Caratteri UTF-8 nei metadati utente
 
 Se una richiesta include valori UTF-8 (non sottoposti a escape) nel nome della chiave o nel valore dei metadati definiti dall'utente, il comportamento StorageGRID non è definito.
@@ -50,18 +54,21 @@ StorageGRID non analizza né interpreta i caratteri UTF-8 con escape inclusi nel
 
 
 
+[[object-tag-limits]]
 == Limiti dei tag degli oggetti
 
 Puoi aggiungere tag ai nuovi oggetti quando li carichi oppure puoi aggiungerli agli oggetti esistenti.  Sia StorageGRID che Amazon S3 supportano fino a 10 tag per ciascun oggetto.  I tag associati a un oggetto devono avere chiavi tag univoche.  Una chiave tag può avere una lunghezza massima di 128 caratteri Unicode e i valori tag possono avere una lunghezza massima di 256 caratteri Unicode.  Le chiavi e i valori sono sensibili alle maiuscole e alle minuscole.
 
 
 
+[[object-ownership]]
 == Proprietà dell'oggetto
 
 In StorageGRID, tutti gli oggetti sono di proprietà dell'account proprietario del bucket, compresi gli oggetti creati da un account non proprietario o da un utente anonimo.
 
 
 
+[[supported-request-headers]]
 == Intestazioni di richiesta supportate
 
 Sono supportate le seguenti intestazioni di richiesta:
@@ -137,6 +144,7 @@ Vedere<<Intestazioni di richiesta per la crittografia lato server>>
 
 
 
+[[unsupported-request-headers]]
 == Intestazioni di richiesta non supportate
 
 Le seguenti intestazioni di richiesta non sono supportate:
@@ -160,6 +168,7 @@ IL `x-amz-website-redirect-location` intestazione ritorna `XNotImplemented` .
 
 
 
+[[storage-class-options]]
 == Opzioni di classe di archiviazione
 
 IL `x-amz-storage-class` è supportata l'intestazione della richiesta.  Il valore inviato per `x-amz-storage-class` influisce sul modo in cui StorageGRID protegge i dati degli oggetti durante l'acquisizione e non sul numero di copie persistenti dell'oggetto archiviate nel sistema StorageGRID (determinato da ILM).
@@ -198,6 +207,7 @@ NOTE: Se si sta inserendo un oggetto in un bucket con S3 Object Lock abilitato, 
 
 
 
+[[request-headers-for-server-side-encryption]]
 == Intestazioni di richiesta per la crittografia lato server
 
 È possibile utilizzare le seguenti intestazioni di richiesta per crittografare un oggetto con la crittografia lato server.  Le opzioni SSE e SSE-C si escludono a vicenda.
@@ -227,6 +237,7 @@ NOTE: Se un oggetto è crittografato con SSE o SSE-C, tutte le impostazioni di c
 
 
 
+[[versioning]]
 == Controllo delle versioni
 
 Se il controllo delle versioni è abilitato per un bucket, univoco `versionId` viene generato automaticamente per la versione dell'oggetto memorizzato.  Questo `versionId` viene restituito anche nella risposta utilizzando il `x-amz-version-id` intestazione di risposta.
@@ -235,6 +246,7 @@ Se il controllo delle versioni è sospeso, la versione dell'oggetto viene memori
 
 
 
+[[signature-calculations-for-the-authorization-header]]
 == Calcoli della firma per l'intestazione di autorizzazione
 
 Quando si utilizza il `Authorization` intestazione per autenticare le richieste, StorageGRID differisce da AWS nei seguenti modi:

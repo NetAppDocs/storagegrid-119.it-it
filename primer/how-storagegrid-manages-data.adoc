@@ -21,12 +21,14 @@ image::../media/object_conceptual_drawing.png[Oggetto]
 
 
 
+[[what-is-object-data]]
 == Cosa sono i dati oggetto?
 
 I dati oggetto possono essere qualsiasi cosa, ad esempio una fotografia, un filmato o una cartella clinica.
 
 
 
+[[what-is-object-metadata]]
 == Cosa sono i metadati degli oggetti?
 
 I metadati di un oggetto sono tutte le informazioni che descrivono un oggetto.  StorageGRID utilizza i metadati degli oggetti per tracciare le posizioni di tutti gli oggetti nella griglia e per gestire il ciclo di vita di ciascun oggetto nel tempo.
@@ -44,12 +46,14 @@ Per informazioni dettagliate su come e dove StorageGRID memorizza i metadati deg
 
 
 
+[[how-is-object-data-protected]]
 == Come vengono protetti i dati degli oggetti?
 
 Il sistema StorageGRID fornisce due meccanismi per proteggere i dati degli oggetti dalla perdita: la replicazione e la codifica di cancellazione.
 
 
 
+[[replication]]
 === Replicazione
 
 Quando StorageGRID abbina gli oggetti a una regola di gestione del ciclo di vita delle informazioni (ILM) configurata per creare copie replicate, il sistema crea copie esatte dei dati degli oggetti e le archivia su nodi di archiviazione o pool di archiviazione cloud.  Le regole ILM stabiliscono il numero di copie effettuate, dove tali copie vengono archiviate e per quanto tempo vengono conservate dal sistema.  Se una copia viene persa, ad esempio a causa della perdita di un nodo di archiviazione, l'oggetto è comunque disponibile se ne esiste una copia altrove nel sistema StorageGRID .
@@ -60,6 +64,7 @@ image::../media/ilm_replication_make_2_copies.png[Regola "Fai 2 copie"]
 
 
 
+[[erasure-coding]]
 === Codifica di cancellazione
 
 Quando StorageGRID abbina gli oggetti a una regola ILM configurata per creare copie con codice di cancellazione, suddivide i dati dell'oggetto in frammenti di dati, calcola frammenti di parità aggiuntivi e archivia ciascun frammento su un diverso nodo di archiviazione.  Quando si accede a un oggetto, questo viene riassemblato utilizzando i frammenti memorizzati.  Se un dato o un frammento di parità si danneggia o viene perso, l'algoritmo di codifica di cancellazione può ricreare quel frammento utilizzando un sottoinsieme dei dati e dei frammenti di parità rimanenti.  Le regole ILM e i profili di codifica della cancellazione determinano lo schema di codifica della cancellazione utilizzato.

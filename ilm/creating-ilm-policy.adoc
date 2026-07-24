@@ -19,6 +19,7 @@ Disporre di più policy ILM attive consente di applicare le regole ILM appropria
 
 
 
+[[create-an-ilm-policy]]
 == Creare una policy ILM
 
 .Informazioni su questo compito
@@ -174,6 +175,8 @@ NOTE: È necessario confermare che le regole ILM siano nell'ordine corretto.  Qu
 
 
 
+[[simulate-a-policy]]
+[[simulate-ilm-policy]]
 == Simulare una politica
 
 Simulare una policy sugli oggetti di prova prima di attivarla e applicarla ai dati di produzione.
@@ -203,6 +206,8 @@ link:simulating-ilm-policy-examples.html["Esempio di simulazioni di policy ILM"]
 
 
 
+[[activate-a-policy]]
+[[activate-ilm-policy]]
 == Attiva una politica
 
 Quando si attiva una nuova policy ILM, gli oggetti esistenti e quelli appena acquisiti vengono gestiti da tale policy.  Quando si attivano più policy, i tag delle policy ILM assegnati ai bucket determinano gli oggetti da gestire.

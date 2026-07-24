@@ -15,6 +15,7 @@ Se al momento della creazione dell'account tenant è stata assegnata l'autorizza
 
 
 
+[[workflow-for-cross-grid-replication]]
 == Flusso di lavoro per la replicazione tra griglie
 
 Il diagramma del flusso di lavoro riassume i passaggi da eseguire per configurare la replica tra griglie tra bucket su due griglie.  Questi passaggi sono descritti più dettagliatamente di seguito.
@@ -23,6 +24,7 @@ image::../media/grid-federation-cgr-workflow.png[Flusso di lavoro di replicazion
 
 
 
+[[configure-cross-grid-replication]]
 == Configurare la replicazione tra griglie
 
 Prima di poter utilizzare la replica tra griglie, è necessario accedere agli account tenant corrispondenti su ciascuna griglia e creare bucket identici. Quindi, è possibile abilitare la replica tra griglie su uno o entrambi i bucket.
@@ -37,6 +39,7 @@ Prima di poter utilizzare la replica tra griglie, è necessario accedere agli ac
 
 
 
+[[create-two-identical-buckets]]
 === Crea due bucket identici
 
 Come primo passo, accedi agli account tenant corrispondenti su ciascuna griglia e crea bucket identici.
@@ -65,6 +68,7 @@ TIP: A seconda delle necessità, ogni bucket può utilizzare una regione diversa
 
 
 
+[[enable-cross-grid-replication]]
 === Abilita la replicazione tra griglie
 
 È necessario eseguire questi passaggi prima di aggiungere oggetti a uno dei due bucket.
@@ -112,6 +116,7 @@ Dopo qualche istante, verrà visualizzato un messaggio di conferma dell'operazio
 
 
 
+[[test-replication-between-grids]]
 == Test di replicazione tra griglie
 
 Se la replica tra griglie è abilitata per un bucket, potrebbe essere necessario verificare che la connessione e la replica tra griglie funzionino correttamente e che i bucket di origine e di destinazione soddisfino ancora tutti i requisiti (ad esempio, che il controllo delle versioni sia ancora abilitato).
@@ -135,6 +140,7 @@ Se la connessione è funzionante, viene visualizzato un banner di conferma. In c
 
 
 
+[[disable-cross-grid-replication]]
 == Disabilita la replicazione tra griglie
 
 È possibile interrompere definitivamente la replica tra griglie se non si desidera più copiare oggetti nell'altra griglia.

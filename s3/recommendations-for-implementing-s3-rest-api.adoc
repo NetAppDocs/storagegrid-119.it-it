@@ -15,6 +15,7 @@ Quando si implementa l'API REST S3 per l'uso con StorageGRID, è necessario segu
 
 
 
+[[recommendations-for-heads-to-non-existent-objects]]
 == Raccomandazioni per HEAD su oggetti inesistenti
 
 Se la tua applicazione controlla regolarmente se un oggetto esiste in un percorso in cui non ti aspetti che l'oggetto esista effettivamente, dovresti usare "Disponibile"link:consistency-controls.html["coerenza"] . Ad esempio, dovresti usare la coerenza "Disponibile" se la tua applicazione esegue l'HEAD di una posizione prima di eseguirvi un PUT.
@@ -25,6 +26,7 @@ In caso contrario, se l'operazione HEAD non trova l'oggetto, è possibile che ve
 
 
 
+[[recommendations-for-object-keys]]
 == Raccomandazioni per le chiavi degli oggetti
 
 Seguire questi consigli per i nomi delle chiavi degli oggetti, in base al momento in cui il bucket è stato creato per la prima volta.
@@ -51,6 +53,7 @@ TIP: Un'eccezione è il carico di lavoro S3 che rimuove continuamente tutti gli 
 
 
 
+[[recommendations-for-range-reads]]
 == Consigli per le "letture di intervallo"
 
 Se illink:../admin/configuring-stored-object-compression.html["opzione globale per comprimere gli oggetti memorizzati"] è abilitato, le applicazioni client S3 dovrebbero evitare di eseguire operazioni GetObject che specificano un intervallo di byte da restituire.  Queste operazioni di "lettura di intervallo" sono inefficienti perché StorageGRID deve effettivamente decomprimere gli oggetti per accedere ai byte richiesti.  Le operazioni GetObject che richiedono un intervallo ridotto di byte da un oggetto molto grande sono particolarmente inefficienti; ad esempio, non è efficiente leggere un intervallo di 10 MB da un oggetto compresso da 50 GB.

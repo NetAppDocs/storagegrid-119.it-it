@@ -17,6 +17,7 @@ Per completare questa operazione è necessario disporre dell'autorizzazione s3:D
 
 
 
+[[request-example]]
 == Richiedi esempio
 
 Questo esempio mostra come disabilitare il servizio di integrazione della ricerca per un bucket.

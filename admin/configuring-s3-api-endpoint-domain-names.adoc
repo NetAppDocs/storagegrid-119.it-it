@@ -52,6 +52,7 @@ NOTE: Se non si aggiungono nomi di dominio degli endpoint S3 e l'elenco è vuoto
 
 
 
+[[add-an-s3-endpoint-domain-name]]
 == Aggiungi un nome di dominio dell'endpoint S3
 
 .Passi
@@ -72,6 +73,7 @@ Ora, quando i client utilizzano l'endpoint `_bucket.s3.company.com_` , il server
 
 
 
+[[rename-an-s3-endpoint-domain-name]]
 == Rinominare un nome di dominio dell'endpoint S3
 
 Se si modifica un nome utilizzato dalle applicazioni S3, le richieste in stile virtual-hosted non riusciranno.
@@ -85,6 +87,7 @@ Se si modifica un nome utilizzato dalle applicazioni S3, le richieste in stile v
 
 
 
+[[delete-an-s3-endpoint-domain-name]]
 == Elimina un nome di dominio dell'endpoint S3
 
 Se si rimuove un nome utilizzato dalle applicazioni S3, le richieste in stile virtual-hosted non riusciranno.

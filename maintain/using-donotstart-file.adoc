@@ -22,6 +22,7 @@ Il modo più efficiente per impedire il riavvio di tutti i servizi è impedire l
 
 
 
+[[add-donotstart-file-for-service]]
 == Aggiungi il file DoNotStart per il servizio
 
 È possibile impedire l'avvio di un singolo servizio aggiungendo un file DoNotStart alla directory di quel servizio su un nodo della griglia.
@@ -61,6 +62,7 @@ Quando Server Manager o il nodo della griglia vengono riavviati, Server Manager 
 
 
 
+[[remove-donotstart-file-for-service]]
 == Rimuovere il file DoNotStart per il servizio
 
 Quando si rimuove un file DoNotStart che impedisce l'avvio di un servizio, è necessario avviare tale servizio.

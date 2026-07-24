@@ -17,6 +17,7 @@ A seconda della scelta, StorageGRID esegue copie provvisorie e mette in coda gli
 
 
 
+[[flowchart-of-ingest-options]]
 == Diagramma di flusso delle opzioni di acquisizione
 
 Il diagramma di flusso mostra cosa accade quando gli oggetti vengono abbinati da una regola ILM che utilizza ciascuna delle tre opzioni di acquisizione.
@@ -25,6 +26,7 @@ image::../media/ingest_object_lifecycle.png[Diagramma che mostra come avviene l'
 
 
 
+[[dual-commit]]
 == Doppio impegno
 
 Quando si seleziona l'opzione Dual commit, StorageGRID esegue immediatamente copie provvisorie degli oggetti su due diversi nodi di archiviazione e restituisce al client un messaggio di "ingest riuscito".  L'oggetto viene messo in coda per la valutazione ILM e in seguito vengono create copie che soddisfano le istruzioni di posizionamento della regola.  Se la policy ILM non può essere elaborata immediatamente dopo il doppio commit, la protezione contro la perdita del sito potrebbe richiedere del tempo.
@@ -42,6 +44,7 @@ Utilizzare l'opzione Dual commit in uno di questi casi:
 
 
 
+[[balanced-default]]
 == Bilanciato (predefinito)
 
 Quando si seleziona l'opzione Bilanciato, StorageGRID utilizza anche il posizionamento sincrono durante l'acquisizione ed esegue immediatamente tutte le copie specificate nelle istruzioni di posizionamento della regola.  A differenza dell'opzione Strict, se StorageGRID non riesce a effettuare immediatamente tutte le copie, utilizza invece Dual commit.  Se la policy ILM utilizza posizionamenti su più siti e non è possibile ottenere una protezione immediata contro la perdita del sito, viene attivato l'avviso *Posizionamento ILM non realizzabile*.
@@ -50,6 +53,7 @@ Utilizzare l'opzione Bilanciata per ottenere la migliore combinazione di protezi
 
 
 
+[[strict]]
 == Rigoroso
 
 Quando si seleziona l'opzione Rigorosa, StorageGRID utilizza il posizionamento sincrono durante l'acquisizione ed esegue immediatamente tutte le copie degli oggetti specificate nelle istruzioni di posizionamento della regola.  L'acquisizione non riesce se StorageGRID non riesce a creare tutte le copie, ad esempio perché una posizione di archiviazione richiesta non è temporaneamente disponibile.  Il client deve riprovare l'operazione.

@@ -15,6 +15,7 @@ I client devono comunicare con i nodi della griglia per acquisire e recuperare i
 
 
 
+[[restricted-access-to-ports]]
 == Accesso limitato ai porti
 
 Se i criteri di rete aziendale limitano l'accesso a una qualsiasi delle porte, Ã¨ possibile procedere in uno dei seguenti modi:
@@ -32,6 +33,7 @@ Se i criteri di rete aziendale limitano l'accesso a una qualsiasi delle porte, Ã
 
 
 
+[[ports-used-for-external-communications]]
 == Porte utilizzate per le comunicazioni esterne
 
 La tabella seguente mostra le porte utilizzate per il traffico verso i nodi.

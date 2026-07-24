@@ -18,6 +18,7 @@ NOTE: L'amministratore della griglia deve concederti l'autorizzazione per utiliz
 
 
 
+[[what-is-s3-object-lock]]
 == Che cos'è S3 Object Lock?
 
 La funzionalità StorageGRID S3 Object Lock è una soluzione di protezione degli oggetti equivalente a S3 Object Lock in Amazon Simple Storage Service (Amazon S3).
@@ -34,6 +35,7 @@ Di fatto, tutti gli oggetti appena acquisiti hanno impostazioni di conservazione
 
 
 
+[[retention-modes]]
 === Modalità di conservazione
 
 La funzionalità StorageGRID S3 Object Lock supporta due modalità di conservazione per applicare diversi livelli di protezione agli oggetti.  Queste modalità sono equivalenti alle modalità di conservazione di Amazon S3.
@@ -56,6 +58,7 @@ La funzionalità StorageGRID S3 Object Lock supporta due modalità di conservazi
 
 
 
+[[retention-settings-for-object-versions]]
 === Impostazioni di conservazione per le versioni degli oggetti
 
 Se viene creato un bucket con S3 Object Lock abilitato, gli utenti possono utilizzare l'applicazione client S3 per specificare facoltativamente le seguenti impostazioni di conservazione per ciascun oggetto aggiunto al bucket:
@@ -74,6 +77,7 @@ Per i dettagli sulle impostazioni dell'oggetto, vederelink:../s3/use-s3-api-for-
 
 
 
+[[default-retention-setting-for-buckets]]
 === Impostazione di conservazione predefinita per i bucket
 
 Se viene creato un bucket con S3 Object Lock abilitato, gli utenti possono facoltativamente specificare le seguenti impostazioni predefinite per il bucket:
@@ -88,6 +92,7 @@ Vederelink:../tenant/creating-s3-bucket.html["Crea un bucket S3"] Elink:../tenan
 
 
 
+[[s3-object-lock-tasks]]
 == Attività di blocco degli oggetti S3
 
 Gli elenchi seguenti per gli amministratori della griglia e gli utenti tenant contengono le attività di alto livello per l'utilizzo della funzionalità S3 Object Lock.
@@ -127,6 +132,7 @@ Utente inquilino::
 
 
 
+[[requirements-for-buckets-with-s3-object-lock-enabled]]
 == Requisiti per i bucket con S3 Object Lock abilitato
 
 * Se l'impostazione globale S3 Object Lock è abilitata per il sistema StorageGRID , è possibile utilizzare Tenant Manager, Tenant Management API o S3 REST API per creare bucket con S3 Object Lock abilitato.
@@ -139,6 +145,7 @@ Utente inquilino::
 
 
 
+[[requirements-for-objects-in-buckets-with-s3-object-lock-enabled]]
 == Requisiti per gli oggetti nei bucket con S3 Object Lock abilitato
 
 * Per proteggere una versione dell'oggetto, è possibile specificare le impostazioni di conservazione predefinite per il bucket oppure specificare le impostazioni di conservazione per ciascuna versione dell'oggetto.  Le impostazioni di conservazione a livello di oggetto possono essere specificate tramite l'applicazione client S3 o l'API REST S3.
@@ -147,6 +154,7 @@ Utente inquilino::
 
 
 
+[[lifecycle-of-objects-in-buckets-with-s3-object-lock-enabled]]
 == Ciclo di vita degli oggetti nei bucket con S3 Object Lock abilitato
 
 Ogni oggetto salvato in un bucket con S3 Object Lock abilitato attraversa queste fasi:
@@ -176,6 +184,7 @@ StorageGRID memorizza più copie di ciascun oggetto protetto per il periodo di c
 
 
 
+[[can-i-still-manage-legacy-compliant-buckets]]
 == Posso continuare a gestire i bucket Compliant legacy?
 
 La funzionalità S3 Object Lock sostituisce la funzionalità Compliance disponibile nelle versioni precedenti StorageGRID .  Se hai creato bucket conformi utilizzando una versione precedente di StorageGRID, puoi continuare a gestire le impostazioni di questi bucket; tuttavia, non puoi più creare nuovi bucket conformi. Per le istruzioni, vederehttps://kb.netapp.com/Advice_and_Troubleshooting/Hybrid_Cloud_Infrastructure/StorageGRID/How_to_manage_legacy_Compliant_buckets_in_StorageGRID_11.5["Knowledge Base di NetApp : come gestire i bucket Compliant legacy in StorageGRID 11.5"^] .

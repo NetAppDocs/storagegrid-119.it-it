@@ -19,6 +19,7 @@ Il numero di nodi da aggiungere dipende anche da quanto sono pieni i nodi esiste
 
 
 
+[[general-recommendation-for-adding-storage-capacity-for-erasure-coded-objects]]
 == Raccomandazione generale per l'aggiunta di capacità di archiviazione per oggetti con codice di cancellazione
 
 Se si desidera evitare calcoli dettagliati, è possibile aggiungere due nodi di archiviazione per sito quando i nodi di archiviazione esistenti raggiungono il 70% della capacità.

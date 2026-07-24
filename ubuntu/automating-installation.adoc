@@ -25,6 +25,7 @@ Il servizio host StorageGRID viene installato da un pacchetto e gestito da file 
 
 
 
+[[automate-the-installation-and-configuration-of-the-storagegrid-host-service]]
 == Automatizza l'installazione e la configurazione del servizio host StorageGRID
 
 È possibile automatizzare l'installazione del servizio host StorageGRID utilizzando framework di orchestrazione standard quali Ansible, Puppet, Chef, Fabric o SaltStack.
@@ -46,12 +47,14 @@ Il servizio host StorageGRID è confezionato in un DEB ed è gestito da file di 
 
 
 
+[[example-ansible-role-and-playbook]]
 === Esempio di ruolo e playbook di Ansible
 
 Esempio di ruolo e playbook Ansible sono forniti con l'archivio di installazione in `/extras` cartella.  Il playbook di Ansible mostra come `storagegrid` il ruolo prepara gli host e installa StorageGRID sui server di destinazione.  È possibile personalizzare il ruolo o il playbook in base alle proprie esigenze.
 
 
 
+[[automate-the-configuration-of-storagegrid]]
 == Automatizza la configurazione di StorageGRID
 
 Dopo aver distribuito i nodi della griglia, è possibile automatizzare la configurazione del sistema StorageGRID .

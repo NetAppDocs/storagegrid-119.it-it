@@ -15,6 +15,7 @@ Se necessario, è possibile modificare i nomi visualizzati in Grid Manager per l
 
 
 
+[[what-is-the-rename-procedure]]
 == Qual è la procedura di rinomina?
 
 Quando si installa inizialmente StorageGRID , si specifica un nome per la griglia, per ciascun sito e per ciascun nodo.  Questi nomi iniziali sono noti come _nomi di sistema_ e sono i nomi inizialmente visualizzati in StorageGRID.
@@ -25,6 +26,7 @@ Utilizzare la procedura di ridenominazione per correggere errori di battitura, p
 
 
 
+[[where-do-system-and-display-names-appear]]
 == Dove compaiono i nomi di sistema e quelli visualizzati?
 
 La tabella seguente riassume dove vengono mostrati i nomi di sistema e i nomi visualizzati nell'interfaccia utente StorageGRID e nei file StorageGRID .
@@ -130,12 +132,14 @@ Vuoto a meno che gli elementi non siano stati rinominati; in caso contrario, ass
 |===
 
 
+[[display-name-requirements]]
 == Requisiti del nome visualizzato
 
 Prima di utilizzare questa procedura, rivedere i requisiti per i nomi visualizzati.
 
 
 
+[[display-names-for-nodes]]
 === Nomi visualizzati per i nodi
 
 I nomi visualizzati per i nodi devono seguire queste regole:
@@ -153,6 +157,7 @@ I nomi visualizzati per i nodi devono seguire queste regole:
 
 
 
+[[display-names-for-grid-and-sites]]
 === Nomi visualizzati per griglia e siti
 
 I nomi visualizzati per la griglia e i siti seguono le stesse regole, con queste eccezioni:
@@ -165,6 +170,7 @@ I nomi visualizzati per la griglia e i siti seguono le stesse regole, con queste
 
 
 
+[[display-name-best-practices]]
 == Buone pratiche per il nome visualizzato
 
 Se si prevede di rinominare più elementi, documentare lo schema di denominazione generale prima di utilizzare questa procedura.  Elabora un sistema che garantisca che i nomi siano unici, coerenti e facili da capire a colpo d'occhio.
@@ -180,6 +186,7 @@ Pensateci due volte prima di aggiungere dettagli specifici ai nomi che potrebber
 
 
 
+[[example-display-names]]
 === Esempi di nomi visualizzati
 
 Supponiamo che il tuo sistema StorageGRID abbia tre data center e nodi di tipo diverso in ogni data center.  I nomi visualizzati potrebbero essere semplici come questi:

@@ -15,6 +15,7 @@ Se l'impostazione globale S3 Object Lock è abilitata per il sistema StorageGRID
 
 
 
+[[how-to-enable-s3-object-lock-for-a-bucket]]
 == Come abilitare S3 Object Lock per un bucket
 
 Se l'impostazione globale S3 Object Lock è abilitata per il sistema StorageGRID , è possibile abilitare facoltativamente S3 Object Lock quando si crea ogni bucket.
@@ -31,12 +32,14 @@ S3 Object Lock richiede il controllo delle versioni dei bucket, che viene abilit
 
 
 
+[[default-retention-settings-for-a-bucket]]
 == Impostazioni di conservazione predefinite per un bucket
 
 Quando S3 Object Lock è abilitato per un bucket, è possibile abilitare facoltativamente la conservazione predefinita per il bucket e specificare una modalità di conservazione predefinita e un periodo di conservazione predefinito.
 
 
 
+[[default-retention-mode]]
 === Modalità di conservazione predefinita
 
 * In modalità CONFORMITÀ:
@@ -57,12 +60,14 @@ Quando S3 Object Lock è abilitato per un bucket, è possibile abilitare facolta
 
 
 
+[[default-retention-period]]
 === Periodo di conservazione predefinito
 
 Ogni bucket può avere un periodo di conservazione predefinito specificato in anni o giorni.
 
 
 
+[[how-to-set-default-retention-for-a-bucket]]
 == Come impostare la conservazione predefinita per un bucket
 
 Per impostare la conservazione predefinita per un bucket, utilizzare uno dei seguenti metodi:
@@ -73,6 +78,7 @@ Per impostare la conservazione predefinita per un bucket, utilizzare uno dei seg
 
 
 
+[[putobjectlockconfiguration]]
 === PutObjectLockConfiguration
 
 La richiesta PutObjectLockConfiguration consente di impostare e modificare la modalità di conservazione predefinita e il periodo di conservazione predefinito per un bucket in cui è abilitato S3 Object Lock.  È anche possibile rimuovere le impostazioni di conservazione predefinite configurate in precedenza.
@@ -115,6 +121,7 @@ Authorization: _authorization-string_
 ----
 
 
+[[how-to-determine-the-default-retention-for-a-bucket]]
 == Come determinare la conservazione predefinita per un bucket
 
 Per determinare se S3 Object Lock è abilitato per un bucket e per visualizzare la modalità di conservazione predefinita e il periodo di conservazione, utilizzare uno di questi metodi:
@@ -125,6 +132,7 @@ Per determinare se S3 Object Lock è abilitato per un bucket e per visualizzare 
 
 
 
+[[getobjectlockconfiguration]]
 === Ottieni configurazione blocco oggetto
 
 La richiesta GetObjectLockConfiguration consente di determinare se S3 Object Lock è abilitato per un bucket e, in tal caso, di verificare se sono configurati una modalità di conservazione predefinita e un periodo di conservazione per il bucket.
@@ -173,6 +181,7 @@ Server: AmazonS3
 ----
 
 
+[[how-to-specify-retention-settings-for-an-object]]
 == Come specificare le impostazioni di conservazione per un oggetto
 
 Un bucket con S3 Object Lock abilitato può contenere una combinazione di oggetti con e senza impostazioni di conservazione S3 Object Lock.
@@ -227,6 +236,7 @@ Puoi usare il `s3:object-lock-remaining-retention-days` chiave di condizione del
 
 
 
+[[how-to-update-retention-settings-for-an-object]]
 == Come aggiornare le impostazioni di conservazione per un oggetto
 
 Se è necessario aggiornare le impostazioni di conservazione o di blocco legale per una versione esistente di un oggetto, è possibile eseguire le seguenti operazioni sulle sottorisorse dell'oggetto:
@@ -246,6 +256,7 @@ Se il nuovo valore di conservazione legale è impostato su ON, l'oggetto viene s
 
 
 
+[[how-to-use-governance-mode]]
 == Come utilizzare la modalità GOVERNANCE
 
 Gli utenti che hanno il `s3:BypassGovernanceRetention` l'autorizzazione può ignorare le impostazioni di conservazione attive di un oggetto che utilizza la modalità GOVERNANCE.  Tutte le operazioni DELETE o PutObjectRetention devono includere `x-amz-bypass-governance-retention:true` intestazione della richiesta.  Questi utenti possono eseguire le seguenti operazioni aggiuntive:

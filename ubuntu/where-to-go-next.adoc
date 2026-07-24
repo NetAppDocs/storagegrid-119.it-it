@@ -15,6 +15,7 @@ Dopo aver completato l'installazione, eseguire le attività di integrazione e co
 
 
 
+[[required-tasks]]
 == Compiti richiesti
 
 * link:../admin/managing-tenants.html["Crea un account inquilino"]per il protocollo client S3 che verrà utilizzato per archiviare gli oggetti sul sistema StorageGRID .
@@ -36,6 +37,7 @@ Vedere https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/config
 
 
 
+[[optional-tasks]]
 == Attività facoltative
 
 * link:../maintain/changing-ip-addresses-and-mtu-values-for-all-nodes-in-grid.html["Aggiorna gli indirizzi IP dei nodi della griglia"]se sono cambiati da quando hai pianificato la distribuzione e generato il pacchetto di ripristino.

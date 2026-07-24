@@ -15,6 +15,7 @@ summary: È possibile utilizzare una macchina virtuale per ospitare qualsiasi ti
 
 
 
+[[vmware-vsphere-hypervisor]]
 == VMware vSphere Hypervisor
 
 È necessario installare VMware vSphere Hypervisor su un server fisico preparato.  Prima di installare il software VMware, è necessario configurare correttamente l'hardware (incluse le versioni del firmware e le impostazioni del BIOS).
@@ -29,6 +30,7 @@ link:../network/index.html["Linee guida per il networking"]
 
 
 
+[[esx-host-configuration-requirements]]
 == Requisiti di configurazione dell'host ESX
 
 
@@ -36,6 +38,7 @@ CAUTION: È necessario configurare correttamente il protocollo NTP (Network Time
 
 
 
+[[vmware-configuration-requirements]]
 == Requisiti di configurazione VMware
 
 Prima di distribuire i nodi StorageGRID è necessario installare e configurare VMware vSphere e vCenter.

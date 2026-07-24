@@ -15,6 +15,7 @@ summary: È possibile configurare la sicurezza di rete e degli oggetti per critt
 
 
 
+[[stored-object-encryption]]
 == Crittografia degli oggetti memorizzati
 
 La crittografia degli oggetti archiviati consente la crittografia di tutti i dati degli oggetti quando vengono acquisiti tramite S3.  Per impostazione predefinita, gli oggetti archiviati non sono crittografati, ma è possibile scegliere di crittografarli utilizzando l'algoritmo di crittografia AES-128 o AES-256.  Quando si abilita l'impostazione, tutti gli oggetti appena acquisiti vengono crittografati, ma non viene apportata alcuna modifica agli oggetti archiviati esistenti.  Se si disabilita la crittografia, gli oggetti attualmente crittografati rimangono crittografati, ma gli oggetti appena acquisiti non vengono crittografati.
@@ -25,12 +26,14 @@ Per maggiori dettagli sui metodi di crittografia StorageGRID , vederelink:../adm
 
 
 
+[[prevent-client-modification]]
 == Impedisci la modifica del client
 
 Impedisci modifiche al client è un'impostazione a livello di sistema.  Quando è selezionata l'opzione *Impedisci modifiche client*, le seguenti richieste vengono rifiutate.
 
 
 
+[[s3-rest-api]]
 === API REST S3
 
 * Richieste DeleteBucket
@@ -39,6 +42,7 @@ Impedisci modifiche al client è un'impostazione a livello di sistema.  Quando �
 
 
 
+[[enable-http-for-storage-node-connections]]
 == Abilita HTTP per le connessioni del nodo di archiviazione
 
 Per impostazione predefinita, le applicazioni client utilizzano il protocollo di rete HTTPS per tutte le connessioni dirette ai nodi di archiviazione.  Facoltativamente, è possibile abilitare HTTP per queste connessioni, ad esempio quando si testa una griglia non di produzione.
@@ -49,6 +53,7 @@ Vederelink:summary-ip-addresses-and-ports-for-client-connections.html["Riepilogo
 
 
 
+[[select-options]]
 == Seleziona le opzioni
 
 .Prima di iniziare
